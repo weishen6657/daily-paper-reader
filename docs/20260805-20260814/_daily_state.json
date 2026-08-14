@@ -1,8 +1,281 @@
 {
   "date": "20260805-20260814",
   "date_label": "2026-08-05 ~ 2026-08-14",
-  "generated_at": "2026-08-14 12:40:42 UTC",
+  "generated_at": "2026-08-14 13:29:29 UTC",
   "recommend_exists": true,
-  "run_count": 1,
-  "papers": []
+  "run_count": 2,
+  "papers": [
+    {
+      "paper_id": "2608.04708v1",
+      "route": "20260805-20260814/2608.04708v1-benchmarking-multi-fidelity-neural-operators-on-complex-pde-problems-with-non-trivial-fidelity-differences",
+      "title": "Benchmarking Multi-fidelity Neural Operators on Complex PDE Problems with Non-trivial Fidelity Differences",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "在达西流等地下水典型偏微分方程上评测多保真神经算子策略",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.06894v1",
+      "route": "20260805-20260814/2608.06894v1-from-points-to-edges-edge-conditioned-spectral-operators-for-physics-sensitive-pde-learning",
+      "title": "From Points to Edges: Edge-Conditioned Spectral Operators for Physics-Sensitive PDE Learning",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "面向物理敏感PDE学习的新型谱算子，以非均质多孔介质中的达西流为示例",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.10233v1",
+      "route": "20260805-20260814/2608.10233v1-unsupervised-detection-of-groundwater-storage-anomalies-in-ghana-using-grace-satellite-data",
+      "title": "Unsupervised Detection of Groundwater Storage Anomalies in Ghana Using GRACE Satellite Data",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "使用无监督机器学习（Isolation Forest）分析GRACE数据检测地下水储量异常。",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.04778v1",
+      "route": "20260805-20260814/2608.04778v1-continual-learning-physics-informed-neural-networks-for-parameterized-partial-differential-equations",
+      "title": "Continual-Learning Physics-Informed Neural Networks for Parameterized Partial Differential Equations",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "持续学习改进参数化PINN对不同参数的偏微分方程求解，可迁移至地下水流模拟",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.05317v1",
+      "route": "20260805-20260814/2608.05317v1-a-variational-framework-for-bayesian-inversion-in-moving-boundary-darcy-flow",
+      "title": "A variational framework for Bayesian inversion in moving boundary Darcy flow",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "基于压力观测反演渗透率的贝叶斯框架，属于数据驱动地下水文方法",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.05892v1",
+      "route": "20260805-20260814/2608.05892v1-alternating-levenberg-marquardt-training-of-physics-informed-neural-networks-with-fourier-enhanced-features",
+      "title": "Alternating Levenberg-Marquardt Training of Physics-Informed Neural Networks with Fourier-Enhanced Features",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "针对高频多尺度PDE问题的PINN优化方法，可用于物理信息地下水流模拟",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.06107v1",
+      "route": "20260805-20260814/2608.06107v1-kastor-an-efficient-fine-tuning-strategy-for-generative-emulation-of-pde-simulations",
+      "title": "Kastor: An efficient fine-tuning strategy for generative emulation of PDE simulations",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "偏微分方程模拟生成式仿真的高效微调策略，可直接用作地下水流机器学习代理",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.07053v1",
+      "route": "20260805-20260814/2608.07053v1-unsupervised-adaptation-of-pde-foundation-models",
+      "title": "Unsupervised Adaptation of PDE Foundation Models",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "基于物理残差与边界条件的无监督微调PDE基础模型，与物理信息地下水流建模高度相关",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.08114v1",
+      "route": "20260805-20260814/2608.08114v1-finite-basis-physics-informed-neural-networks-with-hard-constraints-for-viscous-fluid-flow-in-highly-perforated-domains",
+      "title": "Finite basis physics-informed neural networks with hard constraints for viscous fluid flow in highly perforated domains",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "物理信息神经网络用于穿孔域中的流体流动，与地下流体模拟方法契合",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.08608v1",
+      "route": "20260805-20260814/2608.08608v1-adex-fno-a-unified-ambient-domain-framework-for-fourier-neural-operators-on-varying-geometries",
+      "title": "ADEx-FNO: A Unified Ambient-Domain Framework for Fourier Neural Operators on Varying Geometries",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "环境域傅里叶神经算子框架可处理变化几何，直接适用于地下水流动代理建模",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.06660v1",
+      "route": "20260805-20260814/2608.06660v1-ct-pikan-coordinate-transformed-physics-informed-kolmogorov-arnold-network-with-autograd-based-metric-evaluation-for-solving-pdes-in-curvilinear-domains",
+      "title": "CT-PIKAN: Coordinate-Transformed Physics-Informed Kolmogorov-Arnold Network with Autograd-Based Metric Evaluation for Solving PDEs in Curvilinear Domains",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "物理信息KAN框架求解复杂几何域中的PDE",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.07161v1",
+      "route": "20260805-20260814/2608.07161v1-fluid-dit-graph-free-diffusion-transformers-for-fluid-flow-simulations-learning",
+      "title": "Fluid-DiT: Graph-Free Diffusion Transformers for Fluid Flow Simulations Learning",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "流体流动模拟的机器学习方法，可迁移至地下水流动模拟。",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.08322v1",
+      "route": "20260805-20260814/2608.08322v1-eikonal-regularisation-in-physics-informed-neural-networks-for-three-dimensional-level-set-advection-transferability-of-two-dimensional-design-principles",
+      "title": "Eikonal Regularisation in Physics-Informed Neural Networks for Three-Dimensional Level-Set Advection: Transferability of Two-Dimensional Design Principles",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "研究PINN中Eikonal正则化超参数在三维平流中的迁移规律，对基于PINN的地下输运模拟有参考价值",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.08356v1",
+      "route": "20260805-20260814/2608.08356v1-stochastic-physics-informed-neural-networks-on-lie-groups-for-learning-underwater-vehicle-dynamics",
+      "title": "Stochastic Physics-Informed Neural Networks on Lie Groups for Learning Underwater Vehicle Dynamics",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "随机物理信息神经网络尊重几何约束，可迁移至地下水流建模",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.04728v1",
+      "route": "20260805-20260814/2608.04728v1-a-hybrid-proper-orthogonal-decomposition-and-diffusion-framework-for-reduced-order-forecasting-of-turbulent-flow-dynamics",
+      "title": "A hybrid proper orthogonal decomposition and diffusion framework for reduced-order forecasting of turbulent flow dynamics",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "使用机器学习和生成扩散的流动预报降阶代理模型",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.05777v2",
+      "route": "20260805-20260814/2608.05777v2-curriculum-multiple-shooting-for-robust-training-of-neural-and-universal-differential-equations",
+      "title": "Curriculum Multiple Shooting for Robust Training of Neural and Universal Differential Equations",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "提出面向含噪时间序列的神经ODE通用训练策略，可应用于数据驱动水文建模",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    },
+    {
+      "paper_id": "2608.07210v1",
+      "route": "20260805-20260814/2608.07210v1-sparse-grids-like-surrogate-models-enhanced-with-gradient-information",
+      "title": "Sparse-grids-like surrogate models enhanced with gradient information",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向参数化非线性偏微分方程的代理模型并引入梯度信息，可迁移至地下水流动代理模型构建",
+      "first_seen_at": "2026-08-14 13:29:29 UTC",
+      "updated_at": "2026-08-14 13:29:29 UTC"
+    }
+  ]
 }

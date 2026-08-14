@@ -44,14 +44,14 @@
       <span class="dpr-home-dashboard-kicker">2026-08-05 ~ 2026-08-14</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 0 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 17 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
-    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>0</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>2 次</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>6</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>11</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-14 12:40:42 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-14 13:29:29 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日无新推荐，系统未产出可展示论文。</p>
+<p>聚焦复杂PDE难题，精读九分新基准与边缘条件谱算子，同时速读微调与无监督适应策略；</p>
+<p>最值得关注多保真神经算子在非平凡保真度差异下的表现，以及物理敏感边缘条件谱算子的建模新路径；</p>
+<p>下一步建议从生成仿真微调或PDE基础模型的无监督适配入手，降低实际物理模拟应用门槛。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -71,12 +73,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">0 篇</strong>
+    <strong class="dpr-home-dashboard-count">6 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Benchmarking Multi-fidelity Neural Operators on Complex PDE Problems with Non-trivial Fidelity Differences">Benchmarking Multi-fidelity Neural Operators on Complex PDE Problems with Non-trivial Fidelity Differences</span></li><li><span class="dpr-home-dashboard-paper-title" title="From Points to Edges: Edge-Conditioned Spectral Operators for Physics-Sensitive PDE Learning">From Points to Edges: Edge-Conditioned Spectral Operators for Physics-Sensitive PDE Learning</span></li><li><span class="dpr-home-dashboard-paper-title" title="Unsupervised Detection of Groundwater Storage Anomalies in Ghana Using GRACE Satellite Data">Unsupervised Detection of Groundwater Storage Anomalies in Ghana Using GRACE Satellite Data</span></li></ul>
   </div>
-
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>6</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -84,12 +86,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">0 篇</strong>
+    <strong class="dpr-home-dashboard-count">11 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Kastor: An efficient fine-tuning strategy for generative emulation of PDE simulations">Kastor: An efficient fine-tuning strategy for generative emulation of PDE simulations</span></li><li><span class="dpr-home-dashboard-paper-title" title="Unsupervised Adaptation of PDE Foundation Models">Unsupervised Adaptation of PDE Foundation Models</span></li><li><span class="dpr-home-dashboard-paper-title" title="Finite basis physics-informed neural networks with hard constraints for viscous fluid flow in highly perforated domains">Finite basis physics-informed neural networks with hard constraints for viscous fluid flow in highly perforated domains</span></li></ul>
   </div>
-
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>11</strong></span></div>
 </section>
 </div>
 
