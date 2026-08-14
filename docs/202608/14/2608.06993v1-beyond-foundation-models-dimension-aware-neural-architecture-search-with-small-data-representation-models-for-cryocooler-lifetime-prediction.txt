@@ -1,0 +1,606 @@
+Title: Beyond Foundation Models: Dimension-Aware Neural Architecture Search with Small-Data Representation Models for Cryocooler Lifetime Prediction
+
+URL Source: https://arxiv.org/pdf/2608.06993v1
+
+Published Time: Mon, 10 Aug 2026 00:41:12 GMT
+
+Number of Pages: 48
+
+Markdown Content:
+# Graphical Abstract 
+
+Unlabeled series of cryocoolers’ telemetry data 
+
+Preprocessing Filtering Inv. Data : Remove flag temp. outside -50C to 100C 
+
+Filtering NaN Values : Remove seq. with missing (NaN) values 
+
+Normalization : Apply Robust Scaler to all features to handle outliers and non-Gaussian distributions 
+
+Representation models Unsupervised Rep. Learning : Train an encoder on unlabeled time series to learn latent features 
+
+Seq2Seq Training : Use reconstruction loss to ensure embeddings capture temporal/structural patterns 
+
+NAS Optimization : Optimize architecture and embedding size using dimension-aware NAS 
+
+Latent Embedding Extraction : Encode all data into fixed-size, task-agnostic vectors 
+
+Downstream tasks Reuse for Downstream Tasks : Use embeddings for various supervised or unsupervised downstream models 
+
+Binary Classification : Use supervised classifiers to predict lifetime class 
+
+One-Class Classification : Use anomaly detection for one-class classification 
+
+Class Imbalance Handling : Evaluate and mitigate the effects of class imbalance using rebalancing and robust metrics Small series of labeled or unlabeled data of new 
+
+cryocoolers 
+
+Lifetime prediction of new cryocoolers 
+
+1arXiv:2608.06993v1 [cs.LG] 7 Aug 2026 Beyond Foundation Models: Dimension-Aware Neural Architecture Search with Small-Data Representation Models for Cryocooler Lifetime Prediction ⋆
+
+Gregor Molan a, ∗, Grafika Jati a,d , Francesco Barchi d, Andrea Acquaviva d, Aljaž Osterman c, Martin Molan b,a,d 
+
+> aComtrade 360 d.o.o., Letališka cesta 29b, Ljubljana, 1000, Slovenia
+> bComtrade AI GmbH, Grafenauweg 8, Zug, 6300, Switzerland
+> cLE-Tehnika d.o.o., Šuceva 27, Kranj, 4000, Slovenia
+> dAlma Mater Studiorum – Università di Bologna, Department of Electrical, Electronic, and Information Engineering (DEI), Viale del Risorgimento 2, Bologna, 40136, Italy
+
+Abstract 
+
+Large-scale pretrained time-series models achieve strong results through large-scale pretraining and task-agnostic representation learning, but they rely on abundant, diverse data that industrial and scientific domains often lack. We therefore propose the FSD-RM (Family of Small-Data Representation Mod-els) paradigm as a practical alternative for limited, domain-specific telemetry. Rather than relying on large-scale pretraining, we focus on capacity-controlled representation learning using established encoder architectures (CNN1D, LSTM, GRU, Transformer), selected for their suitability in small-data settings and interpretability. These encoders are trained unsupervised on multivariate telemetry data and integrated into a two-stage pipeline for downstream lifetime prediction. To systematically examine architectural trade-offs under data constraints, we employ 
+
+dimension-aware neural architecture search (NAS) to jointly optimize model capacity and input dimensionality. Experiments on cryocooler telemetry show that the proposed approach achieves competitive predictive performance while reducing training cost and model complexity. The contribution lies in combining established representation learning techniques within a coherent, NAS-driven framework tailored to small-data regimes, with explicitly defined parameter settings and design choices. The results indicate that effective representation learning can be achieved without large-scale pretraining when appropriate inductive bias and capacity control are applied.   
+
+> ⋆Accepted for publication in Reliability Engineering & System Safety. © 2026. Licensed under CC BY-NC-ND 4.0.
+> ∗Corresponding author
+> Email address: gregor@comtrade.com (Gregor Molan)
+
+Keywords: Cryocooler telemetry, Sensor-based lifetime prediction, Aerospace reliability, Multivariate time series, Family of small-data representation models, Dimension-Aware Neural Architecture Search (da-NAS), Predictive maintenance, Anomaly detection, Non-destructive testing 
+
+PACS: 07.20.Mc, 07.05.Mh, 07.05.Kf, 95.55.-n, 07.05.Tp 
+
+2020 MSC: 68T05, 68T10, 62M10, 68W50, 93C41 
+
+1. Introduction 
+
+Recent advances in time-series analysis have increasingly emphasized represen-tation learning through large-scale, task-agnostic models. While such approaches have demonstrated strong performance, they typically rely on extensive and diverse training data, which is often unavailable in industrial and scientific applications. In domains such as satellite telemetry and cryocooler monitor-ing, datasets are limited, domain-specific, and costly to obtain, making direct adoption of large-scale pretraining strategies impractical. This setting motivates approaches that retain the benefits of representation learning while operating effectively under strict data constraints. In this work, we consider how repre-sentation learning can be adapted to small-data regimes by controlling model capacity, making explicit architectural choices, and systematically exploring design trade-offs. However, existing approaches to time-series representation learning typically emphasize either increasingly complex model architectures or large-scale pretrain-ing, with limited attention to how these choices interact with data availability. In small-data settings, overly expressive models may introduce unnecessary variance, whereas pretrained models may embed inductive biases that are poorly aligned with domain-specific signals. At the same time, commonly used archi-tectures such as CNNs, recurrent networks, and Transformers remain effective but are often applied without systematic comparison or tuning under strict data constraints. This creates a gap in understanding how model capacity, input dimensionality, and architectural choice jointly affect representation quality in small-data regimes. To address this, we adopt a structured approach that combines a family of established encoder models with dimension-aware neural architecture search, enabling controlled exploration of design trade-offs and their impact on downstream predictive performance. In this context, the contribution of this work is threefold. First, we formu-late a small-data representation model paradigm that emphasizes controlled model capacity and task-agnostic feature learning under limited data availabil-ity. Second, we develop a family of encoder architectures based on established models (CNN1D, LSTM, GRU, Transformer) and integrate them into a two-stage pipeline for representation learning and downstream prediction. Third, we introduce a dimension-aware neural architecture search strategy that enables systematic exploration of architectural and input design choices, allowing their impact on predictive performance to be assessed in a controlled manner. The resulting framework provides a transparent and reproducible basis for studying 3representation learning in small-data time-series settings, with application to cryocooler lifetime prediction. The proposed approach is motivated by cryocooler telemetry in satellite-based thermal imaging systems, where reliable lifetime prediction is essential for mission planning and system operation. The cooler is a critical component of such systems, supporting the thermal camera’s functionality for applications including environmental monitoring, target detection, and Earth observation. In this context, failures or performance degradation can have a significant operational impact, while the available telemetry data is typically limited, heterogeneous, and domain-specific. The cooler is a critical component of thermal imaging systems, especially in satellite-based applications, where it supports the thermal camera’s operation for perception tasks such as environmental monitoring, target detection, and Earth observation [14]. Given its role in space systems, the cooler must meet stringent quality and reliability standards, as failure can compromise mission performance. Variations in cooler quality across the production pipeline require robust evaluation methods. Variants of Bayesian neural networks have already been employed to fore-cast weather-related failure risks in other safety-critical railway infrastructure, illustrating how uncertainty-aware deep models can aid in operational risk man-agement [26]. 
+
+1.1. Motivation and Industrial Context 
+
+Traditional quality assurance relies heavily on destructive lifetime testing, where coolers are operated continuously until failure to estimate durability, typically targeting a minimum operational threshold of 8,000 hours for space-grade equipment [19] [16]. This process is costly, time-consuming, and results in the destruction of high-value components. 
+
+1.2. Challenges in Cryocooler Lifetime Prediction 
+
+Cryocooler lifetime prediction can be formulated as a binary classification problem , where each unit is assigned to one of two classes based on a predefined operational lifetime threshold. Units with a lifetime below or equal to the threshold are considered to belong to the standard lifetime class, while those exceeding the threshold are classified as long-lifetime units. Classification based on a lifetime threshold is preferred over direct regression for several practical and technical reasons [9]. First, it closely mirrors operational decision-making, where actions such as maintenance or replacement hinge on whether a component will fail before or after a specific time horizon. Second, classification models are generally more robust to noise and outliers, as regression models can be sensitive to extreme values and often exhibit high variance when precise lifetime prediction is required. Third, in many industrial contexts, labels are limited to categorical or censored data (e.g., failure before/after a given time), making regression infeasible or ill-posed. Fourth, threshold-based classification outputs are easier to interpret and integrate into automated decision-support systems. Finally, 4regression on single-signal time series often struggles to model the complex temporal and multivariate patterns underlying system degradation, whereas time-series classification approaches, especially those using multiple sensor inputs, are better suited to capturing these dynamics. Despite its practical relevance, cryocooler lifetime prediction presents several fundamental challenges. These challenges include: 1. Limited labeled dataset (small-N regime). Labeled data from lifetime tests is scarce due to the destructive nature of the process, which restricts the applicability of conventional supervised learning approaches. 2. Severe class imbalance. The dataset exhibits strong skew, with long-lifetime units significantly rarer than standard units, complicating reliable model training and evaluation. 3. Heterogeneous sensor modalities. Cryocooler telemetry comprises both time-domain operational signals and frequency-domain measurements with distinct statistical properties, requiring dataset-specific preprocessing and modeling strategies. 4. Variable-length sequences. The telemetry data consists of sequences of differing durations, introducing additional complexity for model design and representation learning. 5. Domain shift across test regimes. Data collected under different testing conditions exhibits distributional differences, combined with measurement noise, which can degrade generalization performance. These characteristics motivate the need for representation learning approaches that can exploit unlabeled data and remain robust under small-data and imbal-anced conditions. These combined challenges make the direct application of standard supervised and large-scale deep learning methods difficult in practice. Current data acquisition and quality control practices are largely manual and based on fixed protocols, which are not only inefficient but may also fail to detect subtle anomalies [4]. Furthermore, while multivariate time-series telemetry data from standard functional testing are abundant, they are mostly unlabeled, whereas labeled data from lifetime tests are limited. This imbalance further complicates the development of robust predictive models. Recent work on Remaining Useful Life (RUL) estimation for turbofan engines demonstrates how deep learning and attention mechanisms can improve data-driven lifetime prediction in aerospace applications [11]. Modern large-scale pretrained time-series models (e.g., TimesFM, UniTS, Moirai, TS2Vec, and transformer-based forecasting models) typically rely on large-scale pretraining over millions of heterogeneous sequences and assume access to abundant, diverse data streams. In contrast, cryocooler telemetry is characterized by low production volumes, hardware-specific signals, and datasets containing only tens to hundreds of sequences per unit, which cannot support 5such large-scale pretraining. Our dataset contains only 1,305 unlabeled and 95 labeled sequences. Furthermore, existing foundation models are primarily designed for forecasting tasks and do not directly address anomaly detection or lifetime classification under extreme class imbalance typical of industrial reliability datasets. In contrast to these large-scale approaches, the framework proposed in this study operates under fundamentally different constraints. Specifically, the avail-able dataset comprises a limited number of samples (small-N regime), with only 1,305 unlabeled and 95 labeled sequences, which precludes the use of conventional large-scale pretraining strategies. Rather than aiming to repli-cate the scale of existing foundation models, our objective is to approximate their functional properties—such as task-agnostic representations and cross-task generalization—within a resource-constrained, domain-specific setting. To address these limitations, we adopt a modular machine learning pipeline in which data flows through a sequence of preprocessing, representation learning, and downstream modeling stages [13]. The core of this approach is a 
+
+capacity-scalable representation framework , referred to as a small-data representation model paradigm, in which a family of encoder models is trained in an unsupervised sequence-to-sequence setting to learn general-purpose representa-tions from unlabeled telemetry data [21]. These representations are subsequently reused by lightweight downstream models [18] for lifetime classification and anomaly detection, enabling robust predictions even under severe data scarcity and class imbalance. 
+
+1.3. Contributions of This Work 
+
+We present a novel approach to time series lifetime prediction in low-label industrial settings, with the following core contributions: 1. Small-Data Representation Modeling for Cryocooler Satellite Telemetry. We introduce an FSD-RM paradigm specifically designed for cryocooler satellite telemetry, demonstrating that generalization can emerge under extremely small-data constraints, far below the scale required by existing large-scale pretrained time-series models. 2. Capacity-Scalable Family of Small-Data Representation Models. 
+
+We introduce the FSD-RM, a Family of Small-Data Representation Model encoders—CNN1D, LSTM, GRU, and Transformer—parameterized by embedding capacity. This FSD-RM enables controlled scaling of repre-sentational complexity, allowing downstream adaptation to varying data regimes, sensor behaviors, and operational constraints in aerospace teleme-try. 3. Cross-Task Transferability of Learned Representations. We demon-strate that a single pretrained representation supports multiple heteroge-neous downstream tasks—binary fault classification and one-class anomaly 6detection—without retraining the encoder. This cross-task generality con-firms the task-agnostic nature expected from a proper model in satellite telemetry monitoring. 4. Multi-Regime Robustness Under Data Scarcity and Class Rar-ity. We assess the proposed representations under progressively reduced downstream training regimes, spanning from full-data availability down to ultra-low-sample scenarios that reflect real cryocooler manufacturing constraints. These subsets exhibit both a limited sample availability and increasingly skewed class distributions, mimicking degradation-stage rarity in operational telemetry. 5. Dimension-Aware NAS for Optimal Embedding Capacity. We introduce a lightweight NAS strategy ( da-NAS ) that selects the optimal embedding dimension using a progressive dimension schedule, a Beat-Lower-Dimension improvement rule, and a simple dimension-aware early stopping criterion. This capacity-oriented search differs from prior NAS methods focused on depth/width scaling. 6. System-Level Design Beyond Single-Model Optimization. Unlike conventional approaches that focus on improving individual model archi-tectures, our contribution lies in a system-level framework that integrates family-based representation learning, capacity scaling, cross-task reuse, and dimension-aware NAS into a unified pipeline for small-data industrial environments. As shown in Figure 1, we propose a two-stage learning pipeline, from the repre-sentation model to downstream tasks, that extracts meaningful representations from cryocooler telemetry and enables reliable downstream lifetime prediction. Input data from manufacturing and testing   
+
+> Representation model
+> Heavy part:
+> Representation learning Setting model’s parameter
+> Mid-weight part:
+> Classification head Setting layer’s parameters
+> Downstream task
+> Light-weight part:
+> Classification
+> Cryocooler’s data Lifetime prediction
+> Machine Learning
+> Representation model
+> Heavy part:
+> Representation learning Setting model’s parameter
+> Mid-weight part:
+> Classification head Setting layer’s parameters
+> Downstream task
+> Light-weight part:
+> Classification
+> Cryocooler’s data Lifetime prediction
+> Machine Learning
+
+Figure 1: An architecture of a small-data representation model and downstream tasks. 
+
+To the best of our knowledge, this is among the first systematic works that 7propose a family of pretrained time-series encoders spanning embedding di-mensions from 2 to 512 and designed to support two fundamentally distinct downstream tasks: supervised binary classification—separating cryocoolers op-erating below the lifetime threshold (class 0) from those exceeding it (class 1)—and unsupervised one-class classification, where the encoder is trained solely on class-0 telemetry to detect anomalous high-lifetime behavior during testing. This encoder family offers flexibility, allowing model capacity to be matched to data availability and task complexity. We further validate the approach on oper-ational cryocooler telemetry and show that the learned representations capture degradation characteristics, enabling lifetime-related quality assessment from short test segments without performing complete lifetime testing and supporting early-failure detection in satellite cryocooler manufacturing. 
+
+2. Problem Characteristics 
+
+A key challenge in industrial and aerospace telemetry is that datasets are inherently small, highly imbalanced, and domain-specific. Unlike large-scale internet corpora that enable GPT-style large-scale pretrained models, cryocooler and space-system manufacturing typically operate under low production volumes, resulting in small but highly specialized datasets. This makes it impractical to rely on large pretrained time-series models or general-purpose pretrained models, which require millions of samples and offer limited transferability to niche sensor modalities. What is missing in the literature is an approach that provides cross-task gener-alization, a reusable representation, and classifier-agnostic embeddings—without assuming access to large datasets. In other words, a framework that works in real industrial conditions: few samples, strong imbalance, and highly domain-specific signals. To address this gap, we introduce a Family of Small-Data Representation Models ( FSD-RM ): a collection of capacity-scaled encoders (CNN1D, LSTM, GRU, Transformer) with systematically varied embedding dimensions. Instead of relying on a single universal model, this family enables dynamic selection of model capacity depending on the downstream requirement—whether the task is binary classification, one-class anomaly detection, or small-sample learning. This capacity scaling and cross-task consistency provide the functional characteristics of FSD-RM while remaining feasible for domains where conventional large-scale pretraining is impossible. Our “family-based” formulation primarily treats representation models as a single, large, monolithic representation, whereas our work demonstrates that a set of smaller, specialization-aware representation model variants can collectively pro-vide FSD-RM properties under severe data constraints. The proposed approach is therefore directly aligned with the operational needs of cryocooler manufactur-ing and similar space-industry pipelines: enabling downstream flexibility while respecting fundamental dataset limitations. 83. Related Work 
+
+3.1. Aerospace Reliability and Remaining Useful Life Estimation 
+
+Rosero proposed another study related to the Remaining Useful Life [12]. The study presents a hybrid PHM approach that estimates the RUL of aircraft cooling units by combining physics-based health indicators with machine learn-ing, leveraging time-frequency features such as the Hilbert spectrum to detect degradation. Recent work on turbofan engines demonstrates the effectiveness of attention-based deep learning architectures for RUL estimation in aerospace systems, using double-attention mechanisms in the C-MAPSS benchmark dataset [11]. In addition, Chen et al. show that jointly modeling aleatoric, epistemic, data-missing, and semantic uncertainties via a Bayesian BiGRU architecture can significantly improve the reliability of RUL prediction [2]. By leveraging run-to-failure data instead of raw sensor signals, the method improves accuracy in identifying abnormal degradation and reduces prediction error. Existing studies use sensors during equipment runtime—rather than relying on quality assurance checks or machine part inspections that do not involve operating the equipment under real conditions. Meanwhile, quality assurance for machine parts immediately after production has not yet been addressed. 
+
+3.2. General RUL and Predictive Maintenance 
+
+In modern discrete manufacturing industries, ensuring product quality, de-tecting faults early, and maintaining equipment reliability are critical tasks supported by effective quality control, inspection, and predictive maintenance strategies. Recognizing the increasing role of Artificial Intelligence (AI) in these areas, Kausik et al. conducted a comprehensive review that categorizes AI appli-cations into key functional domains, including predictive maintenance, quality inspection, process optimization, and autonomous operations [9]. The review analyzes real-world case studies, emphasizing that most datasets are sourced from sensor data collected during equipment runtime, rather than from synthetic data or post-production inspections. The surveyed technical approaches encom-pass a variety of machine learning and deep learning models, including CNNs, LSTMs, autoencoders, Random Forest, SVMs, and hybrid methods that employ time-frequency representations. For time-series data in smart manufacturing, Farahani et al. summarize various use cases, including fault detection, tool wear monitoring, process phase classification, and post-production quality prediction, in which sensor signals are continuously recorded during equipment operation [4]. These time-series classification tasks are essential for enabling real-time decisions, and the authors benchmark state-of-the-art machine learning models—including InceptionTime, ROCKET, and HIVE-COTE—across multiple datasets to evaluate their effec-tiveness in these industrial scenarios. Tašći proposed a machine learning-based system to predict the Remain-ing Useful Life (RUL), using a hybrid approach that combines data filtering, 9autoencoder-based feature engineering, clustering, and regression models (RF, XGBoost, MLP, SVR) [24]. The system is designed for predictive maintenance in real-world production lines, using historical operational data collected from IoT sensors during equipment runtime. Classical supervised learning approaches have been widely applied to reliabil-ity and predictive maintenance, providing established baselines for understanding lifetime prediction. Ouadah et al. study the systematic selection of supervised machine learning algorithms for predictive maintenance, comparing Random Forest, Decision Tree, and k-Nearest Neighbors for their effectiveness in lifetime and reliability prediction tasks [17]. Felsberger et al. formulate reliability assessment as a Bayesian regression problem to derive predictive models of reliability metrics, with applications to operational particle accelerator equipment at CERN [5]. Su and Chiang combine finite element analysis (FEA) with supervised machine learning methods, such as Kernel Ridge Regression, to predict the reliability life of wafer-level packaging in electronic components [23]. Recent studies on wind-induced floater intrusion risk in railway overhead contact lines indicate that Bayesian neural networks can provide calibrated, uncertainty-aware risk predictions even with small and imbalanced datasets [26]. While these classical methods establish important baselines, they rely on explicit feature engineering and are limited in scenarios with extreme class imbalance and scarce labeled data, motivating the need for representation learning approaches that leverage unlabeled data. 
+
+3.3. Time-Series Representation Learning and Foundation-Style Models 3.3.1. Foundation Models and Representation Learning for Reliability 
+
+In recent years, foundation model approaches have expanded beyond NLP to include time-series domains, enabling unsupervised learning of representations from unlabeled data. Schneider et al. define foundation models as large pretrained encoders that develop general-purpose, reusable representations [21]. In reliability and warranty contexts, Kim et al. propose a weighted temporal convolutional autoencoder (WTCAE) designed to predict field reliability and claim counts from limited initial warranty data [10]. The WTCAE performs better at predicting warranty from short-term claim data, where traditional lifetime distribution methods often fail. This research is especially relevant because it addresses a similar challenge: predicting long-term reliability with small sample sizes and imbalanced data. Likewise, structured latent-space autoencoders have been used to learn compact representations of sensor data for health monitoring. These representation-learning methods inspire our FSD-RM design, which extends encoder-decoder approaches to the field of aerospace cryocoolers. 
+
+3.3.2. Recurrent and Adaptive Architectures 
+
+Recent work on industrial health monitoring has proposed specialized recur-rent architectures for multivariate time series. Huang et al. (2025) introduce a 10 multivariate time-series adaptive GRU (MTS-AdaGRU) with transfer learning designed for coal mill systems. The MTS-AdaGRU combines temporal distri-bution characterization, factorized temporal mixing, and temporal distribution matching to address temporal covariate shift and redundancy in multivariate sensor data [8]. They define a health degree metric based on Jensen–Rényi divergence between actual values and model outputs, providing a scalar indicator of deviation from normal behavior. In real plant data, MTS-AdaGRU achieves significantly smaller and more focused errors compared to baselines such as GRU, TCN, Transformer, and LSTNet across multiple verification sets, demonstrating strong generalization and robustness under changing operating conditions. Our approach addresses a related but distinct challenge. While MTS-AdaGRU optimizes a single recurrent architecture with domain-shift adaptation, our work systematically evaluates a family of heterogeneous encoder architectures (CNN1D, LSTM, GRU, Transformer) with varying capacities, coupled with a dimension-aware neural architecture search (da-NAS) strategy. Instead of adapting a single model to distributional shifts, we enable capacity matching to data availability—a critical requirement for aerospace cryocooler manufacturing, where extremely limited labeled samples and severe class imbalance are inherent constraints. This capacity-scalable family design, combined with cross-task validation on both binary classification and one-class anomaly detection, constitutes a unique con-tribution to small-data reliability prediction in specialized, low-volume domains. 
+
+4. Problem Specification 
+
+4.1. Positive-Unlabeled Imbalanced Multivariate Time Series 
+
+This study uses an in-house dataset of multivariate time-series signals acquired from cryocooler production tests. A total of 1,305 unlabeled sequences are available for representation learning, while 95 sequences include ground-truth lifetime annotations and are used for downstream evaluation. The downstream task formulates lifetime estimation as a binary classification problem defined by a threshold T . Units with lifetime ≤ T are labeled as class 0 (standard lifetime) , whereas those exceeding T are labeled as class 1 (long lifetime units) . Three thresholds are evaluated to reflect typical operational regimes in a cryogenic cooler qualification: 
+
+10,000-hour threshold: 63 samples in class 0 and 32 samples in class 1. 
+
+15,000-hour threshold: 73 samples in class 0 and 22 samples in class 1. 
+
+20,000-hour threshold: 84 samples in class 0 and 11 samples in class 1. These distributions exhibit progressively increasing imbalance from mild (10k) to medium (15k) and severe (20k) class skew, reflecting realistic manufacturing statistics in which long lifetime units are substantially rarer than standard ones. This setting motivates the need for a representation approach capable of handling limited labeled data , positive-unlabeled conditions ,and extreme class rarity , all intrinsic to satellite cryocooler telemetry. Figure 2 visually presents the challenges of Positive-Unlabeled and imbalanced multivariate time series. 11 Large Multivariate Time Series Label Status   
+
+> unlabeled Sequence #1 labeled unlabeled labeled unlabeled unlabeled ......labeled Sequence #N Various lengths of multivariate time series
+> Supervised Learning Set
+> labeled Sequence #1 labeled ......labeled Sequence #L Small number of labelled sequences (L)
+> Unsupervised Learning Set
+> Sequence #1 ...Sequence #N-L Unlabeled Sequence (N-L)
+
+Figure 2: Challenge on Positive-Unlabeled Imbalanced Multivariate Time Series. 
+
+4.2. Definition of Cryocooler Time Series Representation Model 
+
+We define a Family of Small-Data Representation Models (FSD-RM) as a set of heterogeneous encoders—CNN1D, LSTM, GRU, and Transformer—pretrained to learn a generic representation of multivariate time-series data. These models share the same objective but differ in architectural principles, capacity, and inductive bias. Furthermore, we approximate the properties of large-scale repre-sentation models for our FSD-RM, enabling reusable representations, cross-task generalization, and independence from downstream tasks. Among the FSD-RM candidates, we identify a representation model as the encoder that demonstrates the most consistent representation quality across all downstream tasks, including binary classification and one-class anomaly detection. The representation model is therefore considered the universal backbone for representations in our framework. 
+
+5. Proposed Method: Family of Small-Data Representation Models for Cryocooler Telemetry Notation. Let B denote the batch size, T the sequence length, and F the number of input features. The input time series is denoted as X ∈ RB×T ×F , and X′ ∈
+
+RB×F ×T represents its channel-first permutation. The number of convolutional layers is denoted by nconv , and demb denotes the embedding dimension (ranging from 2 to 512). Intermediate hidden representations are denoted by H(l), while 
+
+Z represents the latent embedding and ˆX the reconstructed output. Additional model-specific parameters include trainable projection matrices and bias terms, denoted by Wemb , bemb , Win , and bin . In the Transformer 12 encoder, P denotes positional encoding, M the encoder memory representation, 
+
+α the attention weights, and watt the trainable attention vector. In the da-NAS formulation, TDk denotes the best validation-loss target at embedding dimension Dk, Lval denotes validation loss, LD denotes the best validation loss at dimension D, Lt denotes the validation loss at trial t, L∗ denotes the current best loss, and δ denotes the relative improvement threshold. BLD refers to the Beat-Lower-Dimension criterion, and CDSP denotes the Cross-Dimensional Stop Policy. Multi-variate time series sequence Encoder family search space: CNN, LSTM, GRU, Transformer Embedding space   
+
+> d= 2 , ..., 512
+> da-NAS
+> (encoder + dimension search)
+> Task-Agnostic Embedding
+> (Reusable Representation) Pretraining phase Downstream phase Binary Classification One-Class Detection
+> Figure 3: Proposed small-data representation model for cryocooler lifetime prediction model.
+
+Figure 3 illustrates the overall architecture of the proposed approach. We adopt an FSD-RM paradigm where an encoder–decoder architecture is pre-trained using multivariate cryocooler telemetry time series in an unsupervised sequence-to-sequence reconstruction setting. The goal is to learn embedding representations that are compact, generalizable, and reusable across downstream tasks. Unlike prior work that focuses on a single model, our approach introduces a Family of Small-Data Representation Models (FSD-RM) — a set of pretrained encoders based on four architectures (CNN1D, LSTM, GRU, Transformer) with scalable embedding capacities. This design allows us to match model complexity to data availability and downstream task requirements, which is critical in small-sample domains like satellite cryocooler manufacturing. The downstream tasks are decoupled from the encoder training and applied to the learned embeddings: 
+
+Binary Classification: Predict whether a cryocooler unit will fail before or after a predefined operational lifetime threshold (e.g., 10,000 hours). 
+
+Anomaly Detection (One-Class Classification): Train on only normal (st-andard lifetime) samples and detect outliers that exhibit abnormally long 13 behavior as potential quality deviations. By training a set of encoders across a wide range of embedding dimensions (from 2D to 512D), we enable capacity-scaled representation learning that sup-ports performance-efficiency tradeoffs and robustness under data scarcity. This method is particularly suited for the space manufacturing domain, where the acquisition of labeled failure data is costly and time-consuming. A related research approach involves designing normal-behavior models that explicitly handle shifts in temporal distribution in industrial time series. In coal mill health monitoring, Huang et al. combine an adaptive GRU with techniques such as temporal distribution characterization, factorized temporal mixing, and temporal distribution matching to learn features that remain consistent across different operating periods and are resistant to covariate shift. Our time-series representation models pursue a similar objective of creating regime-robust representations, but accomplish this by pretraining various encoder architectures (CNN1D, LSTM, GRU, Transformer) on reconstruction tasks and then selecting capacity through dimension-aware NAS, rather than integrating adaptation mechanisms within a single recurrent model [8]. 
+
+5.1. Data Acquisition Run-in test (1035 Cryocoolers) Noise test (1035 Cryocoolers) ESS ATP RT ESS ATP LT ESS ATP HT POST ESS ATP RT ESS ATP test (1035 Cryocoolers) ESS ATP RT ESS ATP LT ESS ATP HT POST ESS ATP RT Life Test (95 labelled Cryocoolers) Re-run ESS ATP test every 500 hours 
+
+> Figure 4: Data acquisition process.
+
+High-level design of our data acquisition process is presented in Figure 4. The cryocooler’s post-production testing process consists of several structured phases. Run-in is the initial phase, lasting 150 hours with data collected every minute, aimed at stabilizing device performance. Next, the Noise Test runs for 15 minutes with a 1-second resolution, measuring vibration frequencies; it is performed on all coolers. The ESS (Environmental Stress Screening) includes four phases: RT (Room Temperature), LT (Low Temperature, -40°C), HT (High Temperature, 71°C), and Post ESS RT, each separated by stabilization periods. 14 Data is recorded at 0.5-second intervals. If successful, the device proceeds to the ESS_ATP (Acceptance Test Procedure), which mirrors the ESS sequence and is conducted before and after the life test. Finally, the Life Test involves continuous operation, with ESS tests repeated every 500 hours to verify continued reliability before resuming operation. 0 1,000 2,000 3,000 4,000 5,000 6,000 7,000 23 .524 24 .525 25 .526 T housing [ °C] T ambient [ °C] Td (RS232) [K] DC Bus Volt [V] I motor [A] RPM [min-1] P heater [mW] CD indicator [0/1] Error Reg. DCVolts 21 .721 .821 .922 22 .122 .250 100 150 200 250 300 23 .623 .723 .823 .924 24 .124 .200.10.20.30.40.50.601,000 2,000 3,000 
+
+> −0.500.51250 300 350 400 450 500
+> −0.500.5123 .623 .723 .823 .924 24 .124 .2
+
+Figure 5: Sample of a Multivariate time series taken from ESS_ATP_RT test. 
+
+The cooler telemetry dataset is a large-scale multivariate dataset collected from industrial cryocooler systems. It includes a wide range of features that capture both environmental and operational characteristics, such as T_housing, T_ambient, DC_Bus, I_motor, P_heater, DCVolts, as well as high-level control variables like Error_Reg, CD, and RPM, as shown in the legend. For the ESS_ATP tests—including ESS_ATP_LT, ESS_ATP_HT, ESS_ATP_RT, a consistent set of 10 core telemetry features is used to monitor system behavior over time. A sample of the ESS_ATP_RT test is shown in Figure 5. The NoiseTest dataset captures high-frequency signals, specifically vibration and acoustic spectra. It comprises 33 frequency-domain features, including spectral power across multiple frequency bands (20 Hz to 20,000 Hz), RPM, and total band power. These features are not analyzed individually; instead, they are jointly used as input to the representation learning models. This enables the extraction of compact, task-agnostic embeddings that capture the overall spectral characteristics relevant for lifetime prediction and anomaly detection. The cryocooler telemetry dataset poses several modeling challenges due to its structural and statistical properties. First, it exhibits feature heterogeneity across test types: ESS_ATP datasets contain time-domain telemetry signals (e.g., voltage, temperature, RPM), while the NoiseTest dataset focuses on frequency-domain features (e.g., spectral band power). This difference requires dataset-specific preprocessing strategies rather than a unified feature representation. Second, the dataset contains variable-length time series, as each test is recorded over a different duration, leading to sequences of inconsistent lengths that 15 complicate model design. Third, class imbalance and sparsity of anomalous events—such as noise or faults—can impair classifier performance if not addressed. Fourth, domain shift caused by different test conditions (e.g., operational settings, data source) limits model generalizability across subsets. Finally, sensor noise and measurement uncertainty can introduce irregularities in the data, requiring filtering or robust representation learning techniques. Importantly, time-domain and frequency-domain telemetry are not fused into a single unified input representation. Instead, each modality is processed using a modality-specific preprocessing pipeline tailored to its statistical properties. The representation learning models are trained separately on each dataset, ensuring that encoder embeddings capture modality-consistent structures without intro-ducing cross-modal interference. This design reflects the operational separation of test regimes and preserves the interpretability of learned representations. 
+
+Organization of Time- and Frequency-Domain Features. The cryocooler teleme-try consists of two distinct modalities: (i) time-domain operational signals (e.g., temperature, voltage, RPM) and (ii) frequency-domain spectral features obtained from NoiseTest measurements. Due to their distinct statistical properties—such as sampling rate, temporal structure, and distributional characteristics—these modalities are processed independently and not concatenated at the feature level. For the time-domain data, each sequence is represented as a multivariate temporal tensor X ∈ RB×T ×F , where T corresponds to the temporal dimension and F to the set of sensor channels. These sequences are directly fed into the encoder architectures (CNN1D, LSTM, GRU, Transformer), preserving temporal order and enabling sequential representation learning. In contrast, the frequency-domain data is organized as fixed-length vectors or short sequences derived from spectral measurements. These features are treated as structured multivariate inputs, where each frequency band corresponds to a channel. Although they do not represent long temporal dynamics, they are processed using the same encoder framework by treating the frequency axis as a structured input dimension, enabling models to learn compact representations of spectral patterns. By maintaining separate preprocessing pipelines and training independent representation models for each modality, the proposed framework avoids bias in-troduced by heterogeneous feature fusion and ensures that each encoder captures modality-specific structure. The resulting embeddings are therefore consistent within each modality while remaining compatible with the downstream classifi-cation and anomaly detection tasks. 
+
+5.2. Sequence Preprocessing 5.2.1. Filtering Invalid Data 
+
+An important step in the preprocessing pipeline involves validating the temperature data recorded in the column T housing [°C] , which represents the housing temperature in degrees Celsius. The process first checks whether this column exists in the input time series sequence. If it is present, the code evaluates 16 whether any recorded values fall outside a physically reasonable range, specifically below −50 ◦C or above 100 ◦C. Such values may indicate sensor malfunction, corrupted measurements, or outliers, and can be flagged for further handling or removal. 
+
+5.2.2. Filtering NaN Value 
+
+In addition to range validation, the preprocessing also includes a step to remove sequences that contain missing values ( NaN ). This is a necessary operation because most machine learning models and analytical methods cannot process incomplete data. Dropping rows with NaN ensures that the dataset used for inference or training is clean, consistent, and reliable. 
+
+5.2.3. Normalization 
+
+Given that our multivariate time series data contains non-Gaussian distri-butions and is susceptible to outlier values, especially during abnormal test conditions, Robust Scaler provided more stable training and reduced sensitivity to extreme values, leading to better overall reconstruction performance. We selected Robust Scaler, as it demonstrated greater resilience to outliers and non-Gaussian feature distributions commonly observed in our sensor data, resulting in more stable training dynamics. 
+
+5.3. Representation Learning Framework 
+
+The proposed framework employs an unsupervised sequence-to-sequence representation learning architecture designed to encode multivariate time-series data into a compact latent embedding. Similar encoder–decoder paradigms have been studied in warranty and field-reliability contexts, where Kim et al. use a weighted temporal convolutional autoencoder (WTCAE) to learn from limited claim data and forecast long-term field reliability despite short-term, imbalanced observations [10]. The objective is to map the complete temporal sequence into a low-dimensional latent space that preserves salient temporal dependencies, structural patterns, and feature dynamics. The input multivariate sequence is processed through an encoder–decoder pipeline, where the encoder extracts hierarchical temporal features, and the decoder reconstructs the input sequence to enforce meaningful latent representations. To enable downstream tasks to operate on fixed-size inputs, the learned temporal features are aggregated into a global latent representation via temporal pooling. This aggregation step, as defined in Equation (2), transforms variable-length sequence representations into a compact embedding vector that captures the input’s overall temporal dynamics. While this operation is explicitly defined in the Seq2SeqCNN1D architecture, the same principle of temporal aggregation is consistently applied across all encoder variants in the proposed framework. The encoder module is designed as a pluggable architecture, allowing different backbone models depending on the desired temporal modeling capacity. In this work, we investigate four variants of the encoder: CNN1D, LSTM, GRU, and Transformer, reflecting architectures that have also proven effective for 17 Remaining Useful Life (RUL) and reliability prediction in aerospace systems [11]. The resulting latent embedding serves as a compact, task-agnostic representation that can be directly utilized for downstream tasks such as classification or anomaly detection. 
+
+5.3.1. Seq2SeqCNN1D: Temporal Convolutional Autoencoder 
+
+As part of the model search space, we include a lightweight convolutional encoder–decoder, Seq2SeqCNN1D , designed for sequence reconstruction and embedding extraction from multivariate time series. 
+
+Motivation. Temporal convolutional networks provide an efficient alternative to recurrent architectures for modeling local temporal dependencies. Seq2SeqCNN1D leverages stacked 1D convolutions to produce compact latent representations suitable for reconstruction-based self-supervision and downstream tasks. 
+
+Architecture. Given an input sequence X ∈ RB×T ×F , where B is the batch size, 
+
+T is the sequence length, and F is the number of features, the model consists of an encoder and a decoder. 
+
+Encoder. The input is first permuted to X′ ∈ RB×F ×T . A stack of nconv 
+
+convolutional layers transforms the representation according to Equation (1): 
+
+H(l) = Dropout  ReLU (CNN1D (H(l−1) )) , l = 1 , . . . , n conv . (1) This transformation progressively extracts hierarchical temporal features from the input sequence. The encoder output Z ∈ RB×demb ×T is aggregated into a fixed-dimensional representation through global average pooling, as defined in Equation (2): 
+
+zglobal = 1
+
+T
+
+> T
+
+X
+
+> t=1
+
+Zt ∈ RB×demb . (2) This operation produces a compact embedding independent of sequence length, as formally defined in Equation (2). 
+
+Decoder. The reconstruction is obtained by projecting the latent representation back to the original feature space using a 1 × 1 convolution: 
+
+bX = CNN1D 1×1(Z), bX ∈ RB×F ×T . (3) 
+
+Outputs. The model produces the global embedding zglobal ∈ RB×demb and the reconstructed sequence bX ∈ RB×T ×F , as formally defined in Equation (3). The transformation defined in Equation (1) extracts hierarchical temporal features. 18 5.3.2. Seq2SeqLSTM 
+
+The Seq2SeqLSTM architecture employs recurrent layers to capture long-range dependencies and uses sequence reconstruction as a self-supervised learning objective. 
+
+Motivation. LSTM networks effectively model non-stationary temporal dynam-ics and long-term dependencies, enabling the extraction of embeddings that summarize temporal evolution for downstream tasks. 
+
+Architecture. For X ∈ RB×T ×F , the model consists of an encoder and a decoder. 
+
+Encoder. The input sequence is processed by stacked LSTM layers: 
+
+(H, (hT , cT )) = LSTM enc (X), (4) where H ∈ RB×T ×H is obtained as defined in Equation (4). The hidden states are projected into the embedding space and aggregated as follows: 
+
+Z = HW ⊤ 
+
+> emb
+
++ bemb , (5a) 
+
+zglobal = 1
+
+T
+
+> T
+
+X
+
+> t=1
+
+Z:,t, :. (5b) These operations produce a fixed-dimensional representation of the sequence. 
+
+Decoder. The decoder reconstructs the sequence using an LSTM initialized with the encoder states: 
+
+Hdec = LSTM dec (Z; hT , cT ). (6) A linear projection is subsequently applied to obtain bX ∈ RB×T ×F , based on the decoder formulation in Equation (6). 
+
+Outputs. The outputs consist of the reconstructed sequence bX and the embedding 
+
+zglobal .
+
+5.3.3. Seq2SeqGRU 
+
+The Seq2SeqGRU architecture provides a parameter-efficient recurrent alternative while retaining the ability to model long-range dependencies. 
+
+Motivation. GRUs reduce model complexity compared to LSTMs, making them well suited for small-data scenarios while maintaining effective temporal modeling. 
+
+Architecture. For X ∈ RB×T ×F , the model consists of an encoder and a decoder. 
+
+Encoder. The sequence is processed using stacked GRU layers: 
+
+(H, hT ) = GRU enc (X). (7) The hidden states H, obtained as defined in Equation (7), are projected and aggregated into zglobal following the procedure as defined in Equations (5a)–(5b). 19 Decoder. A GRU-based decoder reconstructs the sequence from Z using hT for initialization, followed by a linear projection to bX.
+
+Outputs. The model outputs bX and zglobal .
+
+5.3.4. Seq2SeqTransformer 
+
+The Seq2SeqTransformer architecture employs self-attention mechanisms to model complex temporal dependencies without recurrence. 
+
+Motivation. Transformers capture long-range interactions through attention mechanisms and enable scalable representation learning with flexible capacity control. 
+
+Architecture. For X ∈ RB×T ×F , the model includes an encoder and a decoder. 
+
+Encoder. The input is projected into the model space and combined with positional encoding: eE = XW ⊤ 
+
+> in
+
++ bin + P, (8) where P denotes the positional encoding. The projected representation eE is obtained as defined in Equation (8), after which a stack of Nenc Transformer layers produces the memory representation M.
+
+Global Embedding. Attention-based pooling computes the global representation: 
+
+α = softmax (Mw att ), (9a) 
+
+zglobal =
+
+> T
+
+X
+
+> t=1
+
+αtM:,t, :. (9b) 
+
+Decoder. The decoder processes the target sequence using Transformer lay-ers with cross-attention over M and maps the output to bX. The attention weights α and the resulting global embedding zglobal are computed as defined in Equations (9a)–(9b). 
+
+Outputs. The outputs are the reconstructed sequence bX and the attention-pooled embedding zglobal .
+
+5.4. Proposed NAS Framework 5.4.1. Various Approaches for NAS 
+
+There are various approaches to improving NAS. We highlight only two of them: HW-NAS and BW-NAS. The earliest hardware-aware NAS (HW-NAS) approach formulated neural architecture search as a multi-objective optimization problem, jointly considering model accuracy and implementation complexity to efficiently explore Pareto-optimal solutions [22]. 20 Block-wise NAS (BW-NAS) improves the search architecture by modularizing blocks, enabling accurate evaluation. Some of the earliest blockwise awareness of NAS was the study of the proposed progressive block-wise distillation, which learns from several of the teacher’s intermediate feature maps, easing the difficulty of joint optimization but increasing the gap between the student and the teacher models during progressive distillation [25]. Based on BW-NAS, hardware-aware NAS (HW-NAS) further extends the search process by explicitly incorporating hardware constraints—such as latency, energy, and memory—into the optimization objectives. This enables the au-tomated discovery of neural architectures that not only achieve high accuracy but are also tailored for efficient deployment on specific devices. Here, BW-NAS bridges the gap between algorithmic performance and real-world resource limitations [1]. 
+
+5.4.2. da-NAS: Dimension-Aware Neural Architecture Search 
+
+In this study, we introduce a NAS framework da-NAS . Compared to tradi-tional NAS methods that focus on depth or width scaling, da-NAS organizes the search as a dimension-wise hierarchical process. It sequentially explores embedding dimensions (from 2 to 512), leveraging cross-dimensional knowledge transfer to efficiently find the optimal model configuration. It is essential for small, imbalanced datasets typical in cryocooler telemetry. Figure 6 highlights the da-NAS. 21 da-NAS: Dimension-Aware Neural Architecture Search 
+
+> AI lab  • sensors  • telemetry  System status  • GPU cluster Dimensions Controller
+> Ordered dimension progression Embedding dimension 2Embedding dimension 4
+> •••
+> Embedding dimension 512
+> Trial Optimizer
+> Hyperparameter exploration Optuna Sampler Trial 1  Trial 2  Trial 3 Val Loss  Val Loss  Val Loss update
+> Cross-Dimensional Stop Policy
+> Adaptive stopping logic Cross-Dimensional Stop Policy Plateau Detector Trial Loss Plateau Stop  BLD Comparator lower dim. current dim. Continue  Stop
+> Scoreboard Registry
+> Best-config tracking Dim 64  BestCfg:  A7F2  Val=0.112 Dim 32  BestCfg:  9C1B  Val=0.118 Dim 128  BestCfg:  4D9A  Val=0.134 Dim 16  BestCfg:  1A33  Val=0.152 Dim 256  BestCfg:  7B22  Val=0.161 Figure 6: An architecture of the da-NAS solution.
+
+22 We define da-NAS with the following four requirements: 1. Dimension Awareness: Adapts hyperparameters dynamically to embed-ding size. 2. Hierarchical Dependency: Each dimension inherits the performance target from its predecessor, forming an interdependent chain. 
+
+TDk = min 
+
+> trial ∈Dk
+
+(Lval ), TDk+1 ← TDk (10) This hierarchical dependency between consecutive dimensions is defined in Equation (10). 3. Adaptive Termination: Uses plateau detection and cross-dimensional improvement to stop the search efficiently. 4. Industrial Scalability: Enables resource-efficient model selection for deployment in real-world aerospace manufacturing. Based on the definition of da-NAS, we propose a da-NAS pipeline that comprises four main components: 1. Dimension Controller: Defines the ordered sequence of embedding dimensions and determines whether each stage runs in full-exploration or target-guided mode. 2. Trial Optimizer: Performs Optuna-based hyperparameter sampling and evaluates validation loss per trial. 3. Cross-Dimensional Stop Policy (CDSP): Monitors search progress and terminates the process when plateau or Beat-Lower-Dimension (BLD) conditions are met. 4. Scoreboard Registry: Stores the best-performing configurations and publishes results as reference targets for subsequent dimensions. 
+
+5.4.3. Two-Regime Dimensional Strategy 
+
+To balance exploration and computational efficiency, the da-NAS operates under two distinct regimes: 
+
+(a) Full Exploration Regime (Low Dimensions: D ∈ { 2, 4, 8, 16 }). In this regime, the optimizer performs an exhaustive search of up to 4000 trials per dimension. These smaller dimensions represent compact latent spaces with limited repre-sentational capacity; exhaustive exploration ensures a complete mapping of the low-dimensional search landscape. Early stopping is disabled. 
+
+D ≤ 16 ⇒ beat_lower_dim = False . (11) This condition for disabling early stopping at low embedding dimensions is defined in Equation (11). This phase establishes baseline targets for higher-dimensional searches. 23 (b) Target-Guided Regime (High Dimensions: D ≥ 32 ). Starting from D = 32 ,the framework activates the –beat_lower_dim flag, enabling cross-dimensional early stopping once the validation loss LD matches or surpasses the best result of the previous dimension TD−1, as follows: 
+
+LD ≤ TD−1 ⇒ BLD event . (12) This target-guided stopping condition is formally defined in Equation (12). After a BLD, optimization continues for a short post-BLD patience window (default 5 trials) before termination. This adaptive termination substantially reduces redundant search in over-parameterized spaces while guaranteeing monotonic performance improvement. 
+
+5.4.4. Cross-Dimensional Stop Policy (CDSP) 
+
+The CDSP governs the dynamic termination of each NAS study. It uses two core criteria: 1. Relative Improvement Threshold: A trial is considered a significant improvement if its validation loss Lt satisfies the inequality, as follows: 
+
+Lt < L ∗ − δ · L∗, δ = 0 .10 . (13) This 10% relative threshold, defined in Equation (13), prevents premature stopping due to small oscillations in loss. 2. Plateau Detection: When no improvement beyond δ occurs for a fixed patience window (10 trials for the smallest dimension or 5 trials after a BLD), the study terminates automatically. The proposed NAS framework introduces three components: 1. Two-Regime Dimension-Aware Strategy: Combines exhaustive low-dimensional exploration with adaptive high-dimensional optimization, bal-ancing exploration depth and computational efficiency. 2. Beat-Lower-Dimension (BLD) Mechanism: A cross-dimensional early stopping policy that terminates the search once a higher-dimensional model surpasses the previous dimension’s target performance, ensuring monotonic improvement. 3. Percentage-Based Plateau Detection: Employs a relative improvement threshold rather than an absolute delta, improving robustness across scales with varying loss magnitudes. The da-NAS framework enables a progressive, resource-aware search process where each dimensional stage builds upon the empirical performance of the preceding one. By transitioning from full exploration (low-D) to target-guided refinement (high-D), the system achieves: • Reduced computational overhead through adaptive termination. • Consistent performance growth across latent dimensions. • Scalability for high-dimensional and sensor-specific design tasks. 24 5.4.5. HPC Environment and Computation Setup 
+
+All experiments were executed on the Leonardo pre-exascale Tier-0 super-computer. We used the Booster partition, which consists of Atos BullSequana X2135 GPU nodes, each equipped with a 32-core Intel Xeon Platinum 8358 CPU, 512 GB RAM, and 4× NVIDIA A100 GPUs (64 GB HBM2e) interconnected via NVLink 3.0 and a 200 Gbps Mellanox HDR InfiniBand Dragonfly+ network. This environment enables massive parallelization and high-throughput training required for neural architecture search (NAS). Our da-NAS pipeline directly benefits from this hardware: • Large search spaces are explored through distributed GPU-parallel trials. • High-dimensional models (up to 512D embeddings) are trained efficiently using A100 HBM2e memory bandwidth, and • The exploit/explore transition triggered by –beat_lower_dim is acceler-ated via fast inter-node communication, enabling dynamic comparison of architectures across embedding sizes. Overall, the system’s scalability allows our NAS framework to perform hier-archical, dimension-aware architecture optimization at a scale that would be infeasible on standard computing platforms. 
+
+5.5. Downstream Tasks 
+
+After self-supervised training, the learned encoder embeddings are evaluated on two distinct downstream tasks: (i) binary classification of cryocooler lifetime categories, and (ii) one-class anomaly detection using only standard (class 0) units during training. These two tasks represent fundamentally different operational requirements and collectively validate the task-agnostic behavior expected from an FSD-RM representation. 
+
+5.5.1. Binary Classification 
+
+For binary downstream evaluation, each embedding is used as input to a diverse set of classical machine learning classifiers. The objective is to measure how well the representations support supervised separation between cryocoolers below and above a given lifetime threshold. To avoid architectural bias and to ensure classifier-agnostic evaluation, we include models from complementary families: 
+
+Naive Bayes (NB): A probabilistic linear classifier used as a lightweight base-line. Its strong bias and low variance allow us to test whether the embed-dings are already linearly separable. 
+
+Logistic Regression (LR): A linear discriminative model with class-weight correction. This serves as a stable and interpretable baseline for measuring linear separability under imbalance. 25 Random Forest (RF): A tree-based ensemble capable of modeling nonlinear interactions while incorporating class-balanced sampling. 
+
+Support Vector Machine RBF (SVM): This nonlinear classifier demonst-rates high efficacy on low-dimensional embeddings and maintains robustness in the presence of moderate class imbalance. 
+
+K-Nearest Neighbors (KNN): A non-parametric learner sensitive to local geometry of the embedding space—useful for evaluating structure-preservat-ion in the learned representation. 
+
+Multilayer Perceptron (MLP): A small feed-forward neural network that tests whether nonlinear boundaries can be learned efficiently from the embeddings. 
+
+XGBoost (XGB): A gradient-boosted tree model with scale_pos_weight 
+
+to compensate for imbalance, included as a high-performance nonlinear baseline. All classifiers operate on the same encoder embeddings, ensuring a fair, model-agnostic assessment of representational quality. Performance is quantified using ROC–AUC, as it is threshold-free, insensitive to class imbalance, and reflects ranking quality rather than fixed decision boundaries. 
+
+5.5.2. One-Class Classification 
+
+The second downstream task evaluates whether a single encoder can support unsupervised anomaly detection using only class 0 (short-lifetime) samples for training. This setting reflects realistic manufacturing constraints in which long lifetime units are scarce and may not be available during training. We adopt a one-class classification approach using a One-Class SVM with a linear kernel, a standard model-agnostic baseline for evaluating representation quality. The linear kernel is intentionally chosen to avoid overfitting under very small training sets and to enforce smooth, geometry-driven decision boundaries in the embedding space, enabling a fair and stable comparison across all encoder variants. The contamination parameter ν is configured from a small expected anomaly rate and constrained within 0.01 ≤ ν ≤ 0.20 to prevent overfitting. This allows the model to remain conservative, rejecting only embedding patterns that clearly deviate from the nominal distribution. Since one-class classification does not produce class probabilities, we evaluated performance using ROC–AUC computed on test labels. This provides a consistent comparison with the binary task and measures how well the anomaly score ranks class 1 (long lifetime) units above class 0 (standard) units. Overall, evaluating both binary and one-class downstream tasks enables a complete assessment of representation quality: the former tests supervised discriminative capability, while the latter tests unsupervised anomaly sensitivity. A representation that performs well across both tasks demonstrates the reusable task-agnostic characteristics expected from an FSD-RM representation model. 26 5.6. Model Configuration and Hyperparameters 
+
+The proposed FSD-RM (Family of Small-Data Representation Mod-els) is evaluated across a range of architectural configurations and training settings to ensure robustness under varying data regimes. For reproducibility, we summarize the key model configuration and hyperparameters below. 
+
+Embedding dimensions. All encoder architectures (CNN1D, LSTM, GRU, Trans-former) are evaluated across embedding dimensions ranging from 2 to 512. This range enables systematic analysis of capacity scaling under small-data constraints. 
+
+Representation learning setup. All encoders are trained using an unsupervised sequence-to-sequence (Seq2Seq) reconstruction objective. Training is performed on multivariate telemetry sequences, where the encoder learns latent embeddings and the decoder reconstructs the original input. Standard optimization tech-niques (mini-batch gradient descent with validation-based early stopping) are applied to ensure stable convergence. 
+
+Dimension-Aware NAS configuration. The proposed da-NAS framework explores embedding dimensions sequentially from 2 to 512 using a two-regime strategy: (i) full exploration for low-dimensional embeddings (2–16), and (ii) target-guided search with Beat-Lower-Dimension (BLD) stopping for higher dimensions. Hy-perparameters such as learning rate, dropout, and weight decay are sampled using Optuna within dimension-aware search spaces. 
+
+Downstream model settings. Learned embeddings are evaluated using a diverse set of lightweight classifiers (Naive Bayes, Logistic Regression, SVM, KNN, Random Forest, MLP, XGBoost) for binary classification, and a linear One-Class SVM for anomaly detection. Class imbalance is handled via class weighting or calibrated contamination parameters, depending on the task. 
+
+5.7. Model Selection Rationale 
+
+The choice of CNN1D, LSTM, GRU, and Transformer architectures is moti-vated by their complementary strengths and proven robustness in time-series modeling under limited data conditions. CNN1D models efficiently capture local temporal patterns with low computational cost, while recurrent architec-tures (LSTM and GRU) are well-suited for modeling sequential dependencies and long-term temporal dynamics. Although more computationally demanding, Transformer-based models provide flexible attention mechanisms that enhance representation learning when sufficient data are available. More recent architectures, such as large-scale pretrained time-series models and state-space models (e.g., Mamba), were not considered in this study due to the specific constraints of the application domain. In particular, the available dataset is relatively small and highly imbalanced, which increases the risk of overfitting for high-capacity models that require large-scale pretraining to gener-alize effectively. Furthermore, such models typically demand significantly higher 27 computational resources, making them less suitable for practical deployment in industrial environments. Finally, the selected architectures offer a favorable balance between inter-pretability, stability, and computational efficiency, enabling reproducible experi-mentation and reliable deployment. This makes them particularly appropriate for small-data industrial scenarios such as cryocooler lifetime prediction, where robustness and resource efficiency are critical. This design choice prioritizes data efficiency over model scale, aligning with the constraints of real-world industrial telemetry applications. 
+
+6. Experimental Setup and Results 
+
+Representation models aim to learn domain-specific, task-agnostic representa-tions reusable across downstream tasks. We follow this paradigm by evaluating pretrained encoders not for a single task, but for their ability to generalize across both supervised binary classification and unsupervised one-class anomaly detec-tion. Rather than relying on a single universal encoder, we construct a Family of Small-Data Representation Models . This family comprises CNN1D, LSTM, GRU, and Transformer architectures, each trained with the same sequence-to-sequence representation-learning objective. These encoders span a range of model ca-pacities and embedding dimensionalities, enabling a systematic assessment of how the quality of the representation scales with architectural complexity and embedding size. 
+
+6.1. Experiment Setup 
+
+This study is focused on a cryocooler developed and manufactured by the chosen company, and aimed to develop a lifetime prediction model for this specific cryocooler. The proposed experimental setup evaluates a complete Family of Small-Data Representation Models (FSD-RM), covering four encoder architectures—CNN1D, LSTM, GRU, and Transformer—and embedding dimensions ranging from 2 to 512. This capacity-scaled evaluation is designed to reflect how the effectiveness of representation learning depends not only on the encoder type, but also on aligning model capacity with downstream data availability and task complexity. Each encoder–dimension combination is pretrained using a sequence-to-sequence objective and then evaluated on a standardized Cryocooler telemetry dataset. To assess robustness and generalizability, the experimental design incorpo-rates three key dimensions. First, all encoder variants are tested in multiple downstream classifiers to measure their general-purpose embedding quality. Sec-ond, training-size regimes are progressively reduced (from 100% to 5%) to simulate data scarcity, while label distributions are varied to reflect realistic operational imbalance at 10k-hour (mild), 15k-hour (medium), and 20k-hour (severe) lifetime thresholds. Third, each pretrained encoder is evaluated on two distinct downstream tasks: (1) Supervised binary classification, where models are trained using lightweight classifiers (Logistic Regression, SVM, Random 28 Forest, KNN, MLP, Naive Bayes, XGBoost), and (2) Unsupervised one-class classification, where a linear One-Class SVM is applied to embeddings generated from class-0 training data to detect anomalous high-lifetime samples. Using the same embeddings for both tasks enables a controlled test of representation model behavior, specifically the ability to generalize across tasks without retraining. Finally, by analyzing performance stability under combined scarcity and imbalance, the evaluation identifies which encoder–dimension pairs consistently perform well under realistic constraints. This comprehensive strategy highlights the strengths of the FSD-RM design in supporting scalable, robust, and task-agnostic representation learning for cryocooler telemetry analysis. 
+
+6.1.1. State-of-the-Art Comparison 
+
+To contextualize the performance of the proposed framework, we com-pare it against recently published state-of-the-art time-series models, including foundation-scale and transformer-based architectures such as TimesFM [3], UniTS [6], PatchTST [15], and Mamba [7]. These models have demonstrated strong performance on large-scale and multi-domain time-series benchmarks. However, direct empirical comparison is constrained by fundamental differ-ences in data regime and application context. Specifically, the proposed method operates in a highly domain-specific industrial setting characterized by extremely limited labeled data (95 labeled sequences), strong class imbalance, and hetero-geneous sensor modalities (time- and frequency-domain features). In contrast, recent foundation models are typically trained or pre-trained on large-scale datasets containing millions to billions of time points across diverse domains. We do not include empirical results for TimesFM and UniTS, as applying or fine-tuning these models in this data regime—without large-scale domain-relevant pre-training—is unlikely to yield a controlled, comparable evaluation or results that are scientifically meaningful or directly comparable. 29 Table 1: Comparison between the proposed framework and recent state-of-the-art time-series models. 
+
+> Model  Architecture  Training Regime Data  Pretrain  Applic-ability Key Strengths
+> TimesFM [3]  Transformer FM Large-scale pretraining Very large  Yes  Limited  Strong cross-domain generalization UniTS [6]  Multi-task Transformer Large-scale multi-task Large  Yes  Limited  Transfer learning across tasks PatchTST [15]  Patch Transformer Supervised (mod.-large) Moderate large Optional  Partial  Efficient long-horizon modeling Mamba [7]  State-space model Large-scale training Large  Task-dependent Limited  Linear-time sequence modeling CNN1D, LSTM, GRU, Transformer Classical models Small-data + supervised Very small: 1,305 unlabeled + 95 labeled No  High  Robust in low-data settings FSD-RM + da-NAS Hybrid (Rep. model + NAS) Small-data + unsupervised Very small: 1,305 unlabeled + 95 labeled No  High  Data-efficient adaptive representation learning
+
+30 As shown in Table 1, recent state-of-the-art models are designed for large-scale pretraining scenarios and rely on vast amounts of data to achieve strong performance. In contrast, the proposed framework is specifically tailored to a constrained industrial setting with limited data availability. Consequently, instead of direct empirical comparison, we focus on data-efficient representation learning and adaptive model scaling, demonstrating strong performance across multiple downstream tasks under realistic small-data conditions. 
+
+6.2. Downstream Task 1: Binary Classification Results 6.2.1. Evaluation of Encoders and Classifiers 
+
+To ensure a fair evaluation of the representation learning quality, we select one embedding dimension per encoder, determined by the mean performance across all downstream classifiers rather than the best performance of any single classifier. This strategy eliminates classifier-specific bias, as the goal of the representation model is to learn classifier-agnostic, task-independent embeddings rather than to optimize for a particular classifier–encoder pairing. Using aver-age performance across multiple classifiers provides a more stable and reliable estimate of embedding quality, since the mean performance is less sensitive to fluctuations or idiosyncrasies of any single downstream model. This also ensures that the downstream comparison remains consistent and fair, with all classifiers evaluated on embeddings generated under the same encoder configuration. In practice, even if a particular classifier (e.g., XGBoost) achieves its highest score at a different embedding size, such isolated peaks are treated as noise, whereas the embedding dimension with the highest overall mean performance reflects the globally robust representation—typically the one that performs consistently well across multiple classifiers rather than excelling in a single case.  
+
+> Table 2: ROC AUC on the test set for the best embedding dimension of each encoder architecture (100% train split, lifetime threshold = 10k hours). An asterisk ( ∗) marks the best classifier within each architecture.
+
+Encoder NB LR SVM KNN MLP RF XGB 
+
+CNN1D (16) 0.80 0.80 0.81 0.80 0.78 0.82 0.83 
+
+LSTM (16) 0.79 0.82 0.83 0.79 0.80 0.81 0.83 GRU (16) 0.81 0.82 0.82 0.77 0.79 0.80 0.79 Transformer (128) 0.56 0.84 ∗ 0.75 0.70 0.79 0.80 0.83 
+
+Encoder Analysis. The CNN1D, LSTM, and GRU encoders consistently pro-duced stable, low-dimensional representations, with the optimal embedding dimension converging at 16 for all three models. Despite their compact size, the resulting embeddings achieved ROC–AUC values between 0.78 and 0.83 across all downstream classifiers. The slight variance across classifiers indicates that these architectures generate classifier-agnostic features that generalize reliably. This stability demonstrates that convolutional and recurrent inductive biases are well aligned with the underlying degradation patterns in the data. 31 Table 3: PR AUC on the test set for the best embedding dimension of each encoder architecture (100% train split, lifetime threshold = 10k hours). An asterisk ( ∗) marks the best classifier within each architecture. 
+
+Encoder NB LR SVM KNN MLP RF XGB 
+
+CNN1D (16) 0.68 0.71 0.71 0.65 0.63 0.73 0.77 ∗
+
+LSTM (16) 0.67 0.74 0.73 0.71 0.69 0.71 0.77 ∗
+
+GRU (16) 0.70 0.71 0.69 0.62 0.67 0.71 0.71 Transformer (128) 0.47 0.76 0.64 0.58 0.69 0.71 0.77 ∗
+
+The Transformer encoder achieved the highest peak ROC–AUC (0.84 using Logistic Regression), but only when using a substantially larger embedding dimension (128). Performance varied considerably across classifiers, ranging from strong (Logistic Regression) to notably weak (Naive Bayes). This high sensitivity reflects the data-hungry and distribution-dependent nature of attention-based representations. While Transformers can achieve excellent accuracy, their em-bedding stability is less consistent in small-data regimes. 
+
+Classifier Analysis. Across all architectures, Logistic Regression emerged as the most robust and lightweight classifier, consistently achieving strong ROC– AUC values (0.80–0.84) with minimal computational cost. SVM (RBF) also performed well, but is more expensive at scale. Tree-based models (Random Forest, XGBoost) delivered high accuracy but at the cost of increased complexity and inference time. Neural classifiers such as MLP achieved strong results in some cases but were less stable overall. For practical deployment, Logistic Regression provides the best trade-off between performance, robustness, and efficiency. 
+
+6.2.2. Robustness Under Increasing Imbalance Levels 
+
+In this study, the severity of class-imbalance is defined based on the label distribution of the training split, since the imbalance fundamentally affects the learning dynamics of the classifier. Three operational lifetime conditions are evaluated: 10,000 h, 15,000 h, and 20,000 h, which correspond to progressively imbalanced training ratios of approximately 2:1 (mild imbalance), 3:1 (medium imbalance), and 7:1 (severe imbalance), respectively. These ratios reflect the actual availability of healthy versus degraded samples during model development, thereby characterizing the intrinsic difficulty of the learning problem. In contrast, all performance metrics—F1-macro, ROC–AUC, and PR–AUC— are calculated on the test split, whose class distribution determines the evaluation baselines (e.g., the baseline precision in PR–AUC equals the positive-class prevalence in the test set). This separation ensures that (i) imbalance categories faithfully represent the learning environment, while (ii) interpretation of the metric remains consistent and unbiased across scenarios. All models are trained independently under each imbalance setting, and the same test set is used to enable a controlled comparison across architectures, classifiers, and embedding dimensions. 32 Table 4 summarizes the baseline PR–AUC for each scenario, calculated as the positive prevalence in the test distribution. These baselines establish the lower bound of the expected performance under random classification. Previous work [20] demonstrates that PR–AUC is strongly governed by class prevalence; thus, model performance must be interpreted relative to this baseline. 
+
+> Table 4: Baseline PR–AUC per scenario (positive prevalence in the test set).
+
+Scenario Test Ratio (N:P) Baseline PR–AUC 
+
+10,000 h 13:6 0.316 15,000 h 15:4 0.211 20,000 h 17:2 0.105                                   
+
+> Table 5: Performance comparison across imbalance scenarios using a combination of encoder and LR as classifier.
+> Scenario Imbalance Train Set (N:P) Encoder F1-Macro ROC–AUC PR–AUC
+> 10,000 h Mild (2:1) CNN1D 0.69 0.80 0.71 LSTM 0.72 0.82 0.74 Transformer 0.74 0.84 0.76
+> 15,000 h Medium (3:1) CNN1D 0.63 0.74 0.57 LSTM 0.65 0.76 0.62
+> Transformer 0.68 0.73 0.58 20,000 h Severe (7:1) CNN1D 0.64 0.84 0.47
+> LSTM 0.67 0.83 0.46 Transformer 0.62 0.80 0.44
+
+Scenario: 10,000 Hours — Mild Imbalance (2:1). Under the mild imbalance condition, all three encoders exhibit reliable performance in all metrics evaluated. The Transformer achieves the highest scores (F1-Macro = 0.74, ROC–AUC = 0.84, PR–AUC = 0.76), indicating strong class separability and favorable precision–recall behavior. LSTM and CNN1D remain competitive, with ROC– AUC values in the 0.80–0.82 range and PR–AUC between 0.71–0.74. At this level of imbalance, PR–AUC values exceeding 0.70 reflect an effective minority-class identification. Overall, the Transformer–Logistic Regression pair offers the highest capacity, while LSTM and CNN1D provide stable and reliable behavior. 
+
+Scenario: 15,000 Hours — Medium Imbalance (3:1). As the imbalance increases, all metrics decline across encoders, reflecting the greater difficulty of minority detection. The Transformer again yields the strongest results (F1-Macro = 0.68, ROC–AUC = 0.73, PR–AUC = 0.58), demonstrating improved robustness compared to LSTM and CNN1D. At this imbalance level, PR–AUC values 33 around 0.55–0.60 remain acceptable, as precision typically degrades faster than recall. LSTM maintains competitive performance, whereas CNN1D shows a sharper drop in PR–AUC, highlighting the advantage of higher-capacity sequence models under moderate imbalance. 
+
+Scenario: 20,000 Hours — Severe Imbalance (7:1). Under severe imbalance, performance decreases further, particularly for PR–AUC, which is most sen-sitive to rarity. CNN1D unexpectedly achieves the highest ROC–AUC (0.84), indicating strong ranking performance despite the extreme class skew. LSTM follows closely (ROC–AUC = 0.83), while the Transformer deteriorates more noticeably (ROC–AUC = 0.80). PR–AUC values fall within 0.44–0.47, which remains meaningful given the severe imbalance: the baseline PR–AUC, equal to the positive prevalence, is only 0.105. Thus, PR–AUC ≈ 0.45 still indicates substantial improvement over random performance. This scenario emphasizes the robustness of CNN1D and LSTM under extreme imbalance, whereas the Transformer becomes more sensitive to skewed distributions. 
+
+Baseline Precision–Recall Interpretation. PR–AUC decreases monotonically with increasing imbalance severity. In the 10,000 h scenario (2:1), encoder–LR combinations obtain PR–AUC values between 0.71 and 0.76. Under the 15,000 h condition (3:1), the range shifts to 0.57–0.62, and in the 20,000 h setting (7:1), values fall to 0.44–0.47. This behavior is consistent with the reduction in positive prevalence and the resulting decline in precision at comparable recall levels. Relative to the baseline PR–AUC dictated by test-set prevalence based on Table 4, 0.316, 0.211, and 0.105 for the 10,000 h, 15,000 h, and 20,000 h scenarios, respectively, all models yield higher performance. In the mild imbalance case, PR–AUC values are approximately 1.9–2.4× the baseline. In the medium scenario, they reach 2.7–3.0×, and in the severe scenario, 4.2–4.5×. These ratios indicate that although absolute PR–AUC decreases with increasing imbalance, the encoder–LR pairs continue to produce precision–recall characteristics that exceed the level expected from prevalence alone. 
+
+Trends Across Metrics and Scenarios. F1-Macro consistently decreases with higher imbalance, while ROC–AUC remains relatively stable and diverges only under severe skew, where CNN1D performs best. PR–AUC shows the most significant drop due to precision degradation under rarity, but remains well above the scenario-specific baselines, indicating preserved anomaly-detection capability. 
+
+Comparison of Key Encoder–Classifier Pairs. LSTM–Logistic Regression pro-vides the most stable behavior across all scenarios. Transformer–Logistic Regres-sion yields the highest performance under mild and moderate imbalance, but degrades under severe skew, whereas CNN1D–Logistic Regression is the most resilient when imbalance becomes extreme. 
+
+Final Recommendation. LSTM–Logistic Regression is preferred for general-purpose deployment, Transformer–Logistic Regression for high-capacity settings with moderate imbalance, and CNN1D–Logistic Regression for industrial scenar-ios with severe anomaly scarcity. 34 6.3. Downstream Task 2: Anomaly Detection via One-Class Classification Results 
+
+As the goal of this work is to evaluate the generality and quality of the learned representations, we adopt a simple downstream anomaly detector. We choose a One-Class SVM with a linear kernel, which is a widely used and model-agnostic baseline in representation-learning-based anomaly detection. This prevents overfitting to specific decision boundaries and ensures fair evaluation across all embedding models. 
+
+> Table 6: ROC–AUC of One-Class SVM (Linear) across encoder types and lifetime scenarios. Training uses only normal samples (Train N), while testing includes both normal (N) and anomalous (P) samples.
+
+Scenario Train (N) Test Ratio (N:P) Encoder ROC–AUC 
+
+10,000 h 50 13:6 CNN1D (4) 0.62 LSTM (64) 0.67 GRU (512) 0.74 Transformer (8) 0.63 15,000 h 58 15:4 CNN1D (4) 0.72 LSTM (64) 0.67 GRU (512) 0.69 Transformer (2) 0.63 20,000 h 67 17:2 CNN1D (4) 0.84 LSTM (64) 0.79 GRU (64) 0.54 Transformer (2) 0.68 Table 6 shows the embedding under agnostic one-class classification. In the 10,000 h scenario, the training set contains 50 normal samples, which yields a relatively high-variance estimate of the normal embedding distribution. Under this condition, only the GRU(512) encoder produces a sufficiently compact rep-resentation to support a well-defined one-class boundary, achieving a ROC–AUC of 0.74. The CNN1D, LSTM, and Transformer embeddings exhibit weaker separation, reflected in ROC–AUC values between 0.62 and 0.67, indicating a limited inter-class margin when only normal data are provided for training. In the 15,000 h scenario, the normal training set increases to 58 samples, improving the statistical reliability of the one-class model. The additional samples reduce estimation noise in the normal manifold and allow CNN1D(4) to achieve stronger separability (0.72). LSTM(64) and GRU(512) remain tightly grouped around 0.67–0.69, suggesting that their embedding structures change minimally with the incremental availability of normal data. The Transformer encoder remains at 0.63, indicating that its embedding structure provides limited anomaly contrast in this operating condition. In the 20,000 h scenario, the one-class SVM is trained with 67 normal samples, further improving the characterization of normal feature variability. With this larger normal set, CNN1D(4) attains the highest separation (0.84), 35 Table 7: Consistency of a single encoder–embedding configuration across two downstream tasks (one-class SVM and binary Logistic Regression). Using the same representation for heterogeneous tasks demonstrates the transferability of a representation model. 
+
+Scenario Encoder One-Class (SVM Linear) Binary (LR) 
+
+10,000 h CNN1D 0.62 0.70 LSTM 0.67 0.77 GRU 0.74 0.73 Transformer 0.63 0.59 15,000 h CNN1D 0.72 0.66 LSTM 0.67 0.71 GRU 0.69 0.67 Transformer 0.63 0.62 20,000 h CNN1D 0.84 0.81 LSTM 0.79 0.78 GRU 0.54 0.72 Transformer 0.68 0.72 and LSTM(64) also strengthens to 0.79, showing that both encoders form a more coherent normal region as additional data are provided. In contrast, GRU(64) produces a substantially lower ROC–AUC of 0.54, indicating that its embedding collapses under the limited anomaly diversity in the test set (17:2 ratio). The Transformer(2) encoder remains moderate at 0.68, consistent with its limited margin formation across scenarios. In general, the scenario-specific results demonstrate that anomaly separability is influenced by both the encoder’s embedding geometry and the statistical quality of the normal-only training set, and the linear one-class SVM provides a consistent mechanism for exposing these differences. 
+
+6.4. Representation Model Validation via Cross-Task Consistency 
+
+To validate the cross-task generalization property of our FSD-RM represen-tation model, we evaluate whether a single encoder–embedding configuration can support heterogeneous downstream tasks without retraining the representation model. Table 7 reports ROC–AUC values obtained using the same latent embedding for (i) one-class anomaly detection using a linear one-class SVM and (ii) binary classification using Logistic Regression. Across all scenarios, the representations produced by CNN1D (4D), LSTM (64D), GRU (512D), and Transformer (8D) remain transferable, achieving consistent performance on both tasks despite their differing objectives. This cross-task stability satisfies a key requirement of representation models: a unified representation that generalizes to multiple downstream problems without architectural or dimensional changes. The results demonstrate that the same encoder and embedding dimensional-ity can be reused effectively across two structurally different downstream tasks. One-class SVM relies on margin-based separation under an anomaly-detection 36 objective, while Logistic Regression performs supervised discrimination under balanced and imbalanced binary settings. The consistent performance observed across all encoders indicates that the latent features encode task-agnostic struc-ture, allowing them to support both density-based and discriminative classifiers. This behavior aligns with the definition of representation models, where a single representation backbone provides reusable features for diverse downstream tasks without re-optimization or task-specific adaptation. 
+
+6.5. Family of Small-Data Representation Models 
+
+> Table 8: Overview of downstream data regimes used for evaluating the Family of Small-Data Representation Models. For each lifetime threshold (10,000 h, 15,000 h, 20,000 h), the labeled dataset is partitioned into five training subsets (100%–5%), reflecting realistic data-scarcity and imbalance conditions in cryocooler telemetry.
+
+Cooler Lifetime Train / subset #total Samples #Class 0 #Class 1 
+
+10,000 h train 1 / 100% 76 50 26 train 2 / 50% 38 25 13 train 3 / 25% 19 12 7train 4 / 10% 8 5 3train 5 / 5% 4 3 115,000 h train 1 / 100% 76 58 18 train 2 / 50% 38 29 9train 3 / 25% 19 14 5train 4 / 10% 8 6 2train 5 / 5% 4 3 120,000 h train 1 / 100% 76 67 9train 2 / 50% 38 33 5train 3 / 25% 19 17 2train 4 / 10% 8 7 1train 5 / 5% 4 3 1The evaluation of the proposed Family of Small-Data Representation Models (FSD-RM) requires testing how each pretrained encoder behaves under different downstream data regimes. Since the available cryocooler telemetry contains only a limited number of labeled lifetime samples, we explicitly vary the size of the downstream training set to emulate realistic production constraints. For each cooler-lifetime threshold (10,000 h, 15,000 h, 20,000 h), the dataset contains 76 labeled instances, with class distributions reflecting mild, medium, and severe imbalance levels. To assess robustness under data scarcity, the labeled set is further subsampled into five training subsets covering {100%, 50%, 25%, 10%, 5%} of the available data, while holding the test set fixed at 20% of the total labeled samples. Each experiment is repeated using a 60-fold repeated hold-out procedure, ensuring statistically stable performance estimates for every encoder–dimension pair. 37 Table 8 summarizes the resulting downstream training regimes across all lifetime thresholds, including the total number of samples and the exact class distributions for each subset. This structured evaluation enables a systematic comparison of how encoder capacity and embedding dimensionality interact with downstream data volume and class imbalance—key factors in determining which member of the representation model family is most suitable for deployment in a given operational setting. 
+
+6.5.1. Performance Landscape of a Representation Model Instance: LSTM with Logistic Regression 
+
+Figure 7 illustrates the ROC–AUC performance of the LSTM encoder combined with Logistic Regression (LSTM–LR) across embedding dimensions 
+
+{2, 4, 8, 16 , 32 , 64 , 128 , 256 , 512 } and varying training subsets (100%–5%). The results show a clear dependency between embedding capacity and data size. When the full training set is available (76 samples), a broad range of embed-ding dimensions—approximately 8D up to 128D—achieves high performance (ROC–AUC ≈ 0.75 –0.85 ), indicating that larger representations can be effec-tively exploited in data-rich regimes. However, as the training set becomes smaller (e.g., 19 samples or fewer), smaller embeddings (4D–16D) achieve higher performance than larger ones, since high-dimensional representations become difficult to estimate reliably from very limited data. In the most extreme low-data scenarios (8 or 4 samples), performance nat-urally decreases across all dimensions, yet small embeddings still remain the most stable and continue to achieve ROC–AUC values meaningfully above the random baseline of 0.50. This behavior confirms that the optimal embedding size is not universal but depends strongly on the available training volume: large models benefit data-rich settings, whereas compact embeddings are more robust under severe scarcity. These observations reinforce the need for capacity-scaled models within the proposed Family of Small-Data Representation Models. 38 Table 9: Performance Across Training Fractions (10k-hour Scenario, Classifier = LR) 
+
+Encoder 100% (76) 50% (38) 25% (19) 10% (8) 5% (4) CNN1D (16) 0.80 0.78 0.73 0.66 0.58 LSTM (16) 0.82 0.80 0.78 0.71 0.58 GRU (16) 0.82 0.78 0.75 0.68 0.56 Transformer (128) 0.84 0.80 0.70 0.60 0.55 Train Subset 100%                                     
+
+> (76 samples)
+> 50%
+> (38 samples)
+> 25%
+> (19 samples)
+> 10%
+> (8 samples)
+> 5%
+> (4 samples)
+> Embedding Dim 24816 32 64 128 256 512
+> 0.63 0.60 0.61 0.58 0.53 0.65 0.61 0.62 0.59 0.53 0.85 0.83 0.77 0.68 0.59 0.82 0.80 0.78 0.71 0.58 0.79 0.75 0.73 0.67 0.57 0.77 0.74 0.73 0.69 0.62 0.75 0.74 0.74 0.72 0.60 0.74 0.73 0.72 0.68 0.58 0.73 0.74 0.72 0.69 0.62
+> Figure 7: Dataset NoiseTest, AUC classification using LSTM-LR across Embedding dimension
+
+6.5.2. Family of Small-Data Representation Models 
+
+In the 10k-hour scenario, where the number of training samples is relatively large and the class imbalance is mild, higher-capacity representations provide clear benefits. The Transformer with a 128-dimensional embedding achieves the strongest ROC–AUC (0.84) when trained on 100% of the data, demonstrating that complex sequence encoders can exploit richer temporal dependencies when sample availability is sufficient. However, as the training fraction decreases (50% → 25% → 10% → 5%), the Transformer degrades more sharply than lower-capacity encoders. In contrast, CNN1D (16) and LSTM (16) exhibit much more graceful degradation and tend to achieve higher ROC-AUC than 39 Table 10: Performance Across Training Fractions (15k-hour Scenario, Classifier = LR) 
+
+Encoder 100% (76) 50% (38) 25% (19) 10% (8) 5% (4) CNN1D (16) 0.75 0.68 0.69 0.62 0.58 LSTM (16) 0.76 0.73 0.71 0.71 0.66 GRU (16) 0.73 0.67 0.69 0.66 0.61 Transformer (128) 0.73 0.70 0.68 0.59 0.49 
+
+> Table 11: Performance Across Training Fractions (20k-hour Scenario, Classifier = LR)
+
+Encoder 100% (76) 50% (38) 25% (19) 10% (8) 5% (4) CNN1D (16) 0.83 0.79 0.73 0.70 0.62 LSTM (16) 0.83 0.82 0.79 0.76 0.70 GRU (16) 0.85 0.83 0.75 0.73 0.65 Transformer (128) 0.78 0.77 0.68 0.57 0.56 Transformer at training fractions of 10% and 5%. This behavior indicates that model capacity must be matched to available data, and that compact encoders provide superior generalization when samples become scarce. These observations motivate our proposed strategy: maintaining a family of small-data representation models—shared embedding architectures at multiple capacity levels (e.g., 16-dim and 128-dim variants)—so downstream tasks can dynamically select the appropriate representation based on dataset size and operational constraints. 
+
+6.5.3. Capacity-Scalable Family of Small-Data Representation Models 
+
+Across the broader set of imbalance scenarios (10k, 15k, 20k hours), the performance trends consistently reflect how each encoder responds to both shrinking training data and increasing class skew. In the 10k-hour case, all encoders retain ROC–AUC above 0.70 at 25% training and remain functional at 10%, but Transformer collapses fastest toward the 5% regime. Under moderate imbalance (15k), the degradation is more uniform: CNN1D and LSTM maintain ROC–AUC in the 0.62–0.69 range at 10% and 5% fractions, while the Transformer drops to 0.49 at 5%, confirming its higher sensitivity to data scarcity. In the severe imbalance scenario (20k), CNN1D and LSTM encoders again show the highest robustness, achieving 0.70–0.62 at 10% and 5%, while Transformer remains most affected by compounding scarcity and skew. Overall, these results demonstrate that while high-capacity models excel with abundant data, low-capacity temporal encoders exhibit superior resilience in small-sample and high-imbalance regimes. The consistency of this pattern across multiple training budgets reinforces the practicality of deploying a capacity-scalable representation model family, where downstream systems can select the most appropriate encoder based on problem size, imbalance level, and computational constraints. 40 6.6. Guidelines for Selecting Embedding Capacity Based on Data Availability 
+
+The results suggest that no single embedding dimensionality is optimal across all data regimes. Instead, we observe a generalizable pattern: embedding capacity should be matched to the available training volume . When the training set is relatively large (e.g., ≥ 50 samples), a wide range of embedding sizes can be utilized effectively, and higher capacities (e.g., 64D–128D) may provide marginal gains in expressiveness and discriminative power. In contrast, for moderate data regimes (e.g., 19 samples), smaller embedding sizes (e.g., 8D–16D) consistently yield superior generalization, as larger dimensions tend to overfit due to insufficient training signal. In extremely low-data settings (e.g., 4–8 samples), ultra-compact embeddings (2D–4D) become not only necessary but surprisingly effective, providing performance that remains above baseline despite data scarcity. These findings imply a capacity-aware deployment strategy: select smaller embeddings under constrained data regimes, and scale up only when sufficient samples are available. Such dynamic selection is made possible through our proposed Family of Small-Data Representation Models, where multiple pretrained encoders with varying capacities are available and can be adaptively matched to downstream constraints without retraining. 
+
+6.7. Computational Efficiency and Deployment Analysis 
+
+The evaluated encoder architectures exhibit distinct trade-offs between perfor-mance and computational efficiency. CNN1D and LSTM models exhibit strong robustness under small-data and imbalanced conditions while maintaining low computational cost and fast training/inference times, making them well-suited for industrial deployment. In contrast, Transformer-based models offer greater representational capacity and achieve superior peak performance in data-rich settings, but incur increased computational overhead and are more sensitive in limited-data regimes. These observations highlight the importance of matching model capacity to both data availability and deployment constraints. In addition to these qualitative observations, computational efficiency is evaluated quantitatively in terms of training time, number of trainable param-eters, and inference latency. All experiments were conducted on an NVIDIA RTX-series GPU. Table 12 summarizes these metrics across models.                      
+
+> Table 12: Computational efficiency of evaluated models.
+> Model Configu-ration Parameters Training Time (min) Inference (ms/sample)
+> CNN1D d=64 ∼50K ∼5∼0.5 LSTM d=64 ∼120K ∼8∼0.8 GRU d=64 ∼90K ∼7∼0.7 Transformer d=128 ∼300K ∼12 ∼1.5 FSD-RM + da-NAS adaptive (2–512)
+> ∼50K–300K ∼20 a∼0.6–1.5
+> aTraining time includes the architecture search phase.
+
+41 The results indicate that lightweight architectures (CNN1D, GRU) provide faster training and inference, whereas Transformer-based models incur higher computational costs. Although the proposed FSD-RM with da-NAS incurs addi-tional overhead during the search phase, it enables adaptive model scaling while maintaining competitive inference efficiency, making it suitable for deployment under varying resource constraints. While Table 12 summarizes coarse-grained computational characteristics, a more detailed analysis of training efficiency across architectures and embedding dimensions is required to understand scalability behavior. In particular, training time per epoch provides a normalized measure of computational cost that enables direct comparison across models with different training durations.                   
+
+> Table 13: Training efficiency of different model architectures based on best trial execution.
+> Model Embedding Dim #Epochs Train Time (s) Train per Epoch (s)
+> CNN1D 2–512 10–100 2–70 0.20–0.50 (typ.) up to 3.20 GRU 2–16 60–100 138–1020 1.3–10.2 LSTM 2–4 80–95 823–984 ∼10.2 Transformer 2–128 11–100 16–1643 1.4–24.9
+
+Table 13 reports training efficiency based on best-trial execution across model families. CNN1D architectures consistently exhibit the lowest computational cost, maintaining training times per epoch below 0.5 seconds for most configurations. Transformer models, by contrast, impose significantly higher computational demands, with training time per epoch increasing to approximately 25 seconds for larger embedding dimensions. Recurrent models (GRU and LSTM) also demonstrate high computational cost, typically around 10 seconds per epoch, although results are available for a limited subset of configurations. These findings highlight a substantial gap in computational efficiency between convolutional and attention-based architectures. 
+
+6.8. Practical Deployment Perspective and Comparison with Large-Scale Models 
+
+From the perspective of predictive maintenance in aerospace manufacturing, computational efficiency is a critical requirement for real-world deployment. The proposed FSD-RM + da-NAS framework demonstrates a significantly lower resource footprint compared to mainstream large-scale time-series models and pretrained architectures. First, in terms of model size, the evaluated encoders range from approximately 
+
+50 K to 300 K parameters (Table 12), whereas recent large-scale Transformer or large-scale pretrained time-series models typically contain millions to billions of parameters. This reduction of several orders of magnitude directly translates into lower memory consumption and enables deployment on standard industrial hardware, including edge GPUs or high-performance CPUs commonly available in production test environments. 42 Second, regarding training efficiency, our results show that lightweight ar-chitectures such as CNN1D achieve training times per epoch below 0.5 seconds, while even higher-capacity models remain within tens of seconds per epoch (Table 13). In contrast, large models require substantially longer training cycles and extensive pretraining on external datasets, making them impractical for rapid adaptation to domain-specific telemetry data. Third, inference latency remains in the sub-millisecond to low-millisecond range (Table 12), which is essential for real-time or near-real-time decision support in production and testing pipelines. This allows the proposed framework to be integrated directly into cryocooler testing systems, enabling immediate quality assessment and anomaly detection without introducing bottlenecks in the inspection workflow. Importantly, the proposed da-NAS mechanism introduces additional com-putational cost during the offline search phase; however, this cost is incurred only once. After model selection, the deployed encoder operates with the same lightweight footprint as the underlying FSD-RM model. This separation between offline optimization and online inference ensures that the framework remains practical for continuous industrial operation. Overall, compared to mainstream large-scale models, the proposed approach offers a favorable trade-off between predictive performance and computational cost. Its low parameter count, fast training convergence, and efficient inference make it particularly well suited for on-site deployment in cryocooler produc-tion and testing environments, where computational resources are limited and reliability, latency, and reproducibility are critical. 
+
+6.9. Discussion 
+
+While the dataset and model development were centered on a specific cry-ocooler and manufacturer, the proposed framework may be extendable to other cryocooler types, manufacturers, and operational contexts. This demonstrates the potential for broader applicability beyond the scope of the initial study. 
+
+7. Conclusion 
+
+Summary of contributions. This work addresses cryocooler lifetime prediction under small-data, imbalanced, and domain-specific conditions by introducing a family of small-data representation models (FSD-RM) . The proposed frame-work leverages unsupervised sequence-to-sequence representation learning and a dimension-aware neural architecture search (da-NAS) to enable capacity-scalable embeddings. The resulting representations demonstrate cross-task generality, supporting both binary classification and one-class anomaly detection without retraining. 
+
+Practical impact. The proposed approach enables non-destructive lifetime pre-diction using standard telemetry data, reducing reliance on costly and time-consuming lifetime testing. By matching model capacity to data availability, the 43 method provides a practical and deployable solution for low-volume aerospace manufacturing environments, where labeled data is scarce and class imbalance is inherent. 
+
+Future directions. Future work will be organized along three main research directions. First, we will extend the framework with uncertainty quantification and physics-informed priors. This is particularly important for safety-critical aerospace applications, where predictive confidence, calibration, and interpretabil-ity are essential for decision support. Second, we will investigate semi-supervised, positive–unlabeled, and active learning strategies to better exploit the limited labeled data. These methods will enable more efficient use of telemetry data and reduce reliance on costly destructive testing. Third, we will evaluate the transferability of the proposed framework to other cryocooler types, manufacturers, and broader aerospace components. This will assess how well the FSD-RM paradigm generalizes across different sensor systems and operational environments. 
+
+Acknowledgments 
+
+The authors thank the European Space Agency (ESA) for supporting and funding research projects that enabled the advancement of this work. This article is an extension of the results obtained within the ESA-funded RASCOSA project (RotAry Stirling CryOcoolers for Space Applications, ESA General Support Technology Programme (GSTP), Activity No. 1000039802, Contract No. 4000137710/22/NL/KML, RFQ/3-18463/24/NL/KML/cb). In particular, the work presented here builds on and significantly extends the research and out-comes of Work Package 5, which focused on developing and validating advanced AI models for non-destructive lifetime prediction of satellite cryocoolers using telemetry data. The authors also thank Comtrade Group for supporting the research work and the ESA research projects. The commitment of Comtrade Group to innovation and research excellence provided an essential foundation for the successful execution of this work. The authors thank the University of Bologna for its scientific collaboration and expertise, which contributed significantly to the project’s methodological rigor and innovation. The authors also acknowledge the exceptional support of EuroHPC, which enabled us to use high-performance computing resources and thus make the best use of HPC resources available in Europe. In particular, we recognize the allocation of resources under the EuroHPC Development Access Call proposal No. EHPC-DEV-2025D06-042, which provided 4,500 node hours (144,000 local core hours) on the Leonardo Booster at CINECA, Italy, for the period 13/06/2025 to 13/12/2025. This access was essential for the successful completion of our computational experiments and model development. 44 The authors additionally acknowledge Arctur d.o.o. and NCC Slovenia for providing early access to their HPC infrastructure, which enabled initial AI experiments and data-pipeline validation while EuroHPC access was pending, significantly accelerating project progress. 
+
+Declarations 
+
+Data Availability Statement. The telemetry datasets analyzed in this study are proprietary to the cryocooler manufacturer and subject to contractual confi-dentiality. De-identified aggregates necessary to reproduce the main tables and figures, along with the training and inference code for the reported encoders and classifiers, will be made available from the corresponding author upon reasonable request and with permission of the data owner. 
+
+CRediT Author Statement. Conceptualization: [Martin Molan, Gregor Mo-lan]; Methodology: [Gregor Molan, Martin Molan]; Software: [Grafika Jati]; Validation: [Gregor Molan, Grafika Jati, Francesco Barchi, Andrea Acquaviva, Aljaž Osterman, Martin Molan]; Formal Analysis: [Martin Molan]; Investigation: [Gregor Molan, Grafika Jati, Francesco Barchi, Andrea Acquaviva, Martin Molan]; Resources: [Gregor Molan, Aljaž Osterman, Martin Molan]; Data Curation: [Aljaž Osterman, Grafika Jati]; Writing – Original Draft: [Martin Molan, Grafika Jati]; Writing – Review & Editing: [Gregor Molan, Grafika Jati, Francesco Barchi, Andrea Acquaviva, Aljaž Osterman, Martin Molan]; Visualization: [Gregor Molan, Grafika Jati]; Supervision: [Gregor Molan, Martin Molan]; Project Administration: [Gregor Molan]; Funding Acquisition: [Gregor Molan, Aljaž Osterman, Martin Molan]. 
+
+Competing Interests. The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper. 
+
+Funding. This work was supported by the European Space Agency (ESA) under the General Support Technology Programme (GSTP), Activity No. 1000039802, Contract No. 4000137710/22/NL/KML, and by Comtrade Group. Additional computational resources were provided by EuroHPC under the Development Access Call proposal No. EHPC-DEV-2025D06-042. 
+
+References 
+
+[1] Benmeziane, H., Maghraoui, K., Hamza, O., Niar, S., Wistuba, M., Wang, N., 2021. Hardware-aware neural architecture search: Survey and taxonomy, in: Conference: Thirtieth International Joint Conference on Artificial Intelligence {IJCAI-21}, pp. 4322–4329. doi: 10 .24963/ijcai .2021/592 .45 [2] Chen, C., Wang, C., Guo, J., Cui, P., Zheng, J., Liu, Z., 2025. Remaining useful life prediction considering multiple uncertainty information via bayesian bigru-based method. Reliability Engineering & System Safety 264, 111431. URL: https: //www .sciencedirect .com/science/article/pii/S0951832025006313 ,doi: 10 .1016/j .ress .2025 .111431 .[3] Das, A., Kong, W., Sen, R., Zhou, Y., 2023. A decoder-only foundation model for time-series forecasting. arXiv preprint doi: 10 .48550/arXiv .2310 .10688 .[4] Farahani, M.A., McCormick, M., Harik, R., Wuest, T., 2025. Time-series classification in smart manufacturing systems: An experimental evaluation of state-of-the-art machine learning algorithms. Robotics and Computer-Integrated Manufacturing 91, 102839. URL: https: //www .sciencedirect .com/science/article/pii/S0736584524001261 ,doi: 10 .1016/j .rcim .2024 .102839 .[5] Felsberger, L., Kranzlmüller, D., Todd, B., 2018. Field-Reliability Predictions Based on Statistical System Lifecycle Models, in: Holzinger, A., Kieseberg, P., Tjoa, A.M., Weippl, E. (Eds.), Lecture Notes in Computer Science, Springer International Publishing, Hamburg, Germany. pp. 98–117. URL: https://inria .hal .science/hal-02060048 ,doi: 10 .1007/978-3-319-99740-7 \_7 . part 1: MAKE-Main Track. [6] Gao, S., Koker, T., Queen, O., Hartvigsen, T., Tsiligkaridis, T., Zitnik, M., 2024. Units: A unified multi-task time series model. arXiv preprint doi: 10 .48550/arXiv .2403 .00131 .[7] Gu, A., Dao, T., 2023. Mamba: Linear-time sequence modeling with selective state spaces. arXiv preprint doi: 10 .48550/arXiv .2312 .00752 .[8] Huang, C., He, J., Zheng, W., Ke, Z., 2025. A health monitoring method based on multivariate-time series adaptive gated recurrent unit transfer learning model for coal mill system. Reliability Engineering & System Safety 256, 110767. URL: https: //www .sciencedirect .com/science/article/pii/S095183202400838X ,doi: 10 .1016/j .ress .2024 .110767 .[9] Kausik, A.K., Rashid, A.B., Baki, R.F., Jannat Maktum, M.M., 2025. Machine learning algorithms for manufacturing quality assurance: A systematic review of performance metrics and applications. Array 26, 100393. URL: https: //www .sciencedirect .com/science/article/pii/S2590005625000207 ,doi: 10 .1016/j .array .2025 .100393 .[10] Kim, S.M., Jung, M., Kim, Y.S., 2025. Reliability prediction using a weighted temporal convolutional autoencoder based on limited claim data. Reliability Engineering & System Safety 264, 111374. URL: https: 
+
+46 //www .sciencedirect .com/science/article/pii/S0951832025005757 ,doi: 10 .1016/j .ress .2025 .111374 .[11] Liu, L., Song, X., Zhou, Z., 2022. Aircraft engine remaining useful life estimation via a double attention-based data-driven architecture. Reliability Engineering & System Safety 221, 108330. URL: https: //www .sciencedirect .com/science/article/pii/S0951832022000102 ,doi: 10 .1016/j .ress .2022 .108330 .[12] Llasag Rosero, R., Silva, C., Ribeiro, B., 2022. Remaining useful life estimation of cooling units via time-frequency health indicators with machine learning. Aerospace 9. URL: 
+
+https://www .mdpi .com/2226-4310/9/6/309 ,doi: 10 .3390/aerospace9060309 .[13] Modi, A., Kaur, J.N., Makar, M., Mallapragada, P., Sharma, A., Kiciman, E., Swaminathan, A., 2023. Towards modular machine learning pipelines, in: ICML Workshop on Localized Learning (LLW), pp. 1–6. URL: 
+
+https://openreview .net/forum?id=SiSID2Wo6j . accessed: 2025-11-26. [14] Nagarsheth, S.H., Bhatt, J.H., Barve, J.J., 2018. Cold-tip temperature control of space-borne satellite stirling cryocooler: Mathematical modeling and control investigation. IFAC-PapersOnLine 51, 673–679. URL: https: //www .sciencedirect .com/science/article/pii/S2405896318302799 ,doi: 10 .1016/j .ifacol .2018 .05 .113 . 5th IFAC Conference on Advances in Control and Optimization of Dynamical Systems ACODS 2018. [15] Nie, Y., Nguyen, N.H., Sinthong, P., Kalagnanam, J., 2022. A time series is worth 64 words: Long-term forecasting with transformers. arXiv preprint doi: 10 .48550/arXiv .2211 .14730 .[16] Olson, J.M., 2016. Cubesat-sized space microcryocooler, in: Proceedings of the 30th Annual AIAA/USU Conference on Small Satellites, Utah State University. pp. 1–10. URL: 
+
+https://digitalcommons .usu .edu/smallsat/2016/all2016/94/ .[17] Ouadah, A., Zemmouchi-Ghomari, L., Salhi, N., 2022. Selecting an appropriate supervised machine learning algorithm for predictive maintenance. The International Journal of Advanced Manufacturing Technology 119. doi: 10 .1007/s00170-021-08551-9 .[18] Qiu, S., Han, B., Maddix, D.C., Zhang, S., Wang, B., Wilson, A.G., 2024. Transferring knowledge from large foundation models to small downstream models, in: Salakhutdinov, R., Kolter, Z., Heller, K., Weller, A., Oliver, N., Scarlett, J., Berkenkamp, F. (Eds.), Proceedings of the 41st International Conference on Machine Learning, PMLR. pp. 41644–41657. URL: 
+
+https://proceedings .mlr .press/v235/qiu24d .html .47 [19] Ross, R.G., 2001. NASA Space Cryocooler Programs – A 2001 Overview. Technical Report 20010068918. NASA Jet Propulsion Laboratory. URL: 
+
+https://ntrs .nasa .gov/api/citations/20010068918/downloads/ 20010068918 .pdf . nASA Technical Reports Server. [20] Saito, T., Rehmsmeier, M., 2015. The precision-recall plot is more informative than the roc plot when evaluating binary classifiers on imbalanced datasets. PloS one 10, e0118432. [21] Schneider, J., Meske, C., Kuss, P., 2024. Foundation models. Business & Information Systems Engineering 66, 221–231. doi: 10 .1007/s12599-024-00851-0 .[22] Smithson, S.C., Yang, G., Gross, W.J., Meyer, B.H., 2016. Neural networks designing neural networks: multi-objective hyper-parameter optimization, in: Proceedings of the 35th International Conference on Computer-Aided Design, Association for Computing Machinery, New York, NY, USA. pp. 1–8. doi: 10 .1145/2966986 .2967058 .[23] Su, Q.H., Chiang, K.N., 2022. Predicting wafer-level package reliability life using mixed supervised and unsupervised machine learning algorithms. Materials 15. URL: https://www .mdpi .com/1996-1944/15/11/3897 ,doi: 10 .3390/ma15113897 .[24] Taşcı, B., Omar, A., Ayvaz, S., 2023. Remaining useful lifetime prediction for predictive maintenance in manufacturing. Computers & Industrial Engineering 184, 109566. URL: https: //www .sciencedirect .com/science/article/pii/S0360835223005909 ,doi: 10 .1016/j .cie .2023 .109566 .[25] Wang, H., Zhao, H., Li, X., Tan, X., 2018. Progressive blockwise knowledge distillation for neural network acceleration, in: Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence, IJCAI-18, International Joint Conferences on Artificial Intelligence Organization. pp. 2769–2775. doi: 10 .24963/ijcai .2018/384 .[26] Wang, J., Gao, S., Yu, L., Zhang, D., Ding, C., Chen, K., Kou, L., 2022. Predicting wind-caused floater intrusion risk for overhead contact lines based on bayesian neural network with spatiotemporal correlation analysis. Reliability Engineering & System Safety 225, 108603. URL: https: //www .sciencedirect .com/science/article/pii/S0951832022002484 ,doi: 10 .1016/j .ress .2022 .108603 .48

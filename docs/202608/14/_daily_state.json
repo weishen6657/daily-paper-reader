@@ -1,0 +1,265 @@
+{
+  "date": "20260814",
+  "date_label": "",
+  "generated_at": "2026-08-14 21:39:59 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.09071v1",
+      "route": "202608/14/2608.09071v1-two-step-mv-deeponet-probabilistic-operator-learning-for-uncertainty-propagation-driven-by-random-input-fields",
+      "title": "Two-Step MV-DeepONet: Probabilistic Operator Learning for Uncertainty Propagation Driven by Random Input Fields",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "概率型神经算子代理模型支持不确定性传播，可直接迁移到地下水流模拟的机器学习代理建模",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.09483v1",
+      "route": "202608/14/2608.09483v1-hierarchical-rank-evolving-representation-for-physics-informed-neural-networks",
+      "title": "Hierarchical rank-evolving representation for physics-informed neural networks",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "改进张量型物理信息神经网络，自动确定秩，提升地下水流等PDE求解能力",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.10389v1",
+      "route": "202608/14/2608.10389v1-efficient-weak-entropy-pinn-for-solving-hyperbolic-conservation-laws",
+      "title": "Efficient Weak-Entropy PINN for Solving Hyperbolic Conservation Laws",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "用于求解含间断PDE的PINN变体，与地下水流动运移过程相关",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.11435v1",
+      "route": "202608/14/2608.11435v1-variational-parameter-calibration-with-physics-aware-latent-space-surrogates",
+      "title": "Variational Parameter Calibration with Physics-Aware Latent-Space Surrogates",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "物理感知潜空间代理模型结合深度学习降阶与变分参数校准，直接支持机器学习代理的地下水流模拟",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.11831v1",
+      "route": "202608/14/2608.11831v1-kernel-methods-for-learning-operators-with-multiple-inputs-and-outputs",
+      "title": "Kernel Methods for Learning Operators with Multiple Inputs and Outputs",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "基于核的算子学习框架直接支持地下水流动模拟的代理模型构建",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.11937v1",
+      "route": "202608/14/2608.11937v1-distillation-of-foundation-models-for-time-dependent-pdes",
+      "title": "Distillation of Foundation Models for Time-dependent PDEs",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "针对时间相关偏微分方程的代理模型知识蒸馏方法",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.12823v1",
+      "route": "202608/14/2608.12823v1-btf-pinn-enforcing-dirichlet-boundary-conditions-without-boundary-training",
+      "title": "BTF-PINN: Enforcing Dirichlet Boundary Conditions Without Boundary Training",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "一种免边界训练的物理信息神经网络方法，直接适用于地下水流等边界值问题的求解",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.09764v1",
+      "route": "202608/14/2608.09764v1-mono-multiscale-optimal-transport-neural-operator-for-solving-pdes-on-general-geometries",
+      "title": "MoNo: Multiscale Optimal Transport Neural Operator for Solving PDEs on General Geometries",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "用于一般几何上求解PDE的神经算子，可作为地下水流模拟的机器学习替代模型",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.11572v1",
+      "route": "202608/14/2608.11572v1-recast-a-machine-learning-framework-for-correction-and-super-resolution-of-coarse-grid-pde-solvers",
+      "title": "RECAST: A Machine-Learning Framework for Correction and Super-Resolution of Coarse-Grid PDE Solvers",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "机器学习粗网格PDE求解器校正与超分辨，直接相关于AI增强地下水数值模拟",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.11613v1",
+      "route": "202608/14/2608.11613v1-a-local-sinkhorn-framework-for-conditional-distribution-reconstruction-of-multidimensional-random-fields",
+      "title": "A Local Sinkhorn Framework for Conditional Distribution Reconstruction of Multidimensional Random Fields",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "用于多维随机场条件分布重建的局部Sinkhorn方法",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.13044v1",
+      "route": "202608/14/2608.13044v1-identifiability-aware-neural-ordinary-differential-equations-for-parsimonious-and-reliable-dynamic-modelling",
+      "title": "Identifiability-aware neural ordinary differential equations for parsimonious and reliable dynamic modelling",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "可辨识性感知神经ODE用于可靠的数据驱动动态建模",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.13490v1",
+      "route": "202608/14/2608.13490v1-dd-rno-a-domain-decomposed-routed-neural-operator-for-airfoil-flow-prediction",
+      "title": "DD-RNO: A Domain-Decomposed Routed Neural Operator for Airfoil Flow Prediction",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向偏微分方程流场的神经算子代理模型，可迁移至地下水流模拟代理",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.05839v1",
+      "route": "202608/14/2608.05839v1-a-neural-operator-view-on-u-nets-for-inverse-imaging-problems",
+      "title": "A neural operator view on U-Nets for inverse imaging problems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向逆问题的U-Net神经算子方法",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.06993v1",
+      "route": "202608/14/2608.06993v1-beyond-foundation-models-dimension-aware-neural-architecture-search-with-small-data-representation-models-for-cryocooler-lifetime-prediction",
+      "title": "Beyond Foundation Models: Dimension-Aware Neural Architecture Search with Small-Data Representation Models for Cryocooler Lifetime Prediction",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "利用LSTM等编码器进行小数据时间序列预测，方法可迁移至地下水位预测",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.09494v1",
+      "route": "202608/14/2608.09494v1-walk-on-spheres-monte-carlo-and-deep-neural-network-approximations-of-elliptic-pdes-with-drift-and-killing",
+      "title": "Walk-on-Spheres Monte Carlo and deep neural network approximations of elliptic PDEs with drift and killing",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "深度神经网络逼近椭圆型PDE，可迁移至地下水流动模拟",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    },
+    {
+      "paper_id": "2608.12286v1",
+      "route": "202608/14/2608.12286v1-patternformer-learning-multiple-solution-patterns-in-reaction--diffusion-systems",
+      "title": "PatternFormer: Learning Multiple Solution Patterns in Reaction--Diffusion Systems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "基于语言模型的多PDE解代理模型，可适配地下水流建模",
+      "first_seen_at": "2026-08-14 21:39:59 UTC",
+      "updated_at": "2026-08-14 21:39:59 UTC"
+    }
+  ]
+}

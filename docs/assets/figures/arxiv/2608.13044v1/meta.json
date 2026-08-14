@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "extractor": "pymupdf-images",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2608.13044v1/fig-001.webp",
+      "caption": "",
+      "page": 33,
+      "index": 1,
+      "width": 1054,
+      "height": 754
+    },
+    {
+      "url": "assets/figures/arxiv/2608.13044v1/fig-002.webp",
+      "caption": "",
+      "page": 44,
+      "index": 2,
+      "width": 1056,
+      "height": 758
+    },
+    {
+      "url": "assets/figures/arxiv/2608.13044v1/fig-003.webp",
+      "caption": "",
+      "page": 51,
+      "index": 3,
+      "width": 834,
+      "height": 581
+    }
+  ]
+}

@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-05 ~ 2026-08-14</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-14</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 17 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 16 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
-    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>2 次</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>6</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>11</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>10</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-14 13:29:29 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-14 21:39:59 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,9 +62,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>聚焦复杂PDE难题，精读九分新基准与边缘条件谱算子，同时速读微调与无监督适应策略；</p>
-<p>最值得关注多保真神经算子在非平凡保真度差异下的表现，以及物理敏感边缘条件谱算子的建模新路径；</p>
-<p>下一步建议从生成仿真微调或PDE基础模型的无监督适配入手，降低实际物理模拟应用门槛。</p>
+<p>今日精读聚焦概率算子学习与PINN表示改进，速读覆盖边界条件处理及多尺度求解；最值得关注的是Two-Step MV-DeepONet将随机输入场驱动的不确定性传播高效建模，以及分层秩演进表示提升PINN训练效率；下一步可结合BTF-PINN的免边界训练和RECAST的超分修正，探索更实用的复杂几何PDE求解方案。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -76,7 +74,7 @@
     <strong class="dpr-home-dashboard-count">6 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Benchmarking Multi-fidelity Neural Operators on Complex PDE Problems with Non-trivial Fidelity Differences">Benchmarking Multi-fidelity Neural Operators on Complex PDE Problems with Non-trivial Fidelity Differences</span></li><li><span class="dpr-home-dashboard-paper-title" title="From Points to Edges: Edge-Conditioned Spectral Operators for Physics-Sensitive PDE Learning">From Points to Edges: Edge-Conditioned Spectral Operators for Physics-Sensitive PDE Learning</span></li><li><span class="dpr-home-dashboard-paper-title" title="Unsupervised Detection of Groundwater Storage Anomalies in Ghana Using GRACE Satellite Data">Unsupervised Detection of Groundwater Storage Anomalies in Ghana Using GRACE Satellite Data</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Two-Step MV-DeepONet: Probabilistic Operator Learning for Uncertainty Propagation Driven by Random Input Fields">Two-Step MV-DeepONet: Probabilistic Operator Learning for Uncertainty Propagation Driven by Random Input Fields</span></li><li><span class="dpr-home-dashboard-paper-title" title="Hierarchical rank-evolving representation for physics-informed neural networks">Hierarchical rank-evolving representation for physics-informed neural networks</span></li><li><span class="dpr-home-dashboard-paper-title" title="Efficient Weak-Entropy PINN for Solving Hyperbolic Conservation Laws">Efficient Weak-Entropy PINN for Solving Hyperbolic Conservation Laws</span></li></ul>
   </div>
   <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>6</strong></span></div>
 </section>
@@ -86,12 +84,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">11 篇</strong>
+    <strong class="dpr-home-dashboard-count">10 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Kastor: An efficient fine-tuning strategy for generative emulation of PDE simulations">Kastor: An efficient fine-tuning strategy for generative emulation of PDE simulations</span></li><li><span class="dpr-home-dashboard-paper-title" title="Unsupervised Adaptation of PDE Foundation Models">Unsupervised Adaptation of PDE Foundation Models</span></li><li><span class="dpr-home-dashboard-paper-title" title="Finite basis physics-informed neural networks with hard constraints for viscous fluid flow in highly perforated domains">Finite basis physics-informed neural networks with hard constraints for viscous fluid flow in highly perforated domains</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="BTF-PINN: Enforcing Dirichlet Boundary Conditions Without Boundary Training">BTF-PINN: Enforcing Dirichlet Boundary Conditions Without Boundary Training</span></li><li><span class="dpr-home-dashboard-paper-title" title="MoNo: Multiscale Optimal Transport Neural Operator for Solving PDEs on General Geometries">MoNo: Multiscale Optimal Transport Neural Operator for Solving PDEs on General Geometries</span></li><li><span class="dpr-home-dashboard-paper-title" title="RECAST: A Machine-Learning Framework for Correction and Super-Resolution of Coarse-Grid PDE Solvers">RECAST: A Machine-Learning Framework for Correction and Super-Resolution of Coarse-Grid PDE Solvers</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>11</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>10</strong></span></div>
 </section>
 </div>
 

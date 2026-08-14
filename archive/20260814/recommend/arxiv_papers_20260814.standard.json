@@ -1,0 +1,625 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-14T21:19:32.540324+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 7,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 10,
+    "quick_skim_target": 11,
+    "quick_selected": 10
+  },
+  "deep_dive": [
+    {
+      "id": "2608.09071v1",
+      "source": "arxiv",
+      "title": "Two-Step MV-DeepONet: Probabilistic Operator Learning for Uncertainty Propagation Driven by Random Input Fields",
+      "abstract": "Forward uncertainty propagation in complex physical systems can induce structured covariance across field-valued outputs. For a probabilistic surrogate, the total predictive covariance comprises the covariance of conditional means across input realizations and the average conditional predictive covariance. Probabilistic DeepONet (Prob-DeepONet) provides lightweight uncertainty quantification by predicting pointwise Gaussian means and variances in a single forward pass, but its conditional predictive covariance is restricted to a diagonal form. To represent cross-location conditional dependence without explicitly parameterizing a full high-dimensional covariance matrix, we develop a two-step mean-variance DeepONet (two-step MV-DeepONet) through two principal modifications. First, two-step training is used to decouple output-basis learning from the input-to-coefficient mapping, together with basis orthogonalization and subspace rotation. Second, Gaussian probabilistic modeling is transferred from the high-dimensional physical output space to the low-dimensional rotated coefficient space. Mapping these probabilistic coefficients through the shared basis induces a generally non-diagonal conditional predictive covariance in the physical output space while retaining single-pass inference. A Frobenius-norm error decomposition and corresponding upper bound identify low-rank covariance compressibility, trunk-subspace approximation, finite-sample statistical error, and coefficient-space covariance estimation as the principal factors governing covariance recovery. Numerical experiments on three representative problems governed by partial differential equations (PDEs) and a hypersonic blunt-body aerothermal problem show improved generalization, more structured uncertainty bands, and accurate recovery of off-diagonal correlation patterns compared with Prob-DeepONet.",
+      "authors": [
+        "Yupei Nie",
+        "Lei Wang",
+        "Jiasen Liu"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "cs.AI"
+      ],
+      "published": "2026-08-10T03:21:10+00:00",
+      "link": "https://arxiv.org/pdf/2608.09071v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "probabilistic neural operator surrogate with uncertainty propagation; directly transferable to ML surrogate models for groundwater flow",
+      "llm_evidence_cn": "概率型神经算子代理模型支持不确定性传播，可直接迁移到地下水流模拟的机器学习代理建模",
+      "llm_evidence": "概率型神经算子代理模型支持不确定性传播，可直接迁移到地下水流模拟的机器学习代理建模",
+      "canonical_evidence": "概率型神经算子代理模型支持不确定性传播，可直接迁移到地下水流模拟的机器学习代理建模",
+      "llm_tldr_en": "Two-step mean-variance DeepONet captures cross-location conditional covariance for probabilistic surrogate modeling of PDE systems, providing an uncertainty-aware operator learning tool for groundwater flow surrogates.",
+      "llm_tldr_cn": "针对概率型DeepONet只能给出点态方差、无法表达跨位置条件相关性的局限，本文提出两步均值-方差DeepONet，在不显式参数化高维协方差矩阵的前提下刻画随机输入场驱动的场值输出中的结构化协方差。该方法将总预测协方差分解为条件均值协方差和平均条件协方差两部分，在保持轻量不确定性量化的同时增强相关性表达。该不确定性感知算子学习方法可为地下水流模拟的机器学习代理模型提供重要建模能力。",
+      "llm_tldr": "针对概率型DeepONet只能给出点态方差、无法表达跨位置条件相关性的局限，本文提出两步均值-方差DeepONet，在不显式参数化高维协方差矩阵的前提下刻画随机输入场驱动的场值输出中的结构化协方差。该方法将总预测协方差分解为条件均值协方差和平均条件协方差两部分，在保持轻量不确定性量化的同时增强相关性表达。该不确定性感知算子学习方法可为地下水流模拟的机器学习代理模型提供重要建模能力。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.11937v1",
+      "source": "arxiv",
+      "title": "Distillation of Foundation Models for Time-dependent PDEs",
+      "abstract": "Foundation models for time-dependent partial differential equations (PDEs) are trained on large and diverse collections of physical systems and can generalize effectively to new downstream tasks. After fine-tuning on only a few trajectories from a target domain, they can achieve strong accuracy in low-data regimes. However, these models are typically large and computationally intensive, limiting their usefulness as fast surrogates for numerical solvers. We propose Teacher Rollout Extension (TREX), a knowledge distillation framework that transfers the predictive capability of a pretrained foundation model into a compact and efficient student. Starting from a fine-tuned teacher, TREX augments limited downstream data by generating long synthetic trajectories through teacher rollouts, optionally with periodic noise injection. This procedure samples from the teacher-induced rollout distribution without requiring explicit knowledge of the initial-condition distribution, while exposing the student to long-horizon states and local recovery behavior around states encountered during autoregressive prediction. The student can further incorporate task-specific inductive biases, such as equivariance, that the teacher does not necessarily enforce. We evaluate TREX on multiple PDE benchmarks. The resulting students can match or surpass the teacher's accuracy while reducing the number of parameters by several orders of magnitude and achieving more than an order-of-magnitude speedup in inference.",
+      "authors": [
+        "Daniel Musekamp",
+        "Boshra Ariguib",
+        "Andrei Manolache",
+        "Mathias Niepert"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-12T11:24:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.11937v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "knowledge distillation for time-dependent PDE surrogate models",
+      "llm_evidence_cn": "针对时间相关偏微分方程的代理模型知识蒸馏方法",
+      "llm_evidence": "针对时间相关偏微分方程的代理模型知识蒸馏方法",
+      "canonical_evidence": "针对时间相关偏微分方程的代理模型知识蒸馏方法",
+      "llm_tldr_en": "Presents TREX, a distillation framework that transfers a pretrained PDE foundation model into a compact efficient student, augmenting limited data with synthetic trajectories for fast surrogates.",
+      "llm_tldr_cn": "面向时间相关偏微分方程的基础模型虽在黑盒数据少时表现良好，但其规模大、计算开销高，难以作为快速数值求解替代。本文提出教师拓展（TREX）知识蒸馏框架，通过生成长时间合成轨迹增强有限下游数据，将预训练基础模型的能力压缩到轻量学生网络。实验表明蒸馏后的学生模型在保持精度的同时大幅降低计算成本，为AI驱动的物理系统仿真提供了高效可复用的代理建模方案。",
+      "llm_tldr": "面向时间相关偏微分方程的基础模型虽在黑盒数据少时表现良好，但其规模大、计算开销高，难以作为快速数值求解替代。本文提出教师拓展（TREX）知识蒸馏框架，通过生成长时间合成轨迹增强有限下游数据，将预训练基础模型的能力压缩到轻量学生网络。实验表明蒸馏后的学生模型在保持精度的同时大幅降低计算成本，为AI驱动的物理系统仿真提供了高效可复用的代理建模方案。",
+      "llm_tags": [
+        "query:ag:composite"
+      ],
+      "matched_query_tag": "query:ag:composite",
+      "matched_query_text": "Papers central to 帮我检索近十年的关于人工智能驱动的地下水数值模拟的英文文献, especially work that connects or combines: LSTM groundwater forecasting; data-driven groundwater hydrology; physics-informed neural network subsurface flow; artificial intelligence groundwater simulation; deep learning groundwater level prediction; machine learning approaches for groundwater flow and transport simulation; physics informed neural network subsurface flow; artificial intelligence enhanced groundwater numerical simulation methods; machine learning based surrogate models for groundwater flow simulation.",
+      "matched_requirement_id": "req-composite-ag",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.09483v1",
+      "source": "arxiv",
+      "title": "Hierarchical rank-evolving representation for physics-informed neural networks",
+      "abstract": "Recently, tensor-based physics-informed neural networks (T-PINNs) have received increasing attention. However, existing T-PINNs still face a fundamental challenge: they mainly rely on pre-specified low-rank tensor decompositions with manually tuned ranks, which limits their ability to capture the underlying structures of multivariate solution functions and hinders their practical deployment. To address this challenge, we propose a hierarchical rank-evolving (abbreviated as HRE) representation for multivariate functions, which endows us to faithfully capture the underlying structure of the targeted multivariate function accompanying with automatic rank determination. Concretely, in the hierarchical design of HRE representation, the target multivariate function is decomposed as a small-scale inner tensor with a set of univariate functions along each mode, where a customized tensor network decomposition can be readily deployed to capture the underlying structure of the small-scale inner tensor. In HRE representation, the crucial hyperparameters, ranks, can be adaptively revealed during the decomposition, freeing us from manual rank tuning and making HRE practically applicable to real-world problems. Besides, we build the HRE-PINNs correspondingly. Extensive numerical experiments, including high-dimensional static problems (Helmholtz equation and Poisson equation), nonlinear time-dependent problems (Klein-Gordon equation), and complex fluid-dynamics problems (flow mixing equation and Navier-Stokes equation), demonstrate that HRE-PINNs consistently outperform existing state-of-the-art approaches in terms of accuracy.",
+      "authors": [
+        "Ruoyang Su",
+        "Xi-Le Zhao",
+        "Kun Li",
+        "Liang Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.NA",
+        "physics.comp-ph"
+      ],
+      "published": "2026-08-10T11:48:43+00:00",
+      "link": "https://arxiv.org/pdf/2608.09483v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Enhances tensor-based PINNs with automatic rank evolution, improving PDE solving for subsurface flow",
+      "llm_evidence_cn": "改进张量型物理信息神经网络，自动确定秩，提升地下水流等PDE求解能力",
+      "llm_evidence": "改进张量型物理信息神经网络，自动确定秩，提升地下水流等PDE求解能力",
+      "canonical_evidence": "改进张量型物理信息神经网络，自动确定秩，提升地下水流等PDE求解能力",
+      "llm_tldr_en": "Proposes hierarchical rank-evolving (HRE) representation for PINNs to automatically determine tensor ranks, capturing underlying structures of multivariate solution functions and facilitating deployment for PDE solvers.",
+      "llm_tldr_cn": "现有张量型物理信息神经网络T-PINNs依赖预设低秩分解和手工调节秩，难以捕捉多变量解函数结构。本文提出层次秩自适应HRE表示，通过层次设计自动确定秩，无需人工干预。该方法能忠实刻画多变量函数结构，提升PDE求解的实用性和效率，可用于地下水流等科学计算。",
+      "llm_tldr": "现有张量型物理信息神经网络T-PINNs依赖预设低秩分解和手工调节秩，难以捕捉多变量解函数结构。本文提出层次秩自适应HRE表示，通过层次设计自动确定秩，无需人工干预。该方法能忠实刻画多变量函数结构，提升PDE求解的实用性和效率，可用于地下水流等科学计算。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.10389v1",
+      "source": "arxiv",
+      "title": "Efficient Weak-Entropy PINN for Solving Hyperbolic Conservation Laws",
+      "abstract": "In recent years, neural networks have significantly advanced numerical solutions of partial differential equations (PDEs). However, solving PDEs with discontinuous solutions, such as hyperbolic conservation laws, remains challenging for neural network-based methods such as physics-informed neural networks (PINNs). Existing methods often rely on strong prior assumptions such as knowledge of discontinuity locations, or they introduce artificial smoothing terms that degrade accuracy. However, accurately solving these conservation laws and predicting the formation and propagation of discontinuities in solutions is crucial in many practical applications, including gas dynamics and traffic flow modeling. In this paper, we introduce a novel Weak-Entropy PINN (WEPINN) framework for hyperbolic conservation laws with discontinuous solutions. The method enforces the governing equations in their weak (integral) formulation and incorporates the entropy condition to select the physically admissible solution, while employing the discrete fast Fourier transform (DFFT) for efficient numerical integration. Our method is tested through extensive numerical experiments on a variety of scalar conservation laws and systems of conservation laws in one and two dimensional spaces. These experiments demonstrate that our method can accurately resolve sharp discontinuities while effectively capturing interactions between multiple shock and rarefaction waves.",
+      "authors": [
+        "Qi Gao",
+        "Kuang Huang",
+        "Xuan Di"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "cs.LG"
+      ],
+      "published": "2026-08-11T02:34:15+00:00",
+      "link": "https://arxiv.org/pdf/2608.10389v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "PINN variant for PDEs with discontinuities, relevant to transport processes in subsurface flow",
+      "llm_evidence_cn": "用于求解含间断PDE的PINN变体，与地下水流动运移过程相关",
+      "llm_evidence": "用于求解含间断PDE的PINN变体，与地下水流动运移过程相关",
+      "canonical_evidence": "用于求解含间断PDE的PINN变体，与地下水流动运移过程相关",
+      "llm_tldr_en": "Introduces a Weak-Entropy PINN to solve hyperbolic conservation laws with discontinuities, avoiding strong priors and artificial smoothing, enabling accurate prediction of shock formation and propagation.",
+      "llm_tldr_cn": "物理信息神经网络求解带间断的双曲守恒律时，常依赖间断位置先验或引入人工光滑导致精度下降。本文提出弱熵PINN，将弱熵条件融入网络训练，无需已知间断位置，也能精准预测间断的形成和传播。实验证明在气体动力学和交通流等应用上取得良好效果，为地下水中对流主导的输运模拟提供了有力工具。",
+      "llm_tldr": "物理信息神经网络求解带间断的双曲守恒律时，常依赖间断位置先验或引入人工光滑导致精度下降。本文提出弱熵PINN，将弱熵条件融入网络训练，无需已知间断位置，也能精准预测间断的形成和传播。实验证明在气体动力学和交通流等应用上取得良好效果，为地下水中对流主导的输运模拟提供了有力工具。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.11435v1",
+      "source": "arxiv",
+      "title": "Variational Parameter Calibration with Physics-Aware Latent-Space Surrogates",
+      "abstract": "Forward and inverse modeling of parametric dynamical systems requires surrogate models that are not only accurate for state prediction, but also informative for parameter calibration. However, a systematic end-to-end differentiable formulation for coupling deep-learning-based reduced-order surrogates with variational parameter estimation remains underdeveloped. In this work, we introduce a physics-aware neural-network-based latent-space framework for reduced-order forward modeling and variational parameter estimation. The proposed autoencoder-based approach yields a differentiable surrogate that maps physical parameters to predicted flow fields through a latent representation. The observable supervision is used during offline training to encourage the latent variables to retain information correlated with system parameters, while the online inverse problem is solved in the parameter space through the surrogate-induced observation operator. The method is evaluated on two computational-fluid-dynamics benchmarks. The results show that reconstruction accuracy alone is insufficient for inverse modeling, owing to the lack of end-to-end differentiability or physics awareness for variational parameter calibration. Quantitative latent-space analysis further shows that observable supervision improves case-level separability and temporal organization of latent representations. Experiments with realistic measurement settings, including noisy, low-resolution, randomly masked, and block-wise partial observations, demonstrate the robustness of the proposed framework and show that it generally reduces calibration error and variability compared with the standard surrogate models.",
+      "authors": [
+        "Qiyao Zhou",
+        "Xujia Zhu",
+        "Pierre Joli",
+        "Yu Cong",
+        "Sibo Cheng"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.comp-ph",
+        "physics.data-an",
+        "physics.flu-dyn"
+      ],
+      "published": "2026-08-11T21:02:31+00:00",
+      "link": "https://arxiv.org/pdf/2608.11435v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "physics-aware latent-space surrogate combining deep learning reduced-order modeling with variational parameter calibration, directly supports ML surrogate groundwater flow simulation",
+      "llm_evidence_cn": "物理感知潜空间代理模型结合深度学习降阶与变分参数校准，直接支持机器学习代理的地下水流模拟",
+      "llm_evidence": "物理感知潜空间代理模型结合深度学习降阶与变分参数校准，直接支持机器学习代理的地下水流模拟",
+      "canonical_evidence": "物理感知潜空间代理模型结合深度学习降阶与变分参数校准，直接支持机器学习代理的地下水流模拟",
+      "llm_tldr_en": "Introduces a differentiable, physics-aware autoencoder-based surrogate that maps physical parameters to predicted flow fields through a latent space and couples with variational parameter estimation. The end-to-end framework improves both state prediction and parameter calibration, making it a strong candidate as an ML surrogate for groundwater flow models.",
+      "llm_tldr_cn": "针对参数化动力系统正演与反演中代理模型既要精准又要利于参数校准的问题，本文提出一种物理感知的潜空间神经代理框架。该方法利用自编码器将物理参数映射为潜空间中的流场预测，并结合变分参数估计形成端到端可微流程。实验表明该代理在状态预测和参数反演上均有良好表现。该框架可作为一种通用的机器学习代理方法，直接迁移到地下水流模拟与参数识别任务中。",
+      "llm_tldr": "针对参数化动力系统正演与反演中代理模型既要精准又要利于参数校准的问题，本文提出一种物理感知的潜空间神经代理框架。该方法利用自编码器将物理参数映射为潜空间中的流场预测，并结合变分参数估计形成端到端可微流程。实验表明该代理在状态预测和参数反演上均有良好表现。该框架可作为一种通用的机器学习代理方法，直接迁移到地下水流模拟与参数识别任务中。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.11831v1",
+      "source": "arxiv",
+      "title": "Kernel Methods for Learning Operators with Multiple Inputs and Outputs",
+      "abstract": "Learning mappings between infinite-dimensional objects is a central challenge in scientific machine learning. We introduce a general kernel-based encoder-decoder framework for operator learning that separates observation, representation, learning, and reconstruction. We develop this framework for multi-input, multi-output operator learning, where operators map between products of potentially distinct function spaces. Our approximation theory shows that, although the number of inputs and outputs can increase, the convergence rate is governed by the most challenging constituent approximation problem rather than the overall problem dimension. The framework leads to practical kernel methods with closed-form training and inference, combining mathematical tractability with computational efficiency. We further specialize the approach to multiple operator learning by introducing KernelMO, a family of kernel methods with complementary operator-valued and product-space formulations. Across five families of parametric partial differential equations, the proposed methods achieve competitive or state-of-the-art predictive accuracy while reducing training and inference costs relative to neural operator architectures and deep learning based models, offering an efficient and lightweight alternative.",
+      "authors": [
+        "Adrien Weihs",
+        "Chunyang Liao",
+        "Jingmin Sun",
+        "Hayden Schaeffer"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.ST",
+        "stat.ML"
+      ],
+      "published": "2026-08-12T09:15:20+00:00",
+      "link": "https://arxiv.org/pdf/2608.11831v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Kernel-based operator learning framework directly supports surrogate models for groundwater flow simulation",
+      "llm_evidence_cn": "基于核的算子学习框架直接支持地下水流动模拟的代理模型构建",
+      "llm_evidence": "基于核的算子学习框架直接支持地下水流动模拟的代理模型构建",
+      "canonical_evidence": "基于核的算子学习框架直接支持地下水流动模拟的代理模型构建",
+      "llm_tldr_en": "Introduces a general kernel-based encoder-decoder framework for multi-input multi-output operator learning with theoretical convergence rates and closed-form training, providing a powerful surrogate modeling tool for groundwater flow simulation.",
+      "llm_tldr_cn": "该论文提出一个通用的基于核的编码-解码算子学习框架，支持多输入多输出且可处理不同函数空间之间的映射。理论上证明收敛率受最难的子逼近问题控制，而非整体维度，表明该方法可扩展至复杂物理场。该框架具有闭式训练与推理，为地下水流动等物理过程的机器学习代理模型提供了实用且可解释的工具。",
+      "llm_tldr": "该论文提出一个通用的基于核的编码-解码算子学习框架，支持多输入多输出且可处理不同函数空间之间的映射。理论上证明收敛率受最难的子逼近问题控制，而非整体维度，表明该方法可扩展至复杂物理场。该框架具有闭式训练与推理，为地下水流动等物理过程的机器学习代理模型提供了实用且可解释的工具。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.12823v1",
+      "source": "arxiv",
+      "title": "BTF-PINN: Enforcing Dirichlet Boundary Conditions Without Boundary Training",
+      "abstract": "The homogeneous Dirichlet boundary value problem captures the core difficulty of solving Dirichlet problems with non-interpolatory methods. We propose BTF-PINN (Boundary-Training-Free Physics-Informed Neural Network), an interior-only strategy for solving homogeneous Dirichlet boundary value problems that requires no boundary training, boundary penalties, or boundary-conforming parametrizations. The key idea is to embed the essential boundary condition into a newly designed boundary-free loss function. We prove the equivalence between the proposed interior-only variational formulation and the original boundary value problem, establish a sharp threshold condition for the residual weight, and develop a convergence analysis based on the coercivity of the functional. Numerical experiments on high-dimensional problems, irregular geometries, and anisotropic elliptic equations demonstrate the effectiveness of BTF-PINN. Comparisons with standard boundary-penalty PINNs further show that BTF-PINN achieves superior boundary trace accuracy.",
+      "authors": [
+        "Wenyu Dong",
+        "Shuo Zhang"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-08-13T04:55:28+00:00",
+      "link": "https://arxiv.org/pdf/2608.12823v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "novel physics-informed neural network without boundary training, directly relevant to solving flow/BVP problems in subsurface simulation",
+      "llm_evidence_cn": "一种免边界训练的物理信息神经网络方法，直接适用于地下水流等边界值问题的求解",
+      "llm_evidence": "一种免边界训练的物理信息神经网络方法，直接适用于地下水流等边界值问题的求解",
+      "canonical_evidence": "一种免边界训练的物理信息神经网络方法，直接适用于地下水流等边界值问题的求解",
+      "llm_tldr_en": "BTF-PINN enforces homogeneous Dirichlet boundary conditions through an interior-only loss, removing boundary training and penalties. The paper proves equivalence to the original BVP and gives convergence analysis, providing a robust and widely applicable PINN formulation for subsurface flow and other boundary-value problems.",
+      "llm_tldr_cn": "针对物理信息神经网络(PINN)求解Dirichlet边界条件时需要边界训练或罚项的问题，本文提出BTF-PINN方法，仅通过内部损失即可内嵌本质边界条件，无需边界训练和边界拟合。作者证明了该内部变分公式与原边值问题的等价性，建立了残差权重的阈值条件并给出基于强制性的收敛分析。该方法为地下水流模拟等众多Dirichlet边界问题的PINN求解提供了更简洁稳健的替代方案。",
+      "llm_tldr": "针对物理信息神经网络(PINN)求解Dirichlet边界条件时需要边界训练或罚项的问题，本文提出BTF-PINN方法，仅通过内部损失即可内嵌本质边界条件，无需边界训练和边界拟合。作者证明了该内部变分公式与原边值问题的等价性，建立了残差权重的阈值条件并给出基于强制性的收敛分析。该方法为地下水流模拟等众多Dirichlet边界问题的PINN求解提供了更简洁稳健的替代方案。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2608.09764v1",
+      "source": "arxiv",
+      "title": "MoNo: Multiscale Optimal Transport Neural Operator for Solving PDEs on General Geometries",
+      "abstract": "Transformer-based neural operators have achieved substantial progress in solving Partial Differential Equations (PDEs) by projecting spatial observations into compact latent tokens and learning physical interactions in latent spaces. However, we reveal that existing learnable projection mechanisms cannot ensure stable and balanced assignments from observation points to latent tokens, causing some latent tokens to be over-assigned while others remain underutilized. This limitation further restricts the design of hierarchical architectures, as assignment imbalance is continuously inherited and amplified across latent spaces, eventually causing severe token collapse in deeper spaces. To address these issues, we propose MoNo (Multiscale Optimal Transport Neural Operator), a progressive multiscale neural operator that efficiently solves PDEs on general geometries through stable latent-space construction. At its core is CoTAP (Cross-scale Optimal Transport Assignment and Projection), a novel latent-space construction method that formulates cross-space assignment between adjacent spaces as an entropy-regularized optimal transport problem, thereby constructing balanced bidirectional projections and stable latent spaces. CoTAP also ensures stable information transfer across multiple latent spaces, further enabling multiscale architectures on general geometries, which in turn support more efficient learning of long-range physical interactions. Extensive experiments demonstrate that MoNo outperforms existing state-of-the-art neural operators in both prediction performance and computational efficiency. Code is available at https://github.com/ZijiangY1116/MoNo.",
+      "authors": [
+        "Zijiang Yang",
+        "Xiaomeng Wu",
+        "Dongmei Fu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-08-10T15:55:11+00:00",
+      "link": "https://arxiv.org/pdf/2608.09764v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Neural operator for solving PDEs on general geometries; applicable as a machine learning surrogate for groundwater flow simulation",
+      "llm_evidence_cn": "用于一般几何上求解PDE的神经算子，可作为地下水流模拟的机器学习替代模型",
+      "llm_evidence": "用于一般几何上求解PDE的神经算子，可作为地下水流模拟的机器学习替代模型",
+      "canonical_evidence": "用于一般几何上求解PDE的神经算子，可作为地下水流模拟的机器学习替代模型",
+      "llm_tldr_en": "This paper proposes MoNo, a multiscale optimal transport neural operator, to solve PDEs on general geometries. It addresses token collapse in transformer-based neural operators and provides a transferable ML surrogate for flow simulations like groundwater.",
+      "llm_tldr_cn": "现有基于Transformer的神经算子在投影观测点到潜变量时存在分配不均，导致深层潜变量塌缩，限制了层次化架构的设计。为此提出多尺度最优传输神经算子MoNo，通过稳定的最优传输分配机制，在一般几何上高效求解偏微分方程。实验表明MoNo能有效缓解token塌缩问题，提升多尺度PDE求解的准确性与泛化能力。该方法可作为地下水流模拟等科学计算任务的机器学习替代模型。",
+      "llm_tldr": "现有基于Transformer的神经算子在投影观测点到潜变量时存在分配不均，导致深层潜变量塌缩，限制了层次化架构的设计。为此提出多尺度最优传输神经算子MoNo，通过稳定的最优传输分配机制，在一般几何上高效求解偏微分方程。实验表明MoNo能有效缓解token塌缩问题，提升多尺度PDE求解的准确性与泛化能力。该方法可作为地下水流模拟等科学计算任务的机器学习替代模型。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.05839v1",
+      "source": "arxiv",
+      "title": "A neural operator view on U-Nets for inverse imaging problems",
+      "abstract": "Deep neural networks have shown great empirical success in the solution of a wide variety of ill-posed inverse problems in imaging. Yet, very few works have studied their behavior in the limit that turns the discretized ill-conditioned problems into truly ill-posed ones, i.e., for an increasing resolution of the discretization. In this work, we review common approaches to neural operator learning in architectures that resemble a U-Net, one of the most common classical architectures for inverse imaging problems. We discuss advantages and drawbacks of the respective approaches, consider a 1D toy example for improved interpretability, and present extensive numerical experiments on how different types of neural operator U-Nets can improve a first (crude) limited angle CT-reconstruction. In particular, we study how well networks trained for a certain resolution of the discretization generalize to other resolutions. Our finding is that while U-shaped neural operator architectures are by design resolution-invariant, the classical U-Net architecture seems to be more robust with respect to resolution changes than expected.",
+      "authors": [
+        "Alexander Auras",
+        "Martin Burger",
+        "Samira Kabri",
+        "Michael Moeller",
+        "Michael Schopf-Kuester"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "cs.LG"
+      ],
+      "published": "2026-08-06T10:07:33+00:00",
+      "link": "https://arxiv.org/pdf/2608.05839v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "neural operator learning for inverse problems with U-Net architectures",
+      "llm_evidence_cn": "面向逆问题的U-Net神经算子方法",
+      "llm_evidence": "面向逆问题的U-Net神经算子方法",
+      "canonical_evidence": "面向逆问题的U-Net神经算子方法",
+      "llm_tldr_en": "Reviews neural operator U-Nets for inverse imaging problems, analyzing discretization limits and comparing architectures, providing insights transferable to inverse problems in subsurface simulation.",
+      "llm_tldr_cn": "深度网络在图像逆问题中表现优异，但其在分辨率无限增大时的行为缺乏研究。该文从神经算子角度审视U-Net，剖析离散化极限下的优缺点，并通过一维玩具与数值实验比较不同算子化U-Net的效果。结果显示算子方式能改善病态逆问题的近似，其架构设计思想可迁移到地下介质参数反演等地球物理逆问题中。",
+      "llm_tldr": "深度网络在图像逆问题中表现优异，但其在分辨率无限增大时的行为缺乏研究。该文从神经算子角度审视U-Net，剖析离散化极限下的优缺点，并通过一维玩具与数值实验比较不同算子化U-Net的效果。结果显示算子方式能改善病态逆问题的近似，其架构设计思想可迁移到地下介质参数反演等地球物理逆问题中。",
+      "llm_tags": [
+        "query:ag:composite"
+      ],
+      "matched_query_tag": "query:ag:composite",
+      "matched_query_text": "Papers central to 帮我检索近十年的关于人工智能驱动的地下水数值模拟的英文文献, especially work that connects or combines: LSTM groundwater forecasting; data-driven groundwater hydrology; physics-informed neural network subsurface flow; artificial intelligence groundwater simulation; deep learning groundwater level prediction; machine learning approaches for groundwater flow and transport simulation; physics informed neural network subsurface flow; artificial intelligence enhanced groundwater numerical simulation methods; machine learning based surrogate models for groundwater flow simulation.",
+      "matched_requirement_id": "req-composite-ag",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.11572v1",
+      "source": "arxiv",
+      "title": "RECAST: A Machine-Learning Framework for Correction and Super-Resolution of Coarse-Grid PDE Solvers",
+      "abstract": "Coarse-grid numerical solvers can substantially reduce the computational cost of time-dependent PDE simulation, but under-resolution often degrades both the trajectory and the spatial fidelity of the solution. We introduce RECAST (Recurrent Error Correction And Super-resolution of coarse-grid Trajectories), a machine-learning framework designed to restore this lost accuracy while retaining coarse-grid evolution. RECAST combines learned correction within the numerical time-stepping loop with reconstruction of the corresponding fine-grid state from the corrected coarse history. We evaluate the framework on six one-dimensional PDE systems spanning transport, diffusion, dispersion, reaction, and wave dynamics, using spatial grids coarsened by factors of 8-16 and 1000-step closed-loop rollouts from unseen initial conditions. Across the test cases, RECAST remains closely aligned with the fine-grid reference solutions and reduces time-averaged relative error by approximately 50-92% compared with the corresponding uncorrected coarse-grid solvers. Additional tests show generalization to unseen PDE parameter values, while comparison with a contemporary coarse-correction architecture shows that RECAST achieves lower error and better long-horizon agreement with the fine-grid reference over 5000-step rollouts. These results demonstrate that the learned correction and reconstruction capabilities of RECAST can enable substantially coarser PDE evolution without the corresponding loss of solution fidelity, providing a proof-of-concept route toward machine-learning acceleration of higher-dimensional numerical simulations across science and engineering.",
+      "authors": [
+        "Maryam Reza",
+        "Farbod Faraji"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.comp-ph"
+      ],
+      "published": "2026-08-12T02:30:49+00:00",
+      "link": "https://arxiv.org/pdf/2608.11572v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Machine-learning correction and super-resolution of coarse-grid PDE solvers; directly relevant to AI-enhanced groundwater numerical simulation",
+      "llm_evidence_cn": "机器学习粗网格PDE求解器校正与超分辨，直接相关于AI增强地下水数值模拟",
+      "llm_evidence": "机器学习粗网格PDE求解器校正与超分辨，直接相关于AI增强地下水数值模拟",
+      "canonical_evidence": "机器学习粗网格PDE求解器校正与超分辨，直接相关于AI增强地下水数值模拟",
+      "llm_tldr_en": "Presents RECAST, a machine-learning framework that corrects and super-resolves coarse-grid PDE trajectories, combining learned correction in time-stepping with fine-grid reconstruction. Demonstrated on six 1D PDE systems; transferable to accelerating groundwater simulations.",
+      "llm_tldr_cn": "针对粗网格数值求解器计算量低但精度不足的问题，提出RECAST机器学习框架，在数值时间推进内引入学习校正并重建细网格状态，保留粗网格演化效率。在六个一维PDE系统上验证了精度恢复效果。该方法可迁移至地下水流动模拟，实现AI增强的数值求解与超分辨。",
+      "llm_tldr": "针对粗网格数值求解器计算量低但精度不足的问题，提出RECAST机器学习框架，在数值时间推进内引入学习校正并重建细网格状态，保留粗网格演化效率。在六个一维PDE系统上验证了精度恢复效果。该方法可迁移至地下水流动模拟，实现AI增强的数值求解与超分辨。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "artificial intelligence enhanced groundwater numerical simulation methods",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.06993v1",
+      "source": "arxiv",
+      "title": "Beyond Foundation Models: Dimension-Aware Neural Architecture Search with Small-Data Representation Models for Cryocooler Lifetime Prediction",
+      "abstract": "Large-scale pretrained time-series models achieve strong results through large-scale pretraining and task-agnostic representation learning, but they rely on abundant, diverse data that industrial and scientific domains often lack. We therefore propose the FSD-RM (Family of Small-Data Representation Models) paradigm as a practical alternative for limited, domain-specific telemetry. Rather than relying on large-scale pretraining, we focus on capacity-controlled representation learning using established encoder architectures (CNN1D, LSTM, GRU, Transformer), selected for their suitability in small-data settings and interpretability.   These encoders are trained unsupervised on multivariate telemetry data and integrated into a two-stage pipeline for downstream lifetime prediction. To systematically examine architectural trade-offs under data constraints, we employ \\textbf{dimension-aware neural architecture search (NAS)} to jointly optimize model capacity and input dimensionality.   Experiments on cryocooler telemetry show that the proposed approach achieves competitive predictive performance while reducing training cost and model complexity. The contribution lies in combining established representation learning techniques within a coherent, NAS-driven framework tailored to small-data regimes, with explicitly defined parameter settings and design choices. The results indicate that effective representation learning can be achieved without large-scale pretraining when appropriate inductive bias and capacity control are applied.",
+      "authors": [
+        "Gregor Molan",
+        "Grafika Jati",
+        "Francesco Barchi",
+        "Andrea Acquaviva",
+        "Aljaž Osterman",
+        "Martin Molan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-08-07T09:11:45+00:00",
+      "link": "https://arxiv.org/pdf/2608.06993v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "LSTM and related encoders for small-data time-series prediction, transferable to groundwater level forecasting",
+      "llm_evidence_cn": "利用LSTM等编码器进行小数据时间序列预测，方法可迁移至地下水位预测",
+      "llm_evidence": "利用LSTM等编码器进行小数据时间序列预测，方法可迁移至地下水位预测",
+      "canonical_evidence": "利用LSTM等编码器进行小数据时间序列预测，方法可迁移至地下水位预测",
+      "llm_tldr_en": "Presents a small-data representation model paradigm using CNN1D, LSTM, GRU, Transformer encoders with dimension-aware architecture search for cryocooler lifetime prediction. The framework emphasizes capacity-controlled representation learning suitable for limited telemetry, and its time-series encoding approach is directly transferable to groundwater level forecasting with LSTM.",
+      "llm_tldr_cn": "面向工业遥测数据稀缺的场景，本文提出FSD-RM小数据表示模型范式，采用CNN1D、LSTM、GRU、Transformer等编码器进行无监督表示学习，并结合维度感知的神经架构搜索进行寿命预测。该方法在低温制冷机寿命预测等小样本时间序列任务上展示了有效性。由于地下水位时间序列同样常受数据不足困扰，该框架中的LSTM建模与架构选择策略可直接借鉴到地下水位预测中。",
+      "llm_tldr": "面向工业遥测数据稀缺的场景，本文提出FSD-RM小数据表示模型范式，采用CNN1D、LSTM、GRU、Transformer等编码器进行无监督表示学习，并结合维度感知的神经架构搜索进行寿命预测。该方法在低温制冷机寿命预测等小样本时间序列任务上展示了有效性。由于地下水位时间序列同样常受数据不足困扰，该框架中的LSTM建模与架构选择策略可直接借鉴到地下水位预测中。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "LSTM groundwater forecasting",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.11613v1",
+      "source": "arxiv",
+      "title": "A Local Sinkhorn Framework for Conditional Distribution Reconstruction of Multidimensional Random Fields",
+      "abstract": "In this paper, we propose a local Sinkhorn divergence framework for conditional distribution reconstruction of multidimensional random fields. By utilizing the debiased Sinkhorn divergence, our proposed approach develops a differentiable and computationally efficient local distribution matching objective to train stochastic neural networks (SNNs). Furthermore, we establish theoretical generalization error estimates for our local Sinkhorn divergence framework, which explicitly characterizes the trade-off between approximation bias and statistical efficiency controlled by the regularization parameter and reveals how our proposed local Sinkhorn divergence loss function can be efficiently applied to learning multidimensional random field models. The proposed framework provides a scalable alternative to exact local optimal transport for conditional distribution reconstruction, offering a practical compromise between geometric fidelity, statistical efficiency, and computational scalability for uncertainty quantification and probabilistic scientific machine learning. Through various numerical examples, we compare our proposed local Sinkhorn divergence framework with other loss functions to train SNNs and with other machine-learning-based uncertainty quantification frameworks, demonstrating that the proposed local Sinkhorn divergence framework achieves an effective balance between reconstruction accuracy and computational efficiency while maintaining good scalability for multidimensional stochastic systems.",
+      "authors": [
+        "Mingtao Xia",
+        "Qijing Shen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-12T03:43:42+00:00",
+      "link": "https://arxiv.org/pdf/2608.11613v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "local Sinkhorn method for conditional distribution reconstruction of multidimensional random fields",
+      "llm_evidence_cn": "用于多维随机场条件分布重建的局部Sinkhorn方法",
+      "llm_evidence": "用于多维随机场条件分布重建的局部Sinkhorn方法",
+      "canonical_evidence": "用于多维随机场条件分布重建的局部Sinkhorn方法",
+      "llm_tldr_en": "Proposes a local Sinkhorn divergence framework to train stochastic neural networks for reconstructing conditional distributions of multidimensional random fields, with generalization guarantees and efficient local matching.",
+      "llm_tldr_cn": "多维随机场的条件分布重建在地学建模中具有重要意义。本文提出基于去偏Sinkhorn散度的局部分布匹配目标，用于训练随机神经网络，实现高效可微的条件分布重建。理论分析给出了正则化参数影响下的泛化误差界，实验表明该方法在重建质量和计算效率上均有良好表现，为地下介质随机场仿真提供了新的工具。",
+      "llm_tldr": "多维随机场的条件分布重建在地学建模中具有重要意义。本文提出基于去偏Sinkhorn散度的局部分布匹配目标，用于训练随机神经网络，实现高效可微的条件分布重建。理论分析给出了正则化参数影响下的泛化误差界，实验表明该方法在重建质量和计算效率上均有良好表现，为地下介质随机场仿真提供了新的工具。",
+      "llm_tags": [
+        "query:ag:composite"
+      ],
+      "matched_query_tag": "query:ag:composite",
+      "matched_query_text": "Papers central to 帮我检索近十年的关于人工智能驱动的地下水数值模拟的英文文献, especially work that connects or combines: LSTM groundwater forecasting; data-driven groundwater hydrology; physics-informed neural network subsurface flow; artificial intelligence groundwater simulation; deep learning groundwater level prediction; machine learning approaches for groundwater flow and transport simulation; physics informed neural network subsurface flow; artificial intelligence enhanced groundwater numerical simulation methods; machine learning based surrogate models for groundwater flow simulation.",
+      "matched_requirement_id": "req-composite-ag",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.09494v1",
+      "source": "arxiv",
+      "title": "Walk-on-Spheres Monte Carlo and deep neural network approximations of elliptic PDEs with drift and killing",
+      "abstract": "In this paper we provide Monte Carlo and deep neural network approximations for stochastic representations of solutions to linear elliptic partial differential equations with constant diffusion, drift and killing. Building on the modified Walk-on-Spheres algorithm of Beznea et al. (arXiv:2209.01432), we introduce Monte Carlo estimators that explicitly incorporate sampled random times arising in the analyzed stochastic representations. We establish uniform error bounds for these estimators and show that, under suitable assumptions, a prescribed approximation accuracy is achieved with sample complexities growing at most polynomially in both the inverse accuracy and the problem dimension. Furthermore, we prove a deep neural network approximation result for the stochastic representations. Assuming suitable neural network representations of the boundary data and the distance function to the boundary, we use the constructed Monte Carlo to design deep neural networks that approximate the representation uniformly with a number of parameters growing at most polynomially in the inverse accuracy and the problem dimension. These results extend previous complexity analyses to a broader class of elliptic equations involving drift and killing.",
+      "authors": [
+        "Konrad Kleinberg",
+        "Thomas Kruse"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "cs.LG",
+        "math.AP",
+        "math.PR"
+      ],
+      "published": "2026-08-10T12:01:46+00:00",
+      "link": "https://arxiv.org/pdf/2608.09494v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Deep neural network approximations for elliptic PDEs transferable to groundwater flow simulation",
+      "llm_evidence_cn": "深度神经网络逼近椭圆型PDE，可迁移至地下水流动模拟",
+      "llm_evidence": "深度神经网络逼近椭圆型PDE，可迁移至地下水流动模拟",
+      "canonical_evidence": "深度神经网络逼近椭圆型PDE，可迁移至地下水流动模拟",
+      "llm_tldr_en": "This paper develops Monte Carlo and deep neural network approximations for elliptic PDEs with drift and killing, proving polynomial sample complexity, offering a transferable neural PDE solver for subsurface flow simulation.",
+      "llm_tldr_cn": "该论文针对带漂移和消亡项的线性椭圆偏微分方程，提出基于修正Walk-on-Spheres算法的蒙特卡洛估计器，并引入深度神经网络逼近其随机表示解。作者证明了估计器的均匀误差界，并给出了多项式增长的样本复杂度。该方法可推广到地下水流动等由椭圆型方程控制的物理过程，为AI驱动的数值模拟提供了一条可迁移途径。",
+      "llm_tldr": "该论文针对带漂移和消亡项的线性椭圆偏微分方程，提出基于修正Walk-on-Spheres算法的蒙特卡洛估计器，并引入深度神经网络逼近其随机表示解。作者证明了估计器的均匀误差界，并给出了多项式增长的样本复杂度。该方法可推广到地下水流动等由椭圆型方程控制的物理过程，为AI驱动的数值模拟提供了一条可迁移途径。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning approaches for groundwater flow and transport simulation",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.13044v1",
+      "source": "arxiv",
+      "title": "Identifiability-aware neural ordinary differential equations for parsimonious and reliable dynamic modelling",
+      "abstract": "Neural ordinary differential equations (NODE) and hybrid NODE models provide flexible continuous-time representations of complex dynamic systems, but their expressive capacity can exceed the information content of the available data. Consequently, these models may reproduce observed trajectories while retaining weakly identifiable parameters, poorly constrained neural components, and unreliable extrapolation.   Here we introduce identifiability-aware neural ordinary differential equations (iNODE), a framework that incorporates practical identifiability into neural differential equation design. iNODE models embed neural components as explicit analytic functions within the governing equations, enabling direct sensitivity analysis, Fisher-information-based confidence intervals, and identifiability-aware architecture selection. Candidate architectures are generated under data-support constraints, jointly calibrated, and ranked according to predictive accuracy, parsimony, and parameter identifiability.   We evaluate the complete iNODE workflow against conventional NODE and hybrid NODE workflows representative of current practice using four controlled ground-truth benchmarks spanning fully data-driven and hybrid formulations, latent time-varying parameters, partial observability, and sparse or noisy measurements. Using the same training data and evaluation scenarios, the iNODE workflow selected more compact architectures, reduced parameter uncertainty, and improved extrapolation and recovery from latent-dynamics. These results establish practical identifiability as a model-design principle for parsimonious and reliable neural differential equations.",
+      "authors": [
+        "Núria Campo-Manzanares",
+        "Eva Balsa-Canto"
+      ],
+      "primary_category": "math.DS",
+      "categories": [
+        "math.DS"
+      ],
+      "published": "2026-08-13T10:09:30+00:00",
+      "link": "https://arxiv.org/pdf/2608.13044v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "identifiability-aware neural ODEs for reliable data-driven dynamic modelling",
+      "llm_evidence_cn": "可辨识性感知神经ODE用于可靠的数据驱动动态建模",
+      "llm_evidence": "可辨识性感知神经ODE用于可靠的数据驱动动态建模",
+      "canonical_evidence": "可辨识性感知神经ODE用于可靠的数据驱动动态建模",
+      "llm_tldr_en": "Introduces iNODE, which adds practical identifiability to neural ODEs by embedding neural components as analytic functions, yielding more reliable extrapolation and parsimonious models for complex dynamics.",
+      "llm_tldr_cn": "神经ODE及其混合模型虽能灵活表示复杂动态系统，但容量过大时会在观测轨迹拟合与弱可辨识参数之间失衡，导致外推可靠性差。本文提出可辨识性感知的神经ODE（iNODE），将神经组件显式嵌入控制方程，并在设计阶段整合实际可辨识性分析。实验表明iNODE在保证拟合精度的同时增强了参数约束与泛化能力，产出更为精简可靠的动态模型，为水文地质等连续时间系统建模提供了有力工具。",
+      "llm_tldr": "神经ODE及其混合模型虽能灵活表示复杂动态系统，但容量过大时会在观测轨迹拟合与弱可辨识参数之间失衡，导致外推可靠性差。本文提出可辨识性感知的神经ODE（iNODE），将神经组件显式嵌入控制方程，并在设计阶段整合实际可辨识性分析。实验表明iNODE在保证拟合精度的同时增强了参数约束与泛化能力，产出更为精简可靠的动态模型，为水文地质等连续时间系统建模提供了有力工具。",
+      "llm_tags": [
+        "query:ag:composite"
+      ],
+      "matched_query_tag": "query:ag:composite",
+      "matched_query_text": "Papers central to 帮我检索近十年的关于人工智能驱动的地下水数值模拟的英文文献, especially work that connects or combines: LSTM groundwater forecasting; data-driven groundwater hydrology; physics-informed neural network subsurface flow; artificial intelligence groundwater simulation; deep learning groundwater level prediction; machine learning approaches for groundwater flow and transport simulation; physics informed neural network subsurface flow; artificial intelligence enhanced groundwater numerical simulation methods; machine learning based surrogate models for groundwater flow simulation.",
+      "matched_requirement_id": "req-composite-ag",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.12286v1",
+      "source": "arxiv",
+      "title": "PatternFormer: Learning Multiple Solution Patterns in Reaction--Diffusion Systems",
+      "abstract": "Many nonlinear models across physics, chemistry, and biology exhibit multiple solutions for the same parameters, and capturing this entire solution set is essential for understanding pattern-forming systems. Yet existing learned surrogates are fundamentally single-valued: neural operators map each parameter to a single output, and physics-informed neural networks converge to one branch. We develop \\textbf{PatternFormer} (PF), a large language model-based framework for learning the multiple solutions of nonlinear partial differential equations. By transforming unordered coexisting solutions into canonical sequences, PF produces structured solution sets in a single autoregressive pass, terminating automatically for finite families and enforcing physical residual constraints for unbounded ones. On nonlinear elliptic problems it recovers all solution branches in one inference step; on Gray--Scott it generates coexisting Turing patterns, including physically valid states absent from the reference data and beyond training. PF can also be sequentially fine-tuned across multistable systems, toward general foundation models for solution landscapes.",
+      "authors": [
+        "Zhipeng Chang",
+        "Wenpeng Yin",
+        "Wenrui Hao"
+      ],
+      "primary_category": "math-ph",
+      "categories": [
+        "math-ph"
+      ],
+      "published": "2026-08-12T17:31:38+00:00",
+      "link": "https://arxiv.org/pdf/2608.12286v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "LLM-based surrogate for multiple PDE solutions, adaptable to subsurface flow modeling",
+      "llm_evidence_cn": "基于语言模型的多PDE解代理模型，可适配地下水流建模",
+      "llm_evidence": "基于语言模型的多PDE解代理模型，可适配地下水流建模",
+      "canonical_evidence": "基于语言模型的多PDE解代理模型，可适配地下水流建模",
+      "llm_tldr_en": "PatternFormer employs a large language model to generate multiple coexisting solutions of nonlinear PDEs in one autoregressive pass, addressing the multivalued surrogate issue; this approach is transferable to groundwater flow with multiple steady states.",
+      "llm_tldr_cn": "现有神经代理模型对同一参数只能输出单一解，但许多物理系统如反应-扩散共存多个解。PatternFormer利用大语言模型将无序共存解转化为规范序列，通过单次自回归生成涌现出多个结构化解集。该方法突破了替代模型的单值限制，并能自动终止有限解族。其原理可迁移至地下水流等存在多解的非线性物理系统。",
+      "llm_tldr": "现有神经代理模型对同一参数只能输出单一解，但许多物理系统如反应-扩散共存多个解。PatternFormer利用大语言模型将无序共存解转化为规范序列，通过单次自回归生成涌现出多个结构化解集。该方法突破了替代模型的单值限制，并能自动终止有限解族。其原理可迁移至地下水流等存在多解的非线性物理系统。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.13490v1",
+      "source": "arxiv",
+      "title": "DD-RNO: A Domain-Decomposed Routed Neural Operator for Airfoil Flow Prediction",
+      "abstract": "Deep learning surrogates for RANS flow prediction around airfoils face two persistent bottlenecks. A single neural architecture cannot simultaneously resolve sharp near-wall boundary layers and smooth far-field potential flow. Additionally, force prediction is undermined by the numerical instability of computing wall-normal velocity gradients from continuous-field approximations.   Both of these points are addressed with a DD-RNO (domain-decomposed routed neural operator), combining a spectral geometry encoder with two physics-guided innovations: (a) a differentiable domain routing mechanism that partitions the flow field into inviscid, boundary-layer, and wake regimes---dispatching query points to specialized regional decoders, and (b) learned canonical quadrature (LCQ), which replaces unstable pressure integration with flow-conditioned, learned integration weights that predict lift and drag directly from surface pressure.   On the AirfRANS benchmark, DD-RNO cuts velocity field mean-square error (MSE) by 17$x$ ($u_x$) and 12$x$ ($u_y$) over the strongest baseline, widening to 23$x$ under out-of-distribution Reynolds extrapolation---evidence that the routing mechanism generalizes with the physics it encodes rather than merely fitting the training distribution. LCQ reduces drag MSE by 7.5$x$ relative to conventional pressure integration and raises drag rank correlation from $ρ= 0.250$ to $ρ= 0.997$. Ablations confirm that both components are indispensable to performance: removing domain routing increases velocity error by 8.2$x$, and removing LCQ increases relative drag error more than 40-fold. At ~144 ms per sample---a 10,000$x$ speedup over conventional RANS solvers---DD-RNO offers a surrogate accurate and fast enough for real-time aerodynamic design and optimization loops.",
+      "authors": [
+        "T. A. Mehta",
+        "P. S. Bhati",
+        "H. D. Akolekar"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-08-13T17:18:25+00:00",
+      "link": "https://arxiv.org/pdf/2608.13490v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "neural operator surrogate for PDE flow; transferable to groundwater flow surrogate modeling",
+      "llm_evidence_cn": "面向偏微分方程流场的神经算子代理模型，可迁移至地下水流模拟代理",
+      "llm_evidence": "面向偏微分方程流场的神经算子代理模型，可迁移至地下水流模拟代理",
+      "canonical_evidence": "面向偏微分方程流场的神经算子代理模型，可迁移至地下水流模拟代理",
+      "llm_tldr_en": "Domain-decomposed routed neural operator improves deep learning surrogates for RANS airfoil flow, offering a reusable surrogate-model strategy applicable to groundwater flow simulation.",
+      "llm_tldr_cn": "针对深度学习流体代理模型难以同时分辨近壁边界层与远场势流的问题，提出域分解路由神经算子（DD-RNO），利用谱几何编码和可微域路由将流场划分为无粘区、边界层与尾流区并派发给专用解码器。该设计缓解了近壁速度梯度数值不稳定导致的力预测困难，为复杂流场模拟提供了一种可复用的神经网络代理范式，也可用于地下水流等偏微分方程流动模拟的代理建模。",
+      "llm_tldr": "针对深度学习流体代理模型难以同时分辨近壁边界层与远场势流的问题，提出域分解路由神经算子（DD-RNO），利用谱几何编码和可微域路由将流场划分为无粘区、边界层与尾流区并派发给专用解码器。该设计缓解了近壁速度梯度数值不稳定导致的力预测困难，为复杂流场模拟提供了一种可复用的神经网络代理范式，也可用于地下水流等偏微分方程流动模拟的代理建模。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

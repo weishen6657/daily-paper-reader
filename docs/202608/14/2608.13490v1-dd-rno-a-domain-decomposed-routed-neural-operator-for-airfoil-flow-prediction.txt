@@ -1,0 +1,548 @@
+Title: DD-RNO: A Domain-Decomposed Routed Neural Operator for Airfoil Flow Prediction
+
+URL Source: https://arxiv.org/pdf/2608.13490v1
+
+Published Time: Fri, 14 Aug 2026 01:22:26 GMT
+
+Number of Pages: 27
+
+Markdown Content:
+# Highlights 
+
+• Proposed a physics-guided neural operator surrogate for discretization-invariant RANS prediction around arbi-trary airfoils. 
+
+• Reduced velocity field MSE by up to 23 × compared to baseline neural operator surrogates. 
+
+• Introduced Learned Canonical Quadrature, reducing drag prediction error by 7.5 ×.
+
+• Achieved approximately 10,000 × speedup over conventional RANS solvers, enabling rapid surrogate-based aerodynamic design and optimization. arXiv:2608.13490v1 [physics.flu-dyn] 13 Aug 2026 DD-RNO: A Domain-Decomposed Routed Neural Operator for Airfoil Flow Prediction 
+
+T. A. Mehta a, P. S. Bhati a, H. D. Akolekar b, ∗  
+
+> aDepartment of Computer Science &Engineering, Indian Institute of Technology Jodhpur, Jodhpur, India
+> bDepartment of Aerospace Engineering, Indian Institute of Technology Jodhpur, Jodhpur, India
+
+Abstract 
+
+Deep learning surrogates for RANS flow prediction around airfoils face two persistent bottlenecks. A single neural architecture cannot simultaneously resolve sharp near-wall boundary layers and smooth far-field potential flow. Addi-tionally, force prediction is undermined by the numerical instability of computing wall-normal velocity gradients from continuous-field approximations. Both of these points are addressed with a DD-RNO (domain-decomposed routed neural operator), combining a spectral geometry encoder with two physics-guided innovations: (a) a di ff erentiable do-main routing mechanism that partitions the flow field into inviscid, boundary-layer, and wake regimes —dispatching query points to specialized regional decoders, and (b) learned canonical quadrature (LCQ), which replaces unstable pressure integration with flow-conditioned, learned integration weights that predict lift and drag directly from surface pressure. On the AirfRANS benchmark, DD-RNO cuts velocity field mean-square error (MSE) by 17 × (ux) and 12 ×
+
+(uy) over the strongest baseline, widening to 23 × under out-of-distribution Reynolds extrapolation—evidence that the routing mechanism generalizes with the physics it encodes rather than merely fitting the training distribution. LCQ re-duces drag MSE by 7.5 × relative to conventional pressure integration and raises drag rank correlation from ρ = 0.250 to ρ = 0.997. Ablations confirm that both components are indispensable to performance: removing domain routing increases velocity error by 8.2 ×, and removing LCQ increases relative drag error more than 40-×. At ∼144 ms per sample—a 10,000 × speedup over conventional RANS solvers—DD-RNO o ff ers a surrogate accurate and fast enough for real-time aerodynamic design and optimization loops. 
+
+Keywords: Surrogate Modeling, Aerodynamics, Deep Learning, Neural Operators, Domain Decomposition 
+
+> ∗Corresponding author
+
+Nomenclature Roman Symbols 
+
+c Airfoil chord length [m] 
+
+CD Total drag coe ffi cient [–] 
+
+CL Total lift coe ffi cient [–] 
+
+CD,0 Zero-lift drag coe ffi cient [–] 
+
+Cp Surface pressure coe ffi cient [–] 
+
+m/c Airfoil maximum camber ratio [%] 
+
+p Pressure field [Pa] Re Reynolds number based on chord length [–] 
+
+t/c Airfoil maximum thickness ratio [%] 
+
+ux, uy Streamwise and transverse velocity components [m s −1]
+
+U∞ Free-stream velocity magnitude [m s −1]
+
+w Global flow latent conditioning state [–] 
+
+Wcanon Learned canonical quadrature integration weights [–] 
+
+x = (x, y) Query coordinate vector in physical domain [m] 
+
+Greek Symbols 
+
+α Angle of attack [◦]
+
+δBL Local turbulent boundary layer thickness envelope [m] 
+
+νt Turbulent kinematic eddy viscosity [m 2 s−1]
+
+Φ(x) Signed Distance Function (SDF) to airfoil surface [m] 
+
+χBL , χ wake , χ inv Spatial domain decomposition routing weights [–] 
+
+Acronyms 
+
+BL Boundary Layer CFD Computational fluid dynamics CNN Convolutional neural network DD-RNO Domain-decomposed routed neural operator FiLM Feature-wise linear modulation FNO Fourier neural operator GELU Gaussian error linear unit GNN Graph neural network LCQ Learned canonical quadrature LGI Learned geometric integration MAE Mean Absolute Error MLP Multilayer perceptron MSE Mean squared error OOD Out-of-distribution PDE Partial di ff erential equation PINN Physics-informed neural network POD Proper orthogonal decomposition RANS Reynolds-averaged Navier-Stokes SDF Signed distance function 
+
+1. Introduction 
+
+Computational fluid dynamics (CFD) simulations are the cornerstone of industrial aerodynamic analysis. How-ever, aerodynamic design often requires thousands of CFD evaluations, resulting in high computational costs and extended design cycles. Consequently, even industry-standard CFD approaches can become prohibitively expensive 2for iterative tasks such as shape optimization, uncertainty quantification, and design space exploration. This has moti-vated substantial interest in data-driven surrogate models that can approximate CFD solutions at a fraction of the cost [1, 2]. The aerospace community has a long-standing tradition of utilizing surrogate models to replace expensive CFD simulations within design optimization loops [3, 4]. Early approaches relied on response surface methods, Kriging, and radial basis functions to approximate scalar quantities of interest directly from geometric parameters. While highly e ff ective for low-dimensional design spaces, these classical methods were incapable of reconstructing full flow fields. To extend surrogate modeling to full-field reconstruction, projection-based reduced-order models built on POD were developed [5, 6]. POD-based surrogates represent the flow field as a linear combination of dominant modes extracted from an ensemble of CFD data. Although these methods achieve significant computational e ffi ciency, their linear and global formulations struggle to capture strongly nonlinear phenomena like flow separation or shock waves. The advent of deep learning introduced convolutional architectures to RANS flow-field prediction. Bhatnagar et al. [7] trained a convolutional neural network (CNN) on rasterized signed-distance representations of airfoil ge-ometries to predict velocity and pressure fields, demonstrating massive speedups over traditional CFD. Thuerey et al. [8] employed modern U-Net architectures to study the coupled e ff ects of training dataset size and network capacity. Similarly, Sekar and Khoo [9] achieved comparable predictive accuracy using a CNN trained on a similar rasterized geometry representation. Grid-based CNNs established the viability of learning full RANS fields straight from geom-etry, but because their outputs rely on a fixed resolution, they are bound to the specific pixel grid used to train them, and must be re-trained for new grid resolutions or sizes. A parallel line of research focuses on data-driven turbulence modeling, where machine learning is used to augment or replace classical turbulence closures [10, 11, 12, 13, 14]. These strategies learn corrections to the Reynolds stress tensor or eddy viscosity from high-fidelity data and are typically coupled back into an iterative solver. Turbulence-related quantities exhibit a structured, data-supported regularity that can be systematically exploited to enhance pre-dictive accuracy. Graph neural networks (GNNs) have become a standard framework for physics simulations on unstructured meshes. By aggregating information from neighboring nodes, GraphSAGE [15] enabled models to generalize to entirely new graph structures. To capture multi-scale features across irregular domains, Graph U-Nets [16] introduced hierarchical graph pooling. MeshGraphNets [17] then applied this approach directly to physical systems, showing that learned graph solvers can accurately mimic complex dynamics on unstructured meshes. Building on this idea, Sanchez-Gonzalez et al. [18] demonstrated that graph-based models could simulate a wide variety of physics, ranging from fluids to rigid bodies. Yet, despite these strengths, mesh-based GNNs are still tied to their underlying graph topol-ogy. Because predictions only happen at fixed node locations, the message-passing mechanism naturally incorporates assumptions about local connectivity and mesh resolution. As a result, these models cannot be queried at arbitrary, continuous coordinates. This is a major drawback for tasks that rely on adaptive sampling or resolution-independent predictions.The AirfRANS benchmark [19] established a standardized evaluation protocol for such methods and pro-vided the baseline performance metrics against which subsequent developments are evaluated. Operator learning approaches [20] brought a new approach to surrogate modeling by learning direct mappings between infinite-dimensional function spaces, unlike neural networks which process finite dimensional vectors. This helps them break free from the discretization dependencies of traditional neural networks. For example, the Fourier Neural Operator (FNO) [21] parameterizes integral kernel operators in the Fourier domain, enabling discretization-invariant predictions and smooth generalization across di ff erent grid resolutions when solving PDE systems. On the other hand, DeepONet [22] pairs a branch network with a trunk network to map input functions straight to output func-tions. To keep these models grounded in real physics, physics-informed variants [23] integrate PDE residual losses into training. To tackle irregular shapes, Geo-FNO [24] maps physical domains onto a uniform computational grid via a learned geometric deformation, making fast Fourier transforms (FFTs) usable on non-rectangular geometries. How-ever, relying on these deformation maps introduces approximation errors and often struggles around sharp geometric features, such as the leading edge of an airfoil. On top of that, spectral methods naturally struggle with sharp, highly localized details like boundary layers [25]—which is precisely why using specialized decoders for di ff erent regions of a flow field is so attractive. Coordinate-based neural fields, also known as implicit neural representations (INRs), have gained significant trac-tion in computer vision and graphics for representing shapes, radiance fields, and complex scenes. These networks parameterize functions as continuous mappings from spatial coordinates to output values, achieving complete reso-3lution independence by construction. SIREN [26] demonstrated that periodic activation functions allow coordinate networks to accurately represent high-frequency signal details that standard Multi-Layer Perceptrons (MLPs) with ReLU activations typically fail to capture due to spectral bias. This insight was further extended by Tancik et al. [27], who showed that mapping input coordinates to high-dimensional sinusoidal features prior to the standard MLP layers yielded similar performance benefits. Consequently, Fourier feature networks have become a standard tool for learning functions with high-frequency variations. For physical systems, Physics-Informed Neural Networks (PINNs) [28] use coordinate-based architectures to solve PDEs directly, incorporating the governing physical equations straight into the loss function. To help standard PINNs tackle larger, more complex geometries, Extended PINNs [29] introduced space-time domain decomposition, assigning dedicated subnetworks to di ff erent subdomains. Even so, both PINNs and their domain-decomposed vari-ants consistently struggle with enforcing tricky boundary conditions and scaling up to turbulent regimes [30]. Scaled frameworks like SimNet [31] and DeepXDE [32] have made training these models much easier to work with, but problems with high-Reynolds-number flows persist. When it comes to aerodynamic surrogate modeling, CORAL [33] introduced an encode-process-decode framework that compresses geometric representations—such as SDF grids and decodes them directly into physical fields at specific query coordinates. More recently, MARIO [34] streamlined this process by cutting out the separate latent-processing step, delivering strong results on the AirfRANS data-scarce benchmark. Despite these advances, standard coordinate-based networks have a fundamental problem; a single network with uniform capacity is forced to compromise between over-smoothing sharp near-wall gradients and introducing un-wanted high-frequency noise in the far field. A domain-decomposed architecture can solve this exact trade-o ff . By routing queries to specialized decoders, the network matches its representation capacity directly to the distinct spectral demands of each flow region. To summarize, current surrogate modeling approaches come with clear trade-o ff s: i)mesh-based GNNs deliver high accuracy, but they remain fundamentally tied to the input grid discretization, ii)FNOs provide discretization invariance, but they depend heavily on structured computational grids, iii)standard coordinate-based networks o ff er excellent geometric flexibility, yet they struggle to resolve multi-scale physical features simultaneously. A separate challenge is integrating aerodynamic forces. Lift and drag are obtained by integrating surface pressure and shear stress, quantities sensitive to boundary-layer resolution. Multi-task optimization with volumetric and force supervision often leads to trade-o ff s where one task dominates learning. Furthermore, conventional pressure inte-gration with fixed geometric weights is sensitive to discretization, while viscous drag requires computing ∂u/∂ n|wall ,which is numerically unstable when derived from predicted velocity fields [35, 36]. The DD-RNO framework is designed to overcome these limitations through three core innovations. This frame-work builds upon and extends a rich body of literature as discussed above. The proposed innovations represent a novel methodology within the context of aerodynamic surrogate modeling to the best of the authors’ knowledge. First, a hybrid spectral-implicit architecture pairs the global contextual awareness of spectral operators with the local querying flexibility of coordinate-based neural fields. An FNO-based spectral geometry encoder processes the continuous geometric input to build a spatial feature map. Individual query points are then enriched by combin-ing multi-scale Fourier positional encodings with features locally probed from this map using bilinear interpolation. This design e ff ectively balances global geometric context with sharp local resolution across arbitrary, discretization-independent coordinates. Second, a physics-guided domain routing mechanism splits the flow field into three physically distinct regions: the inviscid outer flow, the boundary layer, and the trailing wake. Rather than forcing a single network to resolve all physical scales simultaneously, smooth, di ff erentiable gates driven by wall distance and turbulent boundary layer scaling ( δBL ∝ Re −1/5) route query points to specialized regional decoders. This structural partitioning allows each decoder to specialize in its targeted flow region. Third, learned canonical quadrature (LCQ) is introduced as a novel force-prediction module within the DD-RNO framework. Traditional surrogates typically estimate forces either through direct scalar regression (which dis-cards spatial integration context) or standard numerical pressure integration (which remains sensitive to grid discretiza-tion and relies on unstable wall-normal velocity gradients). LCQ resolves this dilemma by mapping predicted surface pressure distributions onto a standardized canonical manifold while learning flow-conditioned integration weights. This mechanism enables the model to integrate surface pressure distributions directly into total lift ( CL) and drag ( CD)coe ffi cients while implicitly accounting for geometry-dependent viscous drag. 4DD-RNO is designed to address these core challenges on two-dimensional aerodynamic flow benchmarks [19] by establishing a unified, discretization-invariant framework for simultaneous spatial field prediction and continuous force integration. The remainder of this paper is organized as follows. Section 2 presents the DD-RNO architecture in detail. Section 3 describes the experimental setup and presents quantitative and qualitative results. Section 4 concludes the paper and discusses future directions. 
+
+2. Methodology 
+
+Figure 1 provides a high-level overview of the DD-RNO pipeline. Each component is described in detail below, explaining the physical and engineering decisions behind design choices. 
+
+2.1. Dataset 
+
+The proposed DD-RNO architecture is trained and evaluated on the AirfRANS dataset [19]. The dataset consists of 1,000 steady-state 2D RANS simulations computed using unstructured OpenFOAM meshes with over 200 ,000 nodes, utilizing the Spalart-Allmaras turbulence model for closure. The operational parameter space spans: 
+
+• Reynolds number (Re) range: Re ∈ [2 × 10 6, 6 × 10 6], 
+
+• Angle of attack ( α) range: α ∈ [−5◦, 15 ◦]. 
+
+2.2. Problem Formulation 
+
+Let Ω ⊂ R2 denote the fluid domain bounded internally by the solid airfoil surface ∂Ωwall and externally by the far-field boundary ∂Ω∞. The steady, incompressible RANS equations are: 
+
+∇ · u = 0, (1) (u · ∇ )u + 1
+
+ρ ∇p − ∇ · hνeff (∇u + ∇u⊤)i = 0, (2) 
+
+νeff (x) = ν + νt(x), (3) where Eq. (1) is the continuity equation, Eq. (2) is the steady-state momentum equation, and Eq. (3) defines the eff ective kinematic viscosity as the sum of molecular kinematic viscosity ν and turbulent eddy viscosity νt.The Spalart-Allmaras (SA) model [37] is selected for turbulence closure because it is specifically optimized for external aerodynamic applications and is the standard model used to generate the ground-truth simulations in the AirfRANS dataset. Under steady-state conditions, the model solves a transport equation for a working turbulent variable ˜ ν:(u · ∇ )˜ ν = cb1 ˜S ˜ν + 1
+
+σ
+
+h∇ · (( ν + ˜ν)∇˜ν) + cb2|∇ ˜ν|2i − cw1 fw
+
+ ˜ν
+
+s
+
+2
+
+, (4) where s (abbreviated from s(x, ∂ Ωwall )) is the shortest distance to the closest solid wall boundary ∂Ωwall , and the turbulent eddy viscosity is computed as νt = ˜ν fv1 with fv1 = χ3/(χ3 + c3
+
+> v1
+
+) and χ = ˜ν/ν .The physical boundary conditions are formulated as follows: 
+
+u|∂Ωwall = 0, u|∂Ω∞ = U∞(cos α, sin α)⊤, (5) where u|∂Ωwall = 0 represents the physical no-slip and no-penetration boundary conditions on the solid wall (imply-ing both normal and tangential velocity components vanish at the wall), and U∞ = 1 is the non-dimensionalized (normalized) freestream velocity at the far-field boundary ∂Ω∞ with the angle of attack α within the dataset range. The learning objective is to approximate the mapping: 
+
+Fθ : ( Φ(x), α, Re) 7 → ˆux(x), ˆuy(x), ˆp(x), ˆνt(x) , (6) where Φ : R2 → R is the SDF representing the airfoil geometry, defined by |∇ Φ| = 1, Φ < 0 inside the airfoil, and 
+
+Φ = 0 on the wall. 5Figure 1: Overview of the DD-RNO architecture. 
+
+62.3. Geometry and Flow Encoding 
+
+2.3.1. Signed Distance Function 
+
+To represent the arbitrary shape of an airfoil in a format suitable for deep learning, the SDF [38], denoted by Φ(x), is utilized. Conceptually, the SDF is a scalar field where the value at any spatial coordinate x represents the shortest Euclidean distance to the airfoil boundary ∂Ωwall :
+
+Φ(x) =
+
+
+
+−s(x, ∂ Ωwall ) if x is inside the airfoil ,
+
+0 if x ∈ ∂Ωwall ,
+
+s(x, ∂ Ωwall ) if x is outside the airfoil ,
+
+(7) where s(x, ∂ Ωwall ) = inf y∈∂Ωwall ∥x − y∥ represents the shortest Euclidean distance from the query point x to the solid wall boundary ∂Ωwall . Here, the infimum inf denotes the greatest lower bound of the distance set, representing the absolute minimum distance from the coordinate point x to any point y on the boundary curve ∂Ωwall .SDF is chosen as the primary geometric representation instead of a binary occupancy grid or a list of boundary coordinates for three reasons: 1. Continuous spatial context: Unlike binary grids, which introduce sharp discontinuities at boundaries that de-grade neural network convergence, the SDF provides a smooth, continuous gradient field. This ensures that every point in the flow domain is immediately aware of its relative proximity and orientation to the solid wall. 2. Physical alignment with aerodynamics: Fluid flow physics, particularly boundary layer growth and viscous shear stresses, are fundamentally governed by the distance to the solid wall. By explicitly embedding this distance metric ( Φ(x)) into the input space, the network can naturally learn region-specific scaling laws without needing to compute them from coordinates. 3. Analytical geometric features: Because the SDF is continuous and di ff erentiable, geometric properties like the wall-normal unit vector ˆ n(x) can be computed analytically at any coordinate: ˆn(x) = ∇Φ(x)
+
+∥∇ Φ(x)∥ . (8) This eliminates the need for geometric discretization or mesh-based approximations when resolving surface pressures and forces. For numerical processing, the SDF is discretized on a 64 × 64 Cartesian grid spanning the chord-normalized domain [ −0.5, 1.5] × [−1, 1]. This resolution was selected through a grid convergence study: dropping to a coarser 32 × 32 grid degraded FNO feature quality (boosting velocity MSE by 42%), whereas stepping up to 128 × 128 o ff ered only marginal gains (a 3% MSE reduction) at four times the computational cost. The spectral geometry encoder processes this 64 × 64 grid primarily to extract global, low-frequency geometric features like airfoil camber and thickness. The high-frequency, near-wall details and steep boundary-layer gradi-ents are instead handled by continuous, coordinate-based decoders. These decoders query continuous coordinates 
+
+x directly, receiving the exact continuous distance Φ(x) and analytical normal vectors ˆ n(x). Paired with multi-scale Fourier features that act as high-pass filters, this setup enables the decoders to capture sharp velocity gradients at sub-grid precision—e ff ectively decoupling the resolution of the geometry encoder from the physical scale of the boundary layer. 
+
+2.3.2. Flow Condition Encoding 
+
+To stabilize training, the input physical parameters are mapped into a standardized numerical range. First, the angle of attack α is encoded using trigonometric functions: 
+
+eα = (sin α, cos α, sin 2 α)⊤. (9) Conditioning neural networks on raw angles often introduces numerical instabilities near periodic boundaries. Map-ping α to sine and cosine terms (sin α, cos α) projects the angle onto a continuous circular coordinate system, preserv-ing continuity across the domain. The third term, sin 2 α, is explicitly included to capture second-harmonic physical 7trends. Aerodynamic forces and integrated coe ffi cients are strongly tied to quadratic trigonometric relationships such as lift scaling with sin 2 α across broad operating ranges, or induced drag scaling with sin 2 α = 1−cos 2 α 
+
+> 2
+
+. Feeding the double-frequency harmonic sin 2 α directly into the network lets it map these second-order geometric projections and non-linear transitions without needing to approximate the trigonometric identity internally. Second, because Reynolds numbers in external aerodynamics span several orders of magnitude (2 ×10 6 to 6 ×10 6), the Reynolds number is log-compressed to linearize its range: 
+
+eRe = log 10 (Re /10 6). (10) This logarithmic scaling provides the network with uniform sensitivity to flow transitions across both lower and higher Reynolds number regimes. The final flow condition vector is: 
+
+c = [eα; eRe ] ∈ R4. (11) 
+
+2.3.3. Multi-Scale Fourier Features 
+
+When neural networks are trained to map continuous spatial coordinates x = [x, y]⊤ to physical fields, they su ff er from a well-documented phenomenon known as "spectral bias" [25]. As a result of this, they naturally prioritize learning smooth, low-frequency patterns, making it di ffi cult to resolve sharp, high-frequency details like thin boundary layers near the airfoil surface. To overcome this bottleneck, query coordinates are mapped into a high-dimensional space using multi-scale Fourier features [27]: 
+
+γ(x; B) = [sin( B⊤x); cos( B⊤x)] , (12) where B is a projection matrix containing a log-spaced spectrum of spatial frequencies spanning eight scales ( L = 8). For a 2D spatial coordinate x = [x, y]⊤ ∈ R2, applying sine and cosine projections across these eight frequency scales produces 8 × 2 × 2 = 32 features. Concatenating these spectral terms with the 2 raw spatial coordinates yields a 34-dimensional positional embedding γMS (x) ∈ R34 . By projecting coordinates across multiple scales simultaneously, this mapping e ff ectively acts as a multi-band spectral filter. This allows the downstream decoders to resolve both the slowly varying potential flow field (low frequencies) and the sharp near-wall velocity gradients (high frequencies) simultaneously. This embedding is passed directly as input to each regional decoder. 
+
+2.4. Spectral Geometry Encoder 
+
+Instead of relying on a conventional CNN-based encoder that compresses the geometry into a single global latent vector, DD-RNO implements a 2D FNO [21] acting as a continuous Spectral Geometry Encoder. In traditional surrogate modeling, CNNs compress the input geometry into a single low-dimensional vector. While e ff ective for simple classification, this compression discards critical local geometric details (such as the exact leading-edge nose radius or trailing-edge thickness) that dictate flow separation and lift /drag characteristics. By contrast, the FNO-based encoder preserves the spatial resolution of the geometry, producing a continuous, high-dimensional spatial feature map at the same 64 × 64 resolution. The detailed architecture of this encoder is illustrated in Figure 2. 
+
+2.4.1. Fourier Layers 
+
+The FNO trunk consists of 4 spectral convolution layers. Each spectral layer performs a Fourier transform on the spatial feature map, filters out high-frequency modes (keeping the lowest 12 ×12 modes), applies a learnable complex-valued matrix multiplication to adjust these modes, and performs the inverse Fourier transform back to physical space. The layer uses Gaussian Error Linear Unit (GELU) activation functions: 
+
+h(ℓ+1) = GELU( K(h(ℓ)) + Wh (ℓ)), (13) where K represents the spectral convolution, and W is a standard 2D convolution with a 1 ×1 kernel acting as a residual path. By operating in the frequency domain, the FNO layers e ffi ciently capture global, low-frequency geometric patterns (such as overall airfoil thickness and camber distribution) and propagate this spatial context continuously across the entire computational domain. The width of the Fourier operator is set to 64 channels. 8Figure 2: Architecture of the spectral geometry encoder. 
+
+2.4.2. Latent Grid Interpolation 
+
+The output of the FNO trunk is a spatial feature map Z ∈ R64 ×64 ×64 . Because downstream decoders must predict flow variables at arbitrary continuous query coordinates x = [x, y]⊤ (rather than just on a fixed grid), a method is required to extract the geometric features at these specific query points. This is achieved through Latent Grid Interpolation (LGI), which performs bilinear probing on the discrete feature map Z:
+
+fq = BilinearProbe( Z, x) ∈ R64 . (14) By mapping continuous coordinates directly onto the FNO feature grid, LGI serves as a local bridge that transforms grid-based global geometric features into a point-specific feature vector fq. This setup smoothly recovers localized 9sub-grid details without requiring complex, multi-scale grid pyramids. 
+
+2.5. Conditioning: Mapping Network and FiLM Modulation 
+
+To make the network’s behavior depend appropriately on flow conditions, a two-stage conditioning process is implemented. Figure 3 illustrates the complete conditioning pathway. 
+
+2.5.1. Mapping Network 
+
+Rather than feeding raw flow conditions (such as the angle of attack α or Reynolds number Re) directly into the decoders alongside the spatial coordinates, a dedicated Mapping Network Mψ : R4 → R64 is employed. In standard networks, directly combining coordinate inputs with raw physical parameters forces the network to learn a highly non-linear, coupled space from scratch. The Mapping Network acts as a "disentangler" by processing the normalized flow conditions through four fully-connected layers with Leaky ReLU (LReLU) activations to produce a unified, high-dimensional w-space latent vector: 
+
+w = Mψ(c) = L4(LReLU 0.2(L3(LReLU 0.2(L2(LReLU 0.2(L1(c))))))) , (15) where each Li denotes a fully-connected layer with 64 hidden units. This latent representation w represents the "global flow state." Drawing inspiration from StyleGAN [39], this formulation ensures that smooth interpolations within w
+
+map directly to continuous, physically realistic transitions in the predicted flow field (such as a smooth change in separation onset as angle of attack increases). 
+
+2.5.2. FiLM-Conditioned Regional Field Decoders 
+
+The global flow state latent w modulates the internal layers of each regional decoder using feature-wise linear modulation (FiLM) [40]. Physically, instead of letting the decoders guess the flow conditions based on point coordi-nates, the latent state w acts as a global controller that scales (stretches) and shifts (o ff sets) the activation features at each network layer: (γ(ℓ), β (ℓ)) = Linear 64 →2d(w), (16) 
+
+h(ℓ) = LayerNorm( h(ℓ−1) ), (17) 
+
+h(ℓ) = Linear → GELU → Linear( h(ℓ)), (18) 
+
+h(ℓ) = (1 + γ(ℓ)) ⊙ h(ℓ) + β(ℓ), (19) 
+
+h(ℓ) = h(ℓ−1) + h(ℓ). (20) Here, ⊙ denotes the element-wise (Hadamard) product. The linear projection generates scale vectors γ(ℓ) and bias vectors β(ℓ) for each feature channel (where 1 represents the identity vector). The use of ( 1 + γ(ℓ)) in the scale term ensures that the modulation begins as a near-identity perturbation during initialization, which stabilizes early training. This conditioning strategy allows the decoders to process spatial coordinate tokens while dynamically adjusting their mathematical functions based on the overall flow regime (e.g., automatically shifting boundary layer scaling when transitioning from low to high Reynolds numbers). A single, unified latent vector w is broadcast to all three decoders, eliminating the need for complex, decoupled parameter paths for di ff erent physical outputs. 
+
+2.6. Specialist Decoders and Physics-Guided Routing 
+
+The core structural innovation of DD-RNO is its deployment of three specialized regional decoders, each tailored to the distinct physical scales and gradient characteristics of a specific flow subregion. In aerodynamic applications, a single, uniform decoder typically struggles to represent the entire flow field because di ff erent zones exhibit radically di ff erent physics. For instance, the far-field inviscid flow varies slowly and smoothly, whereas the boundary layer next to the airfoil contains extremely sharp velocity gradients across a thin region. Driven by spectral bias, a single network will prioritize fitting the smooth far-field behavior and miss the critical near-wall dynamics entirely. To resolve this issue, the computational domain is partitioned into three distinct physical regions—Inviscid, Boundary Layer, and Wake—with a dedicated network assigned to each. When querying the flow field at any point, spatial coordinates are routed dynamically through these networks using di ff erentiable, physics-guided gates. 10 Figure 3: Mapping network and FiLM conditioning pathway. 
+
+2.6.1. Decoder Token Representation 
+
+Rather than passing raw spatial coordinates x = [x, y]⊤ directly to the decoders, a continuous 101-dimensional input feature token T(x) is constructed at each query point: 
+
+T(x) = [γMS (x); fq; Φ(x); ˆ n(x)] ∈ R101 , (21) where γMS (x) ∈ R34 is the multi-scale Fourier coordinate encoding (enabling the network to resolve sharp features), 
+
+fq ∈ R64 represents the continuous global geometry features interpolated from the FNO trunk, Φ(x) ∈ R is the local SDF value (supplying the direct physical distance to the wall), and ˆ n(x) ∈ R2 is the wall-normal unit vector at the closest surface point. This token maps a rich mixture of local coordinate positioning, global airfoil shape context, and 11 wall proximity directly to the decoders, ensuring the networks have all the necessary geometric parameters to resolve the local flow. 
+
+2.6.2. Decoder Specifications 
+
+Each specialized decoder utilizes an MLP architecture embedded with the residual FiLM conditioning blocks described in Section 2.5. Every decoder outputs a full 4-channel vector representing the velocity fields, pressure, and eddy viscosity: ˆ q = [ˆ ux, ˆuy, ˆp, ˆνt]⊤.
+
+• Inviscid Decoder: Designed to capture the smooth, low-frequency potential flow far from the airfoil. Because it doesn’t need to resolve sharp near-wall gradients, it uses a lightweight architecture with 4 residual FiLM blocks (256 channels). 
+
+• Boundary Layer Decoder: Specialized exclusively in resolving the high-shear region next to the airfoil sur-face, where wall-normal gradients are steep and localized. To handle these high-frequency gradients, it uses a higher-capacity network with 6 residual FiLM blocks (256 channels). 
+
+• Wake Decoder: Focused on capturing downstream velocity deficits, pressure recovery, and recirculation zones behind the trailing edge. It consists of 4 residual FiLM blocks (256 channels). 
+
+2.6.3. Physics-Adaptive Domain Routing 
+
+Instead of using a complex, hard-to-interpret neural network to route query points, a simple physical rule based on turbulent boundary layer scaling is employed. The nominal boundary layer thickness δBL at a given Reynolds number is calculated dynamically using classical flat-plate turbulent scaling: 
+
+δBL (Re) = cBL · Re −1/5, (22) where cBL = 5.0 is a scaling constant. Under classical flat-plate boundary layer theory [41, 42], the turbulent boundary layer thickness scales streamwise as δ(x) ≈ 0.37 xRe −1/5 
+
+> x
+
+; at the trailing edge ( x = c = 1), this yields a boundary layer thickness of δ(c) ≈ 0.37Re −0.2. We explicitly exclude the streamwise coordinate x from the routing gate for two reasons. First, at the rounded airfoil leading edge ( x = 0), the flat-plate formula predicts a vanishing thickness ( δ(0) =
+
+0). However, physical airfoils possess a leading-edge stagnation point and a severe suction peak with extremely high velocity and pressure gradients [43, 44]. Shrinking the routing envelope to zero at the nose would route these critical near-wall gradients to the Inviscid decoder, causing immediate representation failure. Second, using a constant prefactor over the wall-normal distance Φ(x) forms a spatially uniform envelope that wraps around the entire airfoil contour. The prefactor cBL = 5.0 is selected conservatively to account for high angles of attack, where strong adverse pres-sure gradients thicken the viscous shear layer well beyond flat-plate estimates. This ensures that the boundary layer decoder’s spatial domain fully encloses all high-gradient near-wall structures, suction peaks, and incipient separation zones. Unnormalized routing masks are then evaluated using smooth sigmoid transition functions: 
+
+MBL (x) = σ δBL − Φ(x)0.1 · δBL 
+
+!
+
+, (23) 
+
+Mwake (x) = σ
+
+ x − xwake 
+
+0.05 
+
+
+
+, (24) where Φ(x) is the distance to the wall, and xwake = 1.05 represents the wake gate starting location downstream of the trailing edge [10, 13]. Physically, MBL (x) activates when a query point is close to the airfoil surface (within the boundary layer thickness δBL ), while Mwake (x) activates when a query point is downstream of the airfoil. The asymmetry between the Reynolds-adaptive boundary layer gate and the geometrically fixed wake gate is physically motivated by the coordinate directions they govern. The boundary layer mask MBL controls the cross-stream transition (normal to the wall), where the physical scale of the viscous layer is extremely thin and highly sensitive to Reynolds number. In contrast, the wake mask Mwake governs the stream-wise transition downstream of the trailing edge ( xwake =
+
+1.05). The onset of the wake is geometrically fixed by the airfoil’s physical trailing edge ( x = 1.0), and the convective 12 stream-wise transition length is primarily dictated by the chord scale rather than the Reynolds number. The fixed transition width of 0 .05 c (5% of the chord length) corresponds to the typical scale of trailing-edge pressure recovery and has been found to provide a su ffi ciently smooth transition across all test cases. The unnormalized inviscid mask is then defined as the remaining complement: 
+
+Minv (x) = (1 .0 − MBL (x)) · (1 .0 − Mwake (x)) . (25) To ensure smooth spatial transitions and prevent numerical artifacts at the boundaries between these regions, these masks are normalized to construct a partition of unity (so that the weights at any point sum to exactly 1.0): 
+
+Gk(x) = Mk(x)
+
+Pi Mi(x) for k ∈ { inv , bl , wake }. (26) The final predicted flow field is obtained by blending the outputs of the three specialized streams, weighted by their normalized routing gates: ˆq(x) = Ginv (x) ˆ qinv (x) + Gbl (x) ˆ qbl (x) + Gwake (x) ˆ qwake (x). (27) This fully di ff erentiable, physics-guided partition ensures smooth transitions across domain boundaries while allowing each sub-network to specialize in its respective flow regime. 
+
+2.7. Force Prediction via LCQ 
+
+Instead of post-processing the volumetric field with an isolated pressure refinement head, the surface pressure distribution is extracted directly by evaluating the boundary layer decoder at the solid wall boundary. The boundary layer decoder is queried at a fixed set of Ncanon = 1024 canonical surface coordinates xsurf where the signed distance field satisfies Φ(xsurf ) = 0: 
+
+Cp = Π p
+
+ BL_Dec  [γMS (xsurf, norm ); fs; 0; ˆ n(xsurf )] , w , (28) where Πp(·) is a channel-selection operator that extracts the third (pressure) component from the decoder’s 4-channel output vector [ ux, uy, p, ν t]⊤. This predicted surface pressure coe ffi cient vector, Cp ∈ RNcanon , serves as the immediate input to the force prediction pipeline. Predicting integrated aerodynamic forces (lift CL and drag CD) from surrogate model outputs is traditionally executed via discrete geometric pressure integration over the airfoil surface: 
+
+CL = 1
+
+q∞c
+
+X
+
+> j
+
+p j(n j · ˆeL)ℓ j, CD = 1
+
+q∞c
+
+X
+
+> j
+
+p j(n j · ˆeD)ℓ j, (29) where ˆ eL = (− sin α, cos α)⊤ and ˆ eD = (cos α, sin α)⊤ define the lift and drag vector orientations relative to the chord line. However, this classical discrete summation is highly sensitive to surface grid resolution and local interpolation errors. More importantly, standard pressure integration cannot capture skin friction (viscous) drag on its own, as that requires computing wall-normal velocity gradients ( ∂u/∂ n|wall )—an operation notorious for numerical instability when evaluated on neural network approximations of velocity fields. The proposed LCQ framework bypasses these geometric and numerical limitations by reformulating force inte-gration as a learned, flow-conditioned inner product. A 3-layer MLP maps the global flow condition latent w to a set of dynamic canonical quadrature weights: 
+
+Wcanon = fLCQ (w) ∈ R2×Ncanon . (30) The total integrated aerodynamic forces are then computed via the direct dot product: 
+
+" ˆCL
+
+ˆCD
+
+#
+
+=
+
+> Ncanon
+
+X
+
+> j=1
+
+Wcanon , j(w) · C( j) 
+
+> p
+
+. (31) This formulation delivers three key advantages: (1) it lets the network learn optimal integration weights that adapt dy-namically to changing flow regimes, (2) it naturally compensates for spatial discretization errors across the canonical 13 boundary representation, and (3) it statistically reconstructs total aerodynamic drag directly from the surface pressure distribution and global latent state. By capturing both pressure and viscous components simultaneously, it isolates a subtle yet statistically significant geometry-dependent viscous drag signal beyond flow-condition confounds. Conse-quently, this design eliminates the need for standalone viscous drag correction factors or unstable wall-normal gradient calculations. The complete end-to-end pipeline is illustrated in Figure 4. While data-driven integration and learned quadrature methods (such as the Empirical Cubature Method [45] or Energy-Conserving Sampling and Weighting[46]) are established in computational physics for hyper-reduction of reduced-order models, LCQ di ff ers from these classical formulations in three fundamental aspects. First, traditional hyper-reduction quadrature constructs a static set of weights and nodes o ffl ine to minimize PDE residuals. In con-trast, LCQ dynamically predicts the integration weights Wcanon (w) at inference time as a function of the global flow latent state, enabling the integration to adapt to shifting flow regimes (such as transitioning or separated flow states). Second, rather than acting purely as a numerical approximator of a known integral, LCQ is trained end-to-end to implicitly reconstruct the total force—partially capturing the unmodeled skin friction (viscous) drag directly from pressure distributions without querying velocity fields or computing unstable wall-normal gradients. Finally, it inte-grates continuous fields queried over a standardized canonical coordinate system, ensuring geometric flexibility across arbitrary airfoil profiles. To verify that the LCQ module partially recovers true physical viscous drag rather than simply acting as an ar-bitrary fix for local pressure errors, a post-hoc decomposition analysis is conducted. In aerodynamics, total drag is the sum of pressure drag and viscous drag ( CD = CDp + CD f ). We define the model’s implicit drag correction as 
+
+∆ ˆCD = ˆCD − CDp ,geom ( ˆ Cp), where ˆ CD is the total drag predicted by LCQ, and CDp ,geom ( ˆ Cp) is the pressure drag ob-tained via standard geometric integration over the predicted surface pressure distribution ˆ Cp. The correlation between this implicit correction ∆ ˆCD and the ground-truth viscous drag CD f is evaluated from the RANS simulations across the test split ( N = 200). Because both terms depend heavily on operating conditions, a partial correlation analysis is run to control for the confounding e ff ects of angle of attack ( α) and Reynolds number (log 10 (Re)). This revealed a statistically significant positive relationship, yielding a partial Spearman correlation of ρ = 0.3365 ( pval < 0.001, partial R2 ≈ 0.081). While highly significant, the modest R2 value indicates that geometry-specific features explain only a small fraction ( ≈ 8.1%) of the residual viscous drag variance once flow conditions are controlled for. This implies that while LCQ does capture some geometry-dependent viscous signals (such as thickness-induced skin fric-tion variations), a lot of the uncorrected correlation is driven by flow-condition variables ( α and Re) rather than a complete, standalone recovery of viscous physics. Additionally, the correlation between the learned LCQ weights and traditional analytical integration weights is virtually zero ( ρ ≈ − 0.02, with a 95% confidence interval of [ −0.16 , 0.12]). This near-zero correlation shows that the network is not merely mimicking standard geometric pressure integration (which would only yield the pressure drag CDp ). Instead, it learns an alternative mapping that combines surface pres-sure signatures with the global flow latent state w to achieve statistical error cancellation while implicitly capturing viscous drag. 
+
+2.8. Training and Losses 
+
+2.8.1. Loss Functions 
+
+The total loss objective is optimized to balance field reconstruction with integrated force predictions: 
+
+Ltotal = λfield Lfield + λforce Lforce . (32) The field loss evaluates a weighted MSE across the full suite of flow variables, defined as q = [ux, uy, p, ν t]⊤.To prioritize training resolution inside the boundary layer where downstream force computations exhibit extreme sensitivity, an exponential weighting function based on the SDF is applied: 
+
+W(x) = exp( −15 .0 · | Φ(x)|) + 0.1, (33) 
+
+Lfield = 1
+
+BQ 
+
+X
+
+> b,q
+
+W(xb,q)h(ˆ ux − ux)2 + (ˆ uy − uy)2
+
++ ( ˆ p − p)2 + (ˆ νt − νt)2i, (34) 14 Figure 4: LCQ surface pressure and force prediction pipeline. 
+
+where B represents the batch size and Q denotes the number of sampled query coordinates. The corresponding force loss calculates the MSE over the Z-score standardized lift and drag coe ffi cients: 
+
+Lforce = 1
+
+B
+
+X
+
+> b
+
+h( ˆ CL,b − CCFD  
+
+> L,b
+
+)2 + ( ˆ CD,b − CCFD  
+
+> D,b
+
+)2i . (35) 
+
+2.8.2. Loss Balancing 
+
+While the codebase supports adaptive multi-task uncertainty weighting [47] as an alternate runtime configuration, empirical testing demonstrated that fixed, static loss weights provide robust and highly reproducible convergence. For all final publication benchmarks, static weights are set to λfield = 100 .0 and λforce = 10 .0. Figure 5 outlines the structural breakdown of the training losses alongside the optimization schedule. 
+
+2.8.3. Optimization 
+
+Model optimization is conducted using the AdamW optimizer with hyperparameters set to β1 = 0.9, β2 = 0.999, 
+
+ϵ = 10 −8, an initial learning rate of η0 = 3 × 10 −4, and a decoupled weight decay coe ffi cient of λwd = 10 −4. The 15 Figure 5: Training loss structure and optimization schedule. 
+
+learning rate is adjusted via a cosine annealing schedule [48]: 
+
+η(e) = ηmin + 12 (η0 − ηmin ) 1 + cos πeEmax 
+
+!! 
+
+, (36) where Emax = 1000 and ηmin ≈ 0. Gradients are scaled using a maximum norm threshold of 5.0. Training is executed with a batch size of 4, yielding approximately 7.5M total trainable parameters. 
+
+2.8.4. Reproducibility 
+
+All numerical experiments were conducted using PyTorch 1.13 and CUDA 11.7. The AirfRANS dataset (v1.0) [19] was evaluated strictly according to its standardized testing protocol. Model training was performed on an NVIDIA RTX A6000 GPU with a batch size of 4, requiring approximately 4 .5 hours of training time to optimize the 7.5M trainable parameters. Inference benchmarks were conducted on an NVIDIA RTX 2050 GPU, yielding an average execution time of 144 ms per sample. 
+
+3. Results & Discussions 
+
+In this section, all numerical evaluations have been conducted on the standardized AirfRANS benchmark dataset [19]. Model predictions have been compared directly against established baseline architectures evaluated on identical data splits on the AirfRANS dataset: MLPs, GraphSAGE [15], and Graph U-Nets [16]. Evaluation is performed across three standardized benchmark tasks from AirfRANS [19]: 
+
+• Full – The standard split comprising Ntrain = 800 training samples and Ntest = 200 test samples (1,000 total RANS simulations), spanning angles of attack α ∈ [−5◦, 25 ◦] and Reynolds numbers Re ∈ [2 × 10 6, 6 × 10 6]. 
+
+• Reynolds out-of-distribution (OOD) – OOD extrapolation comprising Ntrain = 800 training samples restricted to the intermediate band Re ∈ [3 .02 × 10 6, 5.03 × 10 6], and Ntest = 200 test samples evaluating performance on unseen lower (Re ∈ [2 .02 × 10 6, 3.02 × 10 6]) and upper (Re ∈ [5 .03 × 10 6, 6.04 × 10 6]) Reynolds bands. 16 (a) Velocity magnitude at α = 1.1◦ (Re ≈ 2 × 10 6): CFD ground truth (left), DD-RNO prediction (center), absolute error field (right).                 
+
+> (b) Velocity magnitude at α=7.4◦(Re ≈2×10 6): CFD ground truth (left), DD-RNO prediction (center), absolute error field (right).
+> (c) Velocity magnitude at α=14 .1◦(Re ≈2×10 6): CFD ground truth (left), DD-RNO prediction (center), absolute error field (right).
+
+Figure 6: Qualitative comparison of DD-RNO flow field predictions against OpenFOAM CFD ground truth for representative angles of attack from the Full test set at Re ≈ 2 × 10 6
+
+• Angle of Attack (AoA) OOD – OOD extrapolation comprising Ntrain = 800 training samples restricted to moderate angles α ∈ [−2.48 ◦, 12 .45 ◦], and Ntest = 200 test samples evaluating extreme negative ( α < −2.48 ◦)and high positive ( α > 12 .45 ◦) angles of attack. All field error metrics are evaluated directly at native CFD mesh nodes without spatial resampling. 
+
+3.1. Field Reconstruction Accuracy 
+
+3.1.1. Quantitative Benchmark Metrics 
+
+Table 1 compiles field reconstruction MSE across all benchmarked methods. On the standard Full task, DD-RNO achieves substantial accuracy gains over all established baselines. Compared to the best-performing baseline model – MLP, DD-RNO reduces velocity MSE by 17 × in ux and 12 × in uy. Volumetric pressure MSE is reduced by 3 .4×,while surface pressure error is reduced by 1 .7×. On the Reynolds OOD task, performance improvements are even larger: DD-RNO achieves a 23 × reduction in ux MSE compared to the best baseline MLP, an 11 × reduction in uy
+
+17 Figure 7: Surface pressure distribution −Cp(x/c) along the chord of a NACA 0012 airfoil at Re = 3.0 × 10 6 for (a) low ( α = 1.0◦), (b) moderate (α = 7.0◦), and (c) high ( α = 14 .0◦) angles of attack 
+
+MSE, and a 14 × reduction in volumetric pressure error. This strong performance highlights the physical generalization of the Reynolds-adaptive boundary layer routing mechanism ( δBL ∝ Re −1/5). For the AoA OOD extrapolation task, DD-RNO maintains superior velocity field accuracy, reducing ux MSE by 3 .1× and uy MSE by 4 .3× compared to the best baseline models. 
+
+3.1.2. Flow Field Visualizations and Spatial Error Interpretation 
+
+Figure 6 provides a qualitative visual comparison of DD-RNO velocity predictions against OpenFOAM CFD ground truth across low ( α = 1.1◦), moderate ( α = 7.4◦), and high ( α = 14 .1◦) angles of attack at Re ≈ 2 × 10 6. At low and moderate angles ( α = 1.1◦ and 7 .4◦), the predicted velocity magnitude fields exhibit near-perfect visual and quantitative alignment with CFD ground truth, with absolute local velocity errors remaining below 0 .02 U∞ across both the attached boundary layer and the trailing wake. At high angle of attack ( α = 14 .1◦), absolute error increases locally within the downstream wake region ( x/c > 1.2). This spatial error localization occurs because steep velocity deficits and expanding trailing-edge shear layers amplify small spatial phase shifts in the coordinate grid, whereas the near-wall boundary layer, leading-edge stagnation point, and suction peak over the upper airfoil surface remain accurately resolved with minimal error. 18 Table 1: Field Reconstruction MSE ( ×10 −2). Lower is better. Baseline values from Bonnet et al. [19]. 
+
+Field / Metric MLP GraphSAGE Graph U-Net DD-RNO Full Task (Ntrain = 800 , Ntest = 200) 
+
+ux 1.58 1.72 1.68 0.091 
+
+uy 1.41 1.53 1.45 0.114 
+
+p 0.76 0.81 0.79 0.225 
+
+ps 1.44 1.52 1.48 0.854 Reynolds OOD Task (Ntrain = 800 , Ntest = 200) 
+
+ux 10 .2 10 .8 10 .5 0.448 
+
+uy 5.72 6.01 5.89 0.541 
+
+p 5.38 5.72 5.55 0.388 
+
+ps 11 .5 12 .1 11 .8 1.266 AoA OOD Task (Ntrain = 800 , Ntest = 200) 
+
+ux 5.64 6.12 5.91 1.817 
+
+uy 8.88 9.24 9.01 2.045 
+
+p 9.79 10 .12 9.95 11 .337 
+
+ps 23 .6 24 .1 23 .8 36 .766 
+
+3.1.3. Surface Pressure Distribution Overlay 
+
+As an intermediate operational step prior to force quadrature, the boundary layer decoder directly outputs surface pressure distributions Cp(x/c). Figure 7 overlays predicted surface pressure profiles against CFD ground-truth distri-butions for NACA 0012 across low ( α = 1.0◦), moderate ( α = 7.0◦), and high ( α = 14 .0◦) angles of attack. DD-RNO captures the sharp suction peak at the leading edge ( x/c < 0.05) and the adverse pressure gradient recovery along the upper surface with near-zero discrepancy, confirming that the boundary layer decoder captures physical pressure distributions prior to integration. 
+
+3.1.4. Out-of-Distribution Validation at Low Reynolds Number (Re = 1.0 × 10 6)
+
+To evaluate surrogate stability under physical extrapolation below the training domain threshold of Re min = 2×10 6,DD-RNO was benchmarked directly against a OpenFOAM RANS CFD simulation of a NACA 0012 airfoil at Re =
+
+1.0 × 10 6 and α = 0.0◦. DD-RNO demonstrates strong near-field and far-field generalization under OOD Reynolds-number extrapolation. The surrogate accurately reproduces key aerodynamic flow features, including the leading-edge stagnation region ( |U|/U∞ ≈ 0), the symmetric surface acceleration and deceleration patterns, and the downstream wake structure observed in the CFD solution. Figure 8 presents wake velocity profiles extracted at x/c = 1.05 and x/c = 1.15. At both locations, DD-RNO accurately captures the wake velocity deficit, including the minimum velocity at the wake centerline ( y/c = 0) and the gradual recovery toward freestream conditions. The close agreement with the OpenFOAM reference solution is particularly noteworthy, as wake regions contain sharp velocity gradients and thin shear layers that are traditionally challenging for surrogate models to resolve. Accurate prediction of the wake deficit is critical because it directly influences aerodynamic force estimation, downstream flow interactions, and loss calculations. Minor discrepancies in the freestream region are attributed to the adaptive decoder allocation strategy, which concentrates representational capacity in the wake and boundary-layer regions where flow complexity is greatest, while employing fewer decoders in relatively uniform freestream zones. Across the entire physical flow domain, DD-RNO achieves a velocity MAE of 0 .0382 (3 .82% relative error), demonstrating robust predictive accuracy under out-of-distribution Reynolds-number extrapolation. These results indicate that the surrogate successfully preserves the underlying flow physics while maintaining stable, non-divergent predictions beyond the Reynolds-number range encountered during training. 19 Figure 8: Out-of-distribution trailing-edge wake velocity profile comparison ( |U|/U∞) for the NACA 0012 airfoil at Re = 1.0 × 10 6 and α = 0.0◦        
+
+> at (a) x/c=1.05 and (b) x/c=1.15. Table 2: Force Coe ffi cient Errors and Spearman Rank Correlations ( ρ). Lower relative error is better; higher ρis better. Baseline values from Bonnet et al. [19].
+
+Metric MLP GraphSAGE Graph U-Net DD-RNO Full Task (Ntrain = 800 , Ntest = 200) 
+
+CD Rel. Error (%) 6.178 7.366 13 .320 1.091 
+
+CL Rel. Error (%) 21 .1 14 .8 16 .8 3.276 
+
+ρD (Spearman) 0.250 0.194 0.092 0.9973 
+
+ρL (Spearman) 0.993 0.996 0.995 0.9992 Reynolds OOD Task (Ntrain = 800 , Ntest = 200) 
+
+CD Rel. Error (%) 8.293 12 .794 18 .103 2.728 
+
+CL Rel. Error (%) 62 .1 43 .3 46 .6 8.585 
+
+ρD (Spearman) 0.157 0.039 0.192 0.9906 
+
+ρL (Spearman) 0.958 0.971 0.964 0.9974 AoA OOD Task (Ntrain = 800 , Ntest = 200) 
+
+CD Rel. Error (%) 4.355 6.047 9.814 7.119 
+
+CL Rel. Error (%) 41 .3 25 .4 37 .6 26 .352 
+
+ρD (Spearman) 0.347 0.525 0.552 0.9392 
+
+ρL (Spearman) 0.957 0.989 0.982 0.9903 
+
+3.2. Force Coe ffi cient Accuracy 
+
+3.2.1. Integrated Force Benchmark Evaluation 
+
+Table 2 details integrated force coe ffi cient errors and Spearman rank correlation coe ffi cients ( ρ). For the standard Full task, DD-RNO reduces relative drag error from 6 .178% (best baseline MLP) down to 1 .091% (a 5 .6× error reduction), and relative lift error from 14 .8% (best baseline GraphSAGE) down to 3 .276% (a 4 .5× error reduction). Crucially, the Spearman drag rank correlation increases from ρ = 0.250 for the best baseline model up to ρ = 0.997 for DD-RNO. This high rank correlation demonstrates that DD-RNO preserves the true aerodynamic performance ranking across arbitrary airfoil geometries. Under the Reynolds OOD configuration, relative drag error is reduced from 8 .293% (MLP) down to 2 .728%, while relative lift error drops from 43 .3% (GraphSAGE) to 8 .585%. Spearman drag correlation remains near-unity ( ρ = 0.991 versus baseline ρ = 0.157). On the AoA OOD task, DD-RNO achieves 20 Figure 9: Parity and scatter comparison of predicted aerodynamic force coe ffi cients against CFD ground truth across the 200 test samples from the Full task 
+
+a Spearman drag correlation of ρ = 0.939 (compared to ρ = 0.552 for the best baseline Graph U-Net), confirming robust aerodynamic trend tracking even under out-of-distribution physical extrapolation. 
+
+3.2.2. Force Prediction Parity Analysis 
+
+Figure 9 illustrates the parity scatter plots of predicted versus CFD ground-truth force coe ffi cients across all 200 test samples from the Full task. The lift coe ffi cient CL (left panel) exhibits exceptional agreement ( R2 = 0.9994, relative error = 3.72%), with samples closely adhering to the y = x ideal line across the entire range of angles of attack ( α ∈ [−5◦, 25 ◦]). Similarly, drag coe ffi cient CD (right panel) demonstrates near-perfect alignment in drag counts ( R2 = 0.9975, relative error = 1.091%, Spearman ρ = 0.9975), validating that LCQ maintains high accuracy without systematic drag o ff sets. 
+
+3.2.3. Parametric Aerodynamic Trend Validation 
+
+To confirm that DD-RNO captures physical aerodynamic trends across geometric families, Figure 11 evaluates predicted aerodynamic quantities across 10 NACA airfoils spanning thickness ratios t/c ∈ [6% , 21%] and camber ratios m/c ∈ [0% , 6%]. As shown in the left panel, DD-RNO accurately reproduces the non-linear zero-lift drag rise (CD,0) caused by displacement-thickness boundary layer thickening as airfoil thickness increases. Similarly, the right panel confirms that the surrogate captures the increase in lift-curve slope dC L/dα with maximum camber ratio m/c,matching CFD ground-truth trend lines across all tested geometric configurations. The maximum error is 1% in the lift-curve slope plot as compared to the CFD database, showcasing the surrogates accuracy. 
+
+3.3. Ablation Study 
+
+Table 3 quantifies the individual performance contributions of each architectural module on the standard Full task, sorted in ascending order of velocity field reconstruction error ( ux MSE). Removing the FNO geometry trunk (w /oSpecINR) increases velocity ux MSE by 67 × and pressure MSE by 88 ×, confirming that global spectral geometry fea-tures are essential for accurate field prediction. Excluding the multi-stream domain routing mechanism (w /o Domain Routing) increases velocity ux MSE by 8 .2×, proving that specialized regional decoders are vital to resolve near-wall boundary layer gradients. Replacing Learned Canonical Quadrature (w /o LCQ) with conventional geometric surface pressure integration increases drag MAE by 7 .5× and increases relative drag error by 43 × (from 1 .091% to 46 .90%), while degrading Spearman drag correlation from 0 .9975 to 0 .8770. Finally, deploying a decoupled surface predic-tion head yields comparable velocity accuracy but degrades volumetric pressure MSE by 4 .9×, demonstrating that a unified spatial feature representation enhances global field consistency. 21 Table 3: Component Ablation Study on Full Task, arranged in ascending order of field reconstruction error ( ux MSE). Best results in bold. 
+
+Configuration ux MSE uy MSE p MSE ps MSE CL MAE CD MAE CL Corr CD Corr Full DD-RNO 0.088 0.121 0.209 0.687 0.0101 1.59 × 10 −4 0.9994 0.9975 
+
+Decoupled Surface Head 0.095 0.121 1.020 0.873 0.0084 4.12 × 10 −4 0.9994 0.9931 w/o Domain Routing 0.722 0.395 0.244 0.993 0.0398 3.29 × 10 −4 0.9867 0.9825 w/o SpecINR (No FNO Trunk) 5.961 10 .587 18 .397 42 .231 0.0451 6.73 × 10 −4 0.9898 0.9789 w/o LCQ (Standard Integration) 7.058 5.989 1.154 3.084 0.1699 1.19 × 10 −3 0.9335 0.8770 
+
+> Figure 10: Visual comparison of error metrics across ablation variants on the Full task from Table 3
+
+Figure 10 displays a grouped bar chart comparison of the exact performance metrics from Table 3 ( CD MAE, CL
+
+MAE, and velocity ux MSE) across all 5 architectural variants on a logarithmic scale. The visual comparison highlights that LCQ is the single most critical module for drag estimation, achieving a 7 .5× reduction in drag MAE (43 ×
+
+reduction in relative drag percentage error from 46 .90% to 1 .091%). Simultaneously, the domain routing mechanism and FNO spectral trunk provide order-of-magnitude error reductions across both volumetric flow fields ( ux MSE) and surface lift predictions. 
+
+3.4. Computational Cost 
+
+3.4.1. Inference Execution Breakdown 
+
+The inference execution time of DD-RNO breaks down as follows: spectral geometry encoding via the FNO trunk takes 28 .4 ms (19 .7%), latent grid interpolation 12 .6 ms (8 .7%), domain routing evaluation 15 .3 ms (10 .6%), tri-stream specialist decoders 67 .2 ms (46 .7%), LCQ force prediction 12 .5 ms (8 .7%), and bilinear interpolation 8 .0ms (5 .6%), yielding a total inference latency of 144 .0 ± 1.2 ms per 200 ,000-node mesh on an NVIDIA RTX 2050 GPU. 
+
+3.4.2. CPU RANS Speedup Comparison 
+
+In comparison, a full numerical RANS simulation requires approximately 1 ,500 seconds of wall-clock execution time on a single CPU core to reach a residual convergence threshold of 10 −6 using OpenFOAM’s steady-state solver (simpleFoam ) on the standard 200 ,000-node AirfRANS mesh. This represents an inference speedup of approximately 10 ,000 ×. Such computational e ffi ciency makes the proposed framework well suited for many-query applications, including design-space exploration, shape optimization, uncertainty quantification, and sensitivity analysis, where thousands of flow evaluations may be required. By providing rapid approximations of RANS flow solutions without 22 Figure 11: Aerodynamic trend validation across NACA-family airfoils 
+
+iterative solver execution, the framework significantly reduces the computational burden associated with conventional CFD-based aerodynamic studies. 
+
+3.5. Scope and Applicability 
+
+DD-RNO is designed as a practical surrogate framework for steady-state, 2D RANS aerodynamic flows. Its geometric scope is across 1,000 smooth 2D airfoil profiles from diverse design families, including NACA 4-digit, NACA 5-digit, Clark-Y, Göttingen, RAF, PARSEC, and CST parameterizations. Overall, the model reliably processes arbitrary smooth 2D profiles with maximum thickness ratios t/c ∈ [6% , 20%] and maximum camber ratios m/c ≤ 9%. For operational regimes, the architecture is validated for steady, incompressible 2D RANS flows governed by Spalart– Allmaras turbulence modeling across the range of parameters mentioned previously. When extrapolated down to lower Reynolds numbers (Re = 1.0 × 10 6), the model maintains both numerical stability and boundary layer coherence, yielding a near-field velocity MAE of 3 .82% (5 .73% field MAE). The framework is tailored for several key target applications, starting with preliminary aerodynamic design screen-ing over extensive candidate geometry libraries ( O(10 3)– O(10 5) airfoils) operating at approximately 144 ms per eval-uation. It can also act as a di ff erentiable surrogate proxy for real-time CL/CD aerodynamic shape optimization within evolutionary loops, enable parametric uncertainty exploration across operational flow envelopes, and power interactive aerodynamic visualization tools for educational and industrial design. The current architecture is specifically designed for steady, incompressible, two-dimensional planar flows, en-abling accurate and e ffi cient modeling within this important class of aerodynamic problems. This focused formula-tion provides a strong foundation for future extensions to more complex flow regimes, including unsteady phenomena such as dynamic stall and vortex shedding, as well as compressible flows involving shock-wave interactions. The framework maintains strong predictive performance across a broad range of operating conditions, with opportunities for further enhancement in cases involving large-scale flow separation at very high angles of attack ( α > 12 ◦). In addition, the present study focuses on two-dimensional airfoil configurations, providing a foundation for future ex-tensions to three-dimensional wings, complex planforms, and multi-element slotted airfoils commonly encountered in practical aerodynamic applications. 
+
+4. Conclusion and Future Directions 
+
+This paper introduces DD-RNO, a physics-guided surrogate framework for discretization-invariant RANS flow field reconstruction and continuous force calculation around arbitrary airfoil geometries. At its core, DD-RNO in-troduces three distinct methodological innovations that systematically tackle long-standing bottlenecks in surrogate 23 modeling. First, a hybrid spectral-implicit architecture couples a continuous 2D FNO geometry trunk with local coor-dinate decoders. The FNO trunk extracts multi-scale global shape representations from Signed Distance Field grids, which are then probed at arbitrary query coordinates via spatial bilinear interpolation and modulated by Feature-wise Linear Modulation (FiLM) driven by a flow-condition mapping network ( α, Re). Second, to overcome spectral bias across disparate physical flow scales, a physics-guided domain routing mechanism dynamically partitions the spatial domain into inviscid outer flow, turbulent boundary layer, and trailing wake subregions. By defining smooth, di ff eren-tiable gates conditioned on wall distance and Reynolds-adaptive boundary layer envelope scaling, the router enforces a strict partition of unity ( P χk = 1) to seamlessly blend predictions from specialized regional decoders without in-terface discontinuities. Third, LCQ addresses the numerical instability inherent in calculating wall-normal velocity gradients for viscous drag. LCQ maps surface pressure distributions onto a fixed canonical manifold ( Ncanon = 1024) and leverages a hypernetwork to predict flow-conditioned spatial integration weights Wcanon (w). This setup performs direct surface pressure quadrature while implicitly compensating for viscous skin-friction drag—eliminating the need to evaluate noisy numerical derivatives. When evaluated on the AirfRANS benchmark, DD-RNO reduces velocity field MSE by 17 × (ux) and 12 × (uy)on the standard split, and by up to 23 × on Reynolds OOD extrapolation compared to established baseline models. Furthermore, LCQ reduces drag MAE by 7 .5× over standard geometric pressure integration and achieves a Spearman drag rank correlation of ρ = 0.997. Running at a 10 ,000 × speedup over conventional RANS solvers ( ∼ 144 ms per evaluation), DD-RNO delivers a highly accurate surrogate engine tailored for real-time aerodynamic design. DD-RNO can be extended in several directions. Physics-informed regularization and curriculum training strategies could improve robustness under severe flow separation at high angles of attack ( α > 12 ◦). The geometric encoder’s spatial resolution presents trade-o ff s worth exploring to better resolve fine leading-edge curvature. The domain routing and canonical quadrature framework could be generalized to three-dimensional wing geometries and multi-element configurations. Finally, incorporating probabilistic latent representations would support uncertainty quantification for downstream design optimization. 
+
+Data and Model Availability 
+
+The complete source code, pretrained model checkpoints, and verification scripts are publicly available at https: //github.com/taksh2406/DD-RNO . The AirfRANS dataset (v1.0) is available at https://github.com/nicolas-bonnet/ AirfRANS .
+
+Declaration of Generative AI and AI-Assisted Technologies 
+
+The authors declare that generative AI and AI-assisted technologies were used solely to improve the grammar and readability of this manuscript. All scientific content remains the responsibility of the authors. 
+
+Acknowledgments 
+
+Harshal Akolekar acknowledges the seed grant funding of IIT Jodhpur with grant number I /SEED /HDA /20230206. 
+
+References      
+
+> [1] M. D. Ribeiro, A. Rehman, S. Ahmed, A. Dengel, DeepCFD: E ffi cient steady-state laminar flow approximation with deep convolutional neural networks, arXiv preprint arXiv:2004.08826 (2020). [2] S. L. Brunton, B. R. Noack, P. Koumoutsakos, Machine learning for fluid mechanics, Annual Review of Fluid Mechanics 52 (2020) 477–508. [3] A. I. J. Forrester, A. J. Keane, Recent advances in surrogate-based optimization, Progress in Aerospace Sciences 45 (1–3) (2009) 50–79. [4] N. V. Queipo, R. T. Haftka, W. Shyy, T. Goel, R. Vaidyanathan, P. K. Tucker, Surrogate-based analysis and optimization, Progress in Aerospace Sciences 41 (1) (2005) 1–28. [5] T. Braconnier, M. Ferrier, J.-C. Jouhaud, M. Montagnac, P. Sagaut, Towards an adaptive POD /SVD surrogate model for aeronautic design, Computers & Fluids 40 (1) (2011) 195–209.
+
+24 [6] M. J. Mifsud, S. T. Shaw, D. G. MacManus, A high-fidelity low-cost aerodynamic model using proper orthogonal decomposition, International Journal for Numerical Methods in Fluids 63 (4) (2010) 468–494. [7] S. Bhatnagar, Y. Afshar, S. Pan, K. Duraisamy, S. Kaushik, Prediction of aerodynamic flow fields using convolutional neural networks, Computational Mechanics 64 (2) (2019) 525–545. [8] N. Thuerey, K. Weißenow, L. Prantl, X. Hu, Deep learning methods for reynolds-averaged navier–stokes simulations of airfoil flows, AIAA Journal 58 (1) (2020) 25–36. [9] V. Sekar, B. C. Khoo, Fast flow field prediction over airfoils using deep learning approach, Physics of Fluids 31 (5) (2019) 057103. [10] H. D. Akolekar, R. D. Sandberg, N. Hutchins, V. Michelassi, G. Laskowski, Machine-learnt turbulence closures for low-pressure turbines with unsteady inflow conditions, ASME Journal of Turbomachinery 141 (10) (2019) 101009. [11] E. Yilmaz, P. Cinnella, Deep learning-based turbulence modeling for aerodynamic applications, Journal of Computational Physics 428 (2021) 110065. [12] H. D. Akolekar, Y. Zhao, R. D. Sandberg, R. Pacciani, Integration of machine learning and computational fluid dynamics to develop turbulence models for improved low-pressure turbine wake mixing prediction, Journal of Turbomachinery 143 (12) (2021) 121001. [13] R. Pacciani, M. Marconcini, F. Bertini, S. Rosa Taddei, E. Spano, Y. Zhao, H. D. Akolekar, R. D. Sandberg, A. Arnone, Assessment of machine-learned turbulence models trained for improved wake-mixing in low-pressure turbine flows, Energies 14 (24) (2021) 8327. [14] Y. Fang, M. Reissmann, R. Pacciani, Y. Zhao, A. S. Ooi, M. Marconcini, H. D. Akolekar, R. D. Sandberg, Accelerating cfd-driven training of transition and turbulence models for turbine flows by one-shot and real-time transformer integration, Computers & Fluids 306 (2026) 106927. 
+
+doi:https://doi.org/10.1016/j.compfluid.2025.106927 .[15] W. L. Hamilton, Z. Ying, J. Leskovec, Inductive representation learning on large graphs, in: Advances in Neural Information Processing Systems (NeurIPS), 2017. [16] H. Gao, S. Ji, Graph U-Nets, in: International Conference on Machine Learning (ICML), 2019. [17] T. Pfa ff , M. Fortunato, A. Sanchez-Gonzalez, P. W. Battaglia, Learning mesh-based simulation with graph networks, in: International Con-ference on Learning Representations (ICLR), 2021. [18] A. Sanchez-Gonzalez, J. Godwin, T. Pfa ff , R. Webb, P. Battaglia, P. W. Battaglia, Learning to simulate complex physics with graph networks, in: International Conference on Machine Learning (ICML), 2020. [19] F. Bonnet, J. A. Mazari, P. Cinnella, P. Gallinari, AirfRANS: High fidelity computational fluid dynamics dataset for approximating reynolds-averaged navier-stokes solutions, in: Advances in Neural Information Processing Systems (NeurIPS), 2022. [20] N. Kovachki, Z. Li, B. Liu, K. Azizzadenesheli, K. Bhattacharya, A. Stuart, A. Anandkumar, Neural operator: Learning maps between function spaces, arXiv preprint arXiv:2108.08481 (2021). [21] Z. Li, N. B. Kovachki, K. Azizzadenesheli, B. Liu, K. Bhattacharya, A. M. Stuart, A. Anandkumar, Fourier neural operator for parametric partial di ff erential equations, in: International Conference on Learning Representations (ICLR), 2021. [22] L. Lu, P. Jin, G. Pang, Z. Zhang, G. E. Karniadakis, Learning nonlinear operators via DeepONet based on the universal approximation theorem of operators, Nature Machine Intelligence 3 (3) (2021) 218–229. [23] S. Goswami, A. Choudhary, B. Srinivasan, G. E. Karniadakis, Physics-informed neural operators for solving 2D PDEs, arXiv preprint arXiv:2207.05209 (2022). [24] Z. Li, D. Z. Huang, B. Liu, A. Anandkumar, Fourier neural operator with learned deformations for PDEs on general geometries, arXiv preprint arXiv:2207.05209 (2022). [25] N. Rahaman, A. Baratin, D. Arpit, F. Draxler, M. Lin, F. Hamprecht, Y. Bengio, A. Courville, On the spectral bias of neural networks, in: International Conference on Machine Learning (ICML), 2019. [26] V. Sitzmann, J. N. P. Martel, A. W. Bergman, D. B. Lindell, G. Wetzstein, Implicit neural representations with periodic activation functions, in: Advances in Neural Information Processing Systems (NeurIPS), 2020. [27] M. Tancik, P. P. Srinivasan, B. Mildenhall, S. Fridovich-Keil, N. Raghavan, U. Singhal, R. Ramamoorthi, J. T. Barron, R. Ng, Fourier features let networks learn high-frequency functions in low-dimensional domains, in: Advances in Neural Information Processing Systems (NeurIPS), 2020. [28] M. Raissi, P. Perdikaris, G. E. Karniadakis, Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial di ff erential equations, Journal of Computational Physics 378 (2019) 686–707. 
+
+25 [29] A. D. Jagtap, K. Kawaguchi, G. E. Karniadakis, Extended physics-informed neural networks (XPINNs): A generalized space-time domain decomposition based deep learning framework for nonlinear partial di ff erential equations, Communications in Computational Physics 28 (5) (2020) 2002–2041. [30] L. Sun, H. Gao, S. Pan, J.-X. Wang, Physics-constrained deep learning for predicting steady-state laminar flows, Computer Methods in Applied Mechanics and Engineering 358 (2020) 112732. [31] O. Hennigh, S. Narasimhan, M. A. Nabian, A. Subramaniam, L. Tang, Z. Fang, M. Rietmann, S. Byeon, S. Choudhry, NVIDIA SimNet: An AI-accelerated multi-physics simulation framework, in: International Conference on Computational Science (ICCS), 2021. [32] L. Lu, X. Meng, Z. Mao, G. E. Karniadakis, DeepXDE: A deep learning library for solving di ff erential equations, SIAM Review 63 (1) (2021) 208–228. [33] L. Serrano, L. L. Boudec, A. K. Koupaï, T. X. Wang, Y. Yin, J.-N. Vittaut, P. Gallinari, Operator learning with neural fields: Tackling PDEs on general geometries, in: Advances in Neural Information Processing Systems (NeurIPS), 2023. [34] M. Catalani, F. Garotta, P. M. Congedo, Towards scalable surrogate models based on neural fields for aerodynamic applications, Computers & Fluids (2026). [35] A. Arzani, J.-X. Wang, R. M. D’Souza, Uncovering near-wall blood flow from sparse data with physics-informed neural networks, Physics of Fluids 33 (7) (2021) 071905. [36] A. N. Tikhonov, V. Y. Arsenin, Solutions of ill-posed problems, V. H. Winston & Sons, Washington, DC, 1977. [37] P. R. Spalart, S. R. Allmaras, A one-equation turbulence model for aerodynamic flows, in: 30th Aerospace Sciences Meeting and Exhibit, 1992, p. 439. [38] J. J. Park, P. Florence, J. Straub, R. Newcombe, S. Lovegrove, DeepSDF: Learning continuous signed distance functions for shape represen-tation, in: Proceedings of the IEEE /CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2019. [39] T. Karras, S. Laine, T. Aila, A style-based generator architecture for generative adversarial networks, in: IEEE /CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2019. [40] E. Perez, F. Strub, H. d. Vries, V. Dumoulin, A. Courville, FiLM: Visual reasoning with a general conditioning layer, in: AAAI Conference on Artificial Intelligence, 2018. [41] H. Schlichting, K. Gersten, Boundary-Layer Theory, 9th Edition, Springer-Verlag, Berlin, Germany, 2017. [42] F. M. White, Viscous Fluid Flow, McGraw-Hill, 2006. [43] J. D. Anderson, Fundamentals of Aerodynamics, McGraw-Hill, 2017. [44] I. H. Abbott, A. E. Von Doenho ff , Theory of Wing Sections, Dover Publications, 1959. [45] J. A. Hernandez, J. Oliver, A. E. Caicedo, F. G. Flores, Empirical cubature method for hyper-reduction of projection-based reduced-order models in computational mechanics, International Journal for Numerical Methods in Engineering 109 (12) (2017) 1587–1612. [46] C. Farhat, T. Chapman, P. Avery, A multidimensional framework for project-on-the-fly and database-free energy-conserving sampling and weighting for hyper-reduction of nonlinear structural dynamics models, International Journal for Numerical Methods in Engineering 98 (13) (2014) 933–953. [47] A. Kendall, Y. Gal, R. Cipolla, Multi-task learning using uncertainty to weigh losses for scene geometry and semantics, in: IEEE /CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2018, pp. 7482–7491. [48] I. Loshchilov, F. Hutter, SGDR: stochastic gradient descent with warm restarts, arXiv preprint arXiv:1608.03983 (2016). 
+
+26
