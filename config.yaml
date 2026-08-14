@@ -25,3 +25,73 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: ag
+      description: 帮我检索近十年的关于人工智能驱动的地下水数值模拟的英文文献
+      enabled: true
+      paper_sources:
+        - arxiv
+        - biorxiv
+      keywords:
+        - keyword: LSTM groundwater forecasting
+          keyword_cn: ''
+          query: LSTM groundwater forecasting
+        - keyword: data-driven groundwater hydrology
+          keyword_cn: ''
+          query: data-driven groundwater hydrology
+        - keyword: physics-informed neural network subsurface flow
+          keyword_cn: ''
+          query: physics-informed neural network subsurface flow
+        - keyword: artificial intelligence groundwater simulation
+          keyword_cn: ''
+          query: artificial intelligence groundwater simulation
+        - keyword: deep learning groundwater level prediction
+          keyword_cn: ''
+          query: deep learning groundwater level prediction
+        - keyword: machine learning groundwater modeling
+          keyword_cn: 机器学习地下水建模
+          query: machine learning approaches for groundwater flow and transport simulation
+      intent_queries:
+        - query: physics informed neural network subsurface flow
+          query_cn: ''
+          enabled: true
+          source: manual
+          note: ''
+        - query: artificial intelligence enhanced groundwater numerical simulation methods
+          query_cn: 人工智能增强的地下水数值模拟方法
+          enabled: true
+          source: manual
+          note: ''
+        - query: machine learning based surrogate models for groundwater flow simulation
+          query_cn: 基于机器学习的地下水流动模拟替代模型
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-08-14T13:03:45.942Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
+  biorxiv:
+    papers_table: biorxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_biorxiv_papers_exact
+    vector_rpc_exact: match_biorxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_biorxiv_papers_bm25
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
