@@ -1,0 +1,69 @@
+{
+  "label": "2026-08-15",
+  "date": "2026-08-15",
+  "generated_at": "2026-08-15T20:48:48",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202608/15/2608.11020v1-derivative-computation-in-pinns-automatic-differentiation-finite-differences-and-beyond",
+      "section": "deep",
+      "title_en": "Derivative Computation in PINNs: Automatic Differentiation, Finite Differences and Beyond",
+      "authors": "Maciej J. Mikulski, Tadeusz Uhl",
+      "date": "2026-08-11",
+      "pdf": "https://arxiv.org/pdf/2608.11020v1",
+      "score": "8.0",
+      "evidence": "系统研究PINN中导数计算方法，是PINN求解地下水流的基础技术。",
+      "tldr": "针对物理信息神经网络(PINN)中的导数计算，本文系统研究了有限差分(FD)作为自动微分(AD)的替代方案。在三个基准PDE上，经适当步长校准，FD精度与AD相当，同时全批量范围内运行更快、GPU内存更少；提出的FD随机变体在平稳问题上优于AD。对含批量依赖的架构（如BatchNorm、自注意力），标准PyTorch autograd存在静默错误，而FD提供的前向近似比AD更接近真实逐样本导数。",
+      "tags": "query:ag",
+      "abstract_en": "We systematically investigate finite-difference (FD) derivative computation in Physics-Informed Neural Networks (PINNs) as an alternative to automatic differentiation (AD). On three benchmark PDEs we show that, with a properly calibrated step size, FD matches AD in accuracy on every problem while running faster across the full tested batch-size range and using substantially less GPU memory, and that a stochastic variant we propose outperforms AD on a stationary problem. We further show that for neural architectures with inter-sample dependencies (e.g. BatchNorm, self-attention) the standard PyTorch autograd idiom is silently incorrect; the correct per-sample alternative is computationally infeasible at PINN-relevant batch sizes, while FD provides a forward-only approximation that is empirically an order of magnitude closer to the true per-sample derivative.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/15/2608.11937v1-distillation-of-foundation-models-for-time-dependent-pdes",
+      "section": "deep",
+      "title_en": "Distillation of Foundation Models for Time-dependent PDEs",
+      "authors": "Daniel Musekamp, Boshra Ariguib, Andrei Manolache, Mathias Niepert",
+      "date": "2026-08-12",
+      "pdf": "https://arxiv.org/pdf/2608.11937v1",
+      "score": "8.0",
+      "evidence": "针对时间依赖PDE基础模型提出知识蒸馏框架，可生成高效代理求解器，与地下水流机器学习代理模型直接相关。",
+      "tldr": "时间相关偏微分方程的基础模型虽能借助大规模预训练在低数据下泛化，但模型庞大、推理成本高。为此提出TREX知识蒸馏框架：利用微调后的教师滚动生成带噪声的合成长轨迹来扩充数据，训练紧凑学生，且无需知道初始条件分布。在多个PDE基准测试中，学生参数减少数个量级，推理提速一个数量级以上，精度可匹配或超越教师。该方法还允许融入等变性等任务归纳偏置，为高效数值代理模型提供新路径。",
+      "tags": "query:ag",
+      "abstract_en": "Foundation models for time-dependent partial differential equations (PDEs) are trained on large and diverse collections of physical systems and can generalize effectively to new downstream tasks. After fine-tuning on only a few trajectories from a target domain, they can achieve strong accuracy in low-data regimes. However, these models are typically large and computationally intensive, limiting their usefulness as fast surrogates for numerical solvers. We propose Teacher Rollout Extension (TREX), a knowledge distillation framework that transfers the predictive capability of a pretrained foundation model into a compact and efficient student. Starting from a fine-tuned teacher, TREX augments limited downstream data by generating long synthetic trajectories through teacher rollouts, optionally with periodic noise injection. This procedure samples from the teacher-induced rollout distribution without requiring explicit knowledge of the initial-condition distribution, while exposing the student to long-horizon states and local recovery behavior around states encountered during autoregressive prediction. The student can further incorporate task-specific inductive biases, such as equivariance, that the teacher does not necessarily enforce. We evaluate TREX on multiple PDE benchmarks. The resulting students can match or surpass the teacher's accuracy while reducing the number of parameters by several orders of magnitude and achieving more than an order-of-magnitude speedup in inference.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/15/2608.09707v1-input-convex-neural-networks-as-surrogates-in-mathematical-optimisation",
+      "section": "quick",
+      "title_en": "Input convex neural networks as surrogates in mathematical optimisation",
+      "authors": "Yu Liu, Jan Kronqvist, Fabricio Oliveira",
+      "date": "2026-08-10",
+      "pdf": "https://arxiv.org/pdf/2608.09707v1",
+      "score": "6.0",
+      "evidence": "输入凸神经网络作为优化中的代理模型",
+      "tldr": "在数学优化中嵌入神经网络作为替代模型是常见做法，但传统ReLU前馈网络（FNN）的混合整数规划重构计算负担大。本文提出使用输入凸神经网络（ICNN）作为替代，利用其凸性获得更紧的线性规划松弛，并在非精确情形下构造凸包松弛。基于此开发的分支定界算法直接对输入变量分支，在案例中匹配FNN精度并显著提升求解效率，表明ICNN适用于近似凸函数场景。",
+      "tags": "query:ag",
+      "abstract_en": "Embedding trained neural networks as surrogates within optimisation problems is an established practice in operations research. The prevailing approach uses feedforward neural networks (FNNs) with ReLU activations, whose piecewise-linear structure admits an exact but computationally intensive mixed-integer programming (MIP) reformulation as the networks grow. We advocate input convex neural networks (ICNNs) as structurally superior surrogates when the underlying response is approximately convex or concave. The convex architecture offers two computational advantages. First, the ICNN-MIP formulation tends to yield a tighter linear programming (LP) relaxation than its FNN-MIP counterpart, with no integrality gap in favourable instances. Second, ICNNs uniquely admit an LP-based reformulation via epigraph representations of ReLU activations, though this embedding is not always exact. When it is not, we exploit the properties of ICNNs to construct the strongest continuous relaxation over box domains, namely, the convex hull of the ICNN's graph, bounded below by the epigraph and above by the concave envelope; this construction is tractable under input convexity but hard for general ReLU networks. On this basis, we develop a branch-and-bound algorithm that builds this relaxation at each node, branches directly on input variables rather than intermediate variables as in MIP reformulations, and terminates at the root node whenever the epigraph embedding is valid. Case studies on humanitarian food aid, oil well routing, and wine blending show that ICNN surrogates match FNN accuracy and deliver gains in solve time and scalability, supporting ICNN as the default surrogate when the underlying function is convex, concave, or well-approximated as such.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/15/2608.13044v1-identifiability-aware-neural-ordinary-differential-equations-for-parsimonious-and-reliable-dynamic-modelling",
+      "section": "quick",
+      "title_en": "Identifiability-aware neural ordinary differential equations for parsimonious and reliable dynamic modelling",
+      "authors": "Núria Campo-Manzanares, Eva Balsa-Canto",
+      "date": "2026-08-13",
+      "pdf": "https://arxiv.org/pdf/2608.13044v1",
+      "score": "6.0",
+      "evidence": "将可辨识性感知引入神经微分方程动态建模，适用于地下水流动与运移的机器学习方法。",
+      "tldr": "神经ODE和小型混合模型虽然灵活，但可能过参数化，导致可识别性差和外推不可靠。提出的iNODE框架将神经组件显式嵌入控制方程，实现敏感性分析和基于Fisher信息的置信区间，并据此进行可识别性感知的架构选择。在四个基准测试中，iNODE相比常规方法选出更紧凑架构，降低参数不确定性，并改善外推和潜在动态恢复。该工作确立了实际可识别性作为可靠神经微分方程的设计原则。",
+      "tags": "query:ag",
+      "abstract_en": "Neural ordinary differential equations (NODE) and hybrid NODE models provide flexible continuous-time representations of complex dynamic systems, but their expressive capacity can exceed the information content of the available data. Consequently, these models may reproduce observed trajectories while retaining weakly identifiable parameters, poorly constrained neural components, and unreliable extrapolation.   Here we introduce identifiability-aware neural ordinary differential equations (iNODE), a framework that incorporates practical identifiability into neural differential equation design. iNODE models embed neural components as explicit analytic functions within the governing equations, enabling direct sensitivity analysis, Fisher-information-based confidence intervals, and identifiability-aware architecture selection. Candidate architectures are generated under data-support constraints, jointly calibrated, and ranked according to predictive accuracy, parsimony, and parameter identifiability.   We evaluate the complete iNODE workflow against conventional NODE and hybrid NODE workflows representative of current practice using four controlled ground-truth benchmarks spanning fully data-driven and hybrid formulations, latent time-varying parameters, partial observability, and sparse or noisy measurements. Using the same training data and evaluation scenarios, the iNODE workflow selected more compact architectures, reduced parameter uncertainty, and improved extrapolation and recovery from latent-dynamics. These results establish practical identifiability as a model-design principle for parsimonious and reliable neural differential equations.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

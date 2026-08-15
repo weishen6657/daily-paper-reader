@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-14</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-15</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 16 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 4 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>6</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>10</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>2</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>2</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-14 21:39:59 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-15 20:48:46 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日精读聚焦概率算子学习与PINN表示改进，速读覆盖边界条件处理及多尺度求解；最值得关注的是Two-Step MV-DeepONet将随机输入场驱动的不确定性传播高效建模，以及分层秩演进表示提升PINN训练效率；下一步可结合BTF-PINN的免边界训练和RECAST的超分修正，探索更实用的复杂几何PDE求解方案。</p>
+<p>今日精读4篇论文，聚焦PINN导数计算与时间相关PDE基座模型蒸馏两大前沿方向。最值得关注的是自动微分与有限差分之外的导数新解法，以及用蒸馏压缩大模型求解PDE的路径。若想入门，建议先读精读篇目的摘要，再按速读文章追踪优化与建模平衡的延伸案例。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -71,12 +71,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">6 篇</strong>
+    <strong class="dpr-home-dashboard-count">2 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Two-Step MV-DeepONet: Probabilistic Operator Learning for Uncertainty Propagation Driven by Random Input Fields">Two-Step MV-DeepONet: Probabilistic Operator Learning for Uncertainty Propagation Driven by Random Input Fields</span></li><li><span class="dpr-home-dashboard-paper-title" title="Hierarchical rank-evolving representation for physics-informed neural networks">Hierarchical rank-evolving representation for physics-informed neural networks</span></li><li><span class="dpr-home-dashboard-paper-title" title="Efficient Weak-Entropy PINN for Solving Hyperbolic Conservation Laws">Efficient Weak-Entropy PINN for Solving Hyperbolic Conservation Laws</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Derivative Computation in PINNs: Automatic Differentiation, Finite Differences and Beyond">Derivative Computation in PINNs: Automatic Differentiation, Finite Differences and Beyond</span></li><li><span class="dpr-home-dashboard-paper-title" title="Distillation of Foundation Models for Time-dependent PDEs">Distillation of Foundation Models for Time-dependent PDEs</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>6</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>2</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -84,12 +84,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">10 篇</strong>
+    <strong class="dpr-home-dashboard-count">2 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="BTF-PINN: Enforcing Dirichlet Boundary Conditions Without Boundary Training">BTF-PINN: Enforcing Dirichlet Boundary Conditions Without Boundary Training</span></li><li><span class="dpr-home-dashboard-paper-title" title="MoNo: Multiscale Optimal Transport Neural Operator for Solving PDEs on General Geometries">MoNo: Multiscale Optimal Transport Neural Operator for Solving PDEs on General Geometries</span></li><li><span class="dpr-home-dashboard-paper-title" title="RECAST: A Machine-Learning Framework for Correction and Super-Resolution of Coarse-Grid PDE Solvers">RECAST: A Machine-Learning Framework for Correction and Super-Resolution of Coarse-Grid PDE Solvers</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Input convex neural networks as surrogates in mathematical optimisation">Input convex neural networks as surrogates in mathematical optimisation</span></li><li><span class="dpr-home-dashboard-paper-title" title="Identifiability-aware neural ordinary differential equations for parsimonious and reliable dynamic modelling">Identifiability-aware neural ordinary differential equations for parsimonious and reliable dynamic modelling</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>10</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>2</strong></span></div>
 </section>
 </div>
 

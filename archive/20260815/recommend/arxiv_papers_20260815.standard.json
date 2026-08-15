@@ -1,0 +1,166 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-15T20:43:54.248313+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2608.11020v1",
+      "source": "arxiv",
+      "title": "Derivative Computation in PINNs: Automatic Differentiation, Finite Differences and Beyond",
+      "abstract": "We systematically investigate finite-difference (FD) derivative computation in Physics-Informed Neural Networks (PINNs) as an alternative to automatic differentiation (AD). On three benchmark PDEs we show that, with a properly calibrated step size, FD matches AD in accuracy on every problem while running faster across the full tested batch-size range and using substantially less GPU memory, and that a stochastic variant we propose outperforms AD on a stationary problem. We further show that for neural architectures with inter-sample dependencies (e.g. BatchNorm, self-attention) the standard PyTorch autograd idiom is silently incorrect; the correct per-sample alternative is computationally infeasible at PINN-relevant batch sizes, while FD provides a forward-only approximation that is empirically an order of magnitude closer to the true per-sample derivative.",
+      "authors": [
+        "Maciej J. Mikulski",
+        "Tadeusz Uhl"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.NA",
+        "physics.comp-ph"
+      ],
+      "published": "2026-08-11T15:01:29+00:00",
+      "link": "https://arxiv.org/pdf/2608.11020v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Systematically compares derivative computation methods in PINNs; fundamental for PINN-based subsurface flow simulation.",
+      "llm_evidence_cn": "系统研究PINN中导数计算方法，是PINN求解地下水流的基础技术。",
+      "llm_evidence": "系统研究PINN中导数计算方法，是PINN求解地下水流的基础技术。",
+      "canonical_evidence": "系统研究PINN中导数计算方法，是PINN求解地下水流的基础技术。",
+      "llm_tldr_en": "Shows that finite-difference derivative computation in PINNs can match automatic differentiation accuracy while running faster and using less memory, and exposes silent errors in autograd for some architectures.",
+      "llm_tldr_cn": "自动微分是PINN的标准导数计算方式，但存在内存开销大、对特定架构计算错误等问题。本文系统比较了有限差分与自动微分在三个基准PDE上的表现，发现标定步长下有限差分精度相当、速度更快且显存更低，并提出随机有限差分变体进一步提速。研究还揭示批量归一化、自注意力等网络结构下PyTorch自动微分的静默错误。该结论为高效可靠的PINN实现提供重要指导，适用于地下水流模拟。",
+      "llm_tldr": "自动微分是PINN的标准导数计算方式，但存在内存开销大、对特定架构计算错误等问题。本文系统比较了有限差分与自动微分在三个基准PDE上的表现，发现标定步长下有限差分精度相当、速度更快且显存更低，并提出随机有限差分变体进一步提速。研究还揭示批量归一化、自注意力等网络结构下PyTorch自动微分的静默错误。该结论为高效可靠的PINN实现提供重要指导，适用于地下水流模拟。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.11937v1",
+      "source": "arxiv",
+      "title": "Distillation of Foundation Models for Time-dependent PDEs",
+      "abstract": "Foundation models for time-dependent partial differential equations (PDEs) are trained on large and diverse collections of physical systems and can generalize effectively to new downstream tasks. After fine-tuning on only a few trajectories from a target domain, they can achieve strong accuracy in low-data regimes. However, these models are typically large and computationally intensive, limiting their usefulness as fast surrogates for numerical solvers. We propose Teacher Rollout Extension (TREX), a knowledge distillation framework that transfers the predictive capability of a pretrained foundation model into a compact and efficient student. Starting from a fine-tuned teacher, TREX augments limited downstream data by generating long synthetic trajectories through teacher rollouts, optionally with periodic noise injection. This procedure samples from the teacher-induced rollout distribution without requiring explicit knowledge of the initial-condition distribution, while exposing the student to long-horizon states and local recovery behavior around states encountered during autoregressive prediction. The student can further incorporate task-specific inductive biases, such as equivariance, that the teacher does not necessarily enforce. We evaluate TREX on multiple PDE benchmarks. The resulting students can match or surpass the teacher's accuracy while reducing the number of parameters by several orders of magnitude and achieving more than an order-of-magnitude speedup in inference.",
+      "authors": [
+        "Daniel Musekamp",
+        "Boshra Ariguib",
+        "Andrei Manolache",
+        "Mathias Niepert"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-12T11:24:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.11937v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Knowledge distillation for time-dependent PDE foundation models to produce efficient surrogate solvers; directly relevant to ML surrogates for groundwater flow.",
+      "llm_evidence_cn": "针对时间依赖PDE基础模型提出知识蒸馏框架，可生成高效代理求解器，与地下水流机器学习代理模型直接相关。",
+      "llm_evidence": "针对时间依赖PDE基础模型提出知识蒸馏框架，可生成高效代理求解器，与地下水流机器学习代理模型直接相关。",
+      "canonical_evidence": "针对时间依赖PDE基础模型提出知识蒸馏框架，可生成高效代理求解器，与地下水流机器学习代理模型直接相关。",
+      "llm_tldr_en": "Presents Teacher Rollout Extension (TREX), a knowledge distillation framework that compresses a fine-tuned foundation model for time-dependent PDEs into a compact student, enabling fast surrogates.",
+      "llm_tldr_cn": "时间依赖偏微分方程的基础模型虽然泛化能力强，但规模大、计算开销高，难以作为快速数值求解替代。作者提出TREX知识蒸馏框架，通过教师模型滚动生成长合成轨迹扩充有限数据，将预训练基础模型的能力迁移至紧凑的学生模型。该方法在低数据区实现了高精度的快速代理建模，为地下水流等复杂物理模拟的高效代理提供支撑。",
+      "llm_tldr": "时间依赖偏微分方程的基础模型虽然泛化能力强，但规模大、计算开销高，难以作为快速数值求解替代。作者提出TREX知识蒸馏框架，通过教师模型滚动生成长合成轨迹扩充有限数据，将预训练基础模型的能力迁移至紧凑的学生模型。该方法在低数据区实现了高精度的快速代理建模，为地下水流等复杂物理模拟的高效代理提供支撑。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.09707v1",
+      "source": "arxiv",
+      "title": "Input convex neural networks as surrogates in mathematical optimisation",
+      "abstract": "Embedding trained neural networks as surrogates within optimisation problems is an established practice in operations research. The prevailing approach uses feedforward neural networks (FNNs) with ReLU activations, whose piecewise-linear structure admits an exact but computationally intensive mixed-integer programming (MIP) reformulation as the networks grow. We advocate input convex neural networks (ICNNs) as structurally superior surrogates when the underlying response is approximately convex or concave. The convex architecture offers two computational advantages. First, the ICNN-MIP formulation tends to yield a tighter linear programming (LP) relaxation than its FNN-MIP counterpart, with no integrality gap in favourable instances. Second, ICNNs uniquely admit an LP-based reformulation via epigraph representations of ReLU activations, though this embedding is not always exact. When it is not, we exploit the properties of ICNNs to construct the strongest continuous relaxation over box domains, namely, the convex hull of the ICNN's graph, bounded below by the epigraph and above by the concave envelope; this construction is tractable under input convexity but hard for general ReLU networks. On this basis, we develop a branch-and-bound algorithm that builds this relaxation at each node, branches directly on input variables rather than intermediate variables as in MIP reformulations, and terminates at the root node whenever the epigraph embedding is valid. Case studies on humanitarian food aid, oil well routing, and wine blending show that ICNN surrogates match FNN accuracy and deliver gains in solve time and scalability, supporting ICNN as the default surrogate when the underlying function is convex, concave, or well-approximated as such.",
+      "authors": [
+        "Yu Liu",
+        "Jan Kronqvist",
+        "Fabricio Oliveira"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC",
+        "cs.LG"
+      ],
+      "published": "2026-08-10T15:11:22+00:00",
+      "link": "https://arxiv.org/pdf/2608.09707v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "neural network surrogates in optimisation with input convex architecture",
+      "llm_evidence_cn": "输入凸神经网络作为优化中的代理模型",
+      "llm_evidence": "输入凸神经网络作为优化中的代理模型",
+      "canonical_evidence": "输入凸神经网络作为优化中的代理模型",
+      "llm_tldr_en": "Advocates input convex neural networks as surrogates in optimization, showing they yield tighter LP relaxations and lower MIP cost than standard ReLU networks for approximately convex responses; a transferable surrogate modeling technique for flow simulation and optimization.",
+      "llm_tldr_cn": "针对传统ReLU前馈网络代理嵌入数学优化时MIP规模过大的问题，本文提出采用输入凸神经网络（ICNN）作为代理。ICNN的凸结构在响应近似凸或凹时可获得更紧的LP松弛，并在多数有利情形下无积分性间隙。实验显示ICNN代理在优化中计算效率更高，为地下水流模拟等科学计算中的代理优化提供了通用且高效的建模工具。",
+      "llm_tldr": "针对传统ReLU前馈网络代理嵌入数学优化时MIP规模过大的问题，本文提出采用输入凸神经网络（ICNN）作为代理。ICNN的凸结构在响应近似凸或凹时可获得更紧的LP松弛，并在多数有利情形下无积分性间隙。实验显示ICNN代理在优化中计算效率更高，为地下水流模拟等科学计算中的代理优化提供了通用且高效的建模工具。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.13044v1",
+      "source": "arxiv",
+      "title": "Identifiability-aware neural ordinary differential equations for parsimonious and reliable dynamic modelling",
+      "abstract": "Neural ordinary differential equations (NODE) and hybrid NODE models provide flexible continuous-time representations of complex dynamic systems, but their expressive capacity can exceed the information content of the available data. Consequently, these models may reproduce observed trajectories while retaining weakly identifiable parameters, poorly constrained neural components, and unreliable extrapolation.   Here we introduce identifiability-aware neural ordinary differential equations (iNODE), a framework that incorporates practical identifiability into neural differential equation design. iNODE models embed neural components as explicit analytic functions within the governing equations, enabling direct sensitivity analysis, Fisher-information-based confidence intervals, and identifiability-aware architecture selection. Candidate architectures are generated under data-support constraints, jointly calibrated, and ranked according to predictive accuracy, parsimony, and parameter identifiability.   We evaluate the complete iNODE workflow against conventional NODE and hybrid NODE workflows representative of current practice using four controlled ground-truth benchmarks spanning fully data-driven and hybrid formulations, latent time-varying parameters, partial observability, and sparse or noisy measurements. Using the same training data and evaluation scenarios, the iNODE workflow selected more compact architectures, reduced parameter uncertainty, and improved extrapolation and recovery from latent-dynamics. These results establish practical identifiability as a model-design principle for parsimonious and reliable neural differential equations.",
+      "authors": [
+        "Núria Campo-Manzanares",
+        "Eva Balsa-Canto"
+      ],
+      "primary_category": "math.DS",
+      "categories": [
+        "math.DS"
+      ],
+      "published": "2026-08-13T10:09:30+00:00",
+      "link": "https://arxiv.org/pdf/2608.13044v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Identifiability-aware neural ODEs for dynamic modelling; applies to ML approaches for groundwater flow and transport systems.",
+      "llm_evidence_cn": "将可辨识性感知引入神经微分方程动态建模，适用于地下水流动与运移的机器学习方法。",
+      "llm_evidence": "将可辨识性感知引入神经微分方程动态建模，适用于地下水流动与运移的机器学习方法。",
+      "canonical_evidence": "将可辨识性感知引入神经微分方程动态建模，适用于地下水流动与运移的机器学习方法。",
+      "llm_tldr_en": "Introduces identifiability-aware neural ODEs (iNODE) that embed neural components as explicit analytic functions, improving parameter identifiability and reliable extrapolation for dynamic systems.",
+      "llm_tldr_cn": "神经微分方程表达能力过强时，参数不可辨识会导致预测外推不可靠。该文提出iNODE框架，将神经网络组件嵌入为显式解析函数，使参数敏感性和可辨识性直接可计算。该方法在保持灵活性的同时提升了动态模型的简约性和可靠性，对地下水流等物理动态过程的机器学习建模有借鉴意义。",
+      "llm_tldr": "神经微分方程表达能力过强时，参数不可辨识会导致预测外推不可靠。该文提出iNODE框架，将神经网络组件嵌入为显式解析函数，使参数敏感性和可辨识性直接可计算。该方法在保持灵活性的同时提升了动态模型的简约性和可靠性，对地下水流等物理动态过程的机器学习建模有借鉴意义。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning approaches for groundwater flow and transport simulation",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
