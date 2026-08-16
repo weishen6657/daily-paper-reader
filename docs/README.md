@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-15</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-16</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 4 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 2 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>2</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>2</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-15 20:48:46 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-16 20:32:58 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日精读4篇论文，聚焦PINN导数计算与时间相关PDE基座模型蒸馏两大前沿方向。最值得关注的是自动微分与有限差分之外的导数新解法，以及用蒸馏压缩大模型求解PDE的路径。若想入门，建议先读精读篇目的摘要，再按速读文章追踪优化与建模平衡的延伸案例。</p>
+<p>今日速读两篇论文，聚焦时间序列数据合成与动力学不确定性量化。</p>
+<p>值得关注：物理信息扩散模型用于动态系统数据生成，以及GENERIC框架下的结构保持不确定性量化方法。</p>
+<p>建议下一步选取其中一篇精读，重点验证其方法在自身研究场景中的适用性。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -71,12 +73,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">2 篇</strong>
+    <strong class="dpr-home-dashboard-count">0 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Derivative Computation in PINNs: Automatic Differentiation, Finite Differences and Beyond">Derivative Computation in PINNs: Automatic Differentiation, Finite Differences and Beyond</span></li><li><span class="dpr-home-dashboard-paper-title" title="Distillation of Foundation Models for Time-dependent PDEs">Distillation of Foundation Models for Time-dependent PDEs</span></li></ul>
+<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>2</strong></span></div>
+
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -87,7 +89,7 @@
     <strong class="dpr-home-dashboard-count">2 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Input convex neural networks as surrogates in mathematical optimisation">Input convex neural networks as surrogates in mathematical optimisation</span></li><li><span class="dpr-home-dashboard-paper-title" title="Identifiability-aware neural ordinary differential equations for parsimonious and reliable dynamic modelling">Identifiability-aware neural ordinary differential equations for parsimonious and reliable dynamic modelling</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Physics-informed Diffusion Generative Model for Time-Series Data Synthesis in Dynamic Systems">Physics-informed Diffusion Generative Model for Time-Series Data Synthesis in Dynamic Systems</span></li><li><span class="dpr-home-dashboard-paper-title" title="Structure-preserving uncertainty quantification for GENERIC dynamics">Structure-preserving uncertainty quantification for GENERIC dynamics</span></li></ul>
   </div>
   <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>2</strong></span></div>
 </section>

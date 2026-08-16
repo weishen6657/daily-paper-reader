@@ -1,0 +1,41 @@
+{
+  "date": "20260816",
+  "date_label": "",
+  "generated_at": "2026-08-16 20:32:58 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.10941v1",
+      "route": "202608/16/2608.10941v1-physics-informed-diffusion-generative-model-for-time-series-data-synthesis-in-dynamic-systems",
+      "title": "Physics-informed Diffusion Generative Model for Time-Series Data Synthesis in Dynamic Systems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "物理信息扩散模型合成物理一致的时间序列，可为LSTM地下水预测提供数据增强。",
+      "first_seen_at": "2026-08-16 20:32:58 UTC",
+      "updated_at": "2026-08-16 20:32:58 UTC"
+    },
+    {
+      "paper_id": "2608.12624v1",
+      "route": "202608/16/2608.12624v1-structure-preserving-uncertainty-quantification-for-generic-dynamics",
+      "title": "Structure-preserving uncertainty quantification for GENERIC dynamics",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "保结构科学机器学习的不确定性量化",
+      "first_seen_at": "2026-08-16 20:32:58 UTC",
+      "updated_at": "2026-08-16 20:32:58 UTC"
+    }
+  ]
+}

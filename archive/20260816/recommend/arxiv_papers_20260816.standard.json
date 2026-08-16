@@ -1,0 +1,95 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-16T20:30:29.473221+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.10941v1",
+      "source": "arxiv",
+      "title": "Physics-informed Diffusion Generative Model for Time-Series Data Synthesis in Dynamic Systems",
+      "abstract": "Industrial time-series signals, such as turbine temperature and rotational speed in aero-engines, are essential for monitoring the health and operational status of complex dynamical systems. However, collecting such data is often limited by harsh environments (e.g., high temperature and high pressure) and the high cost of experimental testing. To address this challenge, we introduce PhysDGM, a stepwise physics-embedded diffusion generative model for synthesizing time-series data that are consistent with the underlying physical laws of dynamical systems. PhysDGM embeds physical laws directly into each reverse diffusion step of the generative process, ensuring trajectory-level physical consistency, rather than enforcing constraints only at the final output. A large-scale AI-synthetic dataset (4.4 million samples, 20x scale-up) constructed by PhysDGM demonstrates strong fidelity across 34 datasets spanning turbofan engines, aero-engines, batteries, and chemical processes. After incorporating the synthetic data, the downstream task performance substantially surpassed that using real data alone by 48% for remaining useful life prediction, 15% for health indicator estimation, 22% for state-of-health assessment, and 20% for fault diagnosis. Moreover, it requires 10-20x less training data than existing approaches, substantially reducing the high cost of data collection in dynamical systems. We further demonstrate PhysDGM's potential in identifying early-stage faults in aero-engines by incorporating AI-synthesized data. In summary, PhysDGM provides a solid foundation for generating physically consistent industrial time-series, paving the way for expanding physics-guided AI into diverse data-scarce environments, including both industrial machinery and complex chemical reaction dynamics.",
+      "authors": [
+        "Haiteng Wang",
+        "Yunfei Zhu",
+        "Tao Wang",
+        "Yikang Li",
+        "Jiabao Dong",
+        "Xiaoge Zhang",
+        "Lei Ren"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-11T14:11:51+00:00",
+      "link": "https://arxiv.org/pdf/2608.10941v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Physics-informed diffusion model synthesizes physically consistent time series, enabling data augmentation for LSTM groundwater forecasting.",
+      "llm_evidence_cn": "物理信息扩散模型合成物理一致的时间序列，可为LSTM地下水预测提供数据增强。",
+      "llm_evidence": "物理信息扩散模型合成物理一致的时间序列，可为LSTM地下水预测提供数据增强。",
+      "canonical_evidence": "物理信息扩散模型合成物理一致的时间序列，可为LSTM地下水预测提供数据增强。",
+      "llm_tldr_en": "Presents PhysDGM, a diffusion generative model that embeds physical laws into reverse diffusion steps to synthesize time-series data with trajectory-level consistency. Tested on aero-engine signals, it addresses limited data in harsh environments and can support data augmentation for LSTM groundwater forecasting.",
+      "llm_tldr_cn": "针对工业动力系统数据采集困难且成本高昂的问题，提出物理嵌入扩散生成模型PhysDGM，在每步逆向扩散过程中嵌入物理定律，使合成的时间序列在轨迹层面满足物理一致性。在航空发动机温度与转速等信号上验证了生成质量。该方法可扩展用于地下水水位等时间序列的数据增强，辅助LSTM等预测模型的训练。",
+      "llm_tldr": "针对工业动力系统数据采集困难且成本高昂的问题，提出物理嵌入扩散生成模型PhysDGM，在每步逆向扩散过程中嵌入物理定律，使合成的时间序列在轨迹层面满足物理一致性。在航空发动机温度与转速等信号上验证了生成质量。该方法可扩展用于地下水水位等时间序列的数据增强，辅助LSTM等预测模型的训练。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "LSTM groundwater forecasting",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.12624v1",
+      "source": "arxiv",
+      "title": "Structure-preserving uncertainty quantification for GENERIC dynamics",
+      "abstract": "Structure-preserving machine learning embeds physical structure directly into model architectures, yet uncertainty quantification (UQ) for such hard-constrained models remains limited because standard UQ methods may violate the encoded admissibility conditions, require architectural modifications, or impose substantial computational costs. In this work, we propose Structure-Preserving Epistemic Neural Networks (S-PENNs), a general framework for UQ in scientific machine learning models with hard architectural constraints, and instantiate it for GENERIC (General Equation for Non-Equilibrium Reversible-Irreversible Coupling) dynamics. S-PENNs preserve the structural constraints of a pretrained model by attaching lightweight epinets to its constrained components, ensuring that every sampled realization remains physically admissible by construction. When applied to GENERIC dynamics, such a proposed framework yields thermodynamically consistent rollouts that preserve the first and second laws. Furthermore, we combine S-PENNs with split conformal prediction as a post-hoc calibration method to produce prediction intervals with finite-sample marginal coverage guarantees. We validate S-PENNs on three numerical examples: a harmonic oscillator coupled to a heat bath and an idealized chemical motor, both governed by ODEs, and a one-dimensional viscoplastic model governed by PDEs. Across all three examples, S-PENNs produce thermodynamically consistent stochastic realizations and well-calibrated prediction intervals while reducing the computational cost by about one to three orders of magnitude compared to deep ensembles. Although the present study focuses on GENERIC dynamics, S-PENNs can be extended more broadly to scientific machine learning models in computational mechanics with either hard or soft constraints.",
+      "authors": [
+        "Zequn He",
+        "Celia Reina"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.comp-ph"
+      ],
+      "published": "2026-08-12T22:12:19+00:00",
+      "link": "https://arxiv.org/pdf/2608.12624v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Uncertainty quantification for structure-preserving scientific ML",
+      "llm_evidence_cn": "保结构科学机器学习的不确定性量化",
+      "llm_evidence": "保结构科学机器学习的不确定性量化",
+      "canonical_evidence": "保结构科学机器学习的不确定性量化",
+      "llm_tldr_en": "Proposes Structure-Preserving Epistemic Neural Networks for UQ in hard-constrained scientific ML, instantiated for GENERIC dynamics.",
+      "llm_tldr_cn": "硬约束科学机器学习模型的不确定性量化通常面临违背约束或计算成本高的问题。本文提出保结构认知神经网络（S-PENNs），通过向预训练模型的受约束组件附加轻量级epinet进行不确定性估计，同时保持模型的物理结构约束。在GENERIC动力学上的实例验证了该方法的通用性。该框架可推广至地下水物理约束AI仿真模型的不确定性评估。",
+      "llm_tldr": "硬约束科学机器学习模型的不确定性量化通常面临违背约束或计算成本高的问题。本文提出保结构认知神经网络（S-PENNs），通过向预训练模型的受约束组件附加轻量级epinet进行不确定性估计，同时保持模型的物理结构约束。在GENERIC动力学上的实例验证了该方法的通用性。该框架可推广至地下水物理约束AI仿真模型的不确定性评估。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "artificial intelligence enhanced groundwater numerical simulation methods",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

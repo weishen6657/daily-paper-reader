@@ -1,0 +1,39 @@
+{
+  "label": "2026-08-16",
+  "date": "2026-08-16",
+  "generated_at": "2026-08-16T20:33:00",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202608/16/2608.10941v1-physics-informed-diffusion-generative-model-for-time-series-data-synthesis-in-dynamic-systems",
+      "section": "quick",
+      "title_en": "Physics-informed Diffusion Generative Model for Time-Series Data Synthesis in Dynamic Systems",
+      "authors": "Haiteng Wang, Yunfei Zhu, Tao Wang, Yikang Li, Jiabao Dong, Xiaoge Zhang, Lei Ren",
+      "date": "2026-08-11",
+      "pdf": "https://arxiv.org/pdf/2608.10941v1",
+      "score": "6.0",
+      "evidence": "物理信息扩散模型合成物理一致的时间序列，可为LSTM地下水预测提供数据增强。",
+      "tldr": "工业时间序列数据获取受高成本与恶劣环境限制，导致数据稀缺。为此提出PhysDGM，一种在扩散模型每个反向步骤中嵌入物理定律的生成模型，确保轨迹级物理一致性。利用其生成440万样本（扩大20倍），在34个数据集上验证，下游任务性能大幅提升，剩余寿命预测提高48%、健康指标估计提高15%、健康状态评估提高22%、故障诊断提高20%，且所需训练数据减少10-20倍。该方法为物理引导AI在数据稀缺场景中的应用奠定基础。",
+      "tags": "query:ag",
+      "abstract_en": "Industrial time-series signals, such as turbine temperature and rotational speed in aero-engines, are essential for monitoring the health and operational status of complex dynamical systems. However, collecting such data is often limited by harsh environments (e.g., high temperature and high pressure) and the high cost of experimental testing. To address this challenge, we introduce PhysDGM, a stepwise physics-embedded diffusion generative model for synthesizing time-series data that are consistent with the underlying physical laws of dynamical systems. PhysDGM embeds physical laws directly into each reverse diffusion step of the generative process, ensuring trajectory-level physical consistency, rather than enforcing constraints only at the final output. A large-scale AI-synthetic dataset (4.4 million samples, 20x scale-up) constructed by PhysDGM demonstrates strong fidelity across 34 datasets spanning turbofan engines, aero-engines, batteries, and chemical processes. After incorporating the synthetic data, the downstream task performance substantially surpassed that using real data alone by 48% for remaining useful life prediction, 15% for health indicator estimation, 22% for state-of-health assessment, and 20% for fault diagnosis. Moreover, it requires 10-20x less training data than existing approaches, substantially reducing the high cost of data collection in dynamical systems. We further demonstrate PhysDGM's potential in identifying early-stage faults in aero-engines by incorporating AI-synthesized data. In summary, PhysDGM provides a solid foundation for generating physically consistent industrial time-series, paving the way for expanding physics-guided AI into diverse data-scarce environments, including both industrial machinery and complex chemical reaction dynamics.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/16/2608.12624v1-structure-preserving-uncertainty-quantification-for-generic-dynamics",
+      "section": "quick",
+      "title_en": "Structure-preserving uncertainty quantification for GENERIC dynamics",
+      "authors": "Zequn He, Celia Reina",
+      "date": "2026-08-12",
+      "pdf": "https://arxiv.org/pdf/2608.12624v1",
+      "score": "6.0",
+      "evidence": "保结构科学机器学习的不确定性量化",
+      "tldr": "在科学机器学习中，硬约束模型的结构保持与不确定性量化常相互冲突，现有UQ方法易破坏物理可容许性或计算代价高昂。本文提出结构保持认知神经网络（S-PENNs），通过向预训练GENERIC模型的约束组件附加轻量epinet，使每个采样实现天然满足热力学约束。结合分裂共形预测，该方法在保证有限样本覆盖的同时，将计算成本较深度集成降低约1-3个数量级。",
+      "tags": "query:ag",
+      "abstract_en": "Structure-preserving machine learning embeds physical structure directly into model architectures, yet uncertainty quantification (UQ) for such hard-constrained models remains limited because standard UQ methods may violate the encoded admissibility conditions, require architectural modifications, or impose substantial computational costs. In this work, we propose Structure-Preserving Epistemic Neural Networks (S-PENNs), a general framework for UQ in scientific machine learning models with hard architectural constraints, and instantiate it for GENERIC (General Equation for Non-Equilibrium Reversible-Irreversible Coupling) dynamics. S-PENNs preserve the structural constraints of a pretrained model by attaching lightweight epinets to its constrained components, ensuring that every sampled realization remains physically admissible by construction. When applied to GENERIC dynamics, such a proposed framework yields thermodynamically consistent rollouts that preserve the first and second laws. Furthermore, we combine S-PENNs with split conformal prediction as a post-hoc calibration method to produce prediction intervals with finite-sample marginal coverage guarantees. We validate S-PENNs on three numerical examples: a harmonic oscillator coupled to a heat bath and an idealized chemical motor, both governed by ODEs, and a one-dimensional viscoplastic model governed by PDEs. Across all three examples, S-PENNs produce thermodynamically consistent stochastic realizations and well-calibrated prediction intervals while reducing the computational cost by about one to three orders of magnitude compared to deep ensembles. Although the present study focuses on GENERIC dynamics, S-PENNs can be extended more broadly to scientific machine learning models in computational mechanics with either hard or soft constraints.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
