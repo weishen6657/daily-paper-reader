@@ -1,0 +1,162 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-17T20:48:01.835650+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2608.13827v1",
+      "source": "arxiv",
+      "title": "HI-MeshGraphNets: Efficient and Accurate Mesh-based Physics Learning with Hierarchical Multi-scale Graph Neural Networks",
+      "abstract": "Machine-learned physical surrogate models have become promising alternatives to mesh-based numerical solvers. Among them, graph neural networks (GNNs) are well suited for representing simulation meshes and learning nodal state evolution through message passing. However, conventional flat message passing becomes inefficient on large, high-fidelity meshes because information propagates only one hop per layer, requiring deep processors for long-range interactions and increasing computational cost, memory usage, and the risk of over-smoothing.   To address this limitation, we propose Hierarchical Interpolating MeshGraphNets (HI-MGN), a multiscale extension of MeshGraphNets for efficient long-range communication on unstructured meshes. HI-MGN replaces the flat processor with a hierarchical multiscale processor that coarsens graphs using farthest-point sampling and Voronoi partitioning while preserving the original mesh topology. Message passing on coarse graphs enables information to travel over larger geometric distances with fewer layers, and a learned graph interpolation network reconstructs fine-resolution features.   Across three structural and fluid benchmarks, HI-MGN achieves improved accuracy compared with MeshGraphNets and the Bi-Stride Multi-Scale GNN while reducing training time and peak memory usage. The results show that topology-aware hierarchical message passing and learned coarse-to-fine interpolation provide an effective and practical framework for scalable mesh-based physics surrogate modeling.",
+      "authors": [
+        "SiHun Lee",
+        "Dong-Hyuk Park",
+        "Taesoo Bang",
+        "Seung-Hoon Kang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-13T23:30:29+00:00",
+      "link": "https://arxiv.org/pdf/2608.13827v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "hierarchical multi-scale GNN surrogate for mesh-based physics simulation, transferable to groundwater flow surrogate models",
+      "llm_evidence_cn": "面向网格物理模拟的多尺度图神经网络代理模型，可迁移至地下水流代理建模",
+      "llm_evidence": "面向网格物理模拟的多尺度图神经网络代理模型，可迁移至地下水流代理建模",
+      "canonical_evidence": "面向网格物理模拟的多尺度图神经网络代理模型，可迁移至地下水流代理建模",
+      "llm_tldr_en": "HI-MGN extends MeshGraphNets with hierarchical multi-scale message passing to efficiently and accurately learn mesh-based physical dynamics on large high-fidelity meshes, reducing computational cost and over-smoothing.",
+      "llm_tldr_cn": "面向大规模高保真网格的物理模拟，传统平面图神经网络消息传递需深层堆叠，导致计算开销大并易出现过平滑，难以捕捉长程相互作用。为此本文提出HI-MGN，一种层次化多尺度图神经网络代理模型，通过跨尺度插值与信息聚合提升长程通信效率。实验表明该方法在多种网格物理模拟基准上取得更优精度与效率，为地下水等高保真网格数值模拟的机器学习替代提供了可行思路。",
+      "llm_tldr": "面向大规模高保真网格的物理模拟，传统平面图神经网络消息传递需深层堆叠，导致计算开销大并易出现过平滑，难以捕捉长程相互作用。为此本文提出HI-MGN，一种层次化多尺度图神经网络代理模型，通过跨尺度插值与信息聚合提升长程通信效率。实验表明该方法在多种网格物理模拟基准上取得更优精度与效率，为地下水等高保真网格数值模拟的机器学习替代提供了可行思路。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.14328v1",
+      "source": "arxiv",
+      "title": "Reduced Order Modeling and Applications to Inverse State Estimation",
+      "abstract": "Solving parametric partial differential equations (PDEs) repeatedly for many parameter values,as needed in optimal control, uncertainty quantification, and inverse problems, is often prohibitive with classical discretizations. This chapter introduces Reduced Order Modeling (ROM), which builds compressed yet accurate representations of parametric solution sets for fast online evaluation. We formulate the approximation of parametric PDEs as a supervised learning task and review linear approximation, very effective for elliptic and parabolic problems, before turning to nonlinear methods needed when solutions exhibit discontinuities or steep gradients. We then show how to use reduced-order models to efficiently recover the state of a physical system from limited measurements, which is an inverse problem known as state estimation. Throughout, we favor results with theoretical guarantees while also discussing practical methods, and provide a companion Jupyter notebook implementing the main algorithms.",
+      "authors": [
+        "Olga Mula",
+        "Agustín Somacal"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-08-14T14:19:47+00:00",
+      "link": "https://arxiv.org/pdf/2608.14328v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Reduced-order models for parametric PDEs as supervised learning surrogates applicable to groundwater simulation",
+      "llm_evidence_cn": "面向参数化PDE的降阶模型作为监督学习替代模型，适用于地下水模拟",
+      "llm_evidence": "面向参数化PDE的降阶模型作为监督学习替代模型，适用于地下水模拟",
+      "canonical_evidence": "面向参数化PDE的降阶模型作为监督学习替代模型，适用于地下水模拟",
+      "llm_tldr_en": "This chapter frames parametric PDE approximation as supervised learning and reviews reduced-order models for fast surrogate evaluation and inverse state estimation, directly applicable to groundwater flow simulation.",
+      "llm_tldr_cn": "参数化偏微分方程的高保真求解往往计算代价高昂，难以支持多次求解。该章节系统介绍降阶建模（ROM），将参数化PDE近似视为监督学习任务，构建压缩且准确的解集表示。综述了线性与非线性方法，并展示其用于高效恢复物理系统状态。该方法可用于地下水流模拟的快速替代模型与反问题求解。",
+      "llm_tldr": "参数化偏微分方程的高保真求解往往计算代价高昂，难以支持多次求解。该章节系统介绍降阶建模（ROM），将参数化PDE近似视为监督学习任务，构建压缩且准确的解集表示。综述了线性与非线性方法，并展示其用于高效恢复物理系统状态。该方法可用于地下水流模拟的快速替代模型与反问题求解。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.11446v1",
+      "source": "arxiv",
+      "title": "XGBoost \"is all you need\": the case of forecasting transmitted heat energy in District Heating Systems",
+      "abstract": "This paper presents a comparative study of two distinct approaches, XGBoost and Long-Short Term Memory (LSTM), for forecasting transmitted heat energy in District Heating Systems (DHS). The objective is to explore scenarios in which conventional ML algorithms demonstrate better performance over deep learning networks in time series forecasting and the associated benefits in terms of computational cost and environmental impact. The study focuses on a real-world DHS dataset. Through experimentation and analysis, it is demonstrated that XGBoost consistently outperforms LSTM in this specific forecasting task. The difference is explained by the error distribution illustrating that LSTM makes more significant errors in the intervals of less data availability. The reduced computational demands of conventional ML approaches not only result in cost savings but also minimize the carbon footprint associated with data analysis tasks in energy systems.",
+      "authors": [
+        "Milan Zdravković"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-08-11T21:24:22+00:00",
+      "link": "https://arxiv.org/pdf/2608.11446v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Comparison of XGBoost and LSTM for time-series forecasting, methodologically relevant to LSTM groundwater forecasting",
+      "llm_evidence_cn": "XGBoost与LSTM在时间序列预测中的对比，对LSTM地下水预测具有方法参考价值",
+      "llm_evidence": "XGBoost与LSTM在时间序列预测中的对比，对LSTM地下水预测具有方法参考价值",
+      "canonical_evidence": "XGBoost与LSTM在时间序列预测中的对比，对LSTM地下水预测具有方法参考价值",
+      "llm_tldr_en": "This paper compares XGBoost and LSTM for forecasting heat energy in district heating systems, showing XGBoost outperforms LSTM; the forecasting methodology is transferable to groundwater level prediction.",
+      "llm_tldr_cn": "在区域供热系统热传输能量预测任务中，本文系统对比了XGBoost与LSTM两种时间序列预测方法，发现XGBoost在该真实数据集上表现优于LSTM。进一步误差分布分析表明LSTM在突发区间出现更大误差。该研究为LSTM等深度学习方法在地下水水位预测等时序建模中的应用提供了重要参考和对比基线。",
+      "llm_tldr": "在区域供热系统热传输能量预测任务中，本文系统对比了XGBoost与LSTM两种时间序列预测方法，发现XGBoost在该真实数据集上表现优于LSTM。进一步误差分布分析表明LSTM在突发区间出现更大误差。该研究为LSTM等深度学习方法在地下水水位预测等时序建模中的应用提供了重要参考和对比基线。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "LSTM groundwater forecasting",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.11613v1",
+      "source": "arxiv",
+      "title": "A Local Sinkhorn Framework for Conditional Distribution Reconstruction of Multidimensional Random Fields",
+      "abstract": "In this paper, we propose a local Sinkhorn divergence framework for conditional distribution reconstruction of multidimensional random fields. By utilizing the debiased Sinkhorn divergence, our proposed approach develops a differentiable and computationally efficient local distribution matching objective to train stochastic neural networks (SNNs). Furthermore, we establish theoretical generalization error estimates for our local Sinkhorn divergence framework, which explicitly characterizes the trade-off between approximation bias and statistical efficiency controlled by the regularization parameter and reveals how our proposed local Sinkhorn divergence loss function can be efficiently applied to learning multidimensional random field models. The proposed framework provides a scalable alternative to exact local optimal transport for conditional distribution reconstruction, offering a practical compromise between geometric fidelity, statistical efficiency, and computational scalability for uncertainty quantification and probabilistic scientific machine learning. Through various numerical examples, we compare our proposed local Sinkhorn divergence framework with other loss functions to train SNNs and with other machine-learning-based uncertainty quantification frameworks, demonstrating that the proposed local Sinkhorn divergence framework achieves an effective balance between reconstruction accuracy and computational efficiency while maintaining good scalability for multidimensional stochastic systems.",
+      "authors": [
+        "Mingtao Xia",
+        "Qijing Shen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-12T03:43:42+00:00",
+      "link": "https://arxiv.org/pdf/2608.11613v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "local Sinkhorn framework for conditional distribution reconstruction of multidimensional random fields; applicable to stochastic groundwater flow/transport simulations",
+      "llm_evidence_cn": "局部Sinkhorn散度框架用于多维随机场的条件分布重建，可服务于地下水流动/运移中的随机场模拟",
+      "llm_evidence": "局部Sinkhorn散度框架用于多维随机场的条件分布重建，可服务于地下水流动/运移中的随机场模拟",
+      "canonical_evidence": "局部Sinkhorn散度框架用于多维随机场的条件分布重建，可服务于地下水流动/运移中的随机场模拟",
+      "llm_tldr_en": "Local Sinkhorn divergence framework for conditional distribution reconstruction of multidimensional random fields using stochastic neural networks. Provides differentiable, efficient local distribution matching with generalization error bounds. Useful for stochastic subsurface flow and transport.",
+      "llm_tldr_cn": "地下水流动与运移模拟常需重建多维随机场（如渗透系数场）的条件分布，但现有分布匹配目标计算复杂且泛化性缺乏保障。该文提出基于去偏Sinkhorn散度的局部分布匹配框架，训练随机神经网络以高效重建多维随机场的条件分布，并给出泛化误差界分析。理论上刻画了正则化参数带来的近似偏差与统计效率权衡。该方法为地下水流与运移中随机场的学习提供了一种可微分且计算高效的训练目标，具有方法论价值。",
+      "llm_tldr": "地下水流动与运移模拟常需重建多维随机场（如渗透系数场）的条件分布，但现有分布匹配目标计算复杂且泛化性缺乏保障。该文提出基于去偏Sinkhorn散度的局部分布匹配框架，训练随机神经网络以高效重建多维随机场的条件分布，并给出泛化误差界分析。理论上刻画了正则化参数带来的近似偏差与统计效率权衡。该方法为地下水流与运移中随机场的学习提供了一种可微分且计算高效的训练目标，具有方法论价值。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning approaches for groundwater flow and transport simulation",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

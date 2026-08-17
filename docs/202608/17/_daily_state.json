@@ -1,0 +1,73 @@
+{
+  "date": "20260817",
+  "date_label": "",
+  "generated_at": "2026-08-17 20:51:30 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.13827v1",
+      "route": "202608/17/2608.13827v1-hi-meshgraphnets-efficient-and-accurate-mesh-based-physics-learning-with-hierarchical-multi-scale-graph-neural-networks",
+      "title": "HI-MeshGraphNets: Efficient and Accurate Mesh-based Physics Learning with Hierarchical Multi-scale Graph Neural Networks",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向网格物理模拟的多尺度图神经网络代理模型，可迁移至地下水流代理建模",
+      "first_seen_at": "2026-08-17 20:51:30 UTC",
+      "updated_at": "2026-08-17 20:51:30 UTC"
+    },
+    {
+      "paper_id": "2608.14328v1",
+      "route": "202608/17/2608.14328v1-reduced-order-modeling-and-applications-to-inverse-state-estimation",
+      "title": "Reduced Order Modeling and Applications to Inverse State Estimation",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向参数化PDE的降阶模型作为监督学习替代模型，适用于地下水模拟",
+      "first_seen_at": "2026-08-17 20:51:30 UTC",
+      "updated_at": "2026-08-17 20:51:30 UTC"
+    },
+    {
+      "paper_id": "2608.11446v1",
+      "route": "202608/17/2608.11446v1-xgboost-is-all-you-need-the-case-of-forecasting-transmitted-heat-energy-in-district-heating-systems",
+      "title": "XGBoost \"is all you need\": the case of forecasting transmitted heat energy in District Heating Systems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "XGBoost与LSTM在时间序列预测中的对比，对LSTM地下水预测具有方法参考价值",
+      "first_seen_at": "2026-08-17 20:51:30 UTC",
+      "updated_at": "2026-08-17 20:51:30 UTC"
+    },
+    {
+      "paper_id": "2608.11613v1",
+      "route": "202608/17/2608.11613v1-a-local-sinkhorn-framework-for-conditional-distribution-reconstruction-of-multidimensional-random-fields",
+      "title": "A Local Sinkhorn Framework for Conditional Distribution Reconstruction of Multidimensional Random Fields",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "局部Sinkhorn散度框架用于多维随机场的条件分布重建，可服务于地下水流动/运移中的随机场模拟",
+      "first_seen_at": "2026-08-17 20:51:30 UTC",
+      "updated_at": "2026-08-17 20:51:30 UTC"
+    }
+  ]
+}

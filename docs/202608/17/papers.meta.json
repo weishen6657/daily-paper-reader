@@ -1,0 +1,69 @@
+{
+  "label": "2026-08-17",
+  "date": "2026-08-17",
+  "generated_at": "2026-08-17T20:51:34",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202608/17/2608.13827v1-hi-meshgraphnets-efficient-and-accurate-mesh-based-physics-learning-with-hierarchical-multi-scale-graph-neural-networks",
+      "section": "deep",
+      "title_en": "HI-MeshGraphNets: Efficient and Accurate Mesh-based Physics Learning with Hierarchical Multi-scale Graph Neural Networks",
+      "authors": "SiHun Lee, Dong-Hyuk Park, Taesoo Bang, Seung-Hoon Kang",
+      "date": "2026-08-13",
+      "pdf": "https://arxiv.org/pdf/2608.13827v1",
+      "score": "8.0",
+      "evidence": "面向网格物理模拟的多尺度图神经网络代理模型，可迁移至地下水流代理建模",
+      "tldr": "针对传统图神经网络在大型高保真网格上因信息传播缓慢而效率低下的问题，提出HI-MGN，一种层次化多尺度MeshGraphNets扩展。通过最远点采样和Voronoi分区实现图粗化，在粗图上进行消息传递以扩大感受野，并利用学习到的插值网络重建细尺度特征。在结构力学和流体力学基准上，该方法提升了准确率，同时显著降低训练时间和内存占用，为大规模网格物理代理建模提供了高效实用方案。",
+      "tags": "query:ag",
+      "abstract_en": "Machine-learned physical surrogate models have become promising alternatives to mesh-based numerical solvers. Among them, graph neural networks (GNNs) are well suited for representing simulation meshes and learning nodal state evolution through message passing. However, conventional flat message passing becomes inefficient on large, high-fidelity meshes because information propagates only one hop per layer, requiring deep processors for long-range interactions and increasing computational cost, memory usage, and the risk of over-smoothing.   To address this limitation, we propose Hierarchical Interpolating MeshGraphNets (HI-MGN), a multiscale extension of MeshGraphNets for efficient long-range communication on unstructured meshes. HI-MGN replaces the flat processor with a hierarchical multiscale processor that coarsens graphs using farthest-point sampling and Voronoi partitioning while preserving the original mesh topology. Message passing on coarse graphs enables information to travel over larger geometric distances with fewer layers, and a learned graph interpolation network reconstructs fine-resolution features.   Across three structural and fluid benchmarks, HI-MGN achieves improved accuracy compared with MeshGraphNets and the Bi-Stride Multi-Scale GNN while reducing training time and peak memory usage. The results show that topology-aware hierarchical message passing and learned coarse-to-fine interpolation provide an effective and practical framework for scalable mesh-based physics surrogate modeling.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/17/2608.14328v1-reduced-order-modeling-and-applications-to-inverse-state-estimation",
+      "section": "deep",
+      "title_en": "Reduced Order Modeling and Applications to Inverse State Estimation",
+      "authors": "Olga Mula, Agustín Somacal",
+      "date": "2026-08-14",
+      "pdf": "https://arxiv.org/pdf/2608.14328v1",
+      "score": "8.0",
+      "evidence": "面向参数化PDE的降阶模型作为监督学习替代模型，适用于地下水模拟",
+      "tldr": "参数化偏微分方程的高保真离散求解代价高昂，难以支撑最优控制、不确定性量化与反问题等重复计算场景。本文引入降阶模型（ROM）作为监督学习任务，先综述适用于椭圆与抛物问题的线性近似，再转向应对间断或陡梯度的非线性方法，并用于高效的逆状态估计。全文兼顾理论保证与实用算法，配有Jupyter实现。",
+      "tags": "query:ag",
+      "abstract_en": "Solving parametric partial differential equations (PDEs) repeatedly for many parameter values,as needed in optimal control, uncertainty quantification, and inverse problems, is often prohibitive with classical discretizations. This chapter introduces Reduced Order Modeling (ROM), which builds compressed yet accurate representations of parametric solution sets for fast online evaluation. We formulate the approximation of parametric PDEs as a supervised learning task and review linear approximation, very effective for elliptic and parabolic problems, before turning to nonlinear methods needed when solutions exhibit discontinuities or steep gradients. We then show how to use reduced-order models to efficiently recover the state of a physical system from limited measurements, which is an inverse problem known as state estimation. Throughout, we favor results with theoretical guarantees while also discussing practical methods, and provide a companion Jupyter notebook implementing the main algorithms.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/17/2608.11446v1-xgboost-is-all-you-need-the-case-of-forecasting-transmitted-heat-energy-in-district-heating-systems",
+      "section": "quick",
+      "title_en": "XGBoost \"is all you need\": the case of forecasting transmitted heat energy in District Heating Systems",
+      "authors": "Milan Zdravković",
+      "date": "2026-08-11",
+      "pdf": "https://arxiv.org/pdf/2608.11446v1",
+      "score": "6.0",
+      "evidence": "XGBoost与LSTM在时间序列预测中的对比，对LSTM地下水预测具有方法参考价值",
+      "tldr": "在区域供热系统（DHS）中，准确预测传输热能对能源管理至关重要。传统机器学习方法XGBoost与深度学习方法LSTM的对比实验表明：XGBoost在预测精度上稳定优于LSTM，其优势源于对数据稀疏区间的误差控制——LSTM在该区间误差明显增大。此外，XGBoost所需计算资源远少于LSTM，显著降低运算成本和碳排放。这一结果表明，在特定时间序列预测场景下，传统ML方法可能比深度学习更高效实用，为能源系统智能化提供了新思路。",
+      "tags": "query:ag",
+      "abstract_en": "This paper presents a comparative study of two distinct approaches, XGBoost and Long-Short Term Memory (LSTM), for forecasting transmitted heat energy in District Heating Systems (DHS). The objective is to explore scenarios in which conventional ML algorithms demonstrate better performance over deep learning networks in time series forecasting and the associated benefits in terms of computational cost and environmental impact. The study focuses on a real-world DHS dataset. Through experimentation and analysis, it is demonstrated that XGBoost consistently outperforms LSTM in this specific forecasting task. The difference is explained by the error distribution illustrating that LSTM makes more significant errors in the intervals of less data availability. The reduced computational demands of conventional ML approaches not only result in cost savings but also minimize the carbon footprint associated with data analysis tasks in energy systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/17/2608.11613v1-a-local-sinkhorn-framework-for-conditional-distribution-reconstruction-of-multidimensional-random-fields",
+      "section": "quick",
+      "title_en": "A Local Sinkhorn Framework for Conditional Distribution Reconstruction of Multidimensional Random Fields",
+      "authors": "Mingtao Xia, Qijing Shen",
+      "date": "2026-08-12",
+      "pdf": "https://arxiv.org/pdf/2608.11613v1",
+      "score": "6.0",
+      "evidence": "局部Sinkhorn散度框架用于多维随机场的条件分布重建，可服务于地下水流动/运移中的随机场模拟",
+      "tldr": "针对多维随机场条件分布重建问题，本文提出局部Sinkhorn散度框架，以去偏Sinkhorn散度构建可微且计算高效的局部分布匹配目标来训练随机神经网络。理论推导了泛化误差界，刻画正则化参数对近似偏差与统计效率的权衡。数值实验表明该方法在重建精度、计算效率与可扩展性间取得良好平衡。",
+      "tags": "query:ag",
+      "abstract_en": "In this paper, we propose a local Sinkhorn divergence framework for conditional distribution reconstruction of multidimensional random fields. By utilizing the debiased Sinkhorn divergence, our proposed approach develops a differentiable and computationally efficient local distribution matching objective to train stochastic neural networks (SNNs). Furthermore, we establish theoretical generalization error estimates for our local Sinkhorn divergence framework, which explicitly characterizes the trade-off between approximation bias and statistical efficiency controlled by the regularization parameter and reveals how our proposed local Sinkhorn divergence loss function can be efficiently applied to learning multidimensional random field models. The proposed framework provides a scalable alternative to exact local optimal transport for conditional distribution reconstruction, offering a practical compromise between geometric fidelity, statistical efficiency, and computational scalability for uncertainty quantification and probabilistic scientific machine learning. Through various numerical examples, we compare our proposed local Sinkhorn divergence framework with other loss functions to train SNNs and with other machine-learning-based uncertainty quantification frameworks, demonstrating that the proposed local Sinkhorn divergence framework achieves an effective balance between reconstruction accuracy and computational efficiency while maintaining good scalability for multidimensional stochastic systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
