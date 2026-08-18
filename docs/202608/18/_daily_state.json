@@ -1,0 +1,153 @@
+{
+  "date": "20260818",
+  "date_label": "",
+  "generated_at": "2026-08-18 21:09:12 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.15657v1",
+      "route": "202608/18/2608.15657v1-a-responsible-artificial-intelligence-framework-for-groundwater-modeling",
+      "title": "A Responsible Artificial Intelligence Framework for Groundwater Modeling",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "利用LSTM与Transformer时间序列模型进行地下水建模，符合LSTM地下水预测需求",
+      "first_seen_at": "2026-08-18 21:09:12 UTC",
+      "updated_at": "2026-08-18 21:09:12 UTC"
+    },
+    {
+      "paper_id": "2608.16475v1",
+      "route": "202608/18/2608.16475v1-a-two-stage-learning-pinn-approach-for-solving-the-inverse-problem-of-the-1d-porous-medium-equation",
+      "title": "A Two-Stage Learning PINN Approach for Solving the Inverse Problem of the 1D Porous Medium Equation",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "物理信息神经网络求解多孔介质方程正反问题，匹配地下水流物理信息神经网络需求。",
+      "first_seen_at": "2026-08-18 21:09:12 UTC",
+      "updated_at": "2026-08-18 21:09:12 UTC"
+    },
+    {
+      "paper_id": "2608.15187v1",
+      "route": "202608/18/2608.15187v1-mino-cotangent-bundle-propagator-learning-for-pdes",
+      "title": "MiNO: Cotangent-bundle propagator learning for PDEs",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "直接针对物理信息神经网络和神经算子学习PDE；其传播子学习方法可用于地下水流模拟",
+      "first_seen_at": "2026-08-18 21:09:12 UTC",
+      "updated_at": "2026-08-18 21:09:12 UTC"
+    },
+    {
+      "paper_id": "2608.15373v1",
+      "route": "202608/18/2608.15373v1-beyond-field-accuracy-two-axis-diagnosis-of-inverse-pinn-parameter-error",
+      "title": "Beyond Field Accuracy: Two-Axis Diagnosis of Inverse-PINN Parameter Error",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "针对逆向物理信息神经网络中的参数误差进行诊断，可应用于地下水流参数反演",
+      "first_seen_at": "2026-08-18 21:09:12 UTC",
+      "updated_at": "2026-08-18 21:09:12 UTC"
+    },
+    {
+      "paper_id": "2608.14120v2",
+      "route": "202608/18/2608.14120v2-from-fixed-grids-to-moving-particlesa-transferable-latent-operator-for-fluid-dynamics",
+      "title": "From Fixed Grids to Moving Particles:A Transferable Latent Operator for Fluid Dynamics",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向流体的可迁移潜算子支持欧拉到拉格朗日零样本预测，可应用于流动与输运模拟",
+      "first_seen_at": "2026-08-18 21:09:12 UTC",
+      "updated_at": "2026-08-18 21:09:12 UTC"
+    },
+    {
+      "paper_id": "2608.14733v1",
+      "route": "202608/18/2608.14733v1-a-novel-fourier-feature-network-for-solving-partial-differential-equations",
+      "title": "A Novel Fourier Feature Network for Solving Partial Differential Equations",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "通过傅里叶特征与最小二乘逼近求解偏微分方程的神经网络方法，可应用于AI驱动的地下水数值模拟。",
+      "first_seen_at": "2026-08-18 21:09:12 UTC",
+      "updated_at": "2026-08-18 21:09:12 UTC"
+    },
+    {
+      "paper_id": "2608.15408v1",
+      "route": "202608/18/2608.15408v1-fast-deeponet-factor-augmented-branch-representations-for-high-dimensional-pde-inputs-in-the-small-sample-regime",
+      "title": "FAST-DeepONet: Factor-Augmented Branch Representations for High-Dimensional PDE Inputs in the Small-Sample Regime",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向高维PDE输入的稳定DeepONet代理建模",
+      "first_seen_at": "2026-08-18 21:09:12 UTC",
+      "updated_at": "2026-08-18 21:09:12 UTC"
+    },
+    {
+      "paper_id": "2608.16070v1",
+      "route": "202608/18/2608.16070v1-oceanlight-efficient-global-ocean-forecasting-via-geometry-adaptive-unstructured-mesh-representation",
+      "title": "OceanLight: Efficient Global Ocean Forecasting via Geometry-Adaptive Unstructured Mesh Representation",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "几何自适应非结构网格图神经网络用于流场预报，可迁移到地下水代理模型",
+      "first_seen_at": "2026-08-18 21:09:12 UTC",
+      "updated_at": "2026-08-18 21:09:12 UTC"
+    },
+    {
+      "paper_id": "2608.16449v1",
+      "route": "202608/18/2608.16449v1-decadal-wave-reconstruction-in-the-mediterranean-sea-with-graph-neural-networks",
+      "title": "Decadal wave reconstruction in the Mediterranean Sea with graph neural networks",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "基于图神经网络的非结构网格物理场代理模型，可迁移至地下水流动的机器学习代理模拟。",
+      "first_seen_at": "2026-08-18 21:09:12 UTC",
+      "updated_at": "2026-08-18 21:09:12 UTC"
+    }
+  ]
+}

@@ -1,0 +1,365 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-18T20:58:36.706360+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2608.15657v1",
+      "source": "arxiv",
+      "title": "A Responsible Artificial Intelligence Framework for Groundwater Modeling",
+      "abstract": "The rapid development and widespread application of artificial intelligence (AI) have sparked intense discussions on how to deploy responsible AI systems in a manner aligned with human values and ethical standards. Compared to fields like healthcare, energy, or finance, the application of AI in groundwater is relatively limited, and research on responsible AI is even more scarce. Taking the middle reaches of the Heihe River Basin as the study area, this paper proposes six Responsible AI principles: transparency, technical robustness, privacy governance, fairness, accountability, and sustainability. LSTM and Transformer time-series models are developed using multi-source hydrometeorological data, and validated via post-hoc interpretability, Monte Carlo simulation, and scenario analysis. The results show that Transformer outperforms LSTM in accuracy, robustness, and interpretability, demonstrating the operability and practical value of Responsible AI principles in groundwater prediction to support sustainable water management under climate change and human activities.",
+      "authors": [
+        "Chong Chen",
+        "Yulu Zhang",
+        "Qingxi Guo",
+        "Yihan Liu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-16T09:59:45+00:00",
+      "link": "https://arxiv.org/pdf/2608.15657v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "LSTM and Transformer time-series models for groundwater modeling, aligning with LSTM groundwater forecasting requirements.",
+      "llm_evidence_cn": "利用LSTM与Transformer时间序列模型进行地下水建模，符合LSTM地下水预测需求",
+      "llm_evidence": "利用LSTM与Transformer时间序列模型进行地下水建模，符合LSTM地下水预测需求",
+      "canonical_evidence": "利用LSTM与Transformer时间序列模型进行地下水建模，符合LSTM地下水预测需求",
+      "llm_tldr_en": "Proposes a Responsible AI framework for groundwater modeling with six principles, developing LSTM and Transformer time-series models from multi-source hydrometeorological data and validating them via interpretability and Monte Carlo methods.",
+      "llm_tldr_cn": "针对人工智能在地下水建模中应用不足及负责任AI研究缺乏的问题，以黑河中游为研究区提出六项负责任AI原则。基于多源水文气象数据开发LSTM和Transformer时间序列模型，并通过事后可解释性、蒙特卡洛等进行验证。该框架将AI预测与透明性、鲁棒性等伦理要求结合，为地下水智能建模提供了可信落地方案。",
+      "llm_tldr": "针对人工智能在地下水建模中应用不足及负责任AI研究缺乏的问题，以黑河中游为研究区提出六项负责任AI原则。基于多源水文气象数据开发LSTM和Transformer时间序列模型，并通过事后可解释性、蒙特卡洛等进行验证。该框架将AI预测与透明性、鲁棒性等伦理要求结合，为地下水智能建模提供了可信落地方案。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "LSTM groundwater forecasting",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.16475v1",
+      "source": "arxiv",
+      "title": "A Two-Stage Learning PINN Approach for Solving the Inverse Problem of the 1D Porous Medium Equation",
+      "abstract": "The Porous Medium Equation (PME), given by $u_t = Δ(u^m)$ for $m > 1$, is a degenerate nonlinear parabolic partial differential equation that arises in various physical applications such as fluid flow in porous media, heat transfer in plasmas, and population dynamics. It is known for its nonlinear diffusion and finite propagation speed. In this paper, we study numerical solutions of the one-dimensional direct and inverse PME using Physics-Informed Neural Networks (PINNs), and compare them with classical numerical methods and available analytical and manufactured solutions. While PINNs provide a flexible framework for solving both forward and inverse problems, we show that the standard inverse formulation suffers from a strong sensitivity to the initial guess, leading to only local convergence. To address this issue, we propose a novel two-stage PINN training framework for the inverse problem, which significantly improves convergence stability and allows reliable recovery of the unknown parameter even for poor initial guesses. Overall, the proposed approach demonstrates that PINNs are a flexible and accurate alternative to classical methods for the 1D PME, and the introduced two-stage training strategy substantially improves their robustness in inverse problems, providing a solid basis for extensions to more complex geometries and higher-dimensional cases.",
+      "authors": [
+        "Noura Al Helwani",
+        "Sophie Moufawad",
+        "Nabil Nassif"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC",
+        "cs.AI"
+      ],
+      "published": "2026-08-17T12:13:22+00:00",
+      "link": "https://arxiv.org/pdf/2608.16475v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Physics-informed neural network solving direct and inverse porous medium equation, matching subsurface flow PINN requirement.",
+      "llm_evidence_cn": "物理信息神经网络求解多孔介质方程正反问题，匹配地下水流物理信息神经网络需求。",
+      "llm_evidence": "物理信息神经网络求解多孔介质方程正反问题，匹配地下水流物理信息神经网络需求。",
+      "canonical_evidence": "物理信息神经网络求解多孔介质方程正反问题，匹配地下水流物理信息神经网络需求。",
+      "llm_tldr_en": "Develops a two-stage learning PINN to solve the direct and inverse 1D porous medium equation, a degenerate nonlinear PDE for fluid flow in porous media, improving on standard inverse PINN formulations and comparing favorably with classical numerical methods.",
+      "llm_tldr_cn": "多孔介质方程是描述地下多孔介质中流体流动的重要退化非线性偏微分方程，其标准PINN反演公式存在明显不足。本文提出两阶段学习的物理信息神经网络（PINN），系统求解一维多孔介质方程的正问题和反问题，并与经典数值方法及解析解对比。实验表明，两阶段策略显著改善了退化非线性扩散问题的求解稳定性与精度。该方法为地下水与多孔介质流动的物理信息神经网络建模提供了更可靠的求解途径。",
+      "llm_tldr": "多孔介质方程是描述地下多孔介质中流体流动的重要退化非线性偏微分方程，其标准PINN反演公式存在明显不足。本文提出两阶段学习的物理信息神经网络（PINN），系统求解一维多孔介质方程的正问题和反问题，并与经典数值方法及解析解对比。实验表明，两阶段策略显著改善了退化非线性扩散问题的求解稳定性与精度。该方法为地下水与多孔介质流动的物理信息神经网络建模提供了更可靠的求解途径。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.15187v1",
+      "source": "arxiv",
+      "title": "MiNO: Cotangent-bundle propagator learning for PDEs",
+      "abstract": "Scientific machine learning for partial differential equations commonly targets solution fields, as in physics-informed neural networks, or solution maps, as in neural operators. We study a third target: the propagator itself, a phase and amplitude in phase space. The motivation is a gap in regularity. A transported discontinuity is nonsmooth in space and time, yet the rule that moves it can be a polynomial phase carrying unit amplitude, so the object that generates an evolution can be far smoother than the field it generates. The microlocal neural operator (MiNO) learns that object, using the eikonal equation for the phase and the transport equation for the amplitude, and recovers the solution by an oscillatory integral. Sharp fronts and caustics then belong to propagation geometry rather than to a field fitted pointwise. Small residuals certify more than the reconstructed field. They place the learned canonical relation, the geometry that carries singularities, close to the exact one, and they separate trainable error from the frequency-truncation tail. On a matched-budget discontinuous-advection benchmark, MiNO stops improving within 10,000 steps at the accuracy limit of its finite reconstruction window, a limit predicted in closed form, whereas a physics-informed neural network with neural-tangent-kernel loss balancing stays near its initial error. On smooth advection, the mean error is $3.84\\times10^{-3}$ for MiNO and $3.12\\times10^{-2}$ for a supervised Fourier neural operator. Single-branch MiNO is the smallest model compared, and one trained generator serves five unseen initial conditions without retraining.",
+      "authors": [
+        "Gnankan Landry Regis N'guessan",
+        "Bum Jun Kim"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CE",
+        "math.NA"
+      ],
+      "published": "2026-08-15T12:02:03+00:00",
+      "link": "https://arxiv.org/pdf/2608.15187v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Directly targets physics-informed neural networks and neural operators for PDEs; method for learning propagators relevant to subsurface flow simulation",
+      "llm_evidence_cn": "直接针对物理信息神经网络和神经算子学习PDE；其传播子学习方法可用于地下水流模拟",
+      "llm_evidence": "直接针对物理信息神经网络和神经算子学习PDE；其传播子学习方法可用于地下水流模拟",
+      "canonical_evidence": "直接针对物理信息神经网络和神经算子学习PDE；其传播子学习方法可用于地下水流模拟",
+      "llm_tldr_en": "Proposes MiNO, a microlocal neural operator that learns the propagator (phase and amplitude) of PDEs rather than solution fields, enabling accurate handling of discontinuities. Directly relevant to physics-informed neural network approaches for subsurface flow.",
+      "llm_tldr_cn": "现有科学机器学习通常学解场或解映射，但在传输不连续情况下场的正则性低而传播子反而更光滑。该文提出微局部神经算子MiNO，学习PDE的相位和振幅传播子，再通过振荡积分恢复解。这为尖锐波前和焦散等问题提供了更优的正则性归纳偏置，与物理信息神经网络和神经算子研究高度相关，可迁移至地下水中溶质或压力波传播模拟。",
+      "llm_tldr": "现有科学机器学习通常学解场或解映射，但在传输不连续情况下场的正则性低而传播子反而更光滑。该文提出微局部神经算子MiNO，学习PDE的相位和振幅传播子，再通过振荡积分恢复解。这为尖锐波前和焦散等问题提供了更优的正则性归纳偏置，与物理信息神经网络和神经算子研究高度相关，可迁移至地下水中溶质或压力波传播模拟。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.15373v1",
+      "source": "arxiv",
+      "title": "Beyond Field Accuracy: Two-Axis Diagnosis of Inverse-PINN Parameter Error",
+      "abstract": "Inverse physics-informed neural networks (PINNs) can reconstruct a field accurately while returning an incorrect physical parameter. We introduce a two-axis post-training diagnosis that separates finite-sample resolution under a specified observation-and-estimation protocol from the signed parameter preference encoded by the final learned field and residual metric. The first axis repeatedly fits noisy observations with a matched forward estimator. At known synthetic truth, the second freezes the field and residual view and computes a local score displacement toward a nearby residual-profile minimum. Endpoint consistency then tests whether joint training delivers that preference under the same final view. Across three synthetic one-dimensional, scalar-parameter PDEs, matched-forward mean absolute relative error ranges from 2.34 percent to 17.46 percent. The displacement tracks frozen-profile minima across locked seeds, architectures, and fresh-noise retraining (r from .945 to .982), and it tracks delivered signed log-error in 240 fresh-noise RBA runs (r = .994; 237/240 correct directions). A coupled two-parameter Darcy check validates the full matrix calculation. The axes are complementary diagnostic coordinates, not additive error components or a deployable oracle-free estimator. Together, they route follow-up work toward observations, residual evidence, or endpoint delivery.",
+      "authors": [
+        "Yifan Zhang",
+        "Qian Tao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.NA"
+      ],
+      "published": "2026-08-15T18:54:12+00:00",
+      "link": "https://arxiv.org/pdf/2608.15373v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "diagnoses parameter error in inverse physics-informed neural networks, directly applicable to subsurface flow parameter estimation",
+      "llm_evidence_cn": "针对逆向物理信息神经网络中的参数误差进行诊断，可应用于地下水流参数反演",
+      "llm_evidence": "针对逆向物理信息神经网络中的参数误差进行诊断，可应用于地下水流参数反演",
+      "canonical_evidence": "针对逆向物理信息神经网络中的参数误差进行诊断，可应用于地下水流参数反演",
+      "llm_tldr_en": "This paper introduces a two-axis post-training diagnosis for inverse PINNs that separates finite-sample resolution from learned parameter preference, helping detect when accurate field reconstruction coexists with incorrect physical parameters.",
+      "llm_tldr_cn": "逆物理信息神经网络（PINN）即使能精确重构场量，也可能得到错误的物理参数。该文提出双轴训练后诊断，将有限样本分辨率与最终学习场和残差度量编码的参数偏好区分开。在合成一维标量算例中，该方法能揭示联合训练是否真正收敛到正确的参数偏好。这为地下水流等逆建模中的参数可信度评估提供了重要工具。",
+      "llm_tldr": "逆物理信息神经网络（PINN）即使能精确重构场量，也可能得到错误的物理参数。该文提出双轴训练后诊断，将有限样本分辨率与最终学习场和残差度量编码的参数偏好区分开。在合成一维标量算例中，该方法能揭示联合训练是否真正收敛到正确的参数偏好。这为地下水流等逆建模中的参数可信度评估提供了重要工具。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.14120v2",
+      "source": "arxiv",
+      "title": "From Fixed Grids to Moving Particles:A Transferable Latent Operator for Fluid Dynamics",
+      "abstract": "Lagrangian modeling is vital to fluid dynamics, as it characterizes particle transport and complements the Eulerian representation. However, Lagrangian trajectories are less commonly available than Eulerian fields, while most neural operators are trained and evaluated primarily in the Eulerian representation. This mismatch motivates a new learning problem: can a model trained solely on Eulerian observations generalize zero-shot from Eulerian field prediction to Lagrangian particle rollout, without Lagrangian supervision or task-specific adaptation? To address this problem, we propose the Transferable Latent Operator (TLO), which learns a unified flow representation shared by Eulerian field prediction and Lagrangian particle rollout. TLO decouples latent flow evolution from coordinate-dependent decoding: querying the evolving latent representation at fixed spatial coordinates yields Eulerian fields, whereas querying velocities at particle positions and recursively updating these positions enables Lagrangian rollout. Across five fluid-dynamics benchmarks, TLO consistently outperforms existing neural operators in both Eulerian field prediction and zero-shot Lagrangian rollout, with further gains from limited Lagrangian fine-tuning.",
+      "authors": [
+        "Meng Li",
+        "Chuqi Chen",
+        "Zhengqing Gao",
+        "Xi Zhou",
+        "Xiao Sun",
+        "Yang Xiang",
+        "Huaxi Huang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.GR"
+      ],
+      "published": "2026-08-14T09:26:02+00:00",
+      "link": "https://arxiv.org/pdf/2608.14120v2",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Transferable latent operator for fluid dynamics enabling zero-shot Eulerian-to-Lagrangian rollout; applicable to flow and transport simulation",
+      "llm_evidence_cn": "面向流体的可迁移潜算子支持欧拉到拉格朗日零样本预测，可应用于流动与输运模拟",
+      "llm_evidence": "面向流体的可迁移潜算子支持欧拉到拉格朗日零样本预测，可应用于流动与输运模拟",
+      "canonical_evidence": "面向流体的可迁移潜算子支持欧拉到拉格朗日零样本预测，可应用于流动与输运模拟",
+      "llm_tldr_en": "Proposes Transferable Latent Operator (TLO) that learns shared representations for Eulerian field prediction and Lagrangian particle rollout, enabling zero-shot transfer. Highly relevant to surrogate models for fluid flow and transport.",
+      "llm_tldr_cn": "拉格朗日轨迹数据稀缺而多数神经算子仅用于欧拉场预测，该研究提出新问题：仅由欧拉观测训练的模型能否零样本推广到拉格朗日粒子推演。为此提出可迁移潜算子(TLO)，学习统一流表示，同时支持欧拉场预测与拉格朗日粒子推演。这为地下水流和溶质运移的替代模拟提供了通用方法，具有重要迁移价值。",
+      "llm_tldr": "拉格朗日轨迹数据稀缺而多数神经算子仅用于欧拉场预测，该研究提出新问题：仅由欧拉观测训练的模型能否零样本推广到拉格朗日粒子推演。为此提出可迁移潜算子(TLO)，学习统一流表示，同时支持欧拉场预测与拉格朗日粒子推演。这为地下水流和溶质运移的替代模拟提供了通用方法，具有重要迁移价值。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning approaches for groundwater flow and transport simulation",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.16070v1",
+      "source": "arxiv",
+      "title": "OceanLight: Efficient Global Ocean Forecasting via Geometry-Adaptive Unstructured Mesh Representation",
+      "abstract": "Reliable global ocean forecasting is critical for climate monitoring, marine navigation, and extreme event early warning. Physics-based ocean forecasting models impose prohibitive computational costs, while existing deep learning approaches predominantly rely on structured-grid architectures, incurring unnecessary computation on masked land cells and enforcing uniform resolution across dynamically heterogeneous ocean regions regardless of local flow complexity. Here we present OceanLight, an efficient global ocean forecasting framework innovatively combining geometry-adaptive unstructured mesh tokenization with a graph neural network (GNN) backbone. OceanLight achieves pointwise forecast accuracy and kinetic energy spectral fidelity exceeding both operational numerical analyses and state-of-the-art AI-based models, while surpassing all AI-based ocean models in geostrophic balance consistency. Furthermore, OceanLight demonstrates reliable mesoscale eddy representation, capturing coherent ocean structures beyond pointwise statistical optimization. These capabilities are delivered with a 62% reduction in GPU memory consumption and 70\\% reduction in FLOPs relative to structured-grid baselines. Our unstructured mesh representation establishes a generalizable paradigm for scalable data-driven oceanography.",
+      "authors": [
+        "Wei Wu",
+        "Xiang Wang",
+        "Hongze Leng",
+        "Qingye Min",
+        "Junxing Zhu",
+        "Junqiang Song"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-08-17T04:03:30+00:00",
+      "link": "https://arxiv.org/pdf/2608.16070v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "geometry-adaptive unstructured mesh GNN surrogate for flow forecasting, transferable to groundwater surrogate modeling",
+      "llm_evidence_cn": "几何自适应非结构网格图神经网络用于流场预报，可迁移到地下水代理模型",
+      "llm_evidence": "几何自适应非结构网格图神经网络用于流场预报，可迁移到地下水代理模型",
+      "canonical_evidence": "几何自适应非结构网格图神经网络用于流场预报，可迁移到地下水代理模型",
+      "llm_tldr_en": "OceanLight uses geometry-adaptive unstructured mesh tokenization with a GNN backbone for efficient global ocean forecasting, achieving pointwise accuracy and kinetic energy spectra; its mesh-based surrogate approach transfers to groundwater flow simulation.",
+      "llm_tldr_cn": "该文提出OceanLight框架，将几何自适应非结构网格分词与图神经网络骨干结合，用于全球海洋业务化预报。它避免了结构化网格在陆地掩膜和均匀分辨率上的冗余计算，在保证逐点精度和动能谱的同时显著降低计算成本。该网格自适应代理建模思路对地下水流等复杂流动模拟具有直接借鉴价值。",
+      "llm_tldr": "该文提出OceanLight框架，将几何自适应非结构网格分词与图神经网络骨干结合，用于全球海洋业务化预报。它避免了结构化网格在陆地掩膜和均匀分辨率上的冗余计算，在保证逐点精度和动能谱的同时显著降低计算成本。该网格自适应代理建模思路对地下水流等复杂流动模拟具有直接借鉴价值。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.14733v1",
+      "source": "arxiv",
+      "title": "A Novel Fourier Feature Network for Solving Partial Differential Equations",
+      "abstract": "Building on the foundation of single-hidden-layer neural networks, Fourier Feature Networks (FENs) are proposed, which incorporate Fourier features using $\\cos$, $\\sin$, or a combination of both. Similar to Extreme Learning Machines (ELMs), FENs employ a single-hidden-layer architecture to generate a set of basis functions. The target function is then approximated as a linear combination of these basis functions, with the coefficients determined using the least squares method. However, unlike ELMs, which often rely on affine transformations to improve representational power, FENs can achieve high-precision solutions without requiring such transformations on the input variables. To evaluate the representational capacity of these networks, we search for an optimal scaling factor within a predefined range for the randomly initialized and fixed weights and biases. By adjusting this scaling factor, we ensure a fair comparison between FENs and ELMs using various activation functions, such as $\\text{sigmoid}$, $\\tanh$, and $\\text{swish}$. Our numerical experiments demonstrate that FENs consistently achieve higher accuracy than ELMs.",
+      "authors": [
+        "Qihong Yang",
+        "Zhijie Su",
+        "Yangtao Deng",
+        "Qiaolin He"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-08-13T06:29:30+00:00",
+      "link": "https://arxiv.org/pdf/2608.14733v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Neural network method for solving PDEs via Fourier features and least squares, applicable to AI-driven groundwater numerical simulation.",
+      "llm_evidence_cn": "通过傅里叶特征与最小二乘逼近求解偏微分方程的神经网络方法，可应用于AI驱动的地下水数值模拟。",
+      "llm_evidence": "通过傅里叶特征与最小二乘逼近求解偏微分方程的神经网络方法，可应用于AI驱动的地下水数值模拟。",
+      "canonical_evidence": "通过傅里叶特征与最小二乘逼近求解偏微分方程的神经网络方法，可应用于AI驱动的地下水数值模拟。",
+      "llm_tldr_en": "Proposes Fourier Feature Networks for solving PDEs using single-hidden-layer networks with Fourier features and least-squares fitting, achieving high-precision solutions without affine transformations, offering an efficient neural PDE solver transferable to groundwater simulation.",
+      "llm_tldr_cn": "偏微分方程数值求解在科学计算中至关重要，传统单隐层神经网络在表达能力和精度上存在局限。本文提出一种傅里叶特征网络（FEN），利用余弦、正弦等傅里叶特征构造基函数，并通过最小二乘线性组合逼近目标解，避免了仿射变换的依赖。在多个偏微分方程数值实验中，FEN展现出高精度求解能力，验证了其作为通用神经网络求解器的潜力。该方法可进一步迁移到地下水流动等物理场的智能数值模拟中。",
+      "llm_tldr": "偏微分方程数值求解在科学计算中至关重要，传统单隐层神经网络在表达能力和精度上存在局限。本文提出一种傅里叶特征网络（FEN），利用余弦、正弦等傅里叶特征构造基函数，并通过最小二乘线性组合逼近目标解，避免了仿射变换的依赖。在多个偏微分方程数值实验中，FEN展现出高精度求解能力，验证了其作为通用神经网络求解器的潜力。该方法可进一步迁移到地下水流动等物理场的智能数值模拟中。",
+      "llm_tags": [
+        "query:ag:composite"
+      ],
+      "matched_query_tag": "query:ag:composite",
+      "matched_query_text": "Papers central to 帮我检索近十年的关于人工智能驱动的地下水数值模拟的英文文献, especially work that connects or combines: LSTM groundwater forecasting; data-driven groundwater hydrology; physics-informed neural network subsurface flow; artificial intelligence groundwater simulation; deep learning groundwater level prediction; machine learning approaches for groundwater flow and transport simulation; physics informed neural network subsurface flow; artificial intelligence enhanced groundwater numerical simulation methods; machine learning based surrogate models for groundwater flow simulation.",
+      "matched_requirement_id": "req-composite-ag",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.16449v1",
+      "source": "arxiv",
+      "title": "Decadal wave reconstruction in the Mediterranean Sea with graph neural networks",
+      "abstract": "Accurate simulation and prediction of ocean waves are essential for coastal risk management and climate studies. Deep learning has shown promising results for wave modeling, but most approaches still operate on regular grids and on forecasting time scales, and do not generalize to unstructured discretization or to long time horizons. Here we present WaveGraph, a model based on Graph Neural Networks (GNNs) that emulates basin-scale wave dynamics directly on unstructured meshes with high resolution along the coasts (up to 2-3 km). Trained on bias-corrected simulation data over the Mediterranean Sea, WaveGraph uses a multiscale architecture combining the unstructured model mesh with a uniform graph, allowing simultaneous representation of local coastal interactions and large-scale wave dynamics. The model reconstructs the evolution of significant wave height, mean period, and mean direction, and is applied autoregressively for a continuous 17-year period without reinitialization or drift. Validation against buoy and satellite observations shows skill comparable to the input data set, and ablation experiments indicate that wind forcing drives most of the long-term stability while wave history improves swell-driven and basin-scale dynamics. These results show that GNNs can provide stable and efficient emulators of spectral wave models on unstructured domains, enabling decadal wave reconstructions.",
+      "authors": [
+        "Federica Benassi",
+        "Lorenzo Mentaschi",
+        "Salvatore Causio",
+        "Daniel Holmberg",
+        "Ivan Federico",
+        "Nadia Pinardi"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-08-17T11:49:46+00:00",
+      "link": "https://arxiv.org/pdf/2608.16449v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "GNN surrogate for wave dynamics on unstructured meshes; transferable to machine-learning surrogate models for groundwater flow simulation.",
+      "llm_evidence_cn": "基于图神经网络的非结构网格物理场代理模型，可迁移至地下水流动的机器学习代理模拟。",
+      "llm_evidence": "基于图神经网络的非结构网格物理场代理模型，可迁移至地下水流动的机器学习代理模拟。",
+      "canonical_evidence": "基于图神经网络的非结构网格物理场代理模型，可迁移至地下水流动的机器学习代理模拟。",
+      "llm_tldr_en": "Presents WaveGraph, a GNN-based surrogate that emulates Mediterranean wave dynamics directly on unstructured meshes with high coastal resolution, enabling decadal reconstruction and suggesting transferable techniques for subsurface flow surrogate modeling.",
+      "llm_tldr_cn": "海洋波浪的长期精确重建对海岸风险管理十分关键，但现有深度方法局限于规则网格和短时预测。本文提出WaveGraph，利用图神经网络直接在非结构网格上模拟海盆尺度波浪动态，并将模型网格与均匀图结合以表达多尺度特征。基于地中海偏置校正模拟数据训练后，模型实现了近岸高分辨率的十年波浪重建，展示了良好的泛化能力。该非结构网格代理建模策略可迁移到地下水流动模拟等地球物理流问题中。",
+      "llm_tldr": "海洋波浪的长期精确重建对海岸风险管理十分关键，但现有深度方法局限于规则网格和短时预测。本文提出WaveGraph，利用图神经网络直接在非结构网格上模拟海盆尺度波浪动态，并将模型网格与均匀图结合以表达多尺度特征。基于地中海偏置校正模拟数据训练后，模型实现了近岸高分辨率的十年波浪重建，展示了良好的泛化能力。该非结构网格代理建模策略可迁移到地下水流动模拟等地球物理流问题中。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.15408v1",
+      "source": "arxiv",
+      "title": "FAST-DeepONet: Factor-Augmented Branch Representations for High-Dimensional PDE Inputs in the Small-Sample Regime",
+      "abstract": "Deep operator networks can become statistically unstable when partial differential equation inputs are observed at thousands of strongly correlated sensors but only a small number of operator samples is available. We introduce FAST-DeepONet, a branch representation combining a fixed spectral path with a regularized projection of the orthogonal residual, in which the directional penalty acts on the effective residual map after each of its rows is normalized. On Navier--Stokes flow a plain DeepONet degrades from $0.0394$ to $0.1556$ mean relative $L_2$ error as the branch grows from $129$ to $8193$ coordinates, while FAST-DeepONet stays near $0.04$, so the sensor grid can be refined without a statistical penalty. Across independent test sets for Navier--Stokes flow, Darcy flow, and signed terminal wavefield prediction it lowers mean relative $L_2$ error by $4.7\\%$ to $37.0\\%$ with three to seven times fewer trainable parameters. A spectral-only branch sharing the same basis separates the two paths: the fixed spectral path carries the improvement on Navier--Stokes and Darcy, while terminal wave prediction requires the residual path together with its directional penalty. FAST-DeepONet targets coordinate-query architectures and trains on solution values alone.",
+      "authors": [
+        "Jiyong Kwon",
+        "Bongseok Kim",
+        "Guang Lin"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-15T20:31:51+00:00",
+      "link": "https://arxiv.org/pdf/2608.15408v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "stable DeepONet surrogate for high-dimensional PDE sensor inputs",
+      "llm_evidence_cn": "面向高维PDE输入的稳定DeepONet代理建模",
+      "llm_evidence": "面向高维PDE输入的稳定DeepONet代理建模",
+      "canonical_evidence": "面向高维PDE输入的稳定DeepONet代理建模",
+      "llm_tldr_en": "FAST-DeepONet augments DeepONet branch representations with a spectral path and regularized residual projection, stabilizing learning from high-dimensional sensor inputs in small-sample regimes, applicable to PDE surrogate modeling.",
+      "llm_tldr_cn": "深度算子网络在输入为大量强相关传感器观测而样本量较少时统计不稳定。FAST-DeepONet在分支网络中结合固定谱路径与正交残差的正则化投影，并对残差映射按行归一化。在Navier-Stokes流上随分支坐标从129增至8193，普通DeepONet误差从0.0394升至0.1556，而FAST-DeepONet保持在0.04附近。这为高维PDE输入的代理模型提供了稳定的训练方案，可推广到地下水流模拟。",
+      "llm_tldr": "深度算子网络在输入为大量强相关传感器观测而样本量较少时统计不稳定。FAST-DeepONet在分支网络中结合固定谱路径与正交残差的正则化投影，并对残差映射按行归一化。在Navier-Stokes流上随分支坐标从129增至8193，普通DeepONet误差从0.0394升至0.1556，而FAST-DeepONet保持在0.04附近。这为高维PDE输入的代理模型提供了稳定的训练方案，可推广到地下水流模拟。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
