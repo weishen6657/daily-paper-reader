@@ -1,0 +1,69 @@
+{
+  "label": "2026-08-19",
+  "date": "2026-08-19",
+  "generated_at": "2026-08-19T21:00:06",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202608/19/2608.17591v1-probabilistic-inverse-modeling-of-contaminant-transport-via-a-conditioned-on-design-bayesian-physics-informed-neural-network",
+      "section": "deep",
+      "title_en": "Probabilistic Inverse Modeling of Contaminant Transport via a Conditioned-on-Design Bayesian Physics Informed Neural Network",
+      "authors": "Milad Panahi, Giovanni Michele Porta, Monica Riva, Alberto Guadagnini",
+      "date": "2026-08-18",
+      "pdf": "https://arxiv.org/pdf/2608.17591v1",
+      "score": "9.0",
+      "evidence": "提出贝叶斯物理信息神经网络反演多孔介质污染物运移，直接对应地下水流与运移的机器学习方法",
+      "tldr": "针对非均质多孔介质反应性输运逆问题，提出条件设计贝叶斯物理信息神经网络(CoDe-BPINN)，结合域分解PINN与贝叶斯推断网络，通过物理信息ELBO联合重构浓度场、估计参数并量化不确定性。在层析柱实验中准确再现穿透曲线，发现有效吸附容量随流速和孔隙率非线性下降，并揭示吸附参数间的强负相关，为数据稀缺场景提供鲁棒推断框架。",
+      "tags": "query:ag",
+      "abstract_en": "We address the inverse problem of reactive transport in heterogeneous porous media, where unknown model parameters must be inferred from sparse experimental observations. The problem is complicated by strong nonlinearities, spatial heterogeneity, and limited data availability. We propose a Conditioned-on-Design Bayesian Physics-Informed Neural Network (CoDe-BPINN), which combines a domain-decomposed PINN solver with a Bayesian inference network that learns the conditional distribution of model parameters given experimental design variables. The framework is trained by maximizing a physics-informed Evidence Lower Bound (ELBO), enabling simultaneous reconstruction of spatiotemporal concentration fields, probabilistic parameter estimation, and uncertainty quantification. We demonstrate the approach using laboratory experiments on contaminant transport through a multilayer porous column with an iodinated contrast medium. The model accurately reproduces breakthrough dynamics while revealing systematic parameter dependence on flow conditions. In particular, it identifies a nonlinear decrease in effective sorption capacity with increasing flow rate and porosity, consistent with kinetic limitations and reduced adsorbent mass. The Bayesian formulation also uncovers a strong negative correlation between sorption affinity and sorption capacity, quantifying the intrinsic non-identifiability of the inverse problem. CoDe-BPINN provides a robust framework for parameter inference and uncertainty quantification in data-scarce reactive transport problems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/19/2608.17062v1-turbulent-microscale-flow-field-prediction-in-porous-media-using-convolutional-neural-networks",
+      "section": "deep",
+      "title_en": "Turbulent Microscale Flow Field Prediction In Porous Media Using Convolutional Neural Networks",
+      "authors": "Vishal Srikanth, Ching-Wei Huang, Ryan Harradine, Andrey V. Kuznetsov",
+      "date": "2026-08-17",
+      "pdf": "https://arxiv.org/pdf/2608.17062v1",
+      "score": "8.0",
+      "evidence": "基于CNN的多孔介质流场预测代理模型，与地下水数值模拟直接相关",
+      "tldr": "针对多孔介质湍流微尺度流场预测难题，提出基于卷积神经网络的快速预测方法，利用大涡模拟数据训练，将宏观模型分解为多个模块分别预测流场特性。在圆柱障碍物方形排列的多孔介质中，孔隙雷诺数300，孔隙率范围0.45-0.92，预测全局误差小于10%，相比大涡模拟实现约六个数量级加速。该方法为实时系统级多孔介质流动模拟提供了新途径。",
+      "tags": "query:ag",
+      "abstract_en": "Turbulence modeling in porous media can be greatly improved by combining high-resolution numerical methods with modern data-driven techniques. The development of accurate macroscale models (length scale greater than the pore size) will enable real-time systemic simulations of porous media flow. We consider the case of turbulent flow in homogeneous porous media, typically encountered in engineered porous media (heat exchangers, metamaterials, combustors, etc.). The underlying microscale flow field is inhomogeneous and determined by the geometry of the porous medium. Neural Networks are able to resolve the geometry-dependence and the non-linearity of porous media turbulent flow. We are proposing to separate the macroscale model into individual blocks that predict a unique aspect of the microscale flow, such as microscale spatial flow distribution and vortex dynamics. In the present work, we determine the feasibility of the prediction of the Reynolds-averaged microscale flow patterns by using Convolutional Neural Networks (CNN).   The porous medium is represented by using a square lattice arrangement of circular cylinder solid obstacles. The pore-scale Reynolds number of the flow is 300. The porosity of the porous medium is varied from 0.45 to 0.92 with 60 steps. The microscale flow field is simulated by using Large Eddy Simulation (LES) with a compact sixth-order finite difference method. We demonstrate satisfactory prediction of the microscale flow field using the CNN with a global error less than 10%. We vary the number of training samples to study the deterioration of the model accuracy. The CNN model offers a O(106) speedup over LES with only 10% loss in accuracy.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/19/2608.14733v1-a-novel-fourier-feature-network-for-solving-partial-differential-equations",
+      "section": "quick",
+      "title_en": "A Novel Fourier Feature Network for Solving Partial Differential Equations",
+      "authors": "Qihong Yang, Zhijie Su, Yangtao Deng, Qiaolin He",
+      "date": "2026-08-13",
+      "pdf": "https://arxiv.org/pdf/2608.14733v1",
+      "score": "7.0",
+      "evidence": "提出基于傅里叶特征网络求解PDE，可迁移至物理信息地下水流模拟",
+      "tldr": "求解偏微分方程时，单隐层神经网络需借助仿射变换提升表示能力。本文提出傅里叶特征网络FENs，利用cos/sin生成基函数并用最小二乘求系数，无需输入仿射变换。通过搜索最优缩放因子与ELM公平对比，实验表明FENs在多种激活函数下均获得更高精度。该工作为PDE求解提供了高精度轻量网络方案。",
+      "tags": "query:ag",
+      "abstract_en": "Building on the foundation of single-hidden-layer neural networks, Fourier Feature Networks (FENs) are proposed, which incorporate Fourier features using $\\cos$, $\\sin$, or a combination of both. Similar to Extreme Learning Machines (ELMs), FENs employ a single-hidden-layer architecture to generate a set of basis functions. The target function is then approximated as a linear combination of these basis functions, with the coefficients determined using the least squares method. However, unlike ELMs, which often rely on affine transformations to improve representational power, FENs can achieve high-precision solutions without requiring such transformations on the input variables. To evaluate the representational capacity of these networks, we search for an optimal scaling factor within a predefined range for the randomly initialized and fixed weights and biases. By adjusting this scaling factor, we ensure a fair comparison between FENs and ELMs using various activation functions, such as $\\text{sigmoid}$, $\\tanh$, and $\\text{swish}$. Our numerical experiments demonstrate that FENs consistently achieve higher accuracy than ELMs.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/19/2608.14744v1-iterative-refinement-diffusion-for-super-resolved-data-assimilation-of-multiscale-physical-systems",
+      "section": "quick",
+      "title_en": "Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems",
+      "authors": "Mrigank Dhingra, Ramchandran Muthukumar, Rebecca Willett, Omer San",
+      "date": "2026-08-13",
+      "pdf": "https://arxiv.org/pdf/2608.14744v1",
+      "score": "6.0",
+      "evidence": "面向多尺度物理系统的AI学习代理/数据同化，可迁移至地下水流代理建模",
+      "tldr": "从稀疏低分辨率观测恢复高分辨率状态是多尺度物理系统数据同化的重要挑战。现有生成式超分辨率多为一次性映射，未能充分利用历史状态约束。本文提出迭代细化框架，将重建分解为多分辨率层级上的预测-分析操作，采用共享神经算子提供动态先验，并以条件扩散模型逐级生成细化后验。在256×256 Kraichnan湍流上RMSE为0.184、SSIM为0.836，优于多种基线；在Burgers测试中与一次性扩散相当。该方法融合时间先验与生成式校正，在强多尺度欠定场景具有显著优势。",
+      "tags": "query:ag",
+      "abstract_en": "Recovering high-resolution states from sparse, low-resolution observations is a central challenge in scientific machine learning and data assimilation. Classical data assimilation exploits temporal information through forecast-analysis cycles, but often requires repeated access to expensive high-resolution forecast models. Generative super-resolution can recover unresolved structure from coarse observations, but is commonly used as a one-shot mapping that does not fully exploit constraints from past states. We introduce Iterative Refinement (IR), a learned data assimilation framework that combines these perspectives. Instead of performing a single coarse-to-fine reconstruction, IR decomposes the task into resolution-wise forecast-analysis operations across a multiresolution hierarchy. At each stage, a shared neural operator with resolution-dependent spectral mode slicing provides a dynamical prior, while a shared conditional diffusion corrector uses the current coarser-resolution state to produce a refined posterior at the next finer resolution. We evaluate IR on one-dimensional stochastically forced Burgers dynamics and two-dimensional Kraichnan turbulence. On the challenging 256x256 Kraichnan benchmark, IR achieves an RMSE of 0.184 and an SSIM of 0.836, outperforming spectral upsampling, one-shot diffusion super-resolution, enhanced deep super-resolution, and an autoregressive forecaster. On the more constrained Burgers testbed, IR remains competitive with one-shot diffusion, which achieves the lowest RMSE. These results show that one-shot generative reconstruction can be effective for simpler settings, while hierarchical forecast-analysis refinement becomes advantageous in strongly multiscale and underdetermined regimes. Overall, IR combines temporal priors, generative correction, and multiresolution reconstruction for learned data assimilation in complex physical systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

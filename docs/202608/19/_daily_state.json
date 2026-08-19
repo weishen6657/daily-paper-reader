@@ -1,0 +1,73 @@
+{
+  "date": "20260819",
+  "date_label": "",
+  "generated_at": "2026-08-19 21:00:03 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.17591v1",
+      "route": "202608/19/2608.17591v1-probabilistic-inverse-modeling-of-contaminant-transport-via-a-conditioned-on-design-bayesian-physics-informed-neural-network",
+      "title": "Probabilistic Inverse Modeling of Contaminant Transport via a Conditioned-on-Design Bayesian Physics Informed Neural Network",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "提出贝叶斯物理信息神经网络反演多孔介质污染物运移，直接对应地下水流与运移的机器学习方法",
+      "first_seen_at": "2026-08-19 21:00:03 UTC",
+      "updated_at": "2026-08-19 21:00:03 UTC"
+    },
+    {
+      "paper_id": "2608.17062v1",
+      "route": "202608/19/2608.17062v1-turbulent-microscale-flow-field-prediction-in-porous-media-using-convolutional-neural-networks",
+      "title": "Turbulent Microscale Flow Field Prediction In Porous Media Using Convolutional Neural Networks",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "基于CNN的多孔介质流场预测代理模型，与地下水数值模拟直接相关",
+      "first_seen_at": "2026-08-19 21:00:03 UTC",
+      "updated_at": "2026-08-19 21:00:03 UTC"
+    },
+    {
+      "paper_id": "2608.14733v1",
+      "route": "202608/19/2608.14733v1-a-novel-fourier-feature-network-for-solving-partial-differential-equations",
+      "title": "A Novel Fourier Feature Network for Solving Partial Differential Equations",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "提出基于傅里叶特征网络求解PDE，可迁移至物理信息地下水流模拟",
+      "first_seen_at": "2026-08-19 21:00:03 UTC",
+      "updated_at": "2026-08-19 21:00:03 UTC"
+    },
+    {
+      "paper_id": "2608.14744v1",
+      "route": "202608/19/2608.14744v1-iterative-refinement-diffusion-for-super-resolved-data-assimilation-of-multiscale-physical-systems",
+      "title": "Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向多尺度物理系统的AI学习代理/数据同化，可迁移至地下水流代理建模",
+      "first_seen_at": "2026-08-19 21:00:03 UTC",
+      "updated_at": "2026-08-19 21:00:03 UTC"
+    }
+  ]
+}
