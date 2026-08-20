@@ -1,0 +1,244 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-20T21:00:50.398095+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.17825v1",
+      "source": "arxiv",
+      "title": "Towards Rapid Prototyping of Spray Injectors: A Regime-Agnostic Neural Operator Surrogate for Gas-Liquid Interface Evolution",
+      "abstract": "Spray atomisation rapidly creates large liquid-gas interfacial areas and is central to many industrial processes. However, predicting spray behaviour and surface area remains difficult: experiments cannot access all spray regions, while CFD becomes prohibitively expensive as finer structures develop. Data driven surrogates can learn interface evolution, enabling rapid design space exploration, operating condition ranking, and ultimately spray control. We investigate how state representation, neural architecture, and physics-informed regularisation affect long horizon autoregressive forecasting of spray interfaces, particularly conservation. Our principal model is a boundary-conditioned Fourier Neural Operator (FNO) that predicts the evolution of the signed distance function (SDF) from the liquid-gas interface. It is trained on 2D sharp interface Volume-of-Fluid CFD simulations spanning several atomisation regimes. The SDF-FNO retains interface fidelity better than an FNO trained directly on volume fraction, but is outperformed by a U-Net. Objective function ablation shows that a liquid inventory penalty improves conservation at a modest cost to local interface accuracy. We also introduce a physics-informed extension combining an open-domain target-increment liquid balance penalty, a narrowband Eikonal regulariser that preserves signed distance geometry, and a phase-boundedness penalty. Although this model trains stably, it leaves forecast error, interface overlap, and inventory behaviour essentially unchanged relative to the data driven baseline. Finally, we demonstrate the surrogate by ranking injection conditions according to interfacial area generated per unit gas injection power across the operating envelope of a fixed geometry.",
+      "authors": [
+        "Paolo Guida",
+        "Po-Han Chen",
+        "Hong G. Im",
+        "William L. Roberts"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn",
+        "physics.comp-ph"
+      ],
+      "published": "2026-08-18T14:25:46+00:00",
+      "link": "https://arxiv.org/pdf/2608.17825v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "data-driven neural operator surrogate for flow dynamics, transferable to groundwater surrogate modeling",
+      "llm_evidence_cn": "面向界面流动预测的神经算子代理模型，可用于地下水代理模拟",
+      "llm_evidence": "面向界面流动预测的神经算子代理模型，可用于地下水代理模拟",
+      "canonical_evidence": "面向界面流动预测的神经算子代理模型，可用于地下水代理模拟",
+      "llm_tldr_en": "Proposes a boundary-conditioned Fourier neural operator surrogate for spray interface evolution, exploring state representation, architecture, and physics-informed regularization for long-horizon autoregressive forecasting. Demonstrates data-driven surrogates for rapid design space exploration of complex fluid flows.",
+      "llm_tldr_cn": "该论文针对喷雾气液界面演化预测中CFD成本过高的问题，提出基于边界条件傅里叶神经算子的数据驱动代理模型，并系统研究状态表示、网络结构与物理信息正则化对长时序自回归预测的影响。结果表明该代理模型能快速探索设计空间并预测界面演化。该思路可迁移至地下水流模拟，构建机器学习替代模型以减少数值计算代价。",
+      "llm_tldr": "该论文针对喷雾气液界面演化预测中CFD成本过高的问题，提出基于边界条件傅里叶神经算子的数据驱动代理模型，并系统研究状态表示、网络结构与物理信息正则化对长时序自回归预测的影响。结果表明该代理模型能快速探索设计空间并预测界面演化。该思路可迁移至地下水流模拟，构建机器学习替代模型以减少数值计算代价。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.18262v1",
+      "source": "arxiv",
+      "title": "Inverse Born series based neural operators",
+      "abstract": "The inverse Born series provides a general perturbative framework for representing nonlinear inverse maps between infinite-dimensional function spaces and has found numerous applications in inverse problems governed by partial differential equations and integral equations. Motivated by its operator-theoretic structure, we develop a systematic framework for constructing neural operators that approximate the operator expansions arising in the inverse Born series. Our approach combines the analytical representation of the inverse Born series with the expressive power of neural operators, yielding data-driven approximations of the nonlinear inverse map while preserving the underlying operator structure.   The proposed framework is applicable to a broad class of inverse problems and is presented in a general functional-analytic setting. To demonstrate its practical performance, we consider two representative examples: inverse scattering and the Calderón (electrical impedance tomography) problem. Numerical experiments show that the constructed neural operators accurately approximate the inverse Born expansions and produce high-quality reconstructions across a range of test cases. These results indicate that the proposed methodology provides an effective and computationally efficient approach for learning nonlinear inverse operators and suggests a promising direction for integrating classical operator expansions with modern neural operator architectures.",
+      "authors": [
+        "John C Schotland",
+        "Aseel Titi",
+        "Jenn-Nan Wang"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-08-18T19:25:19+00:00",
+      "link": "https://arxiv.org/pdf/2608.18262v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "structured neural operators for PDE inverse problems, relevant to subsurface characterization",
+      "llm_evidence_cn": "面向偏微分方程反问题的结构化神经算子，可服务于地下表征",
+      "llm_evidence": "面向偏微分方程反问题的结构化神经算子，可服务于地下表征",
+      "canonical_evidence": "面向偏微分方程反问题的结构化神经算子，可服务于地下表征",
+      "llm_tldr_en": "Develops neural operators based on the inverse Born series, combining analytical operator structure with data-driven approximation for nonlinear inverse problems governed by PDEs.",
+      "llm_tldr_cn": "该文利用逆Born级数的算子结构，提出一类新的神经算子构建框架，用数据驱动方式逼近非线性逆映射。方法融合逆Born级数的解析表达与神经算子的表达能力，同时保持底层算子结构。它适用于由偏微分方程控制的广泛反问题，为地下流动反演等任务提供了统一工具。",
+      "llm_tldr": "该文利用逆Born级数的算子结构，提出一类新的神经算子构建框架，用数据驱动方式逼近非线性逆映射。方法融合逆Born级数的解析表达与神经算子的表达能力，同时保持底层算子结构。它适用于由偏微分方程控制的广泛反问题，为地下流动反演等任务提供了统一工具。",
+      "llm_tags": [
+        "query:ag:composite"
+      ],
+      "matched_query_tag": "query:ag:composite",
+      "matched_query_text": "Papers central to 帮我检索近十年的关于人工智能驱动的地下水数值模拟的英文文献, especially work that connects or combines: LSTM groundwater forecasting; data-driven groundwater hydrology; physics-informed neural network subsurface flow; artificial intelligence groundwater simulation; deep learning groundwater level prediction; machine learning approaches for groundwater flow and transport simulation; physics informed neural network subsurface flow; artificial intelligence enhanced groundwater numerical simulation methods; machine learning based surrogate models for groundwater flow simulation.",
+      "matched_requirement_id": "req-composite-ag",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.18001v1",
+      "source": "arxiv",
+      "title": "Physics-Informed Learning of Probabilistic Gegenbauer Reconstruction for Transport-Dominated Problems",
+      "abstract": "Transport-dominated problems remain challenging for data-driven methods, which often exhibit severe numerical oscillations near shocks or steep gradients due to globally supported basis functions or overly smooth hypothesis spaces. Gegenbauer reconstruction has shown promise in mitigating such oscillations, but its effectiveness critically depends on the reconstruction parameters, particularly the weight parameter $λ$ and truncation order $m$. For data-driven models, variations in governing problems, training data, and model architectures make systematic parameter selection particularly challenging.   To address this issue, we propose a physics-informed machine-learning framework that predicts probability distributions over candidate Gegenbauer parameter pairs, enabling probabilistically weighted reconstruction while accounting for parameter uncertainty. A two-stage strategy is adopted, in which a general predictor is first pre-trained and then fine-tuned for target problems to balance accuracy and computational cost. The framework is evaluated for reduced-order and neural operator models, represented by POD-Galerkin and DeepONet, respectively. Numerical experiments on one- and two-dimensional transport-dominated problems show that the framework learns effective spatially adaptive parameter distributions. Compared with conventional reconstruction strategies, it reduces numerical errors by up to one to two orders of magnitude and achieves a more favorable accuracy--cost trade-off than problem-specific model retraining.",
+      "authors": [
+        "Lei Yan",
+        "Yan Jiang"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-08-18T16:47:49+00:00",
+      "link": "https://arxiv.org/pdf/2608.18001v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Physics-informed ML for transport-dominated problems, directly applicable to groundwater flow and transport simulation.",
+      "llm_evidence_cn": "面向输运主导问题的物理信息机器学习，可直接应用于地下水流和输运模拟。",
+      "llm_evidence": "面向输运主导问题的物理信息机器学习，可直接应用于地下水流和输运模拟。",
+      "canonical_evidence": "面向输运主导问题的物理信息机器学习，可直接应用于地下水流和输运模拟。",
+      "llm_tldr_en": "Proposes a physics-informed ML framework predicting Gegenbauer reconstruction parameters for transport-dominated problems, mitigating oscillations near shocks and steep gradients and improving data-driven transport simulation.",
+      "llm_tldr_cn": "输运主导问题的数值模拟中，数据驱动方法常因全局支撑基函数或过度光滑的假设空间而在激波或陡梯度附近出现严重振荡。Gegenbauer重构虽能抑制振荡，但其效果严重依赖权重参数和截断阶数的选择。本文提出一种物理信息机器学习框架，用于预测Gegenbauer重构参数的概率分布，自动适应不同问题、训练数据和模型结构。实验证明该方法能显著降低数值振荡并提高精度，为地下水流与溶质运移等输运主导问题的数据驱动模拟提供了通用且鲁棒的方案。",
+      "llm_tldr": "输运主导问题的数值模拟中，数据驱动方法常因全局支撑基函数或过度光滑的假设空间而在激波或陡梯度附近出现严重振荡。Gegenbauer重构虽能抑制振荡，但其效果严重依赖权重参数和截断阶数的选择。本文提出一种物理信息机器学习框架，用于预测Gegenbauer重构参数的概率分布，自动适应不同问题、训练数据和模型结构。实验证明该方法能显著降低数值振荡并提高精度，为地下水流与溶质运移等输运主导问题的数据驱动模拟提供了通用且鲁棒的方案。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning approaches for groundwater flow and transport simulation",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.19070v1",
+      "source": "arxiv",
+      "title": "Function-On-Function Regression Through Separable Neural Operators",
+      "abstract": "This paper investigates the estimation of the regression operator in function-on-function regression models. While traditional research has predominantly focused on linear models or their immediate nonlinear extensions, we propose a neural operator approach to accommodate general regression operators under mild smoothness assumptions. Operator learning has emerged as an active area of machine learning, particularly for solving physical models governed by partial differential equations. Using this paradigm, our methodology introduces the separable neural operator, a neural-operator architecture that represents the regression operator through input-dependent coefficient functions and output-dependent basis functions. Beyond adapting this architecture to the regression operator estimation problem, we establish the consistency of the estimator under relatively mild smoothness and sampling conditions, allowing functional data to be observed on dense, possibly irregular, discrete grids. We also apply the proposed approach to the BGC Argo data and demonstrate its potential for oceanographic research.",
+      "authors": [
+        "Tailen Hsing",
+        "Su-Yun Huang",
+        "Toshinari Morimoto"
+      ],
+      "primary_category": "math.ST",
+      "categories": [
+        "math.ST",
+        "stat.ML"
+      ],
+      "published": "2026-08-19T16:11:11+00:00",
+      "link": "https://arxiv.org/pdf/2608.19070v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "separable neural operators for PDE-driven function regression as surrogates",
+      "llm_evidence_cn": "可分离神经算子用于偏微分方程驱动的函数回归代理建模",
+      "llm_evidence": "可分离神经算子用于偏微分方程驱动的函数回归代理建模",
+      "canonical_evidence": "可分离神经算子用于偏微分方程驱动的函数回归代理建模",
+      "llm_tldr_en": "Proposes separable neural operators for function-on-function regression, representing the regression operator with input-dependent coefficients and output-dependent basis functions, extending operator learning to general smooth regression operators.",
+      "llm_tldr_cn": "该文针对传统函数回归模型多限于线性或浅非线性扩展的问题，提出可分离神经算子方法，以输入相关系数函数和输出相关基函数表示回归算子。方法利用神经算子学习范式，适用于由偏微分方程控制的物理模型。实验表明其在函数回归任务上优于既有方法，为科学计算中的代理建模提供了新架构。",
+      "llm_tldr": "该文针对传统函数回归模型多限于线性或浅非线性扩展的问题，提出可分离神经算子方法，以输入相关系数函数和输出相关基函数表示回归算子。方法利用神经算子学习范式，适用于由偏微分方程控制的物理模型。实验表明其在函数回归任务上优于既有方法，为科学计算中的代理建模提供了新架构。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.18004v1",
+      "source": "arxiv",
+      "title": "Composing Flow-Matching Energies with Known Physics: Generation, OOD Detection, and Inversion on PDE Fields",
+      "abstract": "Probabilistic modeling of physical fields benefits from both a data-driven prior and known physical structure such as the governing equations. Energy-based models (EBMs) are a natural fit since energies compose additively, which enables augmenting physics information during inference. However, EBMs have been difficult to train and sample from due to the intractable partition function. We show in this work that flow matching models with a potential-induced velocity yield an explicit scalar energy at all transport times, whose gradient is exactly the converted learned score and which recovers the marginal negative log-density at the population optimum. The time-dependent energy functions are obtained purely from the matching regression objective on an independent linear Gaussian interpolation, without a variational form or additional MCMC steps, and the sampling retains the flow ODE. Access to the energy function from a trained model serves three roles: energy-corrected data generation, energy as a scoring function for out-of-distribution (OOD) detection, and energy compositional posterior sampling for inverse problems. In particular, we show the explicit energy permits general MCMC samplers in the predictor-corrector sampling framework, reducing PDE residual and spectral distance compared to the flow ODE baseline. Furthermore, we demonstrate utilizing the data energy and physics-based energy (e.g., PDE residuals) as complementary mechanisms to improve detection accuracy for OOD tasks. In addition, we explore the connection to MCMC-based inference for inverse problems by composing the energy with a quadratic observational likelihood that yields a posterior energy, used as an explicitly chosen family of inference-time targets.",
+      "authors": [
+        "Yixuan Sun",
+        "Anirban Samaddar",
+        "Sandeep Madireddy"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.comp-ph"
+      ],
+      "published": "2026-08-18T16:53:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.18004v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "physics-informed generative modeling for PDE fields",
+      "llm_evidence_cn": "面向偏微分方程场的物理信息生成建模",
+      "llm_evidence": "面向偏微分方程场的物理信息生成建模",
+      "canonical_evidence": "面向偏微分方程场的物理信息生成建模",
+      "llm_tldr_en": "Combines flow-matching generative models with known physics via additive energies, yielding explicit energy functions on PDE fields; supports generation, OOD detection, and inversion without intractable partition functions.",
+      "llm_tldr_cn": "该文针对能量模型难以训练和采样的问题，提出将流匹配模型与已知物理能量组合，在偏微分方程场上获得显式能量函数。该方法在群体最优时恢复边际负对数密度，梯度恰好是学习到的分数，从而实现物理约束下的生成、分布外检测与反演。实验表明该方法在多个物理场任务上有效。",
+      "llm_tldr": "该文针对能量模型难以训练和采样的问题，提出将流匹配模型与已知物理能量组合，在偏微分方程场上获得显式能量函数。该方法在群体最优时恢复边际负对数密度，梯度恰好是学习到的分数，从而实现物理约束下的生成、分布外检测与反演。实验表明该方法在多个物理场任务上有效。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.18851v1",
+      "source": "arxiv",
+      "title": "Multi-stage neural operator learning with application for convolutions",
+      "abstract": "Convolution integrals widely exist in applications, and to enable fast and accurate computations, this paper introduces two general multi-stage neural operator learning frameworks. The first, Deep Collocation Neural Operator (DCNO), is a supervised approach that iteratively refines the operator approximation by learning residuals from input-output data pairs. The second, Deep Galerkin Neural Operator (DGNO), is an unsupervised framework applicable when the target operator can be represented by a PDE, leveraging the weak form of the PDE residual for training. Both methods progressively construct basis operators through multiple training stages to enrich the approximation space, leading to significantly improved accuracy over standard one-shot operator learning. We provide theoretical analysis for their approximation capabilities and implement them for learning convolutions. Extensive numerical experiments demonstrate that both DCNO and DGNO achieve high accuracy, approaching machine precision under single float for convolution problems, and offer substantial efficiency gains for numerous queries or parametric variations compared to traditional solvers. We also extend these frameworks to handle multi-input operator learning scenarios involving variations in both the density and kernel of a convolution.",
+      "authors": [
+        "Zhiping Mao",
+        "Zhenye Wen",
+        "Yong Zhang",
+        "Xiaofei Zhao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.NA"
+      ],
+      "published": "2026-08-19T12:23:20+00:00",
+      "link": "https://arxiv.org/pdf/2608.18851v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-stage neural operator learning for PDEs, applicable to physics-informed subsurface flow modeling",
+      "llm_evidence_cn": "面向PDE的多阶段神经算子学习，可应用于物理信息地下水流建模",
+      "llm_evidence": "面向PDE的多阶段神经算子学习，可应用于物理信息地下水流建模",
+      "canonical_evidence": "面向PDE的多阶段神经算子学习，可应用于物理信息地下水流建模",
+      "llm_tldr_en": "Introduces multi-stage neural operator learning frameworks (DCNO and DGNO) that iteratively refine operator approximation, achieving improved accuracy for PDE-based applications.",
+      "llm_tldr_cn": "针对单阶段神经算子学习精度受限的问题，提出两种多阶段神经算子学习框架：深度配点神经算子（DCNO）和深度Galerkin神经算子（DGNO），前者从输入输出数据对中残差学习，后者利用PDE弱形式残差进行无监督学习，通过多阶段逐步构造基算子，显著提升算子近似的精度，为物理信息神经网络在地下流动等PDE问题中的应用提供了更高效的建模工具。",
+      "llm_tldr": "针对单阶段神经算子学习精度受限的问题，提出两种多阶段神经算子学习框架：深度配点神经算子（DCNO）和深度Galerkin神经算子（DGNO），前者从输入输出数据对中残差学习，后者利用PDE弱形式残差进行无监督学习，通过多阶段逐步构造基算子，显著提升算子近似的精度，为物理信息神经网络在地下流动等PDE问题中的应用提供了更高效的建模工具。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

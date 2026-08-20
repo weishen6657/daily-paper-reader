@@ -1,0 +1,1769 @@
+Title: Inverse Born series based neural operators
+
+URL Source: https://arxiv.org/pdf/2608.18262v1
+
+Published Time: Thu, 20 Aug 2026 00:12:08 GMT
+
+Number of Pages: 40
+
+Markdown Content:
+# Inverse Born series based neural operators 
+
+## John C Schotland ∗ Aseel Titi † Jenn-Nan Wang ‡
+
+Abstract 
+
+The inverse Born series provides a general perturbative framework for rep-resenting nonlinear inverse maps between infinite-dimensional function spaces and has found numerous applications in inverse problems governed by par-tial differential equations and integral equations. Motivated by its operator-theoretic structure, we develop a systematic framework for constructing neu-ral operators that approximate the operator expansions arising in the inverse Born series. Our approach combines the analytical representation of the inverse Born series with the expressive power of neural operators, yielding data-driven approximations of the nonlinear inverse map while preserving the underlying operator structure. The proposed framework is applicable to a broad class of inverse problems and is presented in a general functional-analytic setting. To demonstrate its practical performance, we consider two representative examples: inverse scat-tering and the Calder´ on (electrical impedance tomography) problem. Numeri-cal experiments show that the constructed neural operators accurately approx-imate the inverse Born expansions and produce high-quality reconstructions across a range of test cases. These results indicate that the proposed method-ology provides an effective and computationally efficient approach for learning nonlinear inverse operators and suggests a promising direction for integrating classical operator expansions with modern neural operator architectures. 
+
+# 1 Introduction 
+
+The problem considered in this work is to develop a systematic framework for con-structing neural operators that approximate the operator expansion arising in the inverse Born series. This series provides a powerful and general methodology for representing nonlinear inverse maps between infinite-dimensional function spaces. 
+
+> ∗
+
+Zhao and Ji Professor of Mathematics, Yale University, New Haven, CT 06520-8283, USA. Email: john.schotland@yale.edu 
+
+> †
+
+Mathematics Department, Embry-Riddle Aeronautical University, Prescott, Arizona, USA. Email: titia@erau.edu 
+
+> ‡
+
+Institute of Applied Mathematical Sciences, National Taiwan University, Taipei 106, Taiwan. Email: jnwang@math.ntu.edu.tw 
+
+1arXiv:2608.18262v1 [math.NA] 18 Aug 2026 The inverse Born series was introduced in the setting of one-dimensional quantum mechanical inverse scattering. However, the method is not restricted to scattering problems. Rather, it constitutes a general perturbative framework that has been developed and applied to a broad class of forward and inverse problems governed by partial differential equations and integral equations, including those of optical tomog-raphy, electrical impedance tomography, and acoustic and electromagnetic imaging [4, 17, 18, 34, 36, 39, 41]. We refer to [44, 40] and the references therein for a com-prehensive exposition of the method and its applications. This work is primarily concerned with the inverse Born series. However, the techniques developed here can be extended in a straightforward manner to inversion of other multilinear operator expansions. At a fundamental level, many forward problems can be expressed as nonlinear operator equations of the form 
+
+F(q) = f, 
+
+where q denotes an unknown coefficient, source, or medium parameter, f represents observable data, and F is a nonlinear operator acting between suitable function spaces. The corresponding inverse problem seeks to recover q from measurements of 
+
+f , a task that is often ill-posed and highly sensitive to noise [15]. The Born series provides a formal expansion of the forward operator F around a known reference coefficient, while the inverse Born series provides an expansion of the inverse map 
+
+F−1 in the data f under appropriate assumptions. The convergence and stability of the Born and inverse Born series have been rigorously analyzed in [38, 14]. Recent advances in machine learning, in particular the development of neural operators , offer a promising alternative to explicit evaluation of the Born or inverse Born series. Neural operators are designed to approximate mappings between infinite-dimensional function spaces. Architectures such as PCA-Net, Fourier Neural Opera-tors (FNO) and DeepONet have demonstrated the ability to learn solution operators of PDEs directly from data [2, 6, 5, 21, 30, 29, 31, 32, 33]. The inverse Born series provide a natural analytical foundation for the construc-tion of neural operators. Each term in the series corresponds to a multilinear operator acting on a function space, suggesting a close conceptual connection with the neu-ral operator architecture. Rather than explicitly computing each term in the series, neural operators can be trained to approximate the entire series, effectively learn-ing a resummed representation of the inverse map. This approach preserves the operator-theoretic structure of the problem, while alleviating the computational and convergence limitations of classical series expansions. Moreover, constructing neural operators inspired by the inverse Born series enables a principled integration of phys-ical models and data-driven learning. The series structure provides interpretability and theoretical grounding, while neural operators offer expressive power and flexi-bility. This hybrid framework is particularly attractive for inverse problems, where learning the inverse Born map directly can lead to stable and efficient reconstructions. In recent years, machine learning methods have attracted considerable attention as 2alternative numerical approaches for solving inverse problems; related developments can be found in [1, 3, 42, 7]. Universal approximation theorems for operator learning have been established for several architectures, including neural operators [19, 21, 25, 23], DeepONet [33, 26], and PCA-Net [24]. A comprehensive overview of recent advances in neural operator theory can be found in [20]. The objective of this work is to establish quantitative 
+
+universal approximation theorems, which provide explicit upper bounds on the num-ber of learnable parameters required to achieve a prescribed level of approximation accuracy. To place our results in context, it has been shown in [27] that operator learning for general classes of operators is subject to the so-called ”curse of para-metric complexity,” whereby the number of parameters required for approximation grows exponentially as the target accuracy increases. Such unfavorable scaling may severely limit the practical utility of neural operators. Nevertheless, when attention is restricted to operators arising from specific classes of partial differential equations, recent work has demonstrated that quantitative ap-proximation theorems with tractable parametric complexity can be achieved, avoiding exponential growth. For example, quantitative approximation results have been es-tablished for the Darcy and Navier-Stokes equations using Fourier neural operators and PCA-Net, respectively [19, 24]. Further developments include the analysis of Hamilton-Jacobi equations via Hamilton-Jacobi neural operators [27], and nonlinear parabolic equations in [12]. In addition, neural operators for the scattering problem, mapping the refractive index to the scattering amplitude, were constructed in [13], where corresponding quantitative approximation bounds were also derived. In ad-dition, quantitative approximation theorems based on DeepONet architectures have been developed for a broad range of PDEs, including elliptic, parabolic, and hyper-bolic equations [8, 26, 35], while convergence and approximation results for advection-diffusion equations were investigated in [11]. Recently, a quantitative universal ap-proximation of neural operators for the Dirichlet-to-Neumann map was proved in [22]. In summary, this work is motivated by the observation that the Born and inverse Born series provide general operator expansions for nonlinear forward and inverse problems, extending well beyond classical scattering theory. Since we are primarily interested in inverse problems, we build on this insight to construct neural operators whose architectures are directly informed by the combinatorial structure of the inverse Born series, following recent developments in [12, 13, 22]. Rather than employing the full inverse Born series, we construct our neural operators using a reduced inverse Born series, which leads to a more efficient and transparent framework. Furthermore, we derive the dependence of the parametric complexity on the approximation accuracy whenever possible. By using these series as both a conceptual and architectural foundation, the resulting neural operators yield scalable and stable approximations of complex nonlinear operators while preserving the underlying physical and operator-theoretic structure. This perspective further advances the theory of operator learning and broadens its applicability to inverse problems across a wide range of physical 3settings. This paper is organized as follows. In Section 2, we review the theoretical founda-tions of the Born and inverse Born series. Section 3 presents the main architecture of the proposed neural operators in detail. In Section 4, we apply the framework devel-oped in Section 3 to several representative physical examples. Numerical simulations illustrating the performance of the proposed methods are presented in Section 5. 
+
+# 2 Born and inverse Born series 
+
+In this section, we briefly review the Born and inverse Born series, which provide perturbative operator expansions for nonlinear forward and inverse problems. We present the series in an abstract operator-theoretic setting that highlights their gen-eral applicability beyond classical scattering theory and prepares the groundwork for the neural operator constructions introduced in subsequent sections. Let X and Y be separable Hilbert spaces. We consider the following power series (Born series) 
+
+ϕ = K1(η) + K2(η, η ) + K3(η, η, η ) + · · · , (2.1) where Kj : Xj → Y . The series (2.1) defines the forward mapping F : η 7 → ϕ. The precise form of the Kj depends on the problem at hand. We will study the Kj in greater detail later. We consider the inverse problem of determining η from ϕ. To this end, we make the ansatz: 
+
+η = I[ϕ] = 
+
+> ∞
+
+X
+
+> m=1
+
+Km(ϕ). (2.2) The series (2.2) is referred as the inverse Born series (IBS). To determine the inverse operators {K m}∞
+
+> m=1
+
+, we substitute (2.2) into (2.1), which yields 
+
+K1(ϕ) = K† 
+
+> 1
+
+(ϕ), (2.3) 
+
+K2(ϕ) = −K 1(K2(K1(ϕ), K1(ϕ))) , (2.4) 
+
+K3(ϕ) = −K 1(K2(K1(ϕ), K2(ϕ))) − K 1(K2(K2(ϕ), K1(ϕ))) 
+
+− K 1(K3(K1(ϕ), K1(ϕ), K1(ϕ))) , (2.5) 
+
+Km(ϕ) = −K 1
+
+> m
+
+X
+
+> n=2
+
+Kn
+
+ X
+
+> i1+··· +in=m
+
+Ki1 (ϕ) ⊗ · · · ⊗ K in (ϕ)
+
+
+
+, m ≥ 4, (2.6) where K† 
+
+> 1
+
+is a regularized pseudoinverse of K1 [14, 40]. If K−11 is bounded, we simply choose K1 = K−11 . In general, K1 can be defined as follows. Consider the problem of Tikhonov regularization: 
+
+η† = arg min  
+
+> η
+
+(∥K1η − ϕ∥2 
+
+> Y
+
++ λF (η)) ,
+
+4where F is a convex penalty function. We then define K1(ϕ) = η†. In particular, if 
+
+F (η) = ∥η∥2 
+
+> X
+
+, then 
+
+K1 = ( K∗ 
+
+> 1
+
+K1 + λI )−1K∗ 
+
+> 1
+
+.
+
+In the subsequent section, we will employ a low-rank approximation of K1 and choose 
+
+K1 accordingly. We recall the following convergence theorem and error estimate of the IBS estab-lished in [14]. 
+
+Theorem 2.1. [14, Theorem 2.2] Let μ and ν be positive constants, and suppose that the multilinear operators Km : Xm → Y satisfy 
+
+∥Km(η1, . . . , η m)∥Y ≤ νμ m−1∥η1∥X · · · ∥ ηm∥X , m = 1 , 2, . . . . 
+
+Then the IBS converges provided that 
+
+∥K 1ϕ∥X < r, 
+
+where the radius of convergence r is given by 
+
+1 = 12μ[√16 c2 + 1 − 4c] with c = max {2, ∥K 1∥ ν}.
+
+Moreover, if K1ϕ ∈ Br, then the inverse operator I maps Br into Br0 , where 
+
+r0 = 2μ
+
+√16 c2 + 1 ,
+
+where Br and Br0 are balls of radius r, r 0 in X, respectively. 
+
+Theorem 2.2. [14, Theorem 2.4] Suppose that the hypotheses of Theorem 2.1 hold and that both the forward Born series and the IBS converge. Let ˜η denote the sum of the IBS, and let 
+
+η1 = K1ϕ. 
+
+Setting 
+
+M = max {∥ η∥X , ∥˜η∥X },
+
+we further assume that 
+
+M < 1
+
+μ 1 −
+
+s
+
+ν∥K 1∥
+
+1 + ν∥K 1∥
+
+!
+
+.
+
+Then the approximation error satisfies the estimate 
+
+η −
+
+> N
+
+X
+
+> m=1
+
+Km(ϕ)
+
+> X
+
+≤ fM
+
+∥η1∥X
+
+r
+
+N +1 11 − ∥ η1∥X /r 
+
++
+
+
+
+1 − ν∥K 1∥
+
+(1 − μM)2 + ν∥K 1∥
+
+−1
+
+∥(I − K 1K1)η∥X ,
+
+(2.7) 
+
+where 
+
+fM = 2μ
+
+√16 c2 + 1 .
+
+5Remark 2.3. As pointed out in [14] , the limit of the IBS does not, in general, coincide with η. Nevertheless, (2.7) provides an explicit estimate of the approximation error. 
+
+To facilitate the subsequent discussion, we present a detailed analysis of K1 and construct a low-rank approximation thereof. The operator K1 is then defined based on this approximation. Assume that K1 : X → Y is a compact operator. Let {Ψn}n∈N
+
+and {Φm}m∈N be an orthonormal basis of X and Y , respectively. For N, M ∈ N,let PN and PM be orthogonal projections onto {Ψn}Nn=1 and {Φm}Mm=1 , respectively. Then PM K1PN is represented by an M × N matrix C := ( Cmn )M,N m,n =1 with 
+
+Cmn = ⟨K1(Ψ n), Φm⟩Y .
+
+In other words, for any η ∈ X with η = P∞
+
+> n=1
+
+⟨η, Ψn⟩X Ψn, we have 
+
+PM K1PN η =
+
+> M,N
+
+X
+
+> m,n =1
+
+Cmn ⟨η, Ψn⟩X Φm.
+
+Moreover, by Theorem A.1, for any ε > 0, there exist M0, N 0 such that 
+
+∥PM K1PN − K1∥X→Y < ε (2.8) for all M ≥ M0 and N ≥ N0. That is, C is an approximation of the operator K1.Under suitable regularity assumptions on ϕ and η, the quantities M0 and N0 defined in (2.8) can be explicitly estimated in terms of ε, as shown in Section 4. Motivated by the finite-dimensional approximation C, we define the corresponding finite-dimensional Tikhonov regularized inverse by 
+
+C† = ( C∗C + λI )−1C∗,
+
+which serves as an approximation to K1 = ( K∗ 
+
+> 1
+
+K1 + λI )−1K∗ 
+
+> 1
+
+. To see this, denote 
+
+KM,N  
+
+> 1
+
+:= (( PM K1PN )∗(PM K1PN ) + λI )−1 (PM K1PN )∗.
+
+Then 
+
+K1 − K M,N 
+
+> 1
+
+=  (K∗ 
+
+> 1
+
+K1 + λI )−1 − (( PM K1PN )∗(PM K1PN ) + λI )−1K∗
+
+> 1
+
++ (( PM K1PN )∗(PM K1PN ) + λI )−1 (K∗ 
+
+> 1
+
+− (PM K1PN )∗)= ( K∗ 
+
+> 1
+
+K1 + λI )−1(( PM K1PN )∗(PM K1PN ) − K∗ 
+
+> 1
+
+K1)×
+
+(( PM K1PN )∗(PM K1PN ) + λI )−1K∗
+
+> 1
+
++ (( PM K1PN )∗(PM K1PN ) + λI )−1(K∗ 
+
+> 1
+
+− (PM K1PN )∗).
+
+Since 
+
+∥(K∗ 
+
+> 1
+
+K1 + λI )−1∥X ≤ 1
+
+λ, ∥ (( PM K1PN )∗(PM K1PN ) + λI )−1 ∥X ≤ 1
+
+λ,
+
+6it follows that 
+
+∥K 1 − K M,N  
+
+> 1
+
+∥Y →X ≤ ∥K∗ 
+
+> 1
+
+∥Y →X
+
+λ2 ∥K∗ 
+
+> 1
+
+K1 − (PM K1PN )∗(PM K1PN )∥X
+
++ 1
+
+λ∥K∗ 
+
+> 1
+
+− (PM K1PN )∗∥Y →X .
+
+(2.9) By (2.9), (2.8), we then have 
+
+∥K 1 − K M,N  
+
+> 1
+
+∥Y →X → 0 as M, N → ∞ .
+
+Thus, for sufficiently large M and N , the pseudoinverse C† provides a valid approxi-mation to K1.With the help of C† (choosing M = M0 and N = N0), we can approximate K1(ϕ)as follows, 
+
+KM0,N 0 
+
+> 1
+
+(ϕ) = 
+
+> N0
+
+X
+
+> n=1
+
+(C†ϕM0 )nΨn ∈ X, (2.10) where ( C†ϕM0 )n is the nth element of the vector C†ϕM0 and 
+
+ϕM0 = [ ⟨ϕ, Φ1⟩Y , · · · , ⟨ϕ, ΦM0 ⟩Y ]⊤. We note that C† may be regarded as a learnable parameter within the machine learning framework we employ. In order to construct effective neural operators for the IBS, we would like to find an approximation to the right hand side of (2.6). We use the reduced inverse Born series to replace the terms on the right-hand side of (2.6). Let ε ∈ (0 , 1) be given and assume that 
+
+∥K 1K1 − I∥X < ε. (2.11) Denote by K a compact subset of Y . In view of (2.11), we recall the approximation result in [16, Lemma 7.1], [37], namely we have that for m ≥ 2
+
+∥K m(ϕ) + K1K2(Km−1(ϕ) ⊗ K 1(ϕ)) ∥X < Cε, ϕ ∈ K. (2.12) That is, we can construct Km by an approximate iterative scheme: 
+
+Km ≃ −K 1K2(Km−1 ⊗ K 1), m ≥ 3. (2.13) In view of (2.13), we define bK1 = K1, bK2 = K2,
+
+bKm = −K 1K2( bKm−1 ⊗ K 1), m ≥ 3, (2.14) and the reduced inverse Born series 
+
+bη =
+
+> ∞
+
+X
+
+> m=1
+
+bKm(ϕ). (2.15) The formulas (2.14) and (2.15) will be used in our construction of neural operators below. 7Remark 2.4. We note that a rigorous estimate of the reconstruction error ∥η − bη∥
+
+has not been established. Nevertheless, the reduced inverse Born series serves as a natural approximation to the full inverse Born expansion, and both the theoretical construction and the numerical results suggest that the omitted terms contribute only a limited error under suitable conditions. Establishing rigorous error estimates for the reduced series remains an important direction for future work. 
+
+# 3 Architecture of neural operators 
+
+In this section, we introduce the framework for constructing neural operators based on the reduced inverse Born series (2.15) and the formulas (2.3), (2.14). The input to the neural operators is ϕ ∈ Y and the output is η ∈ X. As above, let {Ψn} and 
+
+{Φm} be orthonormal bases of X and Y , respectively. An L-layer neural operator is constructed by composing layers of the following form: 
+
+σL(U ) = σ(L) ◦ σ(L−1) ◦ · · · ◦ σ(1) (U ), (3.1) where U ∈ Y d0 is an input function and 
+
+σ(ℓ)(U ) = σ
+
+
+
+W (ℓ)U (x) + ( K (ℓ) 
+
+> J
+
+U )( x) + b(ℓ)
+
+
+
+, 1 ≤ ℓ ≤ L. (3.2) Here d0 = 1, σ : R → R is a nonlinear activation function operating component-wise, 
+
+W (ℓ) ∈ Rdℓ×dℓ−1 is a weight matrix, b(ℓ) is a bias, and K (ℓ) 
+
+> J
+
+: Y dℓ−1 → Y dℓ is defined by (K (ℓ) 
+
+> J
+
+U )( x) := X
+
+> m,n ∈J
+
+C(ℓ)
+
+> nm
+
+⟨U, Ψm⟩X Ψn(x) with C(ℓ) 
+
+> nm
+
+∈ Rdℓ×dℓ−1 , (3.3) where ⟨U, Φm⟩Y denotes the inner product operating component-wise. A more precise formulation of K (ℓ) 
+
+> J
+
+will be given subsequently. The architecture of the neural operators is described as follows. For a given ε > 0, let M0, N 0 ∈ N be chosen such that the error estimate (2.8) holds. 
+
+1. (Input layer) . For any ϕ ∈ Y , we set ˆu1(x) = KM0,N 0 
+
+> 1
+
+(ϕ) := 
+
+> N0
+
+X
+
+> n=1
+> M0
+
+X
+
+> m=1
+
+C(0) 
+
+> mn
+
+⟨ϕ, Φm⟩Y + b(0) 
+
+!
+
+Ψn(x).
+
+This layer is sometimes referred to as an encoder .
+
+2. (Hidden layers) . Choose M1 ∈ N.For r = 2 : M1
+
+Ur−1 = [ˆ u1, ˆur−1]⊤;ˆur = KM0,N 0 
+
+> 1
+
+(I[A(r)σLr (Ur−1)]) , A(r) ∈ R1×dLr , I : X → Y a linear map; End 83. (Output layer) . ηapp = PM1 
+
+> r=1
+
+ˆur.Here, C(0) 
+
+> mn
+
+, b (0) , W (ℓ), C (ℓ)
+
+> nm
+
+, A (r) are learnable parameters and M0, N 0, M 1, d = ( d1, · · · , d Lm ), 
+
+L = ( L1, · · · , L r) are appropriately chosen indices. 
+
+# 4 Examples 
+
+In this section, we apply the neural operator framework developed above to the in-verse scattering problem and the Calder´ on problem. Through these applications, we demonstrate how the proposed methodology can be instantiated in concrete prob-lem settings, highlighting both its flexibility and effectiveness in modeling operator mapping. 
+
+## 4.1 Inverse scattering problem 
+
+We consider the following scattering problem for an acoustic wave in an inhomoge-neous medium: ∆u + k2(1 + η(x)) u = 0 in Rd, d = 2 , 3, (4.1) where supp( η) ⊂ Ω and Ω is a compact subset of Rd. Let uη := uinc + usca  
+
+> η
+
+satisfy (4.1) along with the Sommerfeld radiation condition lim  
+
+> |x|→∞
+
+|x|d−12
+
+∂u sca 
+
+> η
+
+∂|x| − iku sca 
+
+> η
+
+
+
+= 0 . (4.2) If follows that uinc solves the Helmholtz equation in Rd. It is well-known that the scattered field usca  
+
+> η
+
+possesses the asymptotic behavior 
+
+usca  
+
+> η
+
+(x) = eik|x|
+
+|x|d−12
+
+
+
+u∞ 
+
+> η
+
+(ˆ x) + O
+
+ 1
+
+|x|
+
+ 
+
+as |x| → ∞ , (4.3) where ˆ x = x/ |x| ∈ Sd−1 and u∞ 
+
+> η
+
+(ˆ x) is called the scattering amplitude. The scattering amplitude u∞ 
+
+> η
+
+(ˆ x) is given by 
+
+u∞ 
+
+> η
+
+(ˆ x) = cd
+
+Z
+
+> Ω
+
+e−ikˆx·yη(y)uη(y) d y, (4.4) where 
+
+cd =
+
+
+
+ei π
+
+> 4
+
+r k3
+
+8π for d = 2 ,k2
+
+4π for d = 3 ,
+
+It follows that the total field uη obeys the Lippmann-Schwinger equation 
+
+uη(x) = uinc (x) + k2
+
+Z
+
+> Ω
+
+Φ( x, y )η(y)uη(y)d y, x ∈ Rd, (4.5) 9where G(x, y ) denotes the outgoing fundamental solution of the Helmholtz equation in Rd:
+
+G(x, y ) := 
+
+
+
+i
+
+4H(1) 0 (k|x − y|) if d = 2 ,
+
+14πeik|x−y|
+
+|x − y| if d = 3 ,
+
+(4.6) where H(1) 0 (z) is the Hankel function of the first kind of order zero. Let us denote 
+
+L∞ 
+
+> M
+
+(Ω; C) = {η ∈ L∞(Rd; C) : 0 ≤ Im( η), supp η ⊂ Ω, |η(x)| ≤ M a.e. }.
+
+We first study the Born series. Denote the mapping 
+
+u = Ψ η(u), (4.7) where Ψ η : L2(Ω; C) → L2(Ω; C) is defined by Ψη(u)( x) := uinc (x) + k2
+
+Z
+
+> Ω
+
+G(x, y )η(y)u(y)d y, ∀ x ∈ Ω. (4.8) The above map between L2(Ω; C) is well-defined, since G ∈ L2(Ω × Ω; C). We will consider the case where Ψ η is a contraction mapping. Therefore, we impose 
+
+Assumption 4.1. We assume that the wavenumber k > 0 and the upper bound 
+
+M > 0 satisfies 
+
+k2M ∥G∥L2(Ω ×Ω) ≤ ρ < 1.
+
+It is not difficult to prove the following results. 
+
+Proposition 4.1. Under Assumption 4.1 , Ψη : L2(Ω; C) → L2(Ω; C) satisfies 
+
+∥Ψη(u) − Ψη(v)∥L2(Ω) ≤ ρ∥u − v∥L2(Ω) 
+
+for all u, v ∈ L2(Ω; C). This implies that uη is a fixed point of Ψη.
+
+Corollary 4.1. Suppose that Assumption 4.1 holds and uinc satisfies 
+
+Q := k2
+
+Z
+
+> Ω
+
+G(x, y )uinc (y)η(y)d y L2(Ω) 
+
+< ∞.
+
+Assume that Q
+
+1 − ρ ≤ β
+
+and let B(uinc , β ) := {v ∈ L2(Ω; C) : ∥v − uinc ∥L2(Ω) ≤ β}. Then there exists a unique fixed point u ∈ B(uinc , β ) of (4.8) .
+
+10 Remark 4.2. For simplicity, we consider a weaker result. Let us set 
+
+Q′ := k2M ∥G∥L2(Ω ×Ω) ∥uinc ∥L2(Ω) 
+
+and choose S′ satisfying 
+
+Q′
+
+1 − ρ ≤ β′.
+
+Now if we take 
+
+R = β′ + ∥uinc ∥L2(Ω) , (4.9) 
+
+then (4.8) has a unique fixed point in B(0 , R ).
+
+Therefore, the total field uη to (4.1) is now expressed as 
+
+uη(x) = uinc (x) + 
+
+Z
+
+> Ω
+
+k2G(x, y )η(y)uinc (y)d y
+
++
+
+Z
+
+> Ω
+
+k2G(x, y )η(y)
+
+Z 
+
+> Ω
+
+k2G(y, z )η(z)uinc (z)d z
+
+
+
+dy + · · · 
+
+= uinc (x) + 
+
+> ∞
+
+X
+
+> j=1
+
+[T η ](j)(uinc )( x),
+
+(4.10) where ([ T η ](j)f )( x)=
+
+Z
+
+> Ω
+
+· · · 
+
+Z
+
+> Ω
+
+(k2G)( x, x 1)( k2G)( x1, x 2) · · · (k2G)( xj−1, x j )η(x1)η(x2) · · · η(xj )f (xj )d x1dx2 · · · dxj ,
+
+If we take uinc (x) = eikθ ·x with θ ∈ Sd−1, then the scattering amplitude is given by 
+
+u∞ 
+
+> η
+
+(θ, ˆx) = cd
+
+Z
+
+> Ω
+
+e−ik(ˆ x−θ)·yη(y)d y + cd
+
+> ∞
+
+X
+
+> j=1
+
+Z
+
+> Ω
+
+e−ikˆx·yη(y)[ T η ](j)(eikθ ·• )( y)d y
+
+= K1(η)( θ, ˆx) + K2(η ⊗ η)( θ, ˆx) + K3(η ⊗ η ⊗ η)( θ, ˆx) + · · · ,
+
+where 
+
+
+
+K1(η)( θ, ˆx) = cd
+
+Z
+
+> Ω
+
+e−ik(ˆ x−θ)·yη(y)d y, K2(η ⊗ η)( θ, ˆx) = cd
+
+Z
+
+> Ω
+
+e−ikˆx·yη(y)
+
+
+
+k2
+
+Z
+
+> Ω
+
+G(y, z )η(z)eikθ ·z dz
+
+
+
+dy, K3(η ⊗ η ⊗ η)( θ, ˆx) = cd
+
+Z
+
+> Ω
+
+e−ikˆx·yη(y)
+
+
+
+k2
+
+Z
+
+> Ω
+
+G(y, z )η(z)
+
+
+
+k2
+
+Z
+
+> Ω
+
+G(z, w )η(w)eikθ ·wdw
+
+
+
+dz
+
+
+
+dy, 
+
+· · · 
+
+Let the orthonormal basis {Ψn}n∈N be given by the Dirichlet eigenfunctions of −∆on Ω with associated eigenvalues {λn}n∈N, so that −∆Ψ n = λnΨn and Ψ n ∈ H10 (Ω). 11 We also denote by {Φℓ}ℓ∈N the eigenfunctions of the Laplace-Beltrami operator on 
+
+Sd−1. Let 
+
+A(1)  
+
+> ℓmn
+
+= cd
+
+Z Z Z 
+
+> Sd−1×Sd−1×Ω
+
+e−ik(ˆ x−θ)·yΦℓ(ˆ x)Φ m(θ)Ψ n(y)d ydσˆxdσθ.
+
+Then K1(η)( θ, ˆx) can be written as 
+
+K1(η)( θ, ˆx) = 
+
+> ∞
+
+X
+
+> ℓ,m =1
+> ∞
+
+X
+
+> n=1
+
+A(1) 
+
+> ℓmn
+
+⟨η, Ψn⟩X
+
+!
+
+Φℓ(ˆ x)Φ m(θ),
+
+where the series converges at least in L2(Ω) uniformly in θ, ˆx ∈ Sd−1. Furthermore, in view of Weyl’s asymptotic formula λn ≃ n2/d , for ε ∈ (0 , 1) and η ∈ Hs(Ω), we choose 
+
+N1 = O(ε−s/d ), (4.11) then 
+
+η −
+
+> N1
+
+X
+
+> n=1
+
+⟨η, Ψn⟩X Ψn L2(Ω) 
+
+< ε. (4.12) On the other hand, by the analyticity of K1(η)( θ, ˆx) in ( θ, ˆx), we have that if 
+
+N2 = O(log(1 /ε )) , (4.13) and using (4.12), we have 
+
+K1(η) −
+
+> N2
+
+X
+
+> ℓ,m =1
+> N1
+
+X
+
+> n=1
+
+A(1) 
+
+> ℓmn
+
+⟨η, Ψn⟩X
+
+!
+
+Φℓ ⊗ Φm
+
+> Y
+
+< Cε (4.14) for all η satisfying ∥η∥Hs(Ω) ≤ M with C = C(M ). When d = 2 , 3, the kernel G(x, y ) ∈ Hs(Ω × Ω) with s < 2 − d 
+
+> 2
+
+[13]. Therefore, we can write 
+
+G(x, y ) = 
+
+> ∞
+
+X
+
+> m,n =1
+
+Cmn Ψm(x)Ψ n(y),
+
+where Cmn = ⟨G, Ψm ⊗ Ψn⟩L2(Ω ×Ω) and the series converges in L2(Ω × Ω). In other words, we can write [T η ]( f )( x) = 
+
+> ∞
+
+X
+
+> m,n =1
+
+(k2Cmn ⟨ηf, Ψn⟩X )Ψ m(x).
+
+Let [Sη ]( g)(ˆ x) = 
+
+Z
+
+> Ω
+
+e−ikˆx·yη(y)g(y)d y, 
+
+12 then using the operators T and S, we can generalize the definitions of Kj ’s as follows 
+
+Kj (η1, η 2, · · · , η j )( θ, ˆx) = [ Sη j ] ◦ [T η j−1] ◦ · · · ◦ [T η 1]( eikθ ·• )(ˆ x), j = 2 , 3, . . . . 
+
+In particular, for K2, we have 
+
+K2(η1, η 2)( θ, ˆx) = [ Sη 2] ◦ [T η 1]( eikθ ·• )(ˆ x)=
+
+Z
+
+> Ω
+
+e−ikˆx·y
+
+> ∞
+
+X
+
+> m,n =1
+
+(cdk2Cmn ⟨η1eikθ ·• , Ψn⟩X )η2(y)Ψ m(y)d y
+
+=
+
+> ∞
+
+X
+
+> m,n =1
+
+cdk2Cmn ⟨η1eikθ ·• , Ψn⟩X ⟨η2e−ikθ ·• , Ψm⟩X
+
+=
+
+> ∞
+
+X
+
+> m,n =1
+
+eCmn ⟨η1eikθ ·• , Ψn⟩X ⟨η2e−ikˆx·• , Ψm⟩X ,
+
+(4.15) where eCmn = cdk2Cmn .To obtain an approximation of G(x, y ) with an explicit estimate on the rank, in the case of d = 2 , 3, following the computation in [13], and choosing 
+
+N3 = O(ε−s/d ) (4.16) we then have 
+
+G −
+
+> N3
+
+X
+
+> m,n =1
+
+Cmn Ψm ⊗ Ψn L2(Ω ×Ω) 
+
+< ε. (4.17) With the help of (4.17), for N3 given above, one has that for all η1, η 2 with ∥η1∥L∞(Ω) ≤
+
+M , ∥η2∥L∞(Ω) ≤ M ,
+
+K2(η1, η 2)( θ, ˆx) −
+
+> N3
+
+X
+
+> m,n =1
+
+eCmn ⟨η1eikθ ·• , Ψn⟩X ⟨η2e−ikˆx·• , Ψm⟩X < ε (4.18) uniformly in θ, ˆx ∈ Sd−1
+
+4.1.1 Neural operators architecture 
+
+Here we aim to construct neural operators based on the IBS framework for the inverse scattering problem. The input data is a given scattering amplitude u∞ 
+
+> η
+
+(θ, ˆx) =: 
+
+ϕ(θ, ˆx) and the output is the corresponding function η. Let Y = L2(Sd−1 × Sd−1). 
+
+1. (Input layer) . For any ϕ ∈ Y , we set ˆu1(x) = KN1,N 2 
+
+> 1
+
+(ϕ) := 
+
+> N1
+
+X
+
+> n=1
+> N2
+
+X
+
+> ℓ,m =1
+
+C(0) 
+
+> ℓmn
+
+⟨ϕ, Φℓ ⊗ Φm⟩Y + b(0) 
+
+!
+
+Ψn(x).
+
+13 2. (Hidden layers) . Choose M1 ∈ N.For r = 2 : M1
+
+Ur−1 = [ˆ u1(y), e ikθ ·y, ˆur−1(z), e −ikˆx·z ]⊤;ˆur = KN1,N 2 
+
+> 1
+
+(I[A(r)σLr (Ur−1)]) , A(r) ∈ R1×dLM1 , where I : f (y, θ, ˆx) → R 
+
+> Ω
+
+f (y, θ, ˆx)dy ;End 
+
+3. (Output layer) . ηapp = PM1 
+
+> r=1
+
+ˆur.In order to achieve the desired approximation accuracy, the truncation indices N1
+
+and N2 are chosen to satisfy (4.11) and (4.13), respectively. Furthermore, the rank 
+
+J of the hidden layer in (3.3) is selected according to (4.16). To understand how a neural network approximates K2 using (4.18), we describe the hidden layer in detail. We will use the ReQU activation function, which is defined by 
+
+σ2(t) := 
+
+(t2, t ≥ 0,
+
+0, t < 0.
+
+Recall from [28, Lemma 2.1], for any t, s ∈ R, we have that 
+
+t = βT 
+
+> 1
+
+σ2(ω1t + α1) (4.19) and 
+
+ts = β⊤ 
+
+> 1
+
+σ2(ω1t + α1s), (4.20) where 
+
+β1 = 14
+
+
+
+11
+
+−1
+
+−1
+
+ , ω1 =
+
+
+
+1
+
+−11
+
+−1
+
+ , α1 =
+
+
+
+1
+
+−1
+
+−11
+
+ .
+
+That is, one can represent the multiplication of t and s exactly by a hidden layer and an output layer with inner weight matrix W (1) =  ω1 α1
+
+ and output weight matrix 
+
+W (2) = β⊤ 
+
+> 1
+
+. Using σ2 in the layer (3.2), we can represent the sum 
+
+> N3
+
+X
+
+> m,n =1
+
+eCmn ⟨η1eikθ ·• , Ψn⟩X ⟨η2e−ikˆx·• , Ψm⟩X
+
+by I[ ˜Aσ L(η2(y), e ikθ ·y, η 1(z), e −ikˆx·z )] with a fixed small number of layers. 
+
+## 4.2 The Calder´ on problem 
+
+The theory of IBS for the Calder´ on problem was thoroughly developed in [4]. Here, we recast the problem within the neural operator framework introduced in Section 3. For comparison, we mention the recent work [10], which considers Fourier Neural Operators (FNOs) on the extension of the inverse map (Neumann-to-Dirichlet map), 14 rather than inverse Born series. The authors develop a rigorous framework for solving the Calder´ on inverse conductivity problem in the presence of noisy measurement perturbations. To facilitate the discussion, we briefly review the problem considered in [4]. Let Ω be a bounded domain in Rd with smooth boundary ∂Ω, where d ≥ 2. We consider a scalar field u satisfying 
+
+∇ ·  σ(x)∇u = 0 , x ∈ Ω, (4.21) where the coefficient (conductivity) σ(x) > 0 for all x ∈ Ω. The field u is also assumed to satisfy the Robin boundary condition 
+
+u + zσ ∂u ∂ν = g, x ∈ ∂Ω, (4.22) where z ≥ 0 is a constant surface impedance, ν denotes the unit outer normal to ∂Ω, and g is a prescribed current density. A typical choice of g is a unit-strength dipole source, 
+
+g = δx1 − δx2 , x1, x 2 ∈ ∂Ω, (4.23) where δx1 and δx2 denote Dirac delta distributions supported at x1 and x2, respec-tively. We consider a conductivity of the form 
+
+σ(x) = σ0
+
+ 1 + η(x),
+
+where σ0 = σ|∂Ω > 0 is constant on ∂Ω. The perturbation η is assumed to belong to 
+
+L∞(Ba) and is supported in Ba ⊂ Ω. Then equation (4.21) is reduced to 
+
+−∆u = ∇ · (η(x)∇u) in Ω. (4.24) The solution u to (4.24) and (4.22) can be written as 
+
+u(x) = u0(x) + 
+
+Z
+
+> Ω
+
+G(x, y )∇ · (η(y)∇u(y)) dy, (4.25) where G is the Green function of −∆ satisfying the boundary condition (4.22) with zero right-hand side. The leading term u0(x) satisfies −∆u0 = 0 in Ω and the boundary condition (4.22). We can see that u0(x) is expressed by 
+
+u0(x) = 1
+
+zσ 0
+
+Z
+
+> ∂Ω
+
+G(x, y )g(y)dy. (4.26) Integrating (4.25) by parts yields 
+
+u(x) = u0(x) −
+
+Z
+
+> Ω
+
+∇yG(x, y ) · ∇ u(y)η(y)dy. 
+
+15 Let ϕ(x) = u0(x) − u(x), then the Born series is given by 
+
+ϕ = K1(η) + K2(η, η ) + · · · , (4.27) where for n ≥ 1(Knη)( x) = ( −1) n
+
+Z
+
+> Ω
+
+η(y1) ∇y1 G(y1, x ) · ∇ y1
+
+Z
+
+> Ω
+
+η(y2) ∇y2 G(y2, y 1)
+
+· · · ∇ yn−1
+
+Z
+
+> Ω
+
+η(yn) ∇yn G(yn, y n−1) · ∇ yn u0(yn) dy 1 · · · dy n.
+
+In particular, 
+
+K1(η) = −
+
+Z
+
+> Ω
+
+η(y1)∇y1 G(y1, x ) · ∇ u0(y1)dy 1 (4.28) and 
+
+K2(η, η ) = 
+
+Z
+
+> Ω
+
+η(y1) ∇y1 G(y1, x ) · ∇ y1
+
+Z
+
+> Ω
+
+η(y2) ∇y2 G(y2, y 1) · ∇ u0(y2) dy 1 dy 2. (4.29) As in [4], let (Sf )( x) = 
+
+Z
+
+> Ω
+
+∇yG(x, y ) · f (y)dy 
+
+and (T f )( x) = ∇(Sf )( x).
+
+Then S : [ L2(Ω)] d → H1(Ω) and T : [ L2(Ω)] d → [L2(Ω)] d are bounded operators. Consequently, S : [ L2(Ω)] d → [L2(Ω)] d is a linear compact operator. To express K1 in terms of S, let ψ be a smooth cutoff function supported in a proper subset Ω 0 satisfying Ba ⊂ Ω0 ⊂ Ω0 ⊂ Ω and ψ = 1 on Ba. Recall that η is supported in Ba. Therefore, we have 
+
+K1(η)( x) = −
+
+Z
+
+> Ω
+
+η(y1)∇y1 G(y1, x ) · ∇ u0(y1)dy 1
+
+= −
+
+Z
+
+> Ω
+
+η(y1)∇y1 G(y1, x ) · ψ(y1)∇u0(y1)dy 1
+
+= −S(ψ∇u0 η).
+
+Since ψ∇u0 is smooth in Ω, K1 : [ L2(Ω)] d → [L2(Ω)] d is a linear compact operator. Under the assumption that ∥η∥L∞(Ba) < 1, the convergence of the Born series (4.27) in L∞(∂Ω) was established in [4, Proposition 2.1]. Here, we are interested in the inverse problem of recovering η from measurements of ϕ on ∂Ω. Following the setup in [4], for the dipole source (4.23), fixing x1 ∈ ∂Ω and varying x2 ∈ ∂Ωyields a field ϕ that depends both on the source location x2 and on the observation point x ∈ ∂Ω. We denote this dependence explicitly and consequently assume that 16 ϕ ∈ L∞(∂Ω × ∂Ω). To indicate the dependence of u0 on x2, we write ∇u0(y1) as 
+
+∇yu0(y1, x 2) and thus modify 
+
+K1(η)( x, x 2) = −
+
+Z
+
+> Ω
+
+η(y1)∇y1 G(y1, x ) · ψ(y1)∇y1 u0(y1, x 2)dy 1.
+
+We now apply the neural operator framework developed in Section 2 to the Calder´ on problem. Let X = L2(Ω) and Y = L2(∂Ω × ∂Ω). Recall that {Ψn}n∈N
+
+denotes the orthonormal basis of L2(Ω) consisting of the Dirichlet eigenfunctions of 
+
+−∆ on Ω, with corresponding eigenvalues {λn}n∈N. On the other hand, let {Φm}m∈N
+
+be normalized eigenfunctions of the Laplace-Beltrami operator on ∂Ω. We further assume that ∂Ω is analytic. Consequently, we see that K1(η)( x, x 2) is analytic for 
+
+x, x 2 ∈ ∂Ω. Therefore, if η ∈ Hs(Ba), then similar to estimates (4.12), (4.14), we find that there exist 
+
+N1 = O(ε−s/d ) and N2 = O(log(1 /ε )) (4.30) such that 
+
+K1(η) −
+
+> N2
+
+X
+
+> ℓ,m =1
+> N1
+
+X
+
+> n=1
+
+A(1) 
+
+> ℓmn
+
+⟨η, Ψn⟩X
+
+!
+
+Φℓ ⊗ Φm
+
+> Y
+
+< Cε, (4.31) where 
+
+A(1)  
+
+> ℓmn
+
+= −
+
+Z Z Z 
+
+> ∂Ω×∂Ω×Ω
+
+Ψn(y1)∇y1 G(y1, x )·ψ(y1)∇y1 u0(y1, x 2)Φ ℓ(x)Φ m(x2)dy 1dσ xdσ x2 .
+
+We can regard ( A(1) 
+
+> ℓmn
+
+) as a ( ℓm ) × n matrix and denote its pseudoinverse by KN1,N 2 
+
+> 1
+
+.Now we need the approximation to K2 given in (4.29). Similarly, we rewrite 
+
+K2(η1, η 2)( x, x 2)=
+
+Z
+
+> Ω
+
+η1(y1) ∇y1 G(y1, x ) · ψ(y1)∇y1
+
+Z 
+
+> Ω
+
+η2(y2) ∇y2 G(y2, y 1) · ψ(y2)∇u0(y2, x 2) dy 2
+
+
+
+dy 1
+
+for x, x 2 ∈ ∂Ω. The inner integral is related to the operator T defined above since 
+
+ψ(y2)∇u0(y2, x 2) is smooth for y2 ∈ Ω and x2 ∈ ∂Ω. We observe that K2(η1, η 2) can be expressed as a composite operator. Namely, 
+
+K2(η1, η 2) = S ψη 1 T (( ψ∇u0)η2) . (4.32) Recall that T : [ L2(Ω)] d → [L2(Ω)] d is a bounded operator. Therefore, for n, m ∈ N,let 
+
+Cnm =
+
+Z
+
+> Ω
+
+Ψm(x)( T Ψn)( x)dx 
+
+then, for any ε > 0, there exist N3 = N3(ε), N4 = N4(ε) such that 
+
+T f −
+
+> N3
+
+X
+
+> n=1
+> N4
+
+X
+
+> m=1
+
+Cnm ⟨f, Ψn⟩Ψn L2(Ω) 
+
+< ε. 
+
+17 In the absence of additional regularity for T , the above argument yields only the existence of N3(ε) and N4(ε), without providing an explicit rate of growth as ε →
+
+0. In view of (4.32), K2(η1, η 2)( x, x 2) for x, x 2 ∈ ∂Ω can be approximated by the following two steps: 
+
+• Input η2, compute 
+
+f (y1, x 2) = 
+
+> N3
+
+X
+
+> n=1
+> N4
+
+X
+
+> m=1
+> N5
+
+X
+
+> p=1
+
+Cnmp ⟨η2, Ψn⟩Ψm(y1)Φ p(x2). (4.33) 
+
+• Input η1, compute 
+
+> N6
+
+X
+
+> ℓ=1
+> N7
+
+X
+
+> q=1
+
+eCℓq ⟨η1(·)f (·, x 2), Ψℓ⟩Ψq(x). (4.34) For any ε > 0, one can choose N3(ε), N 4(ε), N 6(ε), and N5 = O(log(1 /ε )), N7 =
+
+O(log(1 /ε )), such that K2(η1, η 2) can be approximated by the iterative step (4.33), (4.34) with error ε. That is, 
+
+K2(η1, η 2)( x, x 2)
+
+≈
+
+> N5
+
+X
+
+> p=1
+> N7
+
+X
+
+> q=1
+> N3
+
+X
+
+> n=1
+> N4
+
+X
+
+> m=1
+> N6
+
+X
+
+> ℓ=1
+
+Cnmp eCℓq ⟨η2, Ψn⟩⟨ η1Ψm, Ψℓ⟩
+
+!
+
+Φq(x)Φ p(x2),
+
+which can be represented by the layer structure (3.1)-(3.2). 
+
+4.2.1 Neural operators architecture 
+
+Given measurements ϕ(x, x 2) ∈ L2(∂Ω × ∂Ω). The target output is η.
+
+1. (Input layer) . For any ϕ ∈ Y , we set ˆu1(y) = KN1,N 2 
+
+> 1
+
+(ϕ) := 
+
+> N1
+
+X
+
+> n=1
+> N2
+
+X
+
+> ℓ,m =1
+
+C(0) 
+
+> ℓmn
+
+⟨ϕ, Φℓ ⊗ Φm⟩Y + b(0) 
+
+!
+
+Ψn(y).
+
+2. (Hidden layers) . Choose M1 ∈ N.For r = 2 : M1
+
+Ur−1 = [ˆ u1(y), ˆur−1(y)] ⊤;ˆur = KN1,N 2 
+
+> 1
+
+(A(r)σLr (Ur−1)) , A(r) ∈ R1×dLM1 ;End 
+
+3. (Output layer) . ηapp = PM1 
+
+> r=1
+
+ˆur.To achieve the desired approximation accuracy, the truncation indices N1 and N2
+
+are chosen to satisfy (4.30). However, an explicit characterization of the dependence of the hidden-layer rank J in (3.3) on the accuracy parameter ε is not available. 18 5 Simulation results 
+
+## 5.1 Model complexity for the scattering problem 
+
+The IBS neural operator consists of M1 = 3 Born series terms, corresponding to the number of hidden layers used in the architecture. Each hidden layer is implemented as a 2-layer multilayer perceptron (MLP) with hidden dimension d = 64, resulting in the layer structure: 
+
+R8 → R64 → R64 → R8 (5.1) The input dimension of 8 corresponds to the real-valued representation of the 4-component complex vector Ur−1 = [ u1(y), e ikθ ·y, u r−1(z), e −ik ˆx·z ]T . The encoder K1
+
+uses N1 = 512 spatial basis functions and N2 = 12 angular basis functions. The learnable coefficients C(0)  
+
+> lmn
+
+∈ R2×N2×N2×N1 contribute the majority of the model pa-rameters. The total number of learnable parameters is 157,568, distributed as follows: Table 1: Parameter breakdown of the IBS neural operator. 
+
+Component Shape Parameters 
+
+Encoder coefficients C(0)  
+
+> lmn
+
+(2 , 12 , 12 , 512) 147,456 Encoder bias b(0)  
+
+> n
+
+(512) 512 Hidden layer local weights 3 × (8 × 64 + 64 × 64 + 64 × 8) ≈ 9, 600 Readout weights A(r) 3 × 64 192 The proposed IBS neural operator was trained using 400 synthetic scattering samples generated from compactly supported Mat´ ern Gaussian random fields with smoothness parameter ν = 1 .5 and correlation length ℓ = 0 .3, see [43] for a de-tailed description of Mat´ ern Gaussian random fields. The forward scattering data were computed by solving the Lippmann-Schwinger equation via fixed-point itera-tion. Relative complex Gaussian noise was added to the far-field measurements to simulate realistic experimental conditions. The model was trained for 35 epochs using the Adam optimizer with learning rate 5 × 10 −4 and weight decay 10 −5. The reconstruction grid size was 32 × 32, with 12 incident and observation angles and 12 angular basis functions. The following metrics are used to evaluate reconstruction quality: 
+
+• Relative L2 Error . Measures the overall reconstruction accuracy: 
+
+Erel = ∥η − ηapp ∥2
+
+∥η∥2
+
+(5.2) 
+
+• Peak Signal-to-Noise Ratio (PSNR) : Measures reconstruction quality in decibels: PSNR = 20 log 10 
+
+max |η|√MSE 
+
+
+
+(5.3) 19 • Structural Similarity Index (SSIM) : Measures structural similarity: SSIM = (2 μημηapp + c1)(2 ση,η app + c2)(μ2 
+
+> η
+
++ μ2 
+
+> ηapp
+
++ c1)( σ2 
+
+> η
+
++ σ2 
+
+> ηapp
+
++ c2) (5.4) All reported metrics are computed on the test dataset containing 120 independent samples. 
+
+## 5.2 Experimental results for the inverse scattering problem 
+
+To comprehensively evaluate the performance and generalization capabilities of the IBS neural operator, we conducted a series of controlled experiments. Each experi-ment is described in detail below. 
+
+5.2.1 In-distribution generalization 
+
+The model was evaluated on independent realizations of the same Mat´ ern random field model used for training ( ν = 1 .5, ℓ = 0 .3). This experiment assesses the network’s ability to generalize to unseen scatterers chosen from the same distribution. The results presented in Table 2 demonstrate the strong performance of the IBS neural operator for in-distribution generalization. Figure 5.2.1 shows representative reconstructions for four test samples. Table 2: In-distribution generalization performance of the IBS neural operator. 
+
+Metric Value 
+
+Relative L2 Error 0.2891 ± 0.0487 PSNR (dB) 23 .90 SSIM 0.9920 ± 0.0021 Best Validation Loss 2.49 × 10 −4
+
+20 Figure 1: Comparison of true and predicted contrast functions for four representative test samples from the in-distribution test set ( ν = 1 .5, ℓ = 0 .3) 
+
+5.2.2 Out-of-distribution generalization: rough fields 
+
+The model was tested on scatterers with rougher texture, characterized by Mat´ ern parameters ν = 0 .5 (lower smoothness) and ℓ = 0 .1 (shorter correlation length). This experiment evaluates the network’s robustness to unseen roughness patterns. Table 3: Out-of-distribution generalization performance of the IBS neural operator on rough fields ( ν = 0 .5, ℓ = 0 .1). 
+
+Metric Value 
+
+Relative L2 Error 0.6426 ± 0.0589 PSNR (dB) 18 .38 SSIM 0.9617 ± 0.0060 Best Validation Loss 2.49 × 10 −4
+
+21 Figure 2: Comparison of true and predicted contrast functions for four representative test samples from the rough field test set ( ν = 0 .5, ℓ = 0 .1). The IBS neural operator demonstrates robust generalization to rough fields as reported in Table 3. Despite the significant distribution shift from smooth training data ( ν = 1 .5, ℓ = 0 .3) to rough test data, the network maintains excellent structural similarity, confirming its ability to capture the location and shape of the scatterers with high accuracy, as demonstrated in Figure 5.2.2. The increased relative L2 er-ror reflects the challenge of recovering higher-frequency components not seen during training, yet the PSNR remains above 18 dB and SSIM above 0 .96, indicating that the IBS neural operator successfully generalizes to unseen roughness patterns while maintaining reliable structural reconstruction. 
+
+5.2.3 Out-of-distribution generalization: smooth fields 
+
+The model was tested on scatterers with smoother variations, characterized by Mat´ ern parameters ν = 2 .5 (higher smoothness) and ℓ = 0 .6 (longer correlation length). This experiment evaluates performance on large-scale, slowly varying features. 22 Figure 3: Comparison of true and predicted contrast functions for four representative test samples from the smooth field test set ( ν = 2 .5, ℓ = 0 .6). Table 4: Out-of-distribution generalization performance of the IBS neural operator on smooth fields ( ν = 2 .5, ℓ = 0 .6). 
+
+Metric Value 
+
+Relative L2 Error 0.2191 ± 0.0413 PSNR (dB) 24 .46 SSIM 0.9933 ± 0.0030 Best Validation Loss 2.49 × 10 −4
+
+The IBS neural operator achieves excellent performance on smooth fields as re-ported in Table 4. The network performs even better on smooth fields than on in-distribution data, as demonstrated in Figure 5.2.3, most likely because smooth fields are dominated by low-frequency content, making them inherently easier for the network to reconstruct. 23 5.2.4 Out-of-distribution generalization: strong scattering 
+
+The model was tested on scatterers with higher contrast, using contrast strength 0.3 (three times the training value of 0 .1). This experiment evaluates the network’s ability to handle strong multiple scattering effects. 
+
+Figure 4: Comparison of true and predicted contrast functions for four representative test samples from the strong scattering test set (contrast strength = 0 .3). Table 5: Out-of-distribution generalization performance of the IBS neural operator on strong scattering fields (contrast strength = 0 .3). 
+
+Metric Value 
+
+Relative L2 Error 0.2825 ± 0.0460 PSNR (dB) 24 .09 SSIM 0.9714 ± 0.0068 Best Validation Loss 2.49 × 10 −4
+
+24 The IBS neural operator demonstrates strong generalization to strong scattering as reported in Table 5. The SSIM shows a slight decrease compared to in-distribution performance, reflecting the challenge of accurately reconstructing the sharper contrast variations present in strong scattering fields, as demonstrated in Figure 4. 
+
+5.2.5 Robustness to measurement noise 
+
+The model was tested with varying noise levels added to the far-field measurements. The noise was added as complex Gaussian noise scaled by the maximum amplitude of the scattering amplitude: 
+
+ϕnoisy = ϕ + ϵ · max |ϕ| · (N (0 , 1) + iN (0 , 1)) (5.5) 
+
+Figure 5: Comparison of true and predicted contrast functions for four representative test samples with a high noise level ϵ = 0 .20 added to the far-field measurements. 25 Table 6: Performance of the IBS neural operator on in-distribution test data with a high noise level ϵ = 0 .20 added to the far-field measurements. 
+
+Metric Value 
+
+Relative L2 Error 0.7484 ± 0.1263 PSNR (dB) 15 .63 SSIM 0.9427 ± 0.0357 Best Validation Loss 1.95 × 10 −3
+
+At the highest noise level tested ( ϵ = 0 .20, representing 20% relative noise), the IBS neural operator shows significant decline in reconstruction quality as reported in Table 6. Despite this substantial decay, the SSIM remains above 0 .94, indicating that the network still preserves the fundamental structural features of the scatterers even under extreme noise conditions. 
+
+## 5.3 Model complexity for the Calder´ on problem 
+
+To investigate whether the neural-operator framework developed for inverse scatter-ing can be extended to the inverse conductivity problem, analogous experiments were performed for the Calder´ on problem. The same recursive neural-operator framework was adopted, with modifications to accommodate the different forward operator and measurement model arising from the inverse conductivity equation. The proposed Calder´ on neural operator consists of an encoder followed by two recursive hidden blocks, producing three successive approximations whose sum yields the reconstructed conductivity perturbation. The encoder KN1,N 2 
+
+> 1
+
+projects the bound-ary measurements onto N2 = 32 boundary basis functions and reconstructs the initial estimate using N1 = 64 spatial basis functions. To better reflect the geometry of the computational domain, the spatial basis functions {Ψn}N1 
+
+> n=1
+
+were constructed from the discrete Dirichlet eigenfunctions of the finite element Laplacian on the same po-lar mesh used for the forward solver. Each recursive hidden block applies a pointwise two-layer MLP with hidden dimension d = 64 to the vector Ur−1(y) = 
+
+ u1(y)
+
+ur−1(y)
+
+
+
+,
+
+giving the layer structure R2 → R64 → R64 , followed by a linear readout and a boundary lifting operator that maps the reconstructed field back to the boundary measurement space before reapplying the encoder. The final conductivity pertur-bation is obtained by summing the three iterative approximations. The complete network contains 2 , 173 , 634 trainable parameters. The network was trained using 400 conductivity realizations on a 32 × 32 reconstruction grid with 32 boundary mea-surement locations, 32 boundary basis functions, 64 spatial basis functions, hidden width d = 64, batch size 8, and 35 training epochs. Optimization was performed using the Adam optimizer with learning rate 3 × 10 −4 and weight decay 10 −4.The training data were generated using the full nonlinear forward model. Specifi-cally, boundary measurements were computed using the finite element method (FEM) 26 forward solver described in [4]. For each conductivity realization, a Gaussian random field g with Mat´ ern covariance having smoothness parameter ν = 1 .5 and correlation length ℓ = 0 .3 was first generated. The conductivity perturbation was then defined as η = exp( g) − 1, so that σ = σ0(1 + η) = σ0 exp( g), thereby guaranteeing positive conductivity while producing compactly supported perturbations. The conductivity equation (4.21) with Robin boundary conditions was subsequently solved on a polar triangular finite element mesh, and boundary measurements corresponding to dipole current injections were assembled to form the measurement matrix ϕ(x1, x 2). Con-sequently, the neural operator was trained using measurements generated by the full nonlinear conductivity forward model. The boundary measurements ϕ are real-valued and represented as a single-channel tensor of shape (1 , A, A ), where A = 32 denotes the number of boundary measurement locations. The conductivity perturbation η is represented on a Cartesian grid of size 32 × 32. Prior to training, both the boundary measurements and the conductivity perturbations were standardized using the mean and standard deviation computed from the training dataset. 
+
+## 5.4 Experimental results for Calder´ on’s problem 
+
+We evaluate the performance and generalizability of the IBS neural operators through a series of controlled experiments, as detailed below. 
+
+5.4.1 In-distribution generalization 
+
+The model was evaluated on independent realizations of the same Mat´ ern conductiv-ity random field used during training ν = 1 .5, ℓ = 0 .3. This experiment assesses the ability of the proposed Calder´ on neural operator to generalize to unseen conductivity perturbations drawn from the same statistical distribution. The results presented in Table 7 and figure 6 demonstrate the strong in-distribution reconstruction capability of the proposed Calder´ on neural operator. Table 7: In-distribution generalization performance of the proposed Calder´ on neural operator. 
+
+Metric Value 
+
+Relative L2 Error 0.4282 ± 0.1004 PSNR (dB) 24 .88 SSIM 0.9953 ± 0.0021 Best Validation Loss 1.41 × 10 −1
+
+27 Figure 6: Comparison of the true and reconstructed conductivity perturbations for four representative test samples from the in-distribution test set. 
+
+5.4.2 Out-of-distribution generalization, different Mat´ ern smoothness 
+
+To evaluate the robustness of the proposed Calder´ on neural operator under a change in distribution, the trained model was tested on conductivity realizations generated from a different Mat´ ern random field. Specifically, while the network was trained using ν = 1 .5, the test conductivities were generated using ν = 0 .5. All other simulation parameters, including the correlation length, conductivity strength, and measurement configuration, were kept unchanged. This experiment evaluates the ability of the neural operator to generalize beyond the conductivity prior encountered during training. The results presented in Table 8 and figure 7 demonstrate that the proposed Calder´ on neural operator remains robust under a moderate distributional shift. As expected, the reconstruction accuracy decreases compared with the in-distribution case, reflecting the increased difficulty of reconstructing conductivity perturbations drawn from a different statistical prior. Although the relative L2 error increases, both the PSNR and SSIM remain high, indicating that the neural operator generalizes well beyond the training distribution. 28 Table 8: Out-of-distribution generalization performance of the proposed Calder´ on neural operator. 
+
+Metric Value 
+
+Relative L2 Error 0.5434 ± 0.1063 PSNR (dB) 23 .73 SSIM 0.9922 ± 0.0026 
+
+Figure 7: Comparison of the true and reconstructed conductivity perturbations for four representative out-of-distribution test samples. 
+
+5.4.3 Out-of-distribution generalization, different correlation length 
+
+The model was further evaluated on conductivity perturbations generated using a larger Mat´ ern correlation length while keeping all other parameters fixed. Specifi-cally, the network was trained using conductivity realizations with correlation length 
+
+ℓ = 0 .3, whereas the out-of-distribution test set was generated using ℓ = 0 .8. This 29 experiment evaluates the ability of the proposed neural operator to generalize to con-ductivity fields with significantly smoother spatial variations than those encountered during training. The results presented in Table 9 and Figure 8 demonstrate that the proposed Calder´ on neural operator generalizes well to this out-of-distribution setting. Inter-estingly, unlike the previous out-of-distribution experiments, the reconstruction ac-curacy does not decline. This behavior is expected since increasing the Mat´ ern corre-lation length produces smoother conductivity perturbations and the inverse problem becomes less challenging, allowing the network to reconstruct the conductivity per-turbations with slightly improved accuracy despite the distributional shift. 
+
+Figure 8: Comparison of the true and reconstructed conductivity perturbations for four representative out-of-distribution test samples generated using ℓ = 0 .830 Table 9: Out-of-distribution generalization performance of the proposed Calder´ on neural operator for conductivity perturbations generated using a larger Mat´ ern cor-relation length. 
+
+Metric Value 
+
+Relative L2 Error 0.3496 ± 0.0642 PSNR (dB) 24 .66 SSIM 0.9915 ± 0.0085 
+
+5.4.4 Out-of-distribution generalization, stronger conductivities 
+
+In this experiment, the network was trained using conductivity perturbations gener-ated with gstrength = 0 .1 and the test conductivities were generated using gstrength =0.2. All other simulation parameters were kept unchanged. This experiment eval-uates the ability of the neural operator to generalize to conductivity perturbations with larger amplitudes than those encountered during training. The results presented in Table 10 and Figure 9 indicate that the proposed Calder´ on neural operator remains robust to increased conductivity contrast. Unlike the pre-vious out-of-distribution experiments, only a marginal change in reconstruction per-formance is observed. These results demonstrate that the proposed neural operator generalizes well to conductivity perturbations with stronger amplitudes than those used during training. Table 10: Out-of-distribution generalization performance for stronger conductivity perturbations 
+
+Metric Value 
+
+Relative L2 Error 0.4250 ± 0.0844 PSNR (dB) 25 .01 SSIM 0.9839 ± 0.0074 31 Figure 9: Comparison of the true and reconstructed conductivity perturbations for four representative out-of-distribution test samples with stronger conductivity per-turbations. 
+
+5.4.5 Robustness to measurement noise 
+
+To assess the robustness of the proposed Calder´ on neural operator to measurement errors, additive Gaussian noise was introduced into the simulated boundary measure-ments. The noisy boundary measurements were generated according to 
+
+ϕnoisy = ϕ + ϵ max( |ϕ|) ξ, ξ ∼ N (0 , 1) , (5.6) where ϕclean denotes the noise-free boundary measurement matrix, ϵ is the noise level, and N (0 , 1) is a matrix of independent standard Gaussian random variables. In this experiment, a noise level of ϵ = 0 .5 was considered, corresponding to a severe measurement perturbation. Figure 10 illustrates representative reconstructions obtained from noisy bound-ary measurements. The corresponding quantitative performance is summarized in Table 11. The results indicate that the proposed Calder´ on neural operator remains reasonably robust even under severe measurement noise. 32 Table 11: Performance of the proposed Calder´ on neural operator under additive Gaussian measurement noise with ϵ = 0 .5. 
+
+Metric Value 
+
+Relative L2 Error 0.6004 ± 0.1282 PSNR (dB) 21 .91 SSIM 0.9905 ± 0.0049 
+
+Figure 10: Comparison of the true and reconstructed conductivity perturbations for four representative test samples with additive Gaussian noise ϵ = 0 .5 applied to the boundary measurements. 
+
+## 5.5 Generalization to Discontinuous Conductivity Distribu-tions 
+
+To investigate the limitations of the proposed Calder´ on neural operator beyond the smooth conductivity distributions encountered during training, two experiments with 33 discontinuous piecewise-constant conductivities were considered. 
+
+5.5.1 Moderate-Contrast Discontinuous Conductivity 
+
+The test samples consisted of randomly positioned and oriented elliptical inclusions with sharp interfaces, whereas the neural operator was trained exclusively on smooth conductivity perturbations generated from Mat´ ern random fields. Synthetic EIT measurements for the discontinuous conductivities were generated using the same nonlinear FEM forward solver, and the trained neural operator was applied. The results in Table 12 and Figure 11 show a moderate decline compared with the smooth in-distribution test set. Nevertheless, the reconstructions retain the approximate locations and overall shapes of the inclusions. The limitation is the recovery of the sharp interfaces, which are reconstructed as smoother transitions, illustrating the difficulty of generalizing a neural operator trained on smooth conductivity fields to discontinuous targets. 
+
+Figure 11: Comparison of the true and reconstructed conductivity perturbations for four representative moderate-contrast discontinuous test samples. 34 Table 12: Reconstruction performance of the proposed Calder´ on neural operator for moderate-contrast discontinuous conductivity perturbations. 
+
+Metric Value 
+
+Relative L2 Error 0.5017 ± 0.0982 PSNR (dB) 24 .08 SSIM 0.9781 ± 0.0059 
+
+5.5.2 High-Contrast Discontinuous Conductivity 
+
+The conductivity was defined to be σ = 100 inside the piecewise-constant inclusions and σ = 1 in the background, corresponding to a conductivity contrast of 100:1. 
+
+Figure 12: Comparison of the true and reconstructed conductivity perturbations for four representative high-contrast discontinuous test samples with σ = 100 inside the inclusions and σ = 1 in the background. As shown in Table 13 and Figure 12, the reconstruction performance declines substantially in this extreme out-of-distribution regime. Although the reconstructed 35 fields retain some information about the approximate locations of the inclusions, the model fails to recover both their sharp interfaces and their high conductivity ampli-tudes. This experiment demonstrates a clear limitation of the learned inverse map when extrapolating far beyond the smooth and low-contrast conductivity distribution used during training. Table 13: Reconstruction performance of the proposed Calder´ on neural operator for high-contrast discontinuous conductivities with a conductivity ratio of 100:1. 
+
+Metric Value 
+
+Relative L2 Error 0.9205 ± 0.0224 PSNR (dB) 16 .40 SSIM 0.0228 ± 0.0108 
+
+# 6 Conclusion 
+
+In this paper, we developed a neural operator framework for nonlinear inverse prob-lems by constructing neural operators that approximate the operator expansions aris-ing from the reduced inverse Born series. The proposed framework was applied to both the inverse scattering and Calder´ on problems. For the scattering problem, the neural operator successfully reconstructed the scattering potentials from synthetic far-field measurements generated by the Lippmann-Schwinger equation. The same architecture was subsequently adapted to the Calder´ on problem by replacing the forward model and the measurement operator while preserving the overall network construction. Numerical experiments showed that the proposed approach accurately reconstructs both scattering potentials and conductivity perturbations, indicating that it generalizes across different classes of nonlinear inverse problems. Future work includes extending the simulation to three-dimensional problems and establishing a rigorous error analysis for the reduced inverse Born series. Although the reduced inverse Born series provides a natural approximation to the full inverse Born expan-sion, and both the theoretical construction and numerical results indicate that the neglected higher-order terms introduce only limited error under suitable conditions, a rigorous estimate of the reconstruction error |η − bη| has not yet been established. Developing quantitative error bounds for the reduced series would provide a stronger theoretical foundation for its accuracy and applicability. 
+
+# A Finite-rank approximation 
+
+Let X and Y be separable Hilbert spaces with associated orthonormal basis {Φn}n∈N
+
+and {Ψm}m∈N, respectively. Given T : X → Y a compact operator. For any M, N ∈
+
+36 N, let TM,N : X → Y be defined by 
+
+TM,N (φ) = 
+
+> M
+
+X
+
+> m=1
+> N
+
+X
+
+> n=1
+
+⟨T (Φ n), Ψm⟩Y ⟨φ, Φn⟩X .
+
+Theorem A.1. 
+
+lim   
+
+> M,N →∞
+
+∥TM,N − T ∥X→Y = 0 .
+
+Proof. Let PN and PM be orthogonal projections onto {Φn}Nn=1 and {Ψm}Mm=1 , re-spectively. Then we can write TM,N = PM T P N . Now 
+
+∥TM,N −T ∥X→Y ≤ ∥ TM,N −TM ∥X→Y +∥TM −T ∥X→Y = ∥TM (I−PN )∥X→Y +∥TM −T ∥X→Y .
+
+The second term tends to zero as M → ∞ , see, for example, [9, Theorem 4.4]. That is, for any ε > 0, there exists M0 = M0(ε) such that ∥TM0 − T ∥X→Y < ε/ 2. For a fixed M0, there exists N0 = N0(ε) such that ∥TM0,N 0 − TM0 ∥X→Y < ε/ 2 by the principle of uniform boundedness. 
+
+# References 
+
+[1] Jonas Adler and Ozan ¨Oktem. Solving ill-posed inverse problems using iterative deep neural networks. Inverse Problems , 33(12):124007, 2017. [2] Anima Anandkumar, Kamyar Azizzadenesheli, Kaushik Bhattacharya, Nikola Kovachki, Zongyi Li, Burigede Liu, and Andrew Stuart. Neural operator: Graph kernel network for partial differential equations. In ICLR 2020 Workshop on Integration of Deep Neural Models and Differential Equations , 2020. [3] Simon Arridge, Peter Maass, Ozan ¨Oktem, and Carola-Bibiane Sch¨ onlieb. Solv-ing inverse problems using data-driven models. Acta Numerica , 28:1–174, 2019. [4] Simon Arridge, Shari Moskow, and John C Schotland. Inverse Born series for the Calderon problem. Inverse Problems , 28(3):035003, 2012. [5] Kaushik Bhattacharya, Bamdad Hosseini, Nikola B Kovachki, and Andrew M Stuart. Model reduction and neural networks for parametric pdes. The SMAI journal of computational mathematics , 7:121–157, 2021. [6] Boris Bonev, Thorsten Kurth, Christian Hundt, Jaideep Pathak, Maximilian Baust, Karthik Kashinath, and Anima Anandkumar. Spherical fourier neural operators: Learning stable dynamics on the sphere. In International conference on machine learning , pages 2806–2823. PMLR, 2023. [7] Tatiana A Bubba. Data-driven Models in Inverse Problems , volume 31. Walter de Gruyter GmbH & Co KG, 2024. 37 [8] Ke Chen, Chunmei Wang, and Haizhao Yang. Deep operator learning lessens the curse of dimensionality for PDEs. Transactions on Machine Learning Research ,2023. [9] John B Conway. A course in functional analysis . Springer, 2019. [10] Maarten V de Hoop, Nikola B Kovachki, Matti Lassas, and Nicholas H Nelsen. Extension and neural operator approximation of the electrical impedance to-mography inverse map. arXiv preprint arXiv:2511.20361 , 2025. [11] Beichuan Deng, Yeonjong Shin, Lu Lu, Zhongqiang Zhang, and George Em Karniadakis. Approximation rates of deeponets for learning operators arising from advection–diffusion equations. Neural Networks , 153:411–426, 2022. [12] Takashi Furuya, Koichi Taniguchi, and Satoshi Okuda. Quantitative approx-imation for neural operators in nonlinear parabolic equations. arXiv preprint arXiv:2410.02151 , 2024. [13] Takashi Furuya and Jenn-Nan Wang. Quantitative approximation theorems for scattering neural operators. preprint , 2025. [14] Jeremy G Hoskins and John C Schotland. Analysis of the inverse born series: an approach through geometric function theory. Inverse Problems , 38(7):074001, 2022. [15] Victor Isakov. Inverse problems for partial differential equations . Springer, 2006. [16] Akari Ishida and Manabu Machida. Iterative inversion schemes for the born series and the reduced inverse born series. arXiv preprint arXiv:2512.00423 ,2025. [17] Kimberly Kilgore, Shari Moskow, and John C Schotland. Inverse born series for scalar waves. Journal of Computational Mathematics , pages 601–614, 2012. [18] Kimberly Kilgore, Shari Moskow, and John C Schotland. Convergence of the born and inverse born series for electromagnetic scattering. Applicable analysis ,96(10):1737–1748, 2017. [19] Nikola Kovachki, Samuel Lanthaler, and Siddhartha Mishra. On universal ap-proximation and error bounds for Fourier neural operators. Journal of Machine Learning Research , 22(290):1–76, 2021. [20] Nikola B Kovachki, Samuel Lanthaler, and Andrew M Stuart. Operator learning: Algorithms and analysis. Handbook of Numerical Analysis , 25:419–467, 2024. 38 [21] Nikola B Kovachki, Zongyi Li, Burigede Liu, Kamyar Azizzadenesheli, Kaushik Bhattacharya, Andrew M Stuart, and Anima Anandkumar. Neural operator: Learning maps between function spaces with applications to PDEs. J. Mach. Learn. Res. , 24(89):1–97, 2023. [22] Pu-Yun Kow, Andrea Aspri, Elisa Francini, and Jenn-Nan Wang. Quantitative approximation theorem of neural operators for the dirichlet-to-neumann map. 
+
+preprint , 2025. [23] Anastasis Kratsios, Takashi Furuya, Matti Lassas, Maarten de Hoop, et al. Mix-ture of experts soften the curse of dimensionality in operator learning. arXiv preprint arXiv:2404.09101 , 2024. [24] Samuel Lanthaler. Operator learning with pca-net: upper and lower complexity bounds. Journal of Machine Learning Research , 24(318):1–67, 2023. [25] Samuel Lanthaler, Zongyi Li, and Andrew M Stuart. The nonlocal neural oper-ator: Universal approximation. arXiv preprint arXiv:2304.13221 , 2023. [26] Samuel Lanthaler, Siddhartha Mishra, and George E Karniadakis. Error esti-mates for deeponets: A deep learning framework in infinite dimensions. Trans-actions of Mathematics and Its Applications , 6(1):tnac001, 2022. [27] Samuel Lanthaler and Andrew M Stuart. The curse of dimensionality in operator learning. arXiv preprint arXiv:2306.15924 , 2023. [28] Shanshan Li, BoTang and Haijun Yu. Better approximations of high dimensional smooth functions by deep neural networks with rectified power units. Commu-nications in Computational Physics , 27(2):379–411, 2019. [29] Zongyi Li, Nikola Kovachki, Kamyar Azizzadenesheli, Burigede Liu, Kaushik Bhattacharya, Andrew Stuart, and Anima Anandkumar. Fourier neural operator for parametric partial differential equations. arXiv preprint arXiv:2010.08895 ,2020. [30] Zongyi Li, Nikola Kovachki, Kamyar Azizzadenesheli, Burigede Liu, Kaushik Bhattacharya, Andrew Stuart, and Anima Anandkumar. Neural opera-tor: Graph kernel network for partial differential equations. arXiv preprint arXiv:2003.03485 , 2020. [31] Zongyi Li, Nikola Kovachki, Kamyar Azizzadenesheli, Burigede Liu, Andrew Stuart, Kaushik Bhattacharya, and Anima Anandkumar. Multipole graph neu-ral operator for parametric partial differential equations. Advances in Neural Information Processing Systems , 33:6755–6766, 2020. 39 [32] Zongyi Li, Hongkai Zheng, Nikola Kovachki, David Jin, Haoxuan Chen, Burigede Liu, Kamyar Azizzadenesheli, and Anima Anandkumar. Physics-informed neural operator for learning partial differential equations. ACM/JMS Journal of Data Science , 1(3):1–27, 2024. [33] Lu Lu, Pengzhan Jin, and George Em Karniadakis. Deeponet: Learning non-linear operators for identifying differential equations based on the universal ap-proximation theorem of operators. arXiv preprint arXiv:1910.03193 , 2019. [34] Manabu Machida and John C Schotland. Inverse Born series for the radiative transport equation. Inverse Problems , 31(9):095009, 2015. [35] Carlo Marcati and Christoph Schwab. Exponential convergence of deep operator networks for elliptic partial differential equations. SIAM Journal on Numerical Analysis , 61(3):1513–1545, 2023. [36] Vadim A Markel, Joseph A O’Sullivan, and John C Schotland. Inverse problem in optical diffusion tomography. iv. nonlinear inversion formulas. Journal of the Optical Society of America A , 20(5):903–912, 2003. [37] Vadim A Markel and John C Schotland. Reduced inverse born series: a compu-tational study. Journal of the Optical Society of America A , 39(12):C179–C189, 2022. [38] Shari Moskow and John C Schotland. Convergence and stability of the inverse scattering series for diffuse waves. Inverse Problems , 24(6):065005, 2008. [39] Shari Moskow and John C Schotland. Numerical studies of the inverse Born series for diffuse waves. Inverse Problems , 25(9):095007, 2009. [40] Shari Moskow and John C Schotland. 12. inverse Born series. The Radon Trans-form: The First 100 Years and Beyond , 22:273, 2019. [41] George Y Panasyuk, Vadim A Markel, P Scott Carney, and John C Schotland. Nonlinear inverse scattering and three-dimensional near-field optical imaging. 
+
+Applied physics letters , 89(22), 2006. [42] Carola-Bibiane Sch¨ onlieb and Zakhar Shumaylov. Data-driven approaches to inverse problems. arXiv preprint arXiv:2506.11732 , 2025. [43] Michael L Stein. Interpolation of spatial data: some theory for kriging . Springer Science & Business Media, 1999. [44] Arthur B Weglein, Fernanda V Ara´ ujo, Paulo M Carvalho, Robert H Stolt, Ken-neth H Matson, Richard T Coates, Dennis Corrigan, Douglas J Foster, Simon A Shaw, and Haiyan Zhang. Inverse scattering series and seismic exploration. In-verse problems , 19(6):R27, 2003. 40

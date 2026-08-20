@@ -1,0 +1,105 @@
+{
+  "date": "20260820",
+  "date_label": "",
+  "generated_at": "2026-08-20 21:07:18 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.17825v1",
+      "route": "202608/20/2608.17825v1-towards-rapid-prototyping-of-spray-injectors-a-regime-agnostic-neural-operator-surrogate-for-gas-liquid-interface-evolution",
+      "title": "Towards Rapid Prototyping of Spray Injectors: A Regime-Agnostic Neural Operator Surrogate for Gas-Liquid Interface Evolution",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向界面流动预测的神经算子代理模型，可用于地下水代理模拟",
+      "first_seen_at": "2026-08-20 21:07:18 UTC",
+      "updated_at": "2026-08-20 21:07:18 UTC"
+    },
+    {
+      "paper_id": "2608.18001v1",
+      "route": "202608/20/2608.18001v1-physics-informed-learning-of-probabilistic-gegenbauer-reconstruction-for-transport-dominated-problems",
+      "title": "Physics-Informed Learning of Probabilistic Gegenbauer Reconstruction for Transport-Dominated Problems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向输运主导问题的物理信息机器学习，可直接应用于地下水流和输运模拟。",
+      "first_seen_at": "2026-08-20 21:07:18 UTC",
+      "updated_at": "2026-08-20 21:07:18 UTC"
+    },
+    {
+      "paper_id": "2608.18004v1",
+      "route": "202608/20/2608.18004v1-composing-flow-matching-energies-with-known-physics-generation-ood-detection-and-inversion-on-pde-fields",
+      "title": "Composing Flow-Matching Energies with Known Physics: Generation, OOD Detection, and Inversion on PDE Fields",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向偏微分方程场的物理信息生成建模",
+      "first_seen_at": "2026-08-20 21:07:18 UTC",
+      "updated_at": "2026-08-20 21:07:18 UTC"
+    },
+    {
+      "paper_id": "2608.18851v1",
+      "route": "202608/20/2608.18851v1-multi-stage-neural-operator-learning-with-application-for-convolutions",
+      "title": "Multi-stage neural operator learning with application for convolutions",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向PDE的多阶段神经算子学习，可应用于物理信息地下水流建模",
+      "first_seen_at": "2026-08-20 21:07:18 UTC",
+      "updated_at": "2026-08-20 21:07:18 UTC"
+    },
+    {
+      "paper_id": "2608.18262v1",
+      "route": "202608/20/2608.18262v1-inverse-born-series-based-neural-operators",
+      "title": "Inverse Born series based neural operators",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向偏微分方程反问题的结构化神经算子，可服务于地下表征",
+      "first_seen_at": "2026-08-20 21:07:18 UTC",
+      "updated_at": "2026-08-20 21:07:18 UTC"
+    },
+    {
+      "paper_id": "2608.19070v1",
+      "route": "202608/20/2608.19070v1-function-on-function-regression-through-separable-neural-operators",
+      "title": "Function-On-Function Regression Through Separable Neural Operators",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "可分离神经算子用于偏微分方程驱动的函数回归代理建模",
+      "first_seen_at": "2026-08-20 21:07:18 UTC",
+      "updated_at": "2026-08-20 21:07:18 UTC"
+    }
+  ]
+}

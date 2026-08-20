@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-19</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-20</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 4 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 6 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>2</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>2</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>6</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-19 21:00:03 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-20 21:07:18 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日共读4篇论文，精读2篇、速读2篇，重点聚焦物理信息神经网络与多孔介质流动预测。最值得关注的是9.0分的《Conditioned-on-Design Bayesian PINN》用于污染物迁移概率逆建模，以及8.0分CNN预测多孔介质湍流微尺度流场。建议普通读者优先精读高分概率逆建模论文，再结合速读中的傅里叶特征网络拓展思路。</p>
+<p>今日速读6篇计算物理与机器学习交叉研究，其中3篇获7.0分，聚焦界面演化、输运问题及PDE场生成等前沿方向。</p>
+<p>最值得关注喷雾注射器接口演化的神经算子替代模型，以及物理信息概率重建与流匹配能量方法，两者均强调在数据驱动中融入物理规律。</p>
+<p>建议下一步精读这三篇论文，重点对比它们处理物理约束与泛化能力的策略。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -71,12 +73,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">2 篇</strong>
+    <strong class="dpr-home-dashboard-count">0 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Probabilistic Inverse Modeling of Contaminant Transport via a Conditioned-on-Design Bayesian Physics Informed Neural Network">Probabilistic Inverse Modeling of Contaminant Transport via a Conditioned-on-Design Bayesian Physics Informed Neural Network</span></li><li><span class="dpr-home-dashboard-paper-title" title="Turbulent Microscale Flow Field Prediction In Porous Media Using Convolutional Neural Networks">Turbulent Microscale Flow Field Prediction In Porous Media Using Convolutional Neural Networks</span></li></ul>
+<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>2</strong></span></div>
+
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -84,12 +86,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">2 篇</strong>
+    <strong class="dpr-home-dashboard-count">6 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="A Novel Fourier Feature Network for Solving Partial Differential Equations">A Novel Fourier Feature Network for Solving Partial Differential Equations</span></li><li><span class="dpr-home-dashboard-paper-title" title="Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems">Iterative Refinement Diffusion for Super-Resolved Data Assimilation of Multiscale Physical Systems</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Towards Rapid Prototyping of Spray Injectors: A Regime-Agnostic Neural Operator Surrogate for Gas-Liquid Interface Evolution">Towards Rapid Prototyping of Spray Injectors: A Regime-Agnostic Neural Operator Surrogate for Gas-Liquid Interface Evolution</span></li><li><span class="dpr-home-dashboard-paper-title" title="Physics-Informed Learning of Probabilistic Gegenbauer Reconstruction for Transport-Dominated Problems">Physics-Informed Learning of Probabilistic Gegenbauer Reconstruction for Transport-Dominated Problems</span></li><li><span class="dpr-home-dashboard-paper-title" title="Composing Flow-Matching Energies with Known Physics: Generation, OOD Detection, and Inversion on PDE Fields">Composing Flow-Matching Energies with Known Physics: Generation, OOD Detection, and Inversion on PDE Fields</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>2</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>6</strong></span></div>
 </section>
 </div>
 
