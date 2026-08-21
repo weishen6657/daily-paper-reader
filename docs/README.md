@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-20</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-21</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 6 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 5 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>6</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>5</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-20 21:07:18 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-21 21:06:25 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,9 +62,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日速读6篇计算物理与机器学习交叉研究，其中3篇获7.0分，聚焦界面演化、输运问题及PDE场生成等前沿方向。</p>
-<p>最值得关注喷雾注射器接口演化的神经算子替代模型，以及物理信息概率重建与流匹配能量方法，两者均强调在数据驱动中融入物理规律。</p>
-<p>建议下一步精读这三篇论文，重点对比它们处理物理约束与泛化能力的策略。</p>
+<p>今日共速读5篇论文，聚焦AI与科学计算交叉领域，暂无精读。最值得关注的是物理信息神经网络用于颗粒流反演建模，以及两类提升偏微分方程求解效率的新型网络架构（Evo-GTransNet与DeepONet基函数优化）。建议普通读者优先浏览颗粒流建模方向，因其更贴近工程应用场景。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -86,12 +84,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">6 篇</strong>
+    <strong class="dpr-home-dashboard-count">5 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Towards Rapid Prototyping of Spray Injectors: A Regime-Agnostic Neural Operator Surrogate for Gas-Liquid Interface Evolution">Towards Rapid Prototyping of Spray Injectors: A Regime-Agnostic Neural Operator Surrogate for Gas-Liquid Interface Evolution</span></li><li><span class="dpr-home-dashboard-paper-title" title="Physics-Informed Learning of Probabilistic Gegenbauer Reconstruction for Transport-Dominated Problems">Physics-Informed Learning of Probabilistic Gegenbauer Reconstruction for Transport-Dominated Problems</span></li><li><span class="dpr-home-dashboard-paper-title" title="Composing Flow-Matching Energies with Known Physics: Generation, OOD Detection, and Inversion on PDE Fields">Composing Flow-Matching Energies with Known Physics: Generation, OOD Detection, and Inversion on PDE Fields</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Physics-informed neural network for inverse modeling of granular flows">Physics-informed neural network for inverse modeling of granular flows</span></li><li><span class="dpr-home-dashboard-paper-title" title="Evo-GTransNet for Parabolic PDEs: A Fixed-Feature Galerkin Method of Lines with Quadrature-Mass Orthonormalization">Evo-GTransNet for Parabolic PDEs: A Fixed-Feature Galerkin Method of Lines with Quadrature-Mass Orthonormalization</span></li><li><span class="dpr-home-dashboard-paper-title" title="Rationally Enriched Chebyshev Trunk Bases for DeepONet Surrogates of High Péclet Entrance Transport">Rationally Enriched Chebyshev Trunk Bases for DeepONet Surrogates of High Péclet Entrance Transport</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>6</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>5</strong></span></div>
 </section>
 </div>
 

@@ -1,0 +1,1203 @@
+Title: Rationally Enriched Chebyshev Trunk Bases for DeepONet Surrogates of High Péclet Entrance Transport
+
+URL Source: https://arxiv.org/pdf/2608.19658v1
+
+Published Time: Fri, 21 Aug 2026 00:27:55 GMT
+
+Number of Pages: 39
+
+Markdown Content:
+# Rationally Enriched Chebyshev Trunk Bases for DeepONet Surrogates of High Péclet Entrance Transport 
+
+Mingeun Choi a, Satish Kumar a, ∗
+
+> aGeorge W. Woodruff School of Mechanical Engineering, Georgia Institute of Technology, Atlanta, 30332, GA, USA
+
+Abstract 
+
+This study demonstrates a rationally enriched Chebyshev (REC) trunk for deep operator network (DeepONet) surrogate models of singularly perturbed and high-Péclet transport problems whose solution profiles are character-ized by thin localized boundary or wall layers. The REC trunk combines Chebyshev polynomial dictionary elements with rational dictionary elements constructed using the adaptive Antoulas–Anderson (AAA) algorithm. Over five independent training runs, the resulting REC-trunk DeepONet is evalu-ated against a vanilla DeepONet and a Chebyshev-trunk DeepONet whose prescribed dictionary consists only of Chebyshev polynomials across three problems whose singular perturbation parameters are diffusion-to-advection ratios: a singularly perturbed scalar boundary-value problem (BVP), the thermal entrance problem with a prescribed wall temperature, and the con-centration entrance problem with an absorbing wall. Across the held-out test profiles, the REC-trunk DeepONet improves over the vanilla DeepONet and remains comparable to the Chebyshev-trunk DeepONet in predicting the scalar profile, with its clearest advantage over the Chebyshev-trunk Deep-ONet appearing when the perturbation parameter lies between 1.00 × 10 −4
+
+and 1.78 × 10 −4, where it reduces the profile-error metrics by up to 19 .5 % 
+
+relative to the Chebyshev-trunk DeepONet. In predicting the wall-normal temperature and concentration profiles, the REC-trunk DeepONet reduces     
+
+> ∗Corresponding author.
+> Email addresses: mingeun.choi@gatech.edu (Mingeun Choi),
+> satish.kumar@me.gatech.edu (Satish Kumar)
+> Preprint submitted to Elsevier August 21, 2026 arXiv:2608.19658v1 [cs.LG] 20 Aug 2026
+
+the profile-error metrics by up to 60 .2 % and 32 .2 % relative to the vanilla and Chebyshev-trunk DeepONets, respectively, while suppressing artificial near-wall oscillations as the Péclet or mass-transfer Péclet number ranges from 10 2 to 10 4.
+
+Keywords: DeepONet, Rationally enriched Chebyshev trunk, High-Péclet transport 
+
+1. Introduction 
+
+Transport problems are formulated as partial differential equations (PDEs), in which advection, diffusion, and reaction can interact across disparate spatial and temporal scales [1]. When diffusion is weak relative to advection, the associated boundary-value problem (BVP) can become singularly perturbed because the small perturbation parameter (or diffusion-to-advection ratio) multiplies the highest spatial derivative. Such problems often develop bound-ary or interior layers whose widths are far smaller than the domain length [2]. In resolving these localized layers, standard numerical schemes suffer from spurious oscillations or require a prohibitively dense grid [2]. Thus, accurate approximation of solution profiles requires techniques such as fitted finite differences, stabilized finite element methods, and layer-adapted meshes [2], while repeated layer-resolving simulations across parameter ranges remain computationally expensive. To reduce this burden, recent machine-learning (ML) studies have developed physics-informed neural-network (PINN)-based models for singularly perturbed problems by incorporating asymptotic de-compositions, stretched variables, or parameter continuation [3–5]. However, these models rely on problem-specific structures chosen from the differential equation, the small parameter, or the layer behavior of the target problem. Deep operator networks (DeepONets) have emerged as alternative surro-gates for singularly perturbed problems because they are designed to learn operators mapping sampled input functions and problem parameters to so-lution profiles through a branch–trunk representation [6, 7]. A pioneering application showed that a DeepONet can approximate sharp-gradient solu-tions by evaluating the training loss at layer-adapted Shishkin points, which depend on the perturbation parameter, rather than by modifying the network representation itself [8]. Subsequent studies then incorporated such layer-resolving priors within the operator-learning representation. Prandtl–Van Dyke DeepONet (PVD-ONet) decomposes the solution into outer, inner, and 2matching components and assigns these components to multiple DeepONet modules organized by Prandtl and Van Dyke matching [9]. The enriched finite element operator network (eFEONet) augments the finite-element Galerkin ansatz with singular-perturbation corrector functions. The learned coeffi-cients include both nodal finite-element coefficients and coefficients of the added layer-corrector basis [10]. Physics-informed adaptive-scale DeepONet (PAS-Net) augments the trunk input with prescribed or learnable locally rescaled coordinates centered at reference points, thereby changing the co-ordinate representation seen by the trunk [11]. However, these approaches remain problem-specific, since the solution decomposition, finite element enrichment, or coordinate rescaling must be chosen for the particular layer being represented. Parallel efforts have sought to reduce this dependence by expressing the output through prescribed or data-derived bases and their coefficients. Proper orthogonal decomposition DeepONet (POD-DeepONet) computes POD modes from the training outputs and uses the resulting modes as the trunk, leaving the branch network to predict modal coefficients [12]. Spec-tral coefficient learning via operator network (SCLON) predicts coefficients in orthogonal expansions such as Fourier or Legendre bases and applies this coefficient-space formulation to parametric PDEs ranging from singu-larly perturbed convection-diffusion equations to Navier–Stokes flows [13]. The orthogonal polynomial neural operator (OPNO) builds neural operators around orthogonal-polynomial representations on bounded domains and treats Dirichlet, Neumann, and Robin boundary conditions within that polynomial framework [14]. Spectral-embedded DeepONet (SEDONet) converts raw coor-dinate trunk inputs into values of Chebyshev polynomials before a trainable trunk network, improving bounded-domain DeepONet approximation for sharp gradients, boundary layers, and nonperiodic structures [15]. Neverthe-less, these spectral and polynomial bases are global representations over the entire domain, and, thus, a thin localized layer can require many degrees of freedom unless the basis is enriched with dictionary elements adapted to the inner scale. This inner-scale representation issue extends beyond idealized scalar BVPs because engineering transport often contains analogous high-Péclet convection-diffusion layer structure. In biomedical engineering, surface-based biosensors and related biofluidic capture systems involve convective delivery, diffusion, and surface binding near reactive walls [16]. In chemical engineering, reactive microchannels and electrochemical chips generate wall-normal concentration 3fields governed by convective-diffusive delivery to reactive interfaces [17, 18]. In aerospace engineering, high-speed wall-bounded flows involve wall-normal heat and mass transfer in cooled and transpiration-cooled boundary layers [19, 20], hypersonic boundary layers with strong near-wall thermal gradients [21], and reacting boundary layers with finite-rate wall chemistry [22, 23]. Across these examples, the common mathematical feature is a wall-normal temperature or concentration profile shaped by strong axial transport, transverse diffusion, and, in reactive cases, surface kinetics or wall absorption. Thus, entrance heat and mass transfer provide benchmark problems that retain the relevant wall-normal layer geometry under prescribed-wall, absorbing-wall, or Robin-type surface conditions [24–28] while allowing accurate numerical reference profiles and controlled variation of Péclet number, axial location, inlet profile, and wall absorption strength. However, the use of inner-scale-enriched DeepONet trunk bases for such high-Péclet wall-normal profile reconstruction remains underexplored. This paper introduces the rationally enriched Chebyshev (REC) trunk as a prescribed output-coordinate dictionary for DeepONet that combines Chebyshev polynomial dictionary elements with rational dictionary elements without adding trainable trunk parameters. This REC-trunk DeepONet is compared over five independent training runs with a vanilla DeepONet and a Chebyshev-trunk DeepONet, whose prescribed trunk dictionary consists only of Chebyshev polynomial dictionary elements, across three bounded-domain benchmark problems whose solution profiles contain one-sided localized layers. The first problem is the singularly perturbed scalar BVP, serving as the simplest bounded-interval formulation with an exponentially thin outflow layer [8]. The second problem is the thermal entrance problem with a prescribed wall temperature, where the temperature profile develops under hydrodynamically developed laminar duct flow [24, 25]. The third problem is the concentration entrance problem with an absorbing wall, where the concentration profile develops under the same hydrodynamically developed laminar duct flow [26, 27]. Results demonstrate that DeepONet with the REC trunk remains globally competitive on the singularly perturbed scalar BVP and delivers its clearest advantage on the thermal and concentration entrance problems, where wall-attached layers control the profile geometry, by answering the following four questions: 1. How does the REC trunk perform on the singularly perturbed scalar BVP in the small-perturbation-parameter regime? 4(a) Convection direction (+ x)Right-endpoint exponential layer                 
+
+> x= 0
+> u(0) = 0
+> x= 1
+> u(1) = 0 (b) Flow direction (+ x)Wall-attached layers Inlet ( x= 0) Problem 2: Θ(0, y) = Θ in (y)Problem 3:
+> c(0, y) = cin (y)
+> x= 1 Wall ( y= 1) Problem 2: Θ( x, 1) = 0 Problem 3: −∂ c/∂ y(x, 1) = Da c(x, 1) Centerline ( y= 0) Problem 2: ∂Θ/∂ y(x, 0) = 0 Problem 3: ∂ c/∂ y(x, 0) = 0 Wall ( y= −1) Problem 2: Θ( x, − 1) = 0 Problem 3: ∂ c/∂ y(x, − 1) = Da c(x, − 1) Figure 1: Computational domains and boundary conditions for (a) Problem 1 and (b) Problems 2 and 3. The full channel shown in (b) is the symmetric extension of the half-channel computational domain y∈[0 ,1] .
+
+2. How does the REC trunk perform on the thermal entrance problem in the high-Péclet regime, when the learned output is a wall-normal profile at a queried axial location? 3. How does the REC trunk perform on the concentration entrance problem in the high-Péclet regime, under Robin wall kinetics and across different Damköhler numbers? 4. How reproducible are the gains obtained with the REC trunk across repeated training runs and previously unseen solution profiles? 
+
+2. Methods 
+
+2.1. Benchmark problems and operator-learning formulation 
+
+Figure 1 illustrates the computational domains and boundary conditions for the three benchmark problems considered in this study. Problem 1 examines the singularly perturbed scalar BVP posed on the one-dimensional domain shown in Fig. 1(a) and defined by the equation [8] 
+
+−εd2udx 2 (x) + du dx (x) + u(x) = q(x), x ∈ (0 ,1) , (1) with homogeneous Dirichlet boundary conditions 
+
+u(0) = u(1) = 0 . (2) 5Here, x denotes the dimensionless spatial coordinate on the bounded interval 
+
+(0 ,1) , u(x) denotes the dimensionless scalar solution field, q(x) denotes the dimensionless randomized source term, and ε denotes the singular perturbation parameter, given by the diffusion-to-advection ratio after the constant positive convective velocity is normalized to unity. The reaction coefficient is also fixed at unity. These choices allow the effects of ε and q(x) on the solution profiles to be examined without simultaneous changes in convection or reaction. Since 
+
+ε multiplies the highest-order diffusion term, decreasing its value weakens diffusion relative to convection, producing a thinner right-endpoint exponential layer [2]. The parameter range is sampled as ε ∈ [10 −4,10 −2], isolating the strongly perturbed regime targeted throughout this study. 
+
+Problem 2 addresses the thermal entrance problem with a prescribed wall temperature, known as the Graetz problem, posed on the two-dimensional domain shown in Fig. 1(b) and governed by the equation [24, 25] 
+
+w(y) ∂Θ
+
+∂x (x,y ) = 1Pe 
+
+∂2Θ
+
+∂y 2 (x,y ), (x,y ) ∈ (0 ,1] × (0 ,1) , (3) with a parabolic velocity profile for hydrodynamically fully developed flow 
+
+w(y) = 1 − y2, (4) centerline symmetry ∂Θ
+
+∂y (x, 0) = 0 , (5) a homogeneous Dirichlet condition at the wall 
+
+Θ( x, 1) = 0 . (6) The inlet condition is 
+
+Θ(0 ,y ) = Θ in (y). (7) Here, x denotes the dimensionless axial coordinate along the channel, y
+
+denotes the dimensionless wall-normal coordinate across the channel half-width, Θ( x,y ) denotes the dimensionless temperature difference relative to the prescribed wall temperature, and w(y) denotes the prescribed dimensionless axial velocity profile. Because the boundary conditions are already defined, the surrogate directly maps the randomized inlet profile Θin (y) to the wall-normal temperature profile Θ( x,y ) evaluated at a queried axial location x ∈ [0 .05 ,1.0] .The thermal Péclet number Pe = U L/α measures axial advection relative to 6transverse thermal diffusion, where U denotes the characteristic axial velocity, 
+
+L denotes the reference length scale, and α denotes the thermal diffusivity. Sampling Pe −1 ∈ [10 −4,10 −2], which is the singular perturbation parameter analogous to ε in Problem 1, isolates the high-Péclet regime characterized by increasingly thin wall-attached thermal layers. 
+
+Problem 3 investigates the concentration entrance problem with an ab-sorbing wall, posed on the same domain used in Problem 2 and expressed by the equation [26] 
+
+w(y) ∂c ∂x (x,y ) = 1Pe m
+
+∂2c∂y 2 (x,y ), (x,y ) ∈ (0 ,1] × (0 ,1) , (8) with the same parabolic velocity profile as in Problem 2 
+
+w(y) = 1 − y2, (9) the same centerline symmetry condition 
+
+∂c ∂y (x, 0) = 0 , (10) the inlet condition 
+
+c(0 ,y ) = cin (y), (11) and a Robin condition at the wall [27] 
+
+− ∂c ∂y (x, 1) = Da c(x, 1) . (12) Here, c(x,y ) denotes the dimensionless concentration field, cin (y) denotes the randomized inlet concentration profile, Pe m denotes the mass-transfer Péclet number, and Da denotes the Damköhler number, representing the dimensionless wall-absorption strength in a partially absorbing channel [28]. Under this nondimensionalization, both spatial coordinates are scaled by the channel half-width L. The dimensionless groups are Pe m = U L/D and 
+
+Da = kL/D , where U denotes the characteristic axial velocity, D denotes the molecular diffusivity, and k denotes a first-order surface uptake coefficient with units of velocity. Sampling Pe −1 
+
+> m
+
+∈ [10 −4,10 −2], analogous to Pe −1
+
+in Problem 2, isolates the high-Péclet mass-transfer regime characterized by increasingly thin wall-attached concentration layers. To examine the 7effect of wall-absorption strength, Problem 3 is evaluated at three wall-absorption strengths at Da = 0 .1, 1.0, and 10 .0. Similar to the thermal Graetz model, the surrogate maps the randomized inlet condition to the wall-normal concentration profile c(x,y ) evaluated at a queried axial location 
+
+x ∈ [0 .05 ,1.0] .
+
+2.2. Operator learning formulation and baseline trunks 
+
+For each benchmark problem, the learning task is to approximate a profile-valued operator 
+
+G(s,μ ) = u(·; s,μ ), (13) where s denotes the sensor values of the problem-specific input function and 
+
+μ denotes the problem parameters. In Problem 1, s contains samples of the source term q(x), whereas in Problems 2 and 3 it contains samples of the inlet temperature profile Θ(0 ,y ) and the inlet concentration profile c(0 ,y ),respectively. For each query coordinate ξ, the predicted profile value is written in the standard DeepONet form 
+
+G(s,μ )( ξ) ≈ bu(ξ; s,μ ) = b(s,μ ) · ϕ(ξ). (14) Here, b(s,μ ) = [ b1(s,μ ), . . . ,b p(s,μ )] denotes the branch coefficient vector and 
+
+ϕ(ξ) = [ ϕ1(ξ), . . . ,ϕ p(ξ)] denotes the trunk feature vector, whose kth compo-nents are bk(s,μ ) and ϕk(ξ), respectively. Specifically, ξ represents the interval coordinate x in Problem 1 and the wall-normal coordinate y in Problems 2 and 3. The parameter vector μ collects the sample-dependent parameters that condition the operator output, corresponding to ε in Problem 1, (Pe −1, x ) in Problem 2, and (Pe −1 
+
+> m
+
+, x ) in Problem 3. For Problem 3, separate operator surrogates are constructed for fixed values of Da instead of including the Damköhler number in μ. For notational brevity, the dependence on (s,μ ) is omitted below whenever the input profile and parameter value are fixed. To isolate the effect of trunk-basis design, the surrogate models compared within each benchmark use the same branch-network architecture, namely a multilayer perceptron (MLP) with Gaussian error linear unit (GELU) activations and Xavier initialization. This MLP comprises three hidden layers of width 256, and its output dimension is fixed to p = 129 to match the dimension of each compared trunk. Before entering the branch network, the first component of the parameter vector μ is encoded through its base-10 logarithm, with any remaining components appended in raw form. 8Within this shared framework, three distinct trunk designs are compared. The branch network provides the sample- and parameter-dependent coeffi-cients, while the trunk representation defines the corresponding output ap-proximation family. The first baseline model is the standard coordinate-trunk DeepONet, referred to as the Vanilla model, with a trunk MLP consisting of three hidden layers of width 128 and an output dimension of p = 129 
+
+[6]. Unlike the Chebyshev and REC trunks introduced in the following, this baseline uses a learned trunk MLP that takes both the profile coordinate and the encoded parameter vector as inputs. Thus, for this baseline, Eq. (14) is understood with the coordinate-only trunk vector ϕ(ξ) replaced by a learned, parameter-conditioned trunk vector ϕvan (ξ,μ ).The second baseline model is the Chebyshev-trunk DeepONet, labeled as the Chebyshev model. While prior approaches, such as SEDONet, process a Chebyshev feature vector through an additional trainable network [15], the present baseline uses the Chebyshev polynomials directly as the trunk dictio-nary. This formulation isolates the effect of the prescribed trunk dictionary without introducing an auxiliary trainable transformation. For this baseline, the trunk vector ϕ(ξ) in Eq. (14) is the Chebyshev dictionary 
+
+ϕcheb (ξ) = ϕcheb 1 (ξ), . . . ,ϕ cheb 129 (ξ)
+
+=T0(2 ξ − 1) , . . . ,T 128 (2 ξ − 1) , (15) where Tj denotes the Chebyshev polynomial of the first kind of degree j.
+
+2.3. Proposed REC trunk 
+
+The proposed third model is the REC-trunk DeepONet, denoted as the 
+
+REC model, motivated by rational discretizations for singularly perturbed BVPs, where layer-oriented rational mappings resolve thin layers with fewer global polynomial degrees [29]. Unlike the Chebyshev trunk in Eq. (15), whose trunk dictionary consists entirely of Chebyshev polynomial elements, the REC trunk combines a low-degree outer Chebyshev subdictionary for the smooth outer field with an inner rational subdictionary for the localized layer. The rational dictionary elements are constructed by the adaptive Antoulas– Anderson (AAA) algorithm and remain unchanged during DeepONet training [30]. The inner rational subdictionary is derived from a canonical exponentially 9decaying layer family on the unit interval, 
+
+ψδ(ζ) = exp 
+
+
+
+−1 − ζδ
+
+
+
+, ζ ∈ [0 ,1] , δ ∈ [10 −4,10 −2], (16) where ζ denotes the dictionary coordinate and δ denotes the prototype decay parameter, whose sampled range matches the numerical range of ε, Pe −1,and Pe −1 
+
+> m
+
+used in the three benchmark problems defined in Section 2.1. This family represents a one-sided localized layer attached to ζ = 1 , corresponding to the right endpoint x = 1 in Problem 1 and to the wall endpoint y = 1 in Problems 2 and 3. The construction proceeds by choosing 129 − Nout logarithmically spaced values δk ∈ [10 −4,10 −2], one for each rational dictionary element. For each sampled value δk, the profile ψδk is evaluated on a 1025 -point Chebyshev– Lobatto grid in ζ ∈ [0 ,1] . The AAA algorithm approximates each sampled profile by a barycentric rational function with at most 12 retained terms and tolerances of 10 −8 for both approximation error and support-point matching checks. The resulting rational approximant is used as one rational dictionary element and is written as 
+
+rk(ζ) = 
+
+Pmk
+
+> j=1
+
+wk,j fk,j 
+
+ζ − zk,j 
+
+Pmk
+
+> j=1
+
+wk,j 
+
+ζ − zk,j 
+
+, (17) where k indexes the rational dictionary element associated with the sampled layer profile ψδk , zk,j denotes the jth support point selected by AAA from the 1025 Chebyshev–Lobatto points, fk,j = ψδk (zk,j ) denotes the sampled layer value at zk,j , wk,j denotes the corresponding barycentric weight, and mk
+
+denotes the number of retained support points for the kth rational dictionary element [30]. The stored support points, sampled values, and barycentric weights define the rational dictionary elements used by the REC trunk. When inserted into the DeepONet trunk, these rational dictionary elements are evaluated at the profile coordinate ξ. For the three benchmarks, ξ = x in Problem 1 and ξ = y in Problems 2 and 3, with x,y ∈ [0 ,1] . No additional coordinate map is introduced, and the same dictionary elements are evaluated with ζ = ξ. Thus, the trunk dictionary ϕ(ξ) in Eq. (14) for REC trunk can be written as 10 ϕREC (ξ) = ϕREC 1 (ξ), . . . ,ϕ REC 129 (ξ)
+
+=T0(2 ξ − 1) , . . . ,T Nout −1(2 ξ − 1) ,r 1(ξ), . . . ,r 129 −Nout (ξ), (18) where the first Nout Chebyshev dictionary elements form the outer Chebyshev subdictionary, and the remaining (129 − Nout ) rational dictionary elements form the inner rational subdictionary, yielding a total trunk dimension of 129 .The main discussion in Section 3 focuses on the REC trunk with Nout = 16 ,while Section 3.5 analyzes additional REC trunks with Nout = 33 , 65 , and 
+
+97 to examine how the outer-inner split affects the approximation behavior. Appendix Appendix A gives an idealized representation argument for this outer-inner split. The Chebyshev expansion of ψδ shows that decreasing 
+
+δ shifts non-negligible spectral weight toward higher polynomial degrees, whereas the inner rational subdictionary provides coverage across the sampled range log 10 δ ∈ [−4, − 2] . Under the idealized decomposition in Eq. (A.23), the REC trunk assigns the smooth outer field and the thin boundary-attached layer to separate parts of the trunk dictionary, rather than imposing an explicit asymptotic formula. 
+
+2.4. Input sampling and reference profile generation 
+
+The training, validation, and test datasets are constructed by pairing sampled problem inputs with their corresponding numerical reference profiles. In Problem 1, each input consists of a randomized source term and the perturbation parameter ε. In Problems 2 and 3, each input consists of a randomized inlet profile, the inverse-Péclet-type transport parameter, and the queried axial location x. The source term in Problem 1 and the inlet profiles in Problems 2 and 3 are sampled at fixed Chebyshev–Lobatto sensor nodes, which include the interval endpoints and cluster near the boundaries. The resulting sensor vector is supplied to the branch network together with the encoded parameter values, and the corresponding reference profile is evaluated at fixed Chebyshev–Lobatto output nodes. In all three benchmarks, the source or inlet function is sampled at 129 Chebyshev–Lobatto sensor locations, which include the interval endpoints and cluster toward the boundaries. The target profile is evaluated at 257 Chebyshev–Lobatto output locations, providing denser resolution near the endpoint or wall region where the localized layer develops. The randomized input functions are constructed as finite smooth expan-sions rather than taken from external data. In Problem 1, the source term is 11 formed from four sine modes and two localized Gaussian components, 
+
+q(x) = 
+
+> 4
+
+X
+
+> m=1
+
+a(q) 
+
+> m
+
+sin( mπx ) + 
+
+> 2
+
+X
+
+> j=1
+
+ea(q) 
+
+> j
+
+exp 
+
+−12
+
+x − x(q)
+
+> j
+
+ℓ(q)
+
+> j
+
+!2 . (19) The modal and Gaussian amplitudes are drawn independently according to 
+
+a(q) 
+
+> m
+
+,ea(q) 
+
+> j
+
+∼ N (0 ,1) , while the Gaussian centers and widths are sampled as 
+
+x(q) 
+
+> j
+
+∼ U (0 ,1) and ℓ(q) 
+
+> j
+
+∼ U (0 .03 ,0.20) . The perturbation parameter is sampled by drawing log 10 ε uniformly from [−4, − 2] .For Problems 2 and 3, the inlet function is generated from a positive baseline, four cosine modes, and two localized Gaussian components. This common inlet representation is denoted by gin (y), where gin = Θ in for Prob-lem 2 and gin = cin for Problem 3. Before imposing the lower bound, the raw inlet function is 
+
+graw (y) = 1+ 
+
+> 4
+
+X
+
+> m=1
+
+a(in)  
+
+> m
+
+cos(( m−1) πy )+ 
+
+> 2
+
+X
+
+> j=1
+
+ea(in)  
+
+> j
+
+exp 
+
+−12
+
+y − y(in) 
+
+> j
+
+ℓ(in) 
+
+> j
+
+!2 . (20) The cosine amplitudes are drawn according to a(in)  
+
+> m
+
+∼ N (0 ,0.18 2), the Gaussian amplitudes as ea(in)  
+
+> j
+
+∼ N (0 ,0.12 2), the Gaussian centers as y(in)  
+
+> j
+
+∼ U (0 ,1) , and the Gaussian widths as ℓ(in)  
+
+> j
+
+∼ U (0 .05 ,0.18) . To exclude sign-changing inlet temperature differences in Problem 2, for which heating and cooling are equivalent up to a global sign change, and negative inlet concentrations in Problem 3, the inlet function used to generate each reference solution is defined as 
+
+gin (y) = max {graw (y),10 −3}. (21) For Problems 2 and 3, the transport parameter is sampled by drawing 
+
+log 10 Pe −1 and log 10 Pe −1 
+
+> m
+
+, respectively, uniformly from [−4, − 2] . The queried axial location is sampled independently as x ∼ U (0 .05 ,1.0) .The target profiles are generated by problem-specific deterministic numeri-cal solvers. Problem 1 is solved using an upwind finite-difference discretization on a piecewise-uniform Shishkin-type mesh whose transition point depends on 
+
+ε and which places a finer subgrid near the outflow boundary x = 1 where the endpoint layer forms. For Problems 2 and 3, the entrance-transport equations are solved by marching in the axial coordinate from the randomized inlet pro-file to the queried location x. At each axial step, an implicit finite-difference 12 discretization of the transverse diffusion operator on a uniform grid yields a tridiagonal linear system for the updated wall-normal profile. The centerline Neumann condition is imposed at y = 0 , while the wall condition at y = 1 is imposed as a Dirichlet condition for Problem 2 and as a Robin condition for Problem 3. For the convergence check, the same sampled source term and perturbation parameter in Problem 1 are solved on the 4096 -cell Shishkin mesh used for dataset generation and an 8192 -cell Shishkin mesh and compared after linear interpolation onto the same 257 Chebyshev–Lobatto output locations. For Problems 2 and 3, the same inlet profile, inverse-Péclet-type parameter, and queried axial location are solved using the dataset resolution of 257 wall-normal nodes with 400 axial steps per unit length and using 513 wall-normal nodes with 800 axial steps per unit length, again compared on the same 257 
+
+Chebyshev–Lobatto output locations. Across 32 randomly sampled checks for each benchmark problem, the mean relative differences between the two numerical profiles are 4.60 × 10 −4 for Problem 1, 1.97 × 10 −4 for Problem 2, and 1.06 × 10 −4, 1.09 × 10 −4, and 1.43 × 10 −4 for Problem 3 at Da = 0 .1, 1.0,and 10 .0, respectively. The corresponding maximum relative differences are 
+
+9.30 × 10 −4, 6.64 × 10 −4, 4.30 × 10 −4, 4.53 × 10 −4, and 5.26 × 10 −4.
+
+2.5. Training and evaluation 
+
+To quantify model accuracy, four profile-based error metrics are defined on the common discrete evaluation grid. Let u denote the numerical refer-ence profile at the queried condition, let bu denote the corresponding model prediction, and define the profile error as e = bu − u. The relative discrete profile error is 
+
+Erel 2 = ∥e∥2
+
+∥u∥2
+
+, (22) and the pointwise maximum error is 
+
+E∞ = ∥e∥∞. (23) Here, ∥ · ∥ 2 denotes the Euclidean norm of the profile values on the fixed output grid, and ∥ · ∥ ∞ denotes the maximum absolute value over the same grid. The layer-focused maximum error measures the largest absolute discrep-ancy inside a problem-dependent layer strip Ωs,
+
+Elayer max = ∥e∥∞,Ωs . (24) 13 For Problem 1, the layer strip is the right-endpoint boundary-layer region 
+
+Ωℓ = {xj : xj ≥ 1 − C ε | log ε|} , (25) where C denotes a layer-width factor. This definition selects the grid points in the interval [1 − Cε |log ε| ,1] adjacent to the outflow boundary x = 1 , where the outflow Dirichlet condition is satisfied through an endpoint layer under positive convection. In Problem 1, Ωs = Ω ℓ and C = 5 . For Problems 2 and 3, the layer strip is the near-wall region adjacent to the controlled or absorbing wall, 
+
+Ωw = {yj : yj ≥ 1 − C√ηx }, (26) where η = Pe −1 in Problem 2, η = Pe −1 
+
+> m
+
+in Problem 3, and C denotes a layer-width factor. In these problems, Ωs = Ω w and C = 4 . The near-wall region in Problems 2 and 3 is used only to define a common near-wall error measure for comparing the three surrogates and is not intended as an asymptotic estimate of the physical Graetz-layer thickness. The layer-aware error is defined problem-dependently to emphasize the localized layer, 
+
+ELA =
+
+
+
+∥e∥2 
+
+> Q
+
++ ε de dx 
+
+> 2
+> Q
+
++ ∥e∥2
+
+> Q, Ωℓ
+
+∥u∥2 
+
+> Q
+
++ ε du dx 
+
+> 2
+> Q
+
++ ∥u∥2
+
+> Q, Ωℓ
+
+
+
+> 1/2
+
+, for Problem 1 ,
+
+" ∥e∥22,Ωw
+
+∥u∥22,Ωw
+
+#1/2
+
+, for Problems 2 and 3 .
+
+(27) Here, ∥ · ∥ Q denotes the trapezoidal-quadrature norm on the fixed output grid. The restricted norms ∥·∥ Q, Ωℓ and ∥·∥ 2,Ωw are evaluated over the corresponding layer strips. For Problem 1, the derivatives in ELA are evaluated on the same nonuniform output grid using one-sided two-point differences at the endpoints and centered two-point differences at the interior nodes, with the same rule applied to the numerical reference and all model predictions. All three models are trained with the same mean-squared-error (MSE) objective and the same training procedure. Each model uses 3000 training samples and 500 validation samples, and performance is evaluated on 500 
+
+test profiles not used during training or validation. The Adam optimizer is 14 10 −3 
+
+ε
+
+10 −1 
+
+10 0
+
+> Erel 2 |REC /Erel 2 |Chebyshev
+
+10 −3 
+
+ε
+
+10 −1 
+
+10 0
+
+> E∞|REC /E∞|Chebyshev
+
+10 −3 
+
+ε
+
+10 −1 
+
+10 0
+
+> Elayer max  |REC /Elayer max  |Chebyshev
+
+10 −3 
+
+ε
+
+10 −1 
+
+10 0
+
+> ELA |REC /ELA |Chebyshev
+
+10 −1 
+
+10 0
+
+> Erel 2 |REC /Erel 2 |Vanilla
+
+10 −1 
+
+10 0
+
+> E∞|REC /E∞|Vanilla
+
+10 −1 
+
+10 0
+
+> Elayer max  |REC /Elayer max  |Vanilla
+
+10 −1 
+
+10 0
+
+> ELA |REC /ELA |Vanilla
+
+Figure 2: Ratios of Erel 2 , E∞, Elayer max , and ELA over ε ∈ [10 −4,10 −2] for the singularly perturbed scalar BVP at Nout = 16 .
+
+used with learning rate 5 × 10 −4, batch size 64 , weight decay 10 −6, gradient clipping at 5.0, and an exponential learning-rate scheduler with decay factor 
+
+0.995 , for at most 250 epochs. This is followed by a limited-memory Broyden– Fletcher–Goldfarb–Shanno (L-BFGS) quasi-Newton refinement with at most 
+
+80 iterations and strong-Wolfe line search. The checkpoint used for testing is selected by the lowest validation value of Elayer max among the models obtained during Adam optimization and after L-BFGS refinement. Each trunk design is trained in five independent runs on the same data split, with model comparisons made seed by seed. Thus, the same 500 test profiles are evaluated for each of the five trained instances, yielding 2500 error evaluations per model and benchmark. 
+
+3. Results and discussion 
+
+3.1. Singularly perturbed scalar BVP 
+
+Figure 2 shows the ratios of the error from the REC model to the error from the Chebyshev model and to the error from the Vanilla model over 
+
+ε ∈ [10 −4,10 −2] for Erel 2 , E∞, Elayer max , and ELA . The interval [10 −4,10 −2] is 15 Table 1: Comparison of the REC model with the Vanilla and Chebyshev models for the singularly perturbed scalar BVP at Nout = 16 .Metric ratio Full test set First three parameter bins Seeds with lower REC error Profiles with lower REC error 
+
+Erel 2 REC / E rel 2 Vanilla 0.107 0.110 5/5 100% 
+
+E∞|REC / E ∞|Vanilla 0.0976 0.0821 5/5 100% 
+
+Elayer max REC / E layer max Vanilla 0.0977 0.0820 5/5 99 .8% 
+
+ELA |REC / E LA |Vanilla 0.335 0.146 5/5 92 .1% 
+
+Erel 2 REC / E rel 2 Chebyshev 0.962 0.905 5/5 52 .6% 
+
+E∞|REC / E ∞|Chebyshev 1.06 0.970 0/5 43 .9% 
+
+Elayer max REC / E layer max Chebyshev 1.06 0.977 0/5 42 .2% 
+
+ELA |REC / E LA |Chebyshev 1.31 1.11 0/5 32 .8% 
+
+divided into eight equal-width bins on a logarithmic scale, with nominal bin edges 1.00 × 10 −4, 1.78 × 10 −4, 3.16 × 10 −4, 5.62 × 10 −4, 1.00 × 10 −3,
+
+1.78 × 10 −3, 3.16 × 10 −3, 5.62 × 10 −3, and 1.00 × 10 −2. For each test profile in a given bin, the error from the REC model is divided by the error from the 
+
+Chebyshev model or the Vanilla model for the same metric. The marker is placed at the geometric center of the bin and gives the median of these ratios. The shaded band gives the interquartile range (IQR), from the 25th to the 75th percentile. Relative to the Vanilla model, the median ratios for the REC 
+
+model remain below one in all eight ε bins and for all four metrics, with the largest median value reaching 0.977 only for ELA in the largest-ε bin. Relative to the Chebyshev model, the median ratios remain near unity across most ε
+
+bins, whereas the smallest ε bin gives ratios below unity for all four metrics, with median values 0.880 , 0.885 , 0.891 , and 0.805 for Erel 2 , E∞, Elayer max , and 
+
+ELA , respectively. These trends indicate that, for the singularly perturbed scalar BVP, the REC model clearly separates from the Vanilla model across the tested parameter range, while its advantage over the Chebyshev model is concentrated where the perturbation parameter is smallest. Table 1 tabulates error ratios for the singularly perturbed scalar BVP at Nout = 16 for the REC model against both the Vanilla and Chebyshev 
+
+models. Here, the second column gives the ratio of mean errors over the five independent training runs, where each run error is averaged over the 500 
+
+test profiles. The third column gives the ratio of mean errors over the five independent training runs, where each run error is averaged over the first 16 three parameter-bin means using the same parameter bins as Fig. 2. The fourth column counts how many of the five independent training runs give lower error for the REC model than for the denominator model. The fifth column gives the percentage of the 2500 profile comparisons, from the five independent training runs and 500 test profiles per run, in which the REC 
+
+model has lower error than the denominator model. Relative to the Vanilla 
+
+model, the second-column ratios are below 0.335 for all four metrics, and the third-column ratios decrease further to at most 0.146 . The fourth and fifth columns show the same separation across all five independent training runs and at least 92 .1% of the 2500 profile comparisons. Relative to the Chebyshev 
+
+model, the second column remains close to unity for Erel 2 , E∞, and Elayer max ,while ELA stays above unity. In the third column, however, Erel 2 , E∞, and 
+
+Elayer max decrease to 0.905 , 0.970 , and 0.977 , respectively. These results indicate that, for the singularly perturbed scalar BVP, the REC model is most useful when the endpoint layer in u(x) becomes thinnest, while the Chebyshev model remains competitive when the full test set also includes larger perturbation parameters. The REC reductions appear mainly in the first three parameter bins, while the full-test ratios relative to the Chebyshev model remain near unity or above unity, consistent with the representation argument in Appendix Appendix A. The endpoint layer in Problem 1 belongs to the same exponential family used to construct the rational dictionary elements rk in Eq. (18), while the same family also admits the exact Chebyshev expansion in Eq. (A.4) with the active polynomial degree scale in Eq. (A.10). Thus, the layer alignment of the rational dictionary elements does not by itself require the REC model to reduce every metric relative to the Chebyshev model on the singularly perturbed scalar BVP. 
+
+3.2. Thermal entrance problem 
+
+Figure 3 illustrates the ratios of the error from the REC model to the error from the Chebyshev model and to the error from the Vanilla model for the thermal entrance problem, calculated in the same way as Fig. 2, with 
+
+Pe −1 replacing ε and with the independently sampled x values retained within each Pe −1 bin. Relative to the Vanilla model, the median ratios remain below unity for all eight Pe −1 bins and all four metrics, with the largest median value equal to 0.810 for Elayer max . Relative to the Chebyshev model, the median ratios also remain below unity for all bins and metrics, with the largest median value equal to 0.918 for ELA . These results indicate that, for the thermal entrance 17 10 −3 
+
+Pe −1 
+
+10 0
+
+> Erel 2 |REC /Erel 2 |Chebyshev
+
+10 −3 
+
+Pe −1 
+
+10 0
+
+> E∞|REC /E∞|Chebyshev
+
+10 −3 
+
+Pe −1 
+
+10 0
+
+> Elayer max  |REC /Elayer max  |Chebyshev
+
+10 −3 
+
+Pe −1 
+
+10 0
+
+> ELA |REC /ELA |Chebyshev
+
+10 0
+
+> Erel 2 |REC /Erel 2 |Vanilla
+
+10 0
+
+> E∞|REC /E∞|Vanilla
+
+10 0
+
+> Elayer max  |REC /Elayer max  |Vanilla
+
+10 0
+
+> ELA |REC /ELA |Vanilla
+
+Figure 3: Ratios of Erel 2 , E∞, Elayer max , and ELA over Pe −1 ∈ [10 −4,10 −2] for the thermal entrance problem at Nout = 16 .Table 2: Comparison of the REC model with the Vanilla and Chebyshev models for the thermal entrance problem at Nout = 16 .Metric ratio Full test set First three parameter bins Seeds with lower REC error Profiles with lower REC error 
+
+Erel 2 REC / E rel 2 Vanilla 0.398 0.316 5/5 98 .5% 
+
+E∞|REC / E ∞|Vanilla 0.461 0.375 5/5 93 .7% 
+
+Elayer max REC / E layer max Vanilla 0.558 0.435 5/5 80 .6% 
+
+ELA |REC / E LA |Vanilla 0.426 0.318 5/5 85 .9% 
+
+Erel 2 REC / E rel 2 Chebyshev 0.747 0.773 5/5 90 .6% 
+
+E∞|REC / E ∞|Chebyshev 0.699 0.746 5/5 90 .9% 
+
+Elayer max REC / E layer max Chebyshev 0.690 0.759 5/5 81 .2% 
+
+ELA |REC / E LA |Chebyshev 0.725 0.731 5/5 74 .7% 
+
+problem, the REC model improves the reconstruction of the wall-normal temperature profile θ(y) across the tested Pe −1 range and sampled entrance locations x.Table 2 summarizes error ratios for the thermal entrance problem at 18 Nout = 16 for the REC model against both the Vanilla and Chebyshev 
+
+models, similar to Table 1, but with the first three parameter-bin means computed using the same parameter bins as Fig. 3. Relative to the Vanilla 
+
+model, all four second-column ratios are below 0.558 , and all four third-column ratios are below 0.435 . The fourth column shows that the REC model gives lower mean error than the Vanilla model in all five independent training runs for every metric. The fifth column remains high as well, ranging from 80 .6% 
+
+to 98 .5% of the 2500 profile comparisons. Relative to the Chebyshev model, all four second-column ratios and all four third-column ratios remain below unity, with values between 0.690 and 0.773 . The fourth column again shows that the REC model gives lower mean error than the Chebyshev model in all five independent training runs for all four metrics, and the fifth column remains between 74 .7% and 90 .9% . These results indicate that, for the thermal entrance problem, the REC model provides a more reliable representation of the wall-normal temperature profile θ(y) across sampled Pe −1 values and entrance locations x, where the profile must combine a smooth outer region with a wall-attached thermal layer. 
+
+3.3. Concentration entrance problem 
+
+Figure 4 reports the ratios of the error from the REC model to the error from the Chebyshev model and to the error from the Vanilla model for the concentration entrance problem at Da = 0 .1, 1.0, and 10 .0, calculated in the same way as Fig. 2, with Pe −1 
+
+> m
+
+replacing ε and with the independently sampled 
+
+x values retained within each Pe −1 
+
+> m
+
+bin. Relative to the Vanilla model, the median ratios for Erel 2 and E∞ remain below unity for all three Damköhler numbers and all eight Pe −1 
+
+> m
+
+bins, with largest median values 0.688 and 0.745 ,respectively. For Elayer max and ELA , the median ratios remain below unity in all bins except the sixth Pe −1 
+
+> m
+
+bin at Da = 0 .1 and 1.0. Relative to the Chebyshev 
+
+model, all median ratios remain below unity for all three Damköhler numbers, all eight bins, and all four metrics, with the largest median value equal to 
+
+0.914 for ELA . These results indicate that, for the concentration entrance problem, the REC model improves the reconstruction of the wall-normal concentration profile c(y) across sampled entrance locations x and across wall-absorption regimes ranging from weak uptake at Da = 0 .1 to stronger wall-adjacent concentration gradients at Da = 10 .0.Table 3 lists error ratios for the concentration entrance problem at Nout =16 and Da = 0 .1, 1.0, and 10 .0 for the REC model against both the Vanilla 
+
+19 Table 3: Comparison of the REC model with the Vanilla and Chebyshev models for the concentration entrance problem at Nout = 16 .Metric ratio Full test set First three parameter bins Seeds with lower REC error Profiles with lower REC error Problem 3 ( Da = 0 .1)
+
+Erel 2 REC / E rel 2 Vanilla 0.453 0.291 5/5 94 .9% 
+
+E∞|REC / E ∞|Vanilla 0.476 0.329 5/5 90 .9% 
+
+Elayer max REC / E layer max Vanilla 0.799 0.585 5/5 64 .2% 
+
+ELA |REC / E LA |Vanilla 0.827 0.578 4/5 63 .8% 
+
+Erel 2 REC / E rel 2 Chebyshev 0.761 0.683 5/5 87 .7% 
+
+E∞|REC / E ∞|Chebyshev 0.720 0.661 5/5 90 .4% 
+
+Elayer max REC / E layer max Chebyshev 0.788 0.784 5/5 77 .7% 
+
+ELA |REC / E LA |Chebyshev 0.895 0.943 5/5 65 .5% 
+
+Problem 3 ( Da = 1 .0)
+
+Erel 2 REC / E rel 2 Vanilla 0.463 0.304 5/5 93 .5% 
+
+E∞|REC / E ∞|Vanilla 0.484 0.339 5/5 90 .8% 
+
+Elayer max REC / E layer max Vanilla 0.757 0.564 5/5 69 .3% 
+
+ELA |REC / E LA |Vanilla 0.829 0.620 4/5 68% 
+
+Erel 2 REC / E rel 2 Chebyshev 0.770 0.702 5/5 87 .8% 
+
+E∞|REC / E ∞|Chebyshev 0.720 0.670 5/5 91 .6% 
+
+Elayer max REC / E layer max Chebyshev 0.774 0.782 5/5 79 .5% 
+
+ELA |REC / E LA |Chebyshev 0.891 0.954 5/5 68 .8% 
+
+Problem 3 ( Da = 10 .0)
+
+Erel 2 REC / E rel 2 Vanilla 0.433 0.307 5/5 96 .1% 
+
+E∞|REC / E ∞|Vanilla 0.467 0.350 5/5 92 .7% 
+
+Elayer max REC / E layer max Vanilla 0.584 0.388 5/5 79 .3% 
+
+ELA |REC / E LA |Vanilla 0.652 0.518 5/5 79 .2% 
+
+Erel 2 REC / E rel 2 Chebyshev 0.760 0.754 5/5 87 .9% 
+
+E∞|REC / E ∞|Chebyshev 0.698 0.705 5/5 90 .3% 
+
+Elayer max REC / E layer max Chebyshev 0.678 0.681 5/5 82 .9% 
+
+ELA |REC / E LA |Chebyshev 0.710 0.656 5/5 72 .8% 
+
+20 10 −3 
+
+Pe −1 
+
+> m
+
+10 0
+
+> Erel 2 |REC /Erel 2 |Chebyshev
+
+10 −3 
+
+Pe −1 
+
+> m
+
+10 0
+
+> E∞|REC /E∞|Chebyshev
+
+10 −3 
+
+Pe −1 
+
+> m
+
+10 0
+
+> Elayer max  |REC /Elayer max  |Chebyshev
+
+10 −3 
+
+Pe −1 
+
+> m
+
+10 0
+
+> ELA |REC /ELA |Chebyshev
+
+10 0
+
+> Erel 2 |REC /Erel 2 |Vanilla
+
+10 0
+
+> E∞|REC /E∞|Vanilla
+
+10 0
+
+> Elayer max  |REC /Elayer max  |Vanilla
+
+10 0
+
+> ELA |REC /ELA |Vanilla
+
+Da = 0.1 Da = 1.0 Da = 10.0 Figure 4: Ratios of Erel 2 , E∞, Elayer max , and ELA over Pe −1 
+
+> m
+
+∈ [10 −4,10 −2] for the concentration entrance problem at Nout = 16 and Da = 0 .1, 1.0, and 10 .0.
+
+and Chebyshev models, similar to Table 1, but with the first three parameter-bin means computed using the same parameter bins as Fig. 4. Relative to the Vanilla model, the second-column ratios are below unity for all three Damköhler numbers and all four metrics, and the third-column ratios are smaller than the corresponding second-column ratios in every row. The fourth column shows that the REC model gives lower mean error than the Vanilla 
+
+model in all five independent training runs for every metric except ELA at 
+
+Da = 0 .1 and 1.0, where this occurs in four of the five independent training runs, while the fifth column remains above 63 .8% across all rows. Relative to the Chebyshev model, all second-column and third-column ratios remain below unity for Da = 0 .1, 1.0, and 10 .0. The fourth column shows that the REC model gives lower mean error than the Chebyshev model in all five independent training runs for each of the four metrics at each tested Damköhler number, and the fifth column ranges from 65 .5% to 91 .6% . These results indicate that, for the concentration entrance problem, the REC model 21 remains effective for reconstructing the wall-normal concentration profile 
+
+c(y) as the absorbing-wall condition changes the near-wall layer from weakly developed to sharply localized. 
+
+3.4. Representative profile behavior and local smoothness 
+
+Figure 5 shows representative cases selected from the held-out test profiles to visualize the profile behavior underlying the error statistics reported in Sections 3.1–3.3. The figure compares the numerical reference with solution profiles predicted by the Vanilla , Chebyshev , and REC models at Nout = 16 
+
+across the three benchmark problems introduced in Section 2.1. For Problems 1 and 2, Figs. 5(a) and 5(b) show the scalar solution u(x) over x ∈ (0 ,1) and the wall-normal temperature profile θ(y) over y ∈ (0 ,1) , respectively, with ε =1.01 ×10 −4 in Fig. 5(a) and Pe −1 = 1 .24 ×10 −4 and x = 6 .70 ×10 −2 in Fig. 5(b). In Fig. 5(a), using the REC model decreases Erel 2 from 7.90 × 10 −2 with the 
+
+Vanilla model and 2.49 × 10 −2 with the Chebyshev model to 1.87 × 10 −2, and decreases E∞ from 1.63 × 10 −1 and 3.03 × 10 −2 to 2.15 × 10 −2. In Fig. 5(b), 
+
+Erel 2 decreases from 4.45 × 10 −2 with the Vanilla model and 2.41 × 10 −2 with the Chebyshev model to 1.63 × 10 −2, and E∞ decreases from 1.59 × 10 −1
+
+and 8.01 × 10 −2 to 5.91 × 10 −2. These reductions show that the REC model is much closer to the numerical reference than the Vanilla model and still improves over the Chebyshev model in the representative scalar and thermal entrance profiles. For Problem 3, Figs. 5(c), 5(d), and 5(e) show the wall-normal concentra-tion profiles c(y) over y ∈ (0 ,1) as the wall-absorption strength Da increases from 0.1 to 10 .0, with Pe −1 
+
+> m
+
+= 1 .24 × 10 −4 and x = 6 .70 × 10 −2 for Da = 0 .1,and Pe −1 
+
+> m
+
+= 1 .15 × 10 −4 and x = 8 .32 × 10 −2 for Da = 1 .0 and 10 .0. The wall-endpoint drop of the numerical reference, measured by c(y = 0 .99) − c(y = 1) ,increases from 9.44 × 10 −4 at Da = 0 .1 to 1.43 × 10 −2 at Da = 1 .0 and 
+
+1.19 × 10 −1 at Da = 10 .0, showing the progressive formation of a sharper wall-adjacent concentration layer as Da increases. Relative to the Vanilla 
+
+model, the REC model decreases Erel 2 from 1.13 × 10 −2, 2.74 × 10 −2, and 
+
+2.48 × 10 −2 to 5.63 × 10 −3, 1.22 × 10 −2, and 1.82 × 10 −2, respectively, and decreases E∞ from 2.30 × 10 −2, 7.00 × 10 −2, and 7.64 × 10 −2 to 1.56 × 10 −2,
+
+3.10 × 10 −2, and 5.69 × 10 −2. Relative to the Chebyshev model, Erel 2 decreases from 1.17 × 10 −2, 1.88 × 10 −2, and 2.16 × 10 −2 to the same REC values. For 
+
+Da = 0 .1 and 1.0, E∞ decreases from 2.83 × 10 −2 to 1.56 × 10 −2 and from 
+
+5.88 × 10 −2 to 3.10 × 10 −2, while the Da = 10 .0 value remains 5.69 × 10 −2
+
+for both models. Even at Da = 0 .1, where the wall-endpoint drop is weak, 22 0.0  0.5  1.0 
+
+> x
+> -0.2 0.0 0.2 0.4
+> u(x)(a) Problem 1
+> ε = 1.01 × 10 −4
+> 0.0  0.5  1.0
+> y
+> 0.0 0.5 1.0 1.5 Θ( y)(b) Problem 2 Pe −1  = 1.24 × 10 −4
+> x = 6.70 × 10 −2
+> 0.0  0.5  1.0
+> y
+> 0.50 0.75 1.00 1.25 1.50
+> c(y)(c) Problem 3 (Da = 0.1) Pe −1
+> m = 1.24 × 10 −4
+> x = 6.70 × 10 −2
+> 0.0  0.5  1.0
+> y
+> 0.5 1.0 1.5
+> c(y)(d) Problem 3 (Da = 1.0) Pe −1
+> m = 1.15 × 10 −4
+> x = 8.32 × 10 −2
+> 0.0  0.5  1.0
+> y
+> 0.5 1.0 1.5
+> c(y)(e) Problem 3 (Da = 10.0) Pe −1
+> m = 1.15 × 10 −4
+> x = 8.32 × 10 −2
+> Reference  Vanilla  Chebyshev  REC Figure 5: Full representative solution profiles for the three problems at  Nout  = 16 . (a) Scalar profile  u(x) on  x ∈ (0 ,1)  for
+> ε = 1 .01  × 10 −4. (b) Temperature profile  θ(y) on  y ∈ (0 ,1)  for  Pe −1 = 1 .24  × 10 −4 and  x = 6 .70  × 10 −2. (c)–(e) Concentration profiles  c(y) on  y ∈ (0 ,1)  for  Da = 0 .1, 1.0, and  10 .0, where the  Da = 0 .1 case uses  Pe −1
+> m = 1 .24  × 10 −4 and  x = 6 .70  × 10 −2,while the  Da = 1 .0 and  10 .0 cases use  Pe −1
+> m = 1 .15  × 10 −4 and  x = 8 .32  × 10 −2.
+
+23 the Chebyshev model still introduces visible near-wall oscillation, whereas the 
+
+REC model follows the nearly flat reference profile more closely. These results indicate that the REC model predicts the numerical reference substantially more accurately than the Vanilla model and also improves the prediction relative to the Chebyshev model by reducing near-wall oscillatory deviations, rather than only by resolving an extremely thin localized layer. Figure 6 enlarges the right-endpoint layer in u(x), the near-wall part of the temperature profile θ(y), and the near-wall part of the concentration profiles c(y) at Da = 0 .1, 1.0, and 10 .0 for the five representative cases shown in Fig. 5. In these enlarged regions, the predictions from the Chebyshev model often retain local oscillatory deviations from the numerical reference, whereas the predictions from the REC model reduce these deviations while preserving the nearby smooth profile shape. To quantify this local oscillatory behavior, the second-difference roughness W2 is evaluated for the same representative profiles. Profiles with stronger oscillatory variation have larger second differ-ences, while W2 values closer to the numerical-reference value indicate closer agreement in local smoothness. For a discrete profile vector v = ( v1, . . . ,v m)
+
+evaluated at the m = 257 Chebyshev–Lobatto output locations defined in Section 2.4, with vj = u(xj ) for Problem 1, vj = θ(yj ) for Problem 2, and 
+
+vj = c(yj ) for Problem 3, where j indexes the output locations, 
+
+W2(v) = 
+
+> m−1
+
+X
+
+> j=2
+
+|vj+1 − 2vj + vj−1| , (28) where | · | denotes the scalar absolute value. Table 4 shows that the W2 values from the REC model remain closer to the numerical-reference values than the W2 values from the Chebyshev 
+
+model in all five representative cases. For the thermal entrance problem, 
+
+W2 decreases by 83 .6% from the Chebyshev model to the REC model. For the concentration entrance problem, the corresponding decreases are 92 .2% ,
+
+93 .5% , and 94 .1% at Da = 0 .1, 1.0, and 10 .0, respectively, giving larger decreases than in the thermal entrance problem. More importantly, for the singularly perturbed scalar BVP, although the REC model does not substantially improve the scalar-profile prediction accuracy relative to the 
+
+Chebyshev model, it decreases W2 by 78 .7% . In addition, for all held-out test profiles over the five independent training runs, the median W2 decreases from the Chebyshev model to the REC model by 64 .0% for the singularly perturbed scalar BVP and by 81 .4% for the thermal entrance problem. For 24 0.990  0.995  1.000 
+
+> x
+> 0.00 0.05 0.10 0.15 0.20
+> u(x)(a) Problem 1
+> ε = 1.01 × 10 −4
+> 0.990  0.995  1.000
+> y
+> 0.0 0.1 0.2 Θ( y)(b) Problem 2 Pe −1  = 1.24 × 10 −4
+> x = 6.70 × 10 −2
+> 0.990  0.995  1.000
+> y
+> 0.82 0.83 0.84
+> c(y)(c) Problem 3 (Da = 0.1) Pe −1
+> m = 1.24 × 10 −4
+> x = 6.70 × 10 −2
+> 0.990  0.995  1.000
+> y
+> 1.48 1.50 1.52
+> c(y)(d) Problem 3 (Da = 1.0) Pe −1
+> m = 1.15 × 10 −4
+> x = 8.32 × 10 −2
+> 0.990  0.995  1.000
+> y
+> 1.20 1.25 1.30
+> c(y)(e) Problem 3 (Da = 10.0) Pe −1
+> m = 1.15 × 10 −4
+> x = 8.32 × 10 −2
+> Reference  Vanilla  Chebyshev  REC Figure 6: Near-boundary and near-wall solution profiles for the three problems at  Nout  = 16 . (a) Scalar profile  u(x) near the right endpoint for  ε = 1 .01 ×10 −4. (b) Temperature profile  θ(y) near the wall for  Pe −1 = 1 .24 ×10 −4 and  x = 6 .70 ×10 −2. (c)–(e) Concentration profiles  c(y) near the absorbing wall for  Da = 0 .1, 1.0, and  10 .0, where the  Da = 0 .1 case uses  Pe −1
+> m = 1 .24  × 10 −4
+> and  x = 6 .70  × 10 −2, while the  Da = 1 .0 and  10 .0 cases use  Pe −1
+> m = 1 .15  × 10 −4 and  x = 8 .32  × 10 −2. Each comparison includes the numerical reference, Vanilla, Chebyshev, and REC.
+
+25 Table 4: W2 values for the numerical reference and for the predictions from the Chebyshev                                                                                       
+
+> and REC models in the five representative cases shown in Fig. 6, computed over x∈(0 ,1)
+> for Problem 1 and over y∈(0 ,1) for Problems 2 and 3. Problem Parameter W2|Reference W2|Chebyshev W2|REC
+> Problem 1 ε= 1 .01 ×10 −41.87 ×10 −19.72 ×10 −12.07 ×10 −1
+> Problem 2
+> Pe −1= 1 .24 ×10 −4
+> x= 6 .70 ×10 −21.29 ×10 −18.23 ×10 −11.35 ×10 −1
+> Problem 3 (Da = 0 .1)
+> Pe −1
+> m= 1 .24 ×10 −4
+> x= 6 .70 ×10 −25.15 ×10 −28.71 ×10 −16.78 ×10 −2
+> Problem 3 (Da = 1 .0)
+> Pe −1
+> m= 1 .15 ×10 −4
+> x= 8 .32 ×10 −26.39 ×10 −21.43 ×10 09.26 ×10 −2
+> Problem 3 (Da = 10 .0)
+> Pe −1
+> m= 1 .15 ×10 −4
+> x= 8 .32 ×10 −29.22 ×10 −21.63 ×10 09.63 ×10 −2
+
+the concentration entrance problem, the corresponding median decreases are 
+
+87 .2% , 87 .6% , and 85 .9% at Da = 0 .1, 1.0, and 10 .0, respectively. These results indicate that the REC model suppresses the artificial local reversals introduced by the Chebyshev model near the boundary or wall, thereby giving a near-boundary or near-wall profile shape closer to the numerical-reference behavior across both the five representative cases and all held-out test profiles. 
+
+3.5. Dependence on outer Chebyshev subdictionary size 
+
+Sections 3.1–3.4 show that, first, compared with the Vanilla model, the 
+
+REC model gives lower errors in predicting u(x), θ(y), and c(y), even though the Vanilla model uses a learned, parameter-conditioned trunk MLP. This result indicates that the learned coordinate trunk does not by itself provide the same layer-aligned output functions as the prescribed REC dictionary for the tested bounded-domain solution profiles. Compared with the Chebyshev 
+
+model, the REC model changes the prescribed trunk dictionary while keeping the branch network, trunk dimension, data splits, loss function, optimizer, training procedure, and evaluation protocol fixed, as described in Section 2. Therefore, the lower errors in the thermal and concentration entrance problems, together with the smaller W2 values in the representative profiles, support replacing part of the global Chebyshev dictionary by inner-scale rational dictionary elements in the output-coordinate representation, rather than adding trainable trunk expressivity, changing the optimization procedure, or imposing a problem-specific decomposition, rescaling, or sampling rule. 26 16 33 65 97 
+
+Nout 
+
+0.0 1.0 2.0 
+
+> Erel 2 |REC /Erel 2 |Chebyshev
+
+16 33 65 97 
+
+Nout 
+
+0.0 1.0 2.0 
+
+> E∞|REC /E∞|Chebyshev
+
+16 33 65 97 
+
+Nout 
+
+0.0 1.0 2.0 
+
+> Elayer max  |REC /Elayer max  |Chebyshev
+
+16 33 65 97 
+
+Nout 
+
+0.0 1.0 2.0 
+
+> ELA |REC /ELA |Chebyshev
+
+Problem 1 Problem 2 Problem 3 (Da = 0.1) Problem 3 (Da = 1.0) Problem 3 (Da = 10.0) Figure 7: Ratios of Erel 2 , E∞, Elayer max , and ELA from the REC model to the corresponding errors from the Chebyshev model for Nout = 16 , 33 , 65 , and 97 .
+
+However, the results in Sections 3.1–3.4 are obtained with the specific split 
+
+Nout = 16 and do not yet show whether the lower errors in predicting θ(y) and 
+
+c(y) can be attributed to using a larger number of inner rational dictionary elements within the p = 129 trunk dictionary, or whether similar errors would be obtained with a larger outer Chebyshev subdictionary. They also do not show whether the lower errors relative to the Vanilla model remain when 
+
+Nout is increased to 33 , 65 , and 97 .Figures 7 and 8 accordingly compare the error from the REC model against the errors from the Chebyshev and Vanilla models as Nout is varied over 16 , 33 , 65 , and 97 . For each metric and each problem, the solid line gives the median ratio over the five independent training runs and test profiles, and the shaded band gives the IQR. In Fig. 7, for the singularly perturbed scalar 27 16 33 65 97 
+
+Nout 
+
+0.0 0.5 1.0 1.5 
+
+> Erel 2 |REC /Erel 2 |Vanilla
+
+16 33 65 97 
+
+Nout 
+
+0.0 0.5 1.0 1.5 
+
+> E∞|REC /E∞|Vanilla
+
+16 33 65 97 
+
+Nout 
+
+0.0 0.5 1.0 1.5 
+
+> Elayer max  |REC /Elayer max  |Vanilla
+
+16 33 65 97 
+
+Nout 
+
+0.0 0.5 1.0 1.5 
+
+> ELA |REC /ELA |Vanilla
+
+Problem 1 Problem 2 Problem 3 (Da = 0.1) Problem 3 (Da = 1.0) Problem 3 (Da = 10.0) Figure 8: Ratios of Erel 2 , E∞, Elayer max , and ELA from the REC model to the corresponding errors from the Vanilla model for Nout = 16 , 33 , 65 , and 97 .
+
+BVP, the ratios remain close to unity and can exceed unity for Elayer max and ELA ,consistent with Table 1, where the Chebyshev model gives lower errors than the REC model on these two metrics. For the thermal and concentration entrance problems in Fig. 7, the smallest ratios occur at Nout = 16 , and increasing Nout moves the ratios toward unity. In Fig. 8, the ratios remain below unity for the thermal and concentration entrance problems and remain below unity for most singularly perturbed scalar BVP cases. Thus, the weaker improvement over the Chebyshev model at larger Nout supports the interpretation that retaining more inner rational dictionary elements is more favorable for predicting θ(y) and c(y) than increasing the number of outer Chebyshev dictionary elements. The ratios in Fig. 8 also show that the lower errors relative to the Vanilla model are retained when Nout is increased. 28 Problem 1 Da=0.1 Da=1 Da=10 0.0 0.1                      
+
+> Erel 2
+> Problem 1 scale Problem 2 Problem 3 Problem 1 Da=0.1 Da=1 Da=10 0.0 0.2
+> E∞
+> Problem 1 scale Problem 2 Problem 3 Problem 1 Da=0.1 Da=1 Da=10 0.0 0.2
+> Elayer max
+> Problem 1 scale Problem 2 Problem 3 Problem 1 Da=0.1 Da=1 Da=10 0.00 0.25 0.50
+> ELA
+> Problem 1 scale Problem 2 Problem 3 0.00 0.01 0.02 Problems 2-3 scale 0.00 0.02 0.04 Problems 2-3 scale 0.00 0.02 Problems 2-3 scale 0.00 0.05 Problems 2-3 scale Vanilla Chebyshev REC Figure 9: Averaged values of Erel 2,E∞,Elayer max , and ELA for the Vanilla ,Chebyshev , and
+> REC models at Nout = 16 .
+
+3.6. Practical implications 
+
+Figure 9 compares the averaged values of Erel 2 , E∞, Elayer max , and ELA for the 
+
+Vanilla , Chebyshev , and REC models at Nout = 16 . For each model and each problem, the plotted value is the corresponding error metric averaged over the five independent training runs and the test profiles. These averaged error values summarize the observations in Sections 3.1–3.4. For the singularly perturbed scalar BVP, the REC model predicts the scalar profile u(x) more accurately than the Vanilla model and remains comparable to the Chebyshev 
+
+model. For the thermal and concentration entrance problems, the REC 
+
+model gives more accurate predictions of the temperature profile θ(y) and the concentration profile c(y) than both comparison models. The Nout sweep in Section 3.5 further shows that, in these two entrance problems, the lower errors in predicting θ(y) and c(y) are strengthened by using more inner rational dictionary elements within the REC dictionary. Therefore, the practical implication is clearest for REC-type trunk dictionaries in operator surrogates that predict wall-normal temperature or concentration profiles with a smooth 29 outer part and a near-wall layer. This advantage is expected to be particularly relevant to high-Péclet entrance-region heat and mass transfer problems in which repeated evalua-tions are required as inlet profiles or wall conditions change. For example, surface-based biosensors and biosensors based on surface capture require concentration profiles governed by convection, diffusion, reaction, and binding near reactive surfaces [16]. Similarly, microfluidic systems with surface reac-tions and microfluidic electrochemical chips with electrodes on the side walls involve concentration fields formed by laminar convective-diffusive transport and electrochemical reaction at an electrode interface [17, 18]. In high-speed flow applications, high-speed boundary layers with wall transpiration, transpi-ration cooling through a porous wall, hypersonic transitional and turbulent boundary layers, hypersonic turbulent boundary layers with finite-rate chemi-cal reactions, and reacting boundary layers with recombination reactions also require accurate near-wall temperature or species profiles [19–23]. 
+
+4. Conclusion 
+
+This study examined trunk-basis design in DeepONet surrogates for sin-gularly perturbed and high-Péclet transport operators on bounded domains, with particular emphasis on wall-normal profile reconstruction in entrance-region heat and mass transfer. The proposed REC trunk dictionary combines a low-degree outer Chebyshev subdictionary with an inner rational subdic-tionary constructed before DeepONet training from a canonical exponentially decaying layer family. The key conclusions are as follows: 1. On the singularly perturbed scalar BVP, the REC model gives its clearest reductions in the smallest-parameter regime, while remaining comparable to the Chebyshev model over the full test set. 2. On the thermal entrance problem, the REC model improves the recon-struction of the wall-normal temperature profile θ(y) relative to both the Vanilla and Chebyshev models across the tested high-Péclet regime and sampled entrance locations x.3. On the concentration entrance problem, the REC model improves the reconstruction of the wall-normal concentration profile c(y) across 
+
+Da = 0 .1, 1.0, and 10 .0, showing that the improvement persists as the absorbing-wall condition changes the near-wall layer. 4. The reductions obtained with the REC model are consistent across the five independent training runs and the held-out test profiles, indicating 30 that the observed improvements are not restricted to a single training initialization or a small set of selected profiles. 
+
+Acknowledgments 
+
+This work was supported by the Center for Heterogeneous Integration of Micro Electronic Systems (CHIMES), one of the seven centers sponsored by the Semiconductor Research Corporation (SRC) and the Defense Advanced Research Projects Agency (DARPA) under the Joint University Microelec-tronics Program 2.0 (JUMP 2.0). 
+
+Declaration of competing interest 
+
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work presented in this paper. 
+
+Data availability 
+
+The code and data used in this work are available upon request. 
+
+Appendix A. Theoretical motivation for the REC trunk dictionary 
+
+This appendix develops an idealized representation argument for the REC trunk, rather than a convergence theorem for the trained DeepONet. The argument uses the canonical exponential layer family introduced in Eq. (16), whose sampled instances define the inner rational subdictionary in the REC dictionary construction before training. Treating the same family as an idealized target clarifies how polynomial and rational trunks represent a thin boundary-attached layer, and why the REC approximation space combining a low-degree outer Chebyshev subdictionary with the inner rational subdictionary is structurally compatible with the decomposition into a smooth outer solution and a one-sided layer. Define 
+
+s = 2 ζ − 1 ∈ [−1,1] , β = 12δ , (A.1) where s denotes the shifted coordinate and β denotes the rescaled layer parameter. Then 
+
+ψδ(ζ) = e−β eβs . (A.2) 31 Using the modified-Bessel Jacobi-Anger identity [31], 
+
+eβs = I0(β) + 2 
+
+> ∞
+
+X
+
+> k=1
+
+Ik(β)Tk(s), (A.3) where Ik denotes the modified Bessel function of the first kind of order k
+
+and Tk denotes the Chebyshev polynomial of the first kind of degree k, one obtains the exact Chebyshev expansion 
+
+ψδ(ζ) = e−β I0(β) + 2 e−β
+
+> ∞
+
+X
+
+> k=1
+
+Ik(β) Tk(2 ζ − 1) . (A.4) Hence the Chebyshev coefficients are 
+
+c0(δ) = e−β I0(β), ck(δ) = 2 e−β Ik(β), k ≥ 1, (A.5) where ck(δ) denotes the coefficient of Tk(2 ζ − 1) . For the degree-n Chebyshev truncation 
+
+Snψδ(ζ) = c0(δ) + 
+
+> n
+
+X
+
+> k=1
+
+ck(δ) Tk(2 ζ − 1) , (A.6) where n denotes the highest retained Chebyshev degree, the uniform trunca-tion error satisfies 
+
+∥ψδ − Snψδ∥∞ ≤ 2e−β
+
+> ∞
+
+X
+
+> k=n+1
+
+Ik(β), (A.7) where ∥ · ∥ ∞ denotes the supremum norm on [0 ,1] . This shows that, as δ
+
+decreases, appreciable Chebyshev weight shifts to higher polynomial degrees. A low-degree polynomial trunk therefore becomes progressively less well matched to this canonical boundary layer family. A more quantitative scale estimate follows from the local central-limit asymptotic for modified Bessel functions [32], 
+
+e−β Ik(β) ∼ 1
+
+√2πβ exp 
+
+
+
+− k2
+
+2β
+
+
+
+, β → ∞ , k
+
+√β → γ ∈ [0 ,∞), (A.8) where γ denotes the limiting scaled polynomial degree. This identifies k =
+
+O(√β) as the central coefficient scale. Since β = 1 /(2 δ), this gives, for k ≥ 1,
+
+ck(δ) ∼ 2
+
+r δπ exp( −k2δ), c0(δ) ∼
+
+r δπ . (A.9) 32 Thus, the envelope of the Chebyshev coefficients has a Gaussian scale in k.If ρ ∈ (0 ,1) denotes a fixed relative decay level of this envelope and Kρ(δ)
+
+denotes the polynomial degree at which exp( −k2δ) = ρ, then 
+
+Kρ(δ) = 
+
+r| log ρ|
+
+δ . (A.10) Therefore, the active polynomial degree scale is proportional to δ−1/2 as 
+
+δ → 0. For example, taking ρ = e−1 gives Kρ(10 −4) = 100 , which explains why a degree 128 Chebyshev trunk can remain a strong baseline for the pure canonical exponential layer. The inner rational subdictionary is therefore not motivated by a claim that it must dominate a sufficiently high degree Chebyshev expansion on this scalar layer alone. Rather, it is motivated as a compact layer-aligned inner rational subdictionary that can complement a low-degree outer Chebyshev subdictionary in the profile-valued entrance transport problems studied in the main text. Next define the logarithmic parameter 
+
+θ = log 10 δ, (A.11) where θ denotes the log scaled prototype parameter. Then, with δ = 10 θ,
+
+∂θψ10 θ (ζ) = (ln 10) 
+
+1 − ζδ
+
+
+
+exp 
+
+
+
+−1 − ζδ
+
+
+
+. (A.12) If 
+
+t = 1 − ζδ ≥ 0, (A.13) where t denotes the stretched layer coordinate associated with the canonical exponential profile, then 
+
+∂θψ10 θ (ζ) = (ln 10) te −t. (A.14) Since te −t ≤ e−1 for all t ≥ 0,
+
+sup 
+
+> θ
+
+∥∂θψ10 θ ∥∞ ≤ ln 10 
+
+e , (A.15) where the supremum is taken over the log parameter range considered for the layer family. 33 Let {ri}Mi=1 denote the rational dictionary elements, and let δi = 10 θi
+
+denote the prototype parameter value associated with ri. Suppose that 
+
+∥ψδi − ri∥∞ ≤ τi, (A.16) where τi denotes a uniform approximation error bound for the rational dic-tionary element ri on [0 ,1] . It should not be interpreted as the raw AAA stopping tolerance unless that tolerance has been separately verified to bound the uniform approximation error. Then, for any δ = 10 θ,
+
+∥ψδ − ri∥∞ ≤ τi + ln 10 
+
+e |θ − θi| = τi + ln 10 
+
+e |log 10 δ − log 10 δi| . (A.17) Therefore, 
+
+inf 
+
+> v∈R M
+
+∥ψδ − v∥∞ ≤ min 
+
+> 1≤i≤M
+
+
+
+τi + ln 10 
+
+e |log 10 δ − log 10 δi|
+
+
+
+, (A.18) where 
+
+RM = span {r1, . . . ,r M }. (A.19) Here, RM denotes the rational subspace, M denotes the number of rational dictionary elements, and v denotes a candidate approximating function in 
+
+RM .Consequently, if Iθ = [ θmin ,θ max ] denotes the sampled log parameter interval, and if 
+
+hθ = sup 
+
+> θ∈I θ
+
+min  
+
+> 1≤i≤M
+
+|θ − θi| (A.20) denotes the fill distance of the sampled log grid, then 
+
+inf 
+
+> v∈R M
+
+∥ψ10 θ − v∥∞ ≤ τmax + ln 10 
+
+e hθ, θ ∈ I θ, (A.21) where τmax = max 1≤i≤M τi denotes the largest assumed uniform approximation error bound over the inner rational subdictionary. This is a log parameter coverage statement for the idealized layer family, not a statement about the trained DeepONet optimization error. Finally, define 
+
+Pm−1 = span {T0(2 ζ−1) , . . . ,T m−1(2 ζ−1) }, Hm,M = Pm−1+RM , (A.22) 34 where m denotes the number of outer Chebyshev dictionary elements and 
+
+Hm,M denotes the corresponding REC approximation space. For the REC model used in the main comparison, m = 16 and M = 113 .The Chebyshev trunk with the same nominal dimension corresponds to 
+
+P128 , which is obtained by taking m = 129 in the definition of Pm−1. In general, H16 ,113 and P128 are different approximation spaces, and neither space comparison alone implies that one trained DeepONet must outperform the other. The following estimate is therefore an existence bound for the REC approximation space, not a dominance theorem relative to the full Chebyshev space. For a target field of the form 
+
+f (ζ) = q(ζ) + Aψ δ(ζ), (A.23) where f denotes a target profile, q denotes a smooth outer component, and 
+
+A denotes a layer amplitude, let 
+
+ηm(q) := inf 
+
+> π∈P m−1
+
+∥q − π∥∞, (A.24) where π denotes a candidate polynomial in Pm−1, and ηm(q) denotes the best uniform approximation error of the outer component q by the outer Chebyshev subdictionary. Then 
+
+inf 
+
+> v∈H m,M
+
+∥f −v∥∞ ≤ ηm(q)+ |A| min 
+
+> 1≤i≤M
+
+
+
+τi + ln 10 
+
+e |log 10 δ − log 10 δi|
+
+
+
+. (A.25) Although this bound does not prove that the trained REC model must produce lower errors than the trained Vanilla or Chebyshev models in the comparisons of Section 3, it shows that, under the idealized decomposition 
+
+f = q + Aψ δ, the REC trunk is structurally aligned with a smooth outer component and a thin boundary-attached layer, while the inner rational subdictionary provides an error estimate controlled by the spacing of the sampled prototype parameter nodes on the log 10 δ axis for the canonical layer family. The calculation also clarifies the interpretation of the singularly perturbed scalar BVP comparison in Section 3.1, where the REC model improves mainly in the first three parameter bins but does not reduce every full-test metric relative to the Chebyshev model. For the canonical exponential layer, the active polynomial degree scale is proportional to δ−1/2, indicating that a 35 degree 128 Chebyshev trunk remains an effective representation for δ ≥ 10 −4.Thus, the main role of the AAA-constructed inner rational subdictionary is not to replace high-degree Chebyshev approximation in this ideal scalar case, but to supply an explicitly layer-aligned component within a trunk dictionary having the same total number of dictionary elements when the target profiles combine smooth outer behavior with wall-attached transport layers. 
+
+References 
+
+[1] R. Courant, D. Hilbert, Methods of Mathematical Physics: Partial Differential Equations, Wiley, New York, 1989. https://doi.org/10. 1002/9783527617234 .[2] H.-G. Roos, M. Stynes, L. Tobiska, Robust Numerical Methods for Sin-gularly Perturbed Differential Equations: Convection-Diffusion-Reaction and Flow Problems, second ed., Springer Series in Computational Math-ematics, vol. 24, Springer, Berlin, 2008. https://doi.org/10.1007/ 978-3-540-34467-4 .[3] A. Arzani, K.W. Cassel, R.M. D’Souza, Theory-guided physics-informed neural networks for boundary layer problems with singular perturbation, J. Comput. Phys. 473 (2023) 111768. https://doi.org/10.1016/j.jcp. 2022.111768 .[4] L. Zhang, G. He, Multi-scale-matching neural networks for thin plate bending problem, Theor. Appl. Mech. Lett. 14 (1) (2024) 100494. https: //doi.org/10.1016/j.taml.2024.100494 .[5] F. Cao, F. Gao, X. Guo, D. Yuan, Physics-informed neural networks with parameter asymptotic strategy for learning singularly perturbed convection-dominated problem, Comput. Math. Appl. 150 (2023) 229–242. 
+
+https://doi.org/10.1016/j.camwa.2023.09.030 .[6] L. Lu, P. Jin, G. Pang, Z. Zhang, G.E. Karniadakis, Learning nonlinear operators via DeepONet based on the universal approximation theorem of operators, Nat. Mach. Intell. 3 (3) (2021) 218–229. https://doi.org/ 10.1038/s42256-021-00302-5 .[7] S. Wang, H. Wang, P. Perdikaris, Learning the solution operator of para-metric partial differential equations with physics-informed DeepONets, 36 Sci. Adv. 7 (40) (2021) eabi8605. https://doi.org/10.1126/sciadv. abi8605 .[8] T. Du, Z. Huang, Y. Li, Approximation and Generalization of DeepONets for Learning Operators Arising from a Class of Singularly Perturbed Problems, East Asian J. Appl. Math. 14 (4) (2024) 841–873. https: //doi.org/10.4208/eajam.2023-128.051023 .[9] T. Sun, J. Zu, PVD-ONet: A Multi-scale Neural Operator Method for Singularly Perturbed Boundary Layer Problems, arXiv:2507.21437 (2025). https://doi.org/10.48550/arXiv.2507.21437 .[10] J. Lee, Y. Hong, S. Ko, J.Y. Lee, Data-free Asymptotics-Informed Operator Networks for Singularly Perturbed PDEs, arXiv:2512.22006 (2025). https://doi.org/10.48550/arXiv.2512.22006 .[11] C. Mou, Y. Zhang, X. Zhu, Q. Zhuang, PAS-Net: Physics-informed Adaptive Scale Deep Operator Network, arXiv:2511.14925 (2025). https: //doi.org/10.48550/arXiv.2511.14925 .[12] L. Lu, X. Meng, S. Cai, Z. Mao, S. Goswami, Z. Zhang, G.E. Karniadakis, A comprehensive and fair comparison of two neural operators (with practical extensions) based on FAIR data, Comput. Methods Appl. Mech. Engrg. 393 (2022) 114778. https://doi.org/10.1016/j.cma. 2022.114778 .[13] J. Choi, T. Yun, N. Kim, Y. Hong, Spectral operator learning for paramet-ric PDEs without data reliance, Comput. Methods Appl. Mech. Engrg. 420 (2024) 116678. https://doi.org/10.1016/j.cma.2023.116678 .[14] Z. Liu, H. Wang, H. Zhang, K. Bao, X. Qian, S. Song, Render unto Numerics: Orthogonal Polynomial Neural Operator for PDEs with Non-periodic Boundary Conditions, SIAM J. Sci. Comput. 46 (4) (2024) C323–C348. https://doi.org/10.1137/23M1556320 .[15] M. Abid, O. San, Spectral Embedding via Chebyshev Bases for Robust DeepONet Approximation, arXiv:2512.09165 (2025). https://doi.org/ 10.48550/arXiv.2512.09165 .37 [16] T.M. Squires, R.J. Messinger, S.R. Manalis, Making it stick: convection, reaction and diffusion in surface-based biosensors, Nat. Biotechnol. 26 (4) (2008) 417–426. https://doi.org/10.1038/nbt1388 .[17] T. Gervais, K.F. Jensen, Mass transport and surface reactions in mi-crofluidic systems, Chem. Eng. Sci. 61 (4) (2006) 1102–1121. https: //doi.org/10.1016/j.ces.2005.06.024 .[18] S. Chevalier, Semianalytical modeling of the mass transfer in microfluidic electrochemical chips, Phys. Rev. E 104 (3) (2021) 035110. https:// doi.org/10.1103/PhysRevE.104.035110 .[19] A. Sescu, R. Alaziz, M.Z. Afsar, Effect of wall transpiration and heat transfer on Görtler vortices in high speed flows, AIAA J. 57 (3) (2019) 1159–1171. https://doi.org/10.2514/1.J057330 .[20] S. Hillcoat, J.-P. Hickey, Pressure–velocity coupling in transpiration cooling, Int. J. Heat Mass Transf. 239 (2025) 126532. https://doi.org/ 10.1016/j.ijheatmasstransfer.2024.126532 .[21] D. Xu, J. Wang, S. Chen, Skin-friction and heat-transfer decompositions in hypersonic transitional and turbulent boundary layers, J. Fluid Mech. 941 (2022) A4. https://doi.org/10.1017/jfm.2022.269 .[22] D. Passiatore, L. Sciacovelli, P. Cinnella, G. Pascazio, Finite-rate chemistry effects in turbulent hypersonic boundary layers: A direct numerical simulation study, Phys. Rev. Fluids 6 (5) (2021) 054604. 
+
+https://doi.org/10.1103/PhysRevFluids.6.054604 .[23] N. Perakis, O.J. Haidn, M. Ihme, Heat transfer augmentation by re-combination reactions in turbulent reacting boundary layers at ele-vated pressures, Int. J. Heat Mass Transf. 178 (2021) 121628. https: //doi.org/10.1016/j.ijheatmasstransfer.2021.121628 .[24] R.K. Shah, A.L. London, Laminar Flow Forced Convection in Ducts: A Source Book for Compact Heat Exchanger Analytical Data, Academic Press, New York, 1978. https://doi.org/10.1016/C2013-0-06152-X .[25] A.S. Haase, S.J. Chapman, P.A. Tsai, D. Lohse, R.G.H. Lammertink, The Graetz–Nusselt problem extended to continuum flows with finite slip, J. Fluid Mech. 764 (2015) R3. https://doi.org/10.1017/jfm.2014.733 .38 [26] A.S. Popel, J.F. Gross, Mass transfer in the entrance region of a circular tube, Int. J. Heat Mass Transf. 21 (8) (1978) 1133–1141. https://doi. org/10.1016/0017-9310(78)90112-6 .[27] V. Debarnot, J. Fehrenbach, F. de Gournay, L. Martire, The case of Neumann, Robin, and periodic lateral conditions for the semi-infinite generalized Graetz problem and applications, SIAM J. Appl. Math. 78 (4) (2018) 2227–2251. https://doi.org/10.1137/17M1157507 .[28] T. Aquino, Equilibrium distributions under advection–diffusion in laminar channel flow with partially absorbing boundaries, J. Fluid Mech. 985 (2024) A16. https://doi.org/10.1017/jfm.2024.294 .[29] Y. Wang, S. Chen, X. Wu, A rational spectral collocation method for solving a class of parameterized singular perturbation problems, J. Comput. Appl. Math. 233 (10) (2010) 2652–2660. https://doi.org/10. 1016/j.cam.2009.11.011 .[30] Y. Nakatsukasa, O. Sète, L.N. Trefethen, The AAA Algorithm for Ratio-nal Approximation, SIAM J. Sci. Comput. 40 (3) (2018) A1494–A1522. 
+
+https://doi.org/10.1137/16M1106122 .[31] NIST Digital Library of Mathematical Functions, Section 10.35: Gen-erating Function and Associated Series for modified Bessel functions. 
+
+https://dlmf.nist.gov/10.35 .[32] K.B. Athreya, Modified Bessel function asymptotics via probability, Stat. Probab. Lett. 5 (5) (1987) 325–327. https://doi.org/10.1016/ 0167-7152(87)90004-6 .39

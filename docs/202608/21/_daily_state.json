@@ -1,0 +1,89 @@
+{
+  "date": "20260821",
+  "date_label": "",
+  "generated_at": "2026-08-21 21:06:25 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.18641v1",
+      "route": "202608/21/2608.18641v1-physics-informed-neural-network-for-inverse-modeling-of-granular-flows",
+      "title": "Physics-informed neural network for inverse modeling of granular flows",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "物理信息神经网络用于稀疏观测下的流场反演，可直接迁移至地下水流建模。",
+      "first_seen_at": "2026-08-21 21:06:25 UTC",
+      "updated_at": "2026-08-21 21:06:25 UTC"
+    },
+    {
+      "paper_id": "2608.19615v1",
+      "route": "202608/21/2608.19615v1-evo-gtransnet-for-parabolic-pdes-a-fixed-feature-galerkin-method-of-lines-with-quadrature-mass-orthonormalization",
+      "title": "Evo-GTransNet for Parabolic PDEs: A Fixed-Feature Galerkin Method of Lines with Quadrature-Mass Orthonormalization",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "抛物型偏微分方程的神经网络求解器，可迁移至人工智能驱动的数值模拟",
+      "first_seen_at": "2026-08-21 21:06:25 UTC",
+      "updated_at": "2026-08-21 21:06:25 UTC"
+    },
+    {
+      "paper_id": "2608.19658v1",
+      "route": "202608/21/2608.19658v1-rationally-enriched-chebyshev-trunk-bases-for-deeponet-surrogates-of-high-pclet-entrance-transport",
+      "title": "Rationally Enriched Chebyshev Trunk Bases for DeepONet Surrogates of High Péclet Entrance Transport",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "有理增强Chebyshev基的DeepONet代理模型用于高Péclet输运问题，改进输运模拟代理",
+      "first_seen_at": "2026-08-21 21:06:25 UTC",
+      "updated_at": "2026-08-21 21:06:25 UTC"
+    },
+    {
+      "paper_id": "2608.14372v1",
+      "route": "202608/21/2608.14372v1-catching-the-imposter-self-supervised-learning-of-physical-coherence-with-cross-entity-feature-permutations",
+      "title": "Catching the Imposter: Self-Supervised Learning of Physical Coherence with Cross-Entity Feature Permutations",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "环境数据物理一致性自监督学习；与数据驱动水文学相关",
+      "first_seen_at": "2026-08-21 21:06:25 UTC",
+      "updated_at": "2026-08-21 21:06:25 UTC"
+    },
+    {
+      "paper_id": "2608.18262v1",
+      "route": "202608/21/2608.18262v1-inverse-born-series-based-neural-operators",
+      "title": "Inverse Born series based neural operators",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用于偏微分方程反问题的神经算子，为地下水流估计提供代理模型方案。",
+      "first_seen_at": "2026-08-21 21:06:25 UTC",
+      "updated_at": "2026-08-21 21:06:25 UTC"
+    }
+  ]
+}
