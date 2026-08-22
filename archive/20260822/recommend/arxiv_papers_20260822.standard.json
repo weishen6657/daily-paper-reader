@@ -1,0 +1,93 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-22T20:32:03.685857+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2608.19615v1",
+      "source": "arxiv",
+      "title": "Evo-GTransNet for Parabolic PDEs: A Fixed-Feature Galerkin Method of Lines with Quadrature-Mass Orthonormalization",
+      "abstract": "In this paper, we develop an evolutionary generalized transferable neural network (Evo-GTransNet) solver for parabolic partial differential equations, formulated as a retained-space fixed-feature Galerkin method of lines. A GTransNet provides the prescribed spatial dictionary, while only the retained output coefficients evolve, thereby avoiding nonlinear training during time integration. To address severe mass-matrix ill-conditioning, we apply a quadrature-weighted truncated singular value decomposition (SVD) to select the numerically resolved trial space, followed by a separate rescaling that makes its basis orthonormal with respect to the assembly-quadrature mass inner product. Rank truncation modifies the approximation space, whereas the subsequent orthonormalization changes only its coordinate representation and preserves the retained discrete functions in exact arithmetic. The resulting semidiscrete coefficient system has an identity mass matrix, and we establish a semidiscrete energy law for symmetric linear parabolic problems. With the implicit midpoint scheme for time discretization, we further prove the contractivity of the method and derive a conditional fully discrete error estimate in which the error is controlled by the retained-space approximation error and the consistency defects. Numerical experiments demonstrate second-order temporal convergence using repeated feature samples together with separate assembly and validation quadratures, and quantify the accuracy of the retained space in the presence of severe raw-mass ill-conditioning. For the high-frequency and multiscale benchmark problems considered here, GTransNet achieves the smallest mean validation errors among the tested fixed-feature dictionaries at the same nominal output dimension.",
+      "authors": [
+        "Lili Ju",
+        "Jin Zhao"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-08-20T03:56:59+00:00",
+      "link": "https://arxiv.org/pdf/2608.19615v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Neural network solver for parabolic PDEs directly applicable to subsurface flow simulation",
+      "llm_evidence_cn": "用于抛物型偏微分方程的神经网络求解器，可直接应用于地下水流模拟",
+      "llm_evidence": "用于抛物型偏微分方程的神经网络求解器，可直接应用于地下水流模拟",
+      "canonical_evidence": "用于抛物型偏微分方程的神经网络求解器，可直接应用于地下水流模拟",
+      "llm_tldr_en": "A neural solver for parabolic PDEs that fixes a spatial dictionary and evolves only coefficients, using quadrature-weighted truncated SVD and mass orthonormalization to overcome ill-conditioning.",
+      "llm_tldr_cn": "针对抛物型偏微分方程数值求解耗时且现有神经方法训练不稳定等问题，本文提出Evo-GTransNet求解器。该方法采用固定特征Galerkin线法，仅演化输出系数，避免时间积分中的非线性训练。通过加权重截断SVD与质量矩阵正交化处理严重病态，提升了求解稳定性。该框架可推广至地下水流等抛物型方程的高效模拟，具有较好的可迁移性与计算效率。",
+      "llm_tldr": "针对抛物型偏微分方程数值求解耗时且现有神经方法训练不稳定等问题，本文提出Evo-GTransNet求解器。该方法采用固定特征Galerkin线法，仅演化输出系数，避免时间积分中的非线性训练。通过加权重截断SVD与质量矩阵正交化处理严重病态，提升了求解稳定性。该框架可推广至地下水流等抛物型方程的高效模拟，具有较好的可迁移性与计算效率。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.19930v1",
+      "source": "arxiv",
+      "title": "SoilWaterNow: Soil water nowcasting for mapping plant available water (PAW) across paddocks for improved on-farm decision-making",
+      "abstract": "Timely, paddock-scale estimates of plant-available water (PAW) can support crop management in water-limited grain systems. We present the Sydney Soil Water-Energy Balance (SWEB) model, a scalable, physically consistent modelling framework that integrates satellite and climate data with soil properties to estimate crop evapotranspiration and root-zone soil moisture (RZSM) at daily, 30 m resolution. SWEB was validated nationally against different SM monitoring networks across Australia, which demonstrated robust performance across diverse grain-growing environments (correlation coefficients generally ranged from 0.70 to 0.85 for most regions). In future applications, mid-season PAW nowcasts could be combined with water-use-efficiency approaches to estimate water-limited yield potential and inform responsive management decisions, such as nitrogen fertiliser top-up recommendations.",
+      "authors": [
+        "Yi Yu",
+        "Mikaela J. Tilse",
+        "Patrick Filippi",
+        "Thomas F. A. Bishop"
+      ],
+      "primary_category": "physics.bio-ph",
+      "categories": [
+        "physics.bio-ph",
+        "physics.geo-ph",
+        "stat.AP"
+      ],
+      "published": "2026-08-20T11:43:11+00:00",
+      "link": "https://arxiv.org/pdf/2608.19930v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Data-driven hydrological model integrating satellite/climate data for soil water, relevant to data-driven groundwater hydrology",
+      "llm_evidence_cn": "集成卫星与气候数据的数据驱动水文模型，用于土壤水估算，与数据驱动地下水水文学相关",
+      "llm_evidence": "集成卫星与气候数据的数据驱动水文模型，用于土壤水估算，与数据驱动地下水水文学相关",
+      "canonical_evidence": "集成卫星与气候数据的数据驱动水文模型，用于土壤水估算，与数据驱动地下水水文学相关",
+      "llm_tldr_en": "SWEB fuses satellite, climate, and soil data in a physically consistent energy-water balance to nowcast root-zone soil moisture and plant-available water at 30 m resolution.",
+      "llm_tldr_cn": "面向田块尺度作物水分管理的时效性需求，提出SWEB模型。该模型集成卫星、气候与土壤数据，通过物理一致的水量能量平衡计算逐日30米分辨率的蒸散发和根区土壤水分，并在澳大利亚全国监测网络验证可靠。其结果可为作物生产决策提供及时有效的植物可利用水预测，并为水文模拟提供数据驱动新途径。",
+      "llm_tldr": "面向田块尺度作物水分管理的时效性需求，提出SWEB模型。该模型集成卫星、气候与土壤数据，通过物理一致的水量能量平衡计算逐日30米分辨率的蒸散发和根区土壤水分，并在澳大利亚全国监测网络验证可靠。其结果可为作物生产决策提供及时有效的植物可利用水预测，并为水文模拟提供数据驱动新途径。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "data-driven groundwater hydrology",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
