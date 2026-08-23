@@ -1,0 +1,41 @@
+{
+  "date": "20260823",
+  "date_label": "",
+  "generated_at": "2026-08-23 20:27:31 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.19632v1",
+      "route": "202608/23/2608.19632v1-complementary-not-cumulative-interaction-effects-in-physics-informed-neural-networks-for-navier-stokes-vortex-shedding",
+      "title": "Complementary, Not Cumulative: Interaction Effects in Physics-Informed Neural Networks for Navier-Stokes Vortex Shedding",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "PINN训练技巧交互研究，可迁移至基于PINN的地下流建模",
+      "first_seen_at": "2026-08-23 20:27:31 UTC",
+      "updated_at": "2026-08-23 20:27:31 UTC"
+    },
+    {
+      "paper_id": "2608.20025v1",
+      "route": "202608/23/2608.20025v1-clast-context-aware-contrastive-vae-for-probabilistic-time-series-forecasting",
+      "title": "CLaST: Context-aware Contrastive VAE for Probabilistic Time Series Forecasting",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "概率深度时间序列预测方法，可应用于地下水位预测",
+      "first_seen_at": "2026-08-23 20:27:31 UTC",
+      "updated_at": "2026-08-23 20:27:31 UTC"
+    }
+  ]
+}

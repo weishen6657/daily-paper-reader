@@ -1,0 +1,39 @@
+{
+  "label": "2026-08-23",
+  "date": "2026-08-23",
+  "generated_at": "2026-08-23T20:27:34",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202608/23/2608.19632v1-complementary-not-cumulative-interaction-effects-in-physics-informed-neural-networks-for-navier-stokes-vortex-shedding",
+      "section": "quick",
+      "title_en": "Complementary, Not Cumulative: Interaction Effects in Physics-Informed Neural Networks for Navier-Stokes Vortex Shedding",
+      "authors": "Devesh Shah",
+      "date": "2026-08-20",
+      "pdf": "https://arxiv.org/pdf/2608.19632v1",
+      "score": "6.0",
+      "evidence": "PINN训练技巧交互研究，可迁移至基于PINN的地下流建模",
+      "tldr": "物理信息神经网络（PINN）将PDE嵌入损失函数，但各类改进技术常被单独验证，其组合效应不明。本文对DFG/Schafer-Turek非定常圆柱绕流基准进行系统研究：单独应用几乎所有技术均不优于基线；唯有SIREN周期激活配合因果加权，才能解锁此前无法达到的精度，重建速度场与压力场，相对L2误差低至4.1%。继续堆叠技术反而导致性能灾难性下降，说明干预间存在非线性交互。该结果警示：复杂训练配方未必更好，需要有据地组合。",
+      "tags": "query:ag",
+      "abstract_en": "Physics-informed neural networks (PINNs) embed governing partial differential equations directly into the training loss, offering a promising alternative to costly CFD solvers for unsteady flows. Yet the growing list of techniques proposed to improve PINN training is typically validated one at a time, leaving open whether these techniques actually compose. We study this question in depth on the DFG/Schafer-Turek unsteady cylinder wake benchmark. In isolation, nearly every technique performs no better than an untreated baseline. However, combining periodic (SIREN) activations with causal weighting unlocks a previously inaccessible regime, reconstructing velocity and pressure fields to within 4.1% average relative L2 error against an OpenFOAM reference solution. Adding further techniques instead causes catastrophic performance degradation, demonstrating that individually effective PINN interventions can interact nonlinearly and that more elaborate training recipes are not necessarily better.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/23/2608.20025v1-clast-context-aware-contrastive-vae-for-probabilistic-time-series-forecasting",
+      "section": "quick",
+      "title_en": "CLaST: Context-aware Contrastive VAE for Probabilistic Time Series Forecasting",
+      "authors": "Alexander Marusov, Dmitry Anikin, Petr Sokerin, Vitaliy Pozdnyakov, Ilya Kuleshov, Alexey Zaytsev",
+      "date": "2026-08-20",
+      "pdf": "https://arxiv.org/pdf/2608.20025v1",
+      "score": "6.0",
+      "evidence": "概率深度时间序列预测方法，可应用于地下水位预测",
+      "tldr": "概率时间序列预测在能源、金融等领域至关重要，但现有深度生成模型常难以捕捉内部时间依赖，导致潜在表示表达能力有限。为此，提出CLaST，一种上下文感知对比VAE，通过对比损失使嵌入保留观测间的上下文相似性。在九个基准上，短期预测CRPS与NMAE较次优方法最高提升16.4%和14.4%，长期预测分别提升48.6%和25.1%，持续超越强基线。该方法为概率预测提供了更强大的表示学习范式，显著提升预测精度。",
+      "tags": "query:ag",
+      "abstract_en": "Probabilistic forecasting models are widely used for time series forecasting in domains such as energy systems, finance, medicine, and transportation. In recent years, deep generative models have shown strong results on probabilistic forecasting, yet many conventional approaches struggle to capture internal temporal dependencies, leading to latent representations with limited expressive power. To address this limitation, we propose \\textit{CLaST}, a VAE framework for probabilistic multivariate time series forecasting. Unlike existing generative models, CLaST learns embeddings that preserve contextual similarity between observations through our contrastive loss function. Experiments across nine widely adopted benchmarks demonstrate that CLaST consistently surpasses strong baseline methods. In short-term forecasting tasks, our approach achieves improvements of up to $16.4\\%$ in CRPS and $14.4\\%$ in NMAE over the second-best method. Furthermore, in long-term prediction CLaST attains superior overall performance, exceeding the second-best method by up to $48.6\\%$ and $25.1\\%$ in CRPS and NMAE, respectively.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
