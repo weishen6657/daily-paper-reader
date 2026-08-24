@@ -1,0 +1,171 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-24T20:56:37.295021+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2608.21092v1",
+      "source": "arxiv",
+      "title": "Techno-Economic Analysis of Repurposing Abandoned Oil Wells for Geothermal Energy Extraction Using Physics-Informed Neural Networks",
+      "abstract": "To achieve net-zero targets by 2050, it is critical to diversify renewable energy. Hydropower, wind, and solar energy dominate; geothermal energy remains underutilized. Conventional Enhanced Geothermal Systems (EGS) rely on hydraulic stimulation, which poses risks such as induced seismicity. To address this, Closed-Loop Geothermal Systems (CLGS) circulate working fluids in sealed tubing to avoid direct reservoir contact, making them a potential solution for repurposing idle oil wells without environmental hazards. This study developed a Physics-Informed Neural Network (PINN) to model the CLGS performance. Unlike traditional neural networks, PINN explicitly embeds governing physical equations into their learning processes, such as heat conduction and convection. This integration enabled the model to accurately predict the wellbore temperature and flow characteristics over a 25-year lifespan, even with sparse training data. The simulation results confirmed stable long-term predictions. When coupled with an Organic Rankine Cycle (ORC) model, the system yielded a thermodynamic efficiency of 9.5%. Crucially, several economic indicators (e.g., DPP, NPV, and LCOE) are conducted to evaluate the investment feasibility and economic potential of the proposed CLGS-based power generation system. This proposed framework provides a scalable, physics-consistent tool for evaluating both technical performance and economic returns, offering a robust pathway to accelerate geothermal adoption.",
+      "authors": [
+        "Hung-Yu Lin",
+        "Kuan-Chun Shih",
+        "Lea-Der Chen"
+      ],
+      "primary_category": "cs.CE",
+      "categories": [
+        "cs.CE"
+      ],
+      "published": "2026-08-21T13:37:22+00:00",
+      "link": "https://arxiv.org/pdf/2608.21092v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "physics-informed neural network explicitly embeds governing physical equations for subsurface closed-loop geothermal performance",
+      "llm_evidence_cn": "物理信息神经网络显式嵌入控制方程，用于地下闭环地热系统性能建模",
+      "llm_evidence": "物理信息神经网络显式嵌入控制方程，用于地下闭环地热系统性能建模",
+      "canonical_evidence": "物理信息神经网络显式嵌入控制方程，用于地下闭环地热系统性能建模",
+      "llm_tldr_en": "The paper develops a PINN that embeds governing physical equations to model closed-loop geothermal system performance, providing a physics-informed surrogate for subsurface heat and fluid flow.",
+      "llm_tldr_cn": "为实现净零目标需发展地热能，但常规增强型地热系统存在诱发地震等风险，封闭回路地热系统成为利用闲置油井的可行途径。该研究针对闭式地热系统开发了物理信息神经网络（PINN），将控制方程显式嵌入网络以模拟地下换热与流动性能，克服传统神经网络纯数据驱动的局限。结果表明PINN能够为闭式地热系统提供可靠的性能代理模型。该工作直接体现了物理信息神经网络在地下多孔介质流动与传热模拟中的应用，是AI驱动地下数值模拟的重要实例。",
+      "llm_tldr": "为实现净零目标需发展地热能，但常规增强型地热系统存在诱发地震等风险，封闭回路地热系统成为利用闲置油井的可行途径。该研究针对闭式地热系统开发了物理信息神经网络（PINN），将控制方程显式嵌入网络以模拟地下换热与流动性能，克服传统神经网络纯数据驱动的局限。结果表明PINN能够为闭式地热系统提供可靠的性能代理模型。该工作直接体现了物理信息神经网络在地下多孔介质流动与传热模拟中的应用，是AI驱动地下数值模拟的重要实例。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.20477v1",
+      "source": "arxiv",
+      "title": "STCO: Conditional Neural Operators for Time-Dependent PDEs",
+      "abstract": "Neural operators have emerged as efficient surrogates for time-dependent physical systems governed by partial differential equations (PDEs), but their future-state predictions are often conditioned only on observed states and static problem descriptors. For control or optimization, however, body motion, inflow, or forcing are prescribed for the query without being determined solely by the observed state. We introduce the Spatiotemporal Conditional Operator (STCO) for prescribed-condition operator learning (PCOL), a common interface that supplies prescribed target-time condition fields to heterogeneous backbone architectures while retaining their architecture-specific core computation and context pathways. Its condition interface combines Flow-Aware Graph Leaf (FAGL) with Dual-Site Feature-wise Linear Modulation (DSFiLM). Non-learned FAGL uses vorticity from the final observed frame to construct a fixed-cardinality adaptive partition, then co-locates the observed history and target-time condition fields at its regional coordinates. DSFiLM injects separate motion, inflow, and force routes before and after operator computation through current-feature-driven slot- and channel-wise gates. We evaluate twelve matched backbone architectures with different existing physical and temporal inputs. The immersed-boundary computational fluid dynamics (CFD) benchmark spans prescribed motion, inflow disturbances, body-force actuation, and morphology. Across twelve matched backbones, three regimes, and two lead ranges, STCO yields mean paired reductions of 31.1% in relative-L2 field error and 24.7% in normalized pressure-derived load error. It also lowers longer-lead field error for 11 backbones, while interventions on individual condition groups produce measurable prediction changes for every group evaluated.",
+      "authors": [
+        "Xingxin Yang",
+        "Zhan Zhang",
+        "Juan Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-20T18:09:07+00:00",
+      "link": "https://arxiv.org/pdf/2608.20477v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "neural operator surrogate for time-dependent PDEs, applicable to groundwater simulation",
+      "llm_evidence_cn": "针对时变PDE的神经算子代理模型，可用于地下水模拟",
+      "llm_evidence": "针对时变PDE的神经算子代理模型，可用于地下水模拟",
+      "canonical_evidence": "针对时变PDE的神经算子代理模型，可用于地下水模拟",
+      "llm_tldr_en": "Proposes STCO, a spatiotemporal conditional operator framework for neural operator surrogates of time-dependent PDEs, enabling prescribed-condition queries for control and optimization tasks.",
+      "llm_tldr_cn": "现有神经算子对时变物理系统的预测通常只依赖观测状态和静态描述，难以支持控制与优化中外部条件被指定的情形。该文提出STCO框架，为不同骨干架构提供统一的指定条件输入接口，实现带指定目标时刻条件场的算子学习。实验表明该方法能有效提升带外部驱动的时变PDE预测精度。其通用性可直接服务于地下水流动等物理场的高效代理模拟。",
+      "llm_tldr": "现有神经算子对时变物理系统的预测通常只依赖观测状态和静态描述，难以支持控制与优化中外部条件被指定的情形。该文提出STCO框架，为不同骨干架构提供统一的指定条件输入接口，实现带指定目标时刻条件场的算子学习。实验表明该方法能有效提升带外部驱动的时变PDE预测精度。其通用性可直接服务于地下水流动等物理场的高效代理模拟。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.20441v1",
+      "source": "arxiv",
+      "title": "Shared Physics Responses Recover Hidden Rankings in Neural Operator Libraries",
+      "abstract": "Selecting the optimal neural-operator prediction during deployment is challenging when high-fidelity reference solutions are unavailable. We demonstrate that under a squared Hilbert-space loss, ranking a finite model library depends strictly on the low-dimensional span of candidate differences, allowing us to score all models simultaneously using a single anchor-based linearized response of the governing equation. This shared physical diagnostic accurately recovered over 99.6\\% of pairwise preferences and 99.0\\% of optimal checkpoints across diverse Fourier and convolutional operator libraries for fluid, reaction-diffusion, and wave dynamics. Furthermore, the corrected physical proxy frequently outperformed the best individual candidates, and we establish computable sufficient conditions that rigorously certify exact decisions for strongly monotone discretizations. By exploiting the local dynamical response rather than raw defect magnitude, this framework enables the reliable and highly efficient deployment of scientific surrogates without requiring ground-truth data.",
+      "authors": [
+        "Hanbing Liang",
+        "Fujun Liu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.NA",
+        "physics.comp-ph"
+      ],
+      "published": "2026-08-20T14:10:09+00:00",
+      "link": "https://arxiv.org/pdf/2608.20441v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "physics-based ranking of neural operator libraries for PDE simulation",
+      "llm_evidence_cn": "基于物理响应对神经算子库进行排序，用于PDE数值模拟",
+      "llm_evidence": "基于物理响应对神经算子库进行排序，用于PDE数值模拟",
+      "canonical_evidence": "基于物理响应对神经算子库进行排序，用于PDE数值模拟",
+      "llm_tldr_en": "Selects optimal neural-operator prediction without high-fidelity references using a single anchor-based linearized response of the governing equation, recovering over 99% of rankings across operator libraries for fluid, reaction-diffusion, and wave dynamics.",
+      "llm_tldr_cn": "在缺少高保真参考解时，神经算子部署中的模型选择非常困难。作者证明平方Hilbert空间损失下模型排序由候选差异的低维张成决定，从而可用单个锚定线性化物理响应同时评估全部模型。该物理诊断在流场、反应扩散和波动等算子库中准确恢复了99%以上的成对偏好，且修正后的物理代理往往优于最佳候选，为人工智能驱动的数值模拟模型选择提供了高效方法。",
+      "llm_tldr": "在缺少高保真参考解时，神经算子部署中的模型选择非常困难。作者证明平方Hilbert空间损失下模型排序由候选差异的低维张成决定，从而可用单个锚定线性化物理响应同时评估全部模型。该物理诊断在流场、反应扩散和波动等算子库中准确恢复了99%以上的成对偏好，且修正后的物理代理往往优于最佳候选，为人工智能驱动的数值模拟模型选择提供了高效方法。",
+      "llm_tags": [
+        "query:ag:composite"
+      ],
+      "matched_query_tag": "query:ag:composite",
+      "matched_query_text": "Papers central to 帮我检索近十年的关于人工智能驱动的地下水数值模拟的英文文献, especially work that connects or combines: LSTM groundwater forecasting; data-driven groundwater hydrology; physics-informed neural network subsurface flow; artificial intelligence groundwater simulation; deep learning groundwater level prediction; machine learning approaches for groundwater flow and transport simulation; physics informed neural network subsurface flow; artificial intelligence enhanced groundwater numerical simulation methods; machine learning based surrogate models for groundwater flow simulation.",
+      "matched_requirement_id": "req-composite-ag",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.21182v1",
+      "source": "arxiv",
+      "title": "Matching Urban Flood Sensor Placement to Monitoring Objectives Using Bayesian Optimal Experimental Design",
+      "abstract": "Flood-monitoring sensors are often placed according to coverage, access, or expected inundation. However, the value of a measurement depends on the prediction or decision it is intended to inform. Using tRIBS-Urban simulations and a neural-network surrogate of the August 2014 metropolitan Detroit flood, we examine how this learning target changes single-sensor placement. Across 2,576 candidate locations, we compare parameter-oriented optimal experimental design (PO-OED), which values expected information gain (EIG) about model parameters, with goal-oriented optimal experimental design (GO-OED), which values EIG about specified flood predictions. We also examine how parameter EIG evolves during the event, and illustrate that parameter learning translates unevenly into reductions in predictive uncertainty across locations and lead times. Under GO-OED, point-depth targets favor nearby locations, whereas regional-average and regional maximum-depth targets can favor nonlocal locations. Weighted multi-point objectives retain similar broad spatial patterns, although their computed max-EIG locations differ. Public geospatial data further provide illustrative feasibility and contextual classifications for deployment screening. These results show how monitoring objectives shape sensor placement in optimal experimental design, and motivates an objective-first workflow that defines the intended prediction and priorities, applies field-verified restrictions, and ranks locations by EIG.",
+      "authors": [
+        "Chen Cheng",
+        "Vinh Ngoc Tran",
+        "Jiayuan Dong",
+        "Sarah Whitaker",
+        "Shannon Bergt",
+        "John Ziker",
+        "Valeriy Y. Ivanov",
+        "Xun Huan"
+      ],
+      "primary_category": "stat.AP",
+      "categories": [
+        "stat.AP",
+        "physics.geo-ph"
+      ],
+      "published": "2026-08-21T14:52:39+00:00",
+      "link": "https://arxiv.org/pdf/2608.21182v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Neural-network surrogate for urban flood simulation with Bayesian optimal experimental design; transferable to groundwater monitoring design",
+      "llm_evidence_cn": "将神经网络代理模型与贝叶斯最优实验设计用于洪水模拟，可迁移至地下水监测网络设计",
+      "llm_evidence": "将神经网络代理模型与贝叶斯最优实验设计用于洪水模拟，可迁移至地下水监测网络设计",
+      "canonical_evidence": "将神经网络代理模型与贝叶斯最优实验设计用于洪水模拟，可迁移至地下水监测网络设计",
+      "llm_tldr_en": "This paper couples a neural-network surrogate of urban flood simulations with Bayesian optimal experimental design to place sensors according to prediction goals, demonstrating a surrogate-driven OED workflow for environmental modeling.",
+      "llm_tldr_cn": "洪水传感器布点多按覆盖范围，而非实际预测目标。本文使用2014年底特律城市洪水的tRIBS-Urban模拟数据和神经网络代理模型，对比面向参数与面向预测的贝叶斯最优实验设计。在2576个候选位置中评估期望信息增益，展示了学习目标如何改变传感器布点。该方法为地下水流观测网设计提供了基于代理模型和目标导向试验设计的通用框架。",
+      "llm_tldr": "洪水传感器布点多按覆盖范围，而非实际预测目标。本文使用2014年底特律城市洪水的tRIBS-Urban模拟数据和神经网络代理模型，对比面向参数与面向预测的贝叶斯最优实验设计。在2576个候选位置中评估期望信息增益，展示了学习目标如何改变传感器布点。该方法为地下水流观测网设计提供了基于代理模型和目标导向试验设计的通用框架。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

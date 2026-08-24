@@ -1,0 +1,69 @@
+{
+  "label": "2026-08-24",
+  "date": "2026-08-24",
+  "generated_at": "2026-08-24T21:01:55",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202608/24/2608.21092v1-techno-economic-analysis-of-repurposing-abandoned-oil-wells-for-geothermal-energy-extraction-using-physics-informed-neural-networks",
+      "section": "deep",
+      "title_en": "Techno-Economic Analysis of Repurposing Abandoned Oil Wells for Geothermal Energy Extraction Using Physics-Informed Neural Networks",
+      "authors": "Hung-Yu Lin, Kuan-Chun Shih, Lea-Der Chen",
+      "date": "2026-08-21",
+      "pdf": "https://arxiv.org/pdf/2608.21092v1",
+      "score": "9.0",
+      "evidence": "物理信息神经网络显式嵌入控制方程，用于地下闭环地热系统性能建模",
+      "tldr": "为达净零目标，地热能开发受限于传统EGS的诱发地震风险。本研究利用物理信息神经网络（PINN）对闭环地热系统（CLGS）进行建模，模拟废弃油井改造后的长期热力行为。模型预测25年寿命内井筒温度与流动稳定，结合有机朗肯循环（ORC）系统热效率达9.5%。经济指标分析验证了投资可行性，为废弃油井地热利用提供了可扩展的物理一致评估工具。",
+      "tags": "query:ag",
+      "abstract_en": "To achieve net-zero targets by 2050, it is critical to diversify renewable energy. Hydropower, wind, and solar energy dominate; geothermal energy remains underutilized. Conventional Enhanced Geothermal Systems (EGS) rely on hydraulic stimulation, which poses risks such as induced seismicity. To address this, Closed-Loop Geothermal Systems (CLGS) circulate working fluids in sealed tubing to avoid direct reservoir contact, making them a potential solution for repurposing idle oil wells without environmental hazards. This study developed a Physics-Informed Neural Network (PINN) to model the CLGS performance. Unlike traditional neural networks, PINN explicitly embeds governing physical equations into their learning processes, such as heat conduction and convection. This integration enabled the model to accurately predict the wellbore temperature and flow characteristics over a 25-year lifespan, even with sparse training data. The simulation results confirmed stable long-term predictions. When coupled with an Organic Rankine Cycle (ORC) model, the system yielded a thermodynamic efficiency of 9.5%. Crucially, several economic indicators (e.g., DPP, NPV, and LCOE) are conducted to evaluate the investment feasibility and economic potential of the proposed CLGS-based power generation system. This proposed framework provides a scalable, physics-consistent tool for evaluating both technical performance and economic returns, offering a robust pathway to accelerate geothermal adoption.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/24/2608.20477v1-stco-conditional-neural-operators-for-time-dependent-pdes",
+      "section": "deep",
+      "title_en": "STCO: Conditional Neural Operators for Time-Dependent PDEs",
+      "authors": "Xingxin Yang, Zhan Zhang, Juan Li",
+      "date": "2026-08-20",
+      "pdf": "https://arxiv.org/pdf/2608.20477v1",
+      "score": "8.0",
+      "evidence": "针对时变PDE的神经算子代理模型，可用于地下水模拟",
+      "tldr": "神经算子在预测PDE控制系统中，常仅依赖观测状态与静态参数，难以处理控制/优化中预先指定的条件场。为此提出STCO，通过FAGL构造自适应分区并协同历史与条件信息，再用DSFiLM按运动、流入、力等通道注入骨干网络。在浸没边界CFD基准上，12个骨干的平均相对L2场误差降低31.1%，归一化载荷误差降低24.7%，且多数骨干的长时预测得到改善。STCO为指定条件算子学习提供了通用接口，显著提升控制场景下的预测能力。",
+      "tags": "query:ag",
+      "abstract_en": "Neural operators have emerged as efficient surrogates for time-dependent physical systems governed by partial differential equations (PDEs), but their future-state predictions are often conditioned only on observed states and static problem descriptors. For control or optimization, however, body motion, inflow, or forcing are prescribed for the query without being determined solely by the observed state. We introduce the Spatiotemporal Conditional Operator (STCO) for prescribed-condition operator learning (PCOL), a common interface that supplies prescribed target-time condition fields to heterogeneous backbone architectures while retaining their architecture-specific core computation and context pathways. Its condition interface combines Flow-Aware Graph Leaf (FAGL) with Dual-Site Feature-wise Linear Modulation (DSFiLM). Non-learned FAGL uses vorticity from the final observed frame to construct a fixed-cardinality adaptive partition, then co-locates the observed history and target-time condition fields at its regional coordinates. DSFiLM injects separate motion, inflow, and force routes before and after operator computation through current-feature-driven slot- and channel-wise gates. We evaluate twelve matched backbone architectures with different existing physical and temporal inputs. The immersed-boundary computational fluid dynamics (CFD) benchmark spans prescribed motion, inflow disturbances, body-force actuation, and morphology. Across twelve matched backbones, three regimes, and two lead ranges, STCO yields mean paired reductions of 31.1% in relative-L2 field error and 24.7% in normalized pressure-derived load error. It also lowers longer-lead field error for 11 backbones, while interventions on individual condition groups produce measurable prediction changes for every group evaluated.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/24/2608.20441v1-shared-physics-responses-recover-hidden-rankings-in-neural-operator-libraries",
+      "section": "quick",
+      "title_en": "Shared Physics Responses Recover Hidden Rankings in Neural Operator Libraries",
+      "authors": "Hanbing Liang, Fujun Liu",
+      "date": "2026-08-20",
+      "pdf": "https://arxiv.org/pdf/2608.20441v1",
+      "score": "7.0",
+      "evidence": "基于物理响应对神经算子库进行排序，用于PDE数值模拟",
+      "tldr": "神经算子部署时缺少高保真参考解，最优模型选择困难。本文利用平方希尔伯特损失下模型排名仅取决于候选差异低维跨度的性质，用基于共享锚点的线性化方程响应同时评估整个模型库。在流、反应扩散和波动等场景下，该物理诊断准确恢复99.6%成对偏好和99.0%最优检查点，修正代理还常超过最佳单个模型。该方法不依赖真实数据，并给出可计算充分条件，实现可靠高效的科学代理部署。",
+      "tags": "query:ag",
+      "abstract_en": "Selecting the optimal neural-operator prediction during deployment is challenging when high-fidelity reference solutions are unavailable. We demonstrate that under a squared Hilbert-space loss, ranking a finite model library depends strictly on the low-dimensional span of candidate differences, allowing us to score all models simultaneously using a single anchor-based linearized response of the governing equation. This shared physical diagnostic accurately recovered over 99.6\\% of pairwise preferences and 99.0\\% of optimal checkpoints across diverse Fourier and convolutional operator libraries for fluid, reaction-diffusion, and wave dynamics. Furthermore, the corrected physical proxy frequently outperformed the best individual candidates, and we establish computable sufficient conditions that rigorously certify exact decisions for strongly monotone discretizations. By exploiting the local dynamical response rather than raw defect magnitude, this framework enables the reliable and highly efficient deployment of scientific surrogates without requiring ground-truth data.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/24/2608.21182v1-matching-urban-flood-sensor-placement-to-monitoring-objectives-using-bayesian-optimal-experimental-design",
+      "section": "quick",
+      "title_en": "Matching Urban Flood Sensor Placement to Monitoring Objectives Using Bayesian Optimal Experimental Design",
+      "authors": "Chen Cheng, Vinh Ngoc Tran, Jiayuan Dong, Sarah Whitaker, Shannon Bergt, John Ziker, Valeriy Y. Ivanov, Xun Huan",
+      "date": "2026-08-21",
+      "pdf": "https://arxiv.org/pdf/2608.21182v1",
+      "score": "6.0",
+      "evidence": "将神经网络代理模型与贝叶斯最优实验设计用于洪水模拟，可迁移至地下水监测网络设计",
+      "tldr": "城市洪水传感器放置通常依据覆盖或可达性，但测量价值取决于其服务的预测目标。本文基于底特律洪水模拟，比较参数导向与目标导向的贝叶斯最优实验设计，发现目标导向显著影响最优位置：点深度目标偏好近处，区域目标可能偏好非局部位置。最终提出目标优先的传感器布局工作流。",
+      "tags": "query:ag",
+      "abstract_en": "Flood-monitoring sensors are often placed according to coverage, access, or expected inundation. However, the value of a measurement depends on the prediction or decision it is intended to inform. Using tRIBS-Urban simulations and a neural-network surrogate of the August 2014 metropolitan Detroit flood, we examine how this learning target changes single-sensor placement. Across 2,576 candidate locations, we compare parameter-oriented optimal experimental design (PO-OED), which values expected information gain (EIG) about model parameters, with goal-oriented optimal experimental design (GO-OED), which values EIG about specified flood predictions. We also examine how parameter EIG evolves during the event, and illustrate that parameter learning translates unevenly into reductions in predictive uncertainty across locations and lead times. Under GO-OED, point-depth targets favor nearby locations, whereas regional-average and regional maximum-depth targets can favor nonlocal locations. Weighted multi-point objectives retain similar broad spatial patterns, although their computed max-EIG locations differ. Public geospatial data further provide illustrative feasibility and contextual classifications for deployment screening. These results show how monitoring objectives shape sensor placement in optimal experimental design, and motivates an objective-first workflow that defines the intended prediction and priorities, applies field-verified restrictions, and ranks locations by EIG.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
