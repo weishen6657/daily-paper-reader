@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-24</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-25</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 4 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 5 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>2</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>2</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>4</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-24 21:01:48 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-25 21:03:59 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,9 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日完成4篇论文扫描（精读2篇、速读2篇），聚焦AI与物理模拟的交叉应用。</p>
-<p>最值得看：废弃油井改地热的经济性分析（9分）与STCO条件神经算子求解时间相关PDE（8分）。</p>
-<p>下一步可关注这些AI方法在清洁能源改造和工程预测中的落地门槛。</p>
+<p>今日精读一篇孔隙尺度流动预测与生成设计论文（8.0分），另速读三篇科学机器学习相关研究。</p>
+<p>最值得关注：瞬态二维孔隙流动的查询时预测框架，以及代理模型的不确定性量化与全局-局部处理需求。</p>
+<p>建议普通读者优先浏览精读论文，了解其生成设计思路，其余可作拓展阅读。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -73,12 +73,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">2 篇</strong>
+    <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Techno-Economic Analysis of Repurposing Abandoned Oil Wells for Geothermal Energy Extraction Using Physics-Informed Neural Networks">Techno-Economic Analysis of Repurposing Abandoned Oil Wells for Geothermal Energy Extraction Using Physics-Informed Neural Networks</span></li><li><span class="dpr-home-dashboard-paper-title" title="STCO: Conditional Neural Operators for Time-Dependent PDEs">STCO: Conditional Neural Operators for Time-Dependent PDEs</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="A Query-Time Framework for Transient 2D Pore-Scale Flow Prediction and Generative Design">A Query-Time Framework for Transient 2D Pore-Scale Flow Prediction and Generative Design</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>2</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -86,12 +86,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">2 篇</strong>
+    <strong class="dpr-home-dashboard-count">4 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Shared Physics Responses Recover Hidden Rankings in Neural Operator Libraries">Shared Physics Responses Recover Hidden Rankings in Neural Operator Libraries</span></li><li><span class="dpr-home-dashboard-paper-title" title="Matching Urban Flood Sensor Placement to Monitoring Objectives Using Bayesian Optimal Experimental Design">Matching Urban Flood Sensor Placement to Monitoring Objectives Using Bayesian Optimal Experimental Design</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="GeoQ: Geometry-Aware Conditional Quantile Error Estimation for Scientific Surrogate Models">GeoQ: Geometry-Aware Conditional Quantile Error Estimation for Scientific Surrogate Models</span></li><li><span class="dpr-home-dashboard-paper-title" title="Read, Write, Relax: Why Neural PDE Surrogates Need Both Global and Local Processing">Read, Write, Relax: Why Neural PDE Surrogates Need Both Global and Local Processing</span></li><li><span class="dpr-home-dashboard-paper-title" title="Physics-Knowledge-Guided Hybrid Neural Learning for Arctic Sea Ice Concentration Evolution and Short-Range Prediction">Physics-Knowledge-Guided Hybrid Neural Learning for Arctic Sea Ice Concentration Evolution and Short-Range Prediction</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>2</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>4</strong></span></div>
 </section>
 </div>
 

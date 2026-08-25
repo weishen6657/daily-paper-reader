@@ -1,0 +1,89 @@
+{
+  "date": "20260825",
+  "date_label": "",
+  "generated_at": "2026-08-25 21:03:59 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.22235v1",
+      "route": "202608/25/2608.22235v1-a-query-time-framework-for-transient-2d-pore-scale-flow-prediction-and-generative-design",
+      "title": "A Query-Time Framework for Transient 2D Pore-Scale Flow Prediction and Generative Design",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "基于机器学习的瞬态孔隙尺度流查询时代理模型，与地下水流模拟直接相关",
+      "first_seen_at": "2026-08-25 21:03:59 UTC",
+      "updated_at": "2026-08-25 21:03:59 UTC"
+    },
+    {
+      "paper_id": "2608.21652v1",
+      "route": "202608/25/2608.21652v1-geoq-geometry-aware-conditional-quantile-error-estimation-for-scientific-surrogate-models",
+      "title": "GeoQ: Geometry-Aware Conditional Quantile Error Estimation for Scientific Surrogate Models",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向神经代理模型的非侵入式误差校准框架，提升地下水流代理模拟的可靠性",
+      "first_seen_at": "2026-08-25 21:03:59 UTC",
+      "updated_at": "2026-08-25 21:03:59 UTC"
+    },
+    {
+      "paper_id": "2608.21677v1",
+      "route": "202608/25/2608.21677v1-read-write-relax-why-neural-pde-surrogates-need-both-global-and-local-processing",
+      "title": "Read, Write, Relax: Why Neural PDE Surrogates Need Both Global and Local Processing",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "统一全局与局部处理的神经PDE代理模型，与地下水流动ML代理模型直接相关",
+      "first_seen_at": "2026-08-25 21:03:59 UTC",
+      "updated_at": "2026-08-25 21:03:59 UTC"
+    },
+    {
+      "paper_id": "2608.21767v1",
+      "route": "202608/25/2608.21767v1-physics-knowledge-guided-hybrid-neural-learning-for-arctic-sea-ice-concentration-evolution-and-short-range-prediction",
+      "title": "Physics-Knowledge-Guided Hybrid Neural Learning for Arctic Sea Ice Concentration Evolution and Short-Range Prediction",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "物理信息混合神经模型用于海冰密集度演变，与深度学习地下水位预测任务相通",
+      "first_seen_at": "2026-08-25 21:03:59 UTC",
+      "updated_at": "2026-08-25 21:03:59 UTC"
+    },
+    {
+      "paper_id": "2608.23297v1",
+      "route": "202608/25/2608.23297v1-adda-a-modular-framework-for-representing-simulating-and-assimilating-dynamics-with-end-to-end-differentiability",
+      "title": "ADDA: a Modular Framework for Representing, Simulating and Assimilating Dynamics with End-to-end Differentiability",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "模块化端到端可微框架用于动力学模拟与同化，支持AI增强数值模拟",
+      "first_seen_at": "2026-08-25 21:03:59 UTC",
+      "updated_at": "2026-08-25 21:03:59 UTC"
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-25T20:58:07.981174+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2608.22235v1",
+      "source": "arxiv",
+      "title": "A Query-Time Framework for Transient 2D Pore-Scale Flow Prediction and Generative Design",
+      "abstract": "Pore-scale flow governs transport and permeability behaviour in porous media engineering applications, yet repeated lattice Boltzmann method (LBM) simulation across many geometries and design queries remains costly for repeated deployment. This study formulates transient pore-scale flow prediction as a geometry-conditioned query-time operator and introduces QSGS-Transient-7606, a benchmark of 7,606 two-dimensional porous structures each paired with 30 logarithmically sampled LBM states. The proposed continuous-time pore-scale flow surrogate model (CT-PoreFlow) integrates topology-aware geometry encoding, compressed spectral mixing, and log-time conditioning with a late-time flux-calibration objective. On unseen test geometries, CT-PoreFlow achieves a velocity relative L2 of 0.2248 and a terminal permeability error of 12.81%. Frozen morphology and computed tomography image audits confirm reasonable cross-geometry robustness without fine-tuning. The surrogate is then embedded in an inverse design workflow, screening 9,216 generative adversarial network and diffusion candidates across 18 property targets prior to LBM verification. Guided GAN sampling attains 98.11% through-connectivity and 72.28% conditional design success, exceeding diffusion-based generation. The framework unifies transient flow prediction, transport-aware screening, and LBM-verified inverse design for porous media.",
+      "authors": [
+        "Yiming Wang",
+        "Jiale Zhu",
+        "Zhichen Ye",
+        "Yandong Lv",
+        "Shiqi Wang",
+        "Jinlong Liu",
+        "Yucheng Fan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-23T06:13:10+00:00",
+      "link": "https://arxiv.org/pdf/2608.22235v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Query-time ML surrogate for transient pore-scale flow in porous media; directly relevant to groundwater flow simulation",
+      "llm_evidence_cn": "基于机器学习的瞬态孔隙尺度流查询时代理模型，与地下水流模拟直接相关",
+      "llm_evidence": "基于机器学习的瞬态孔隙尺度流查询时代理模型，与地下水流模拟直接相关",
+      "canonical_evidence": "基于机器学习的瞬态孔隙尺度流查询时代理模型，与地下水流模拟直接相关",
+      "llm_tldr_en": "CT-PoreFlow is a continuous-time surrogate model for transient pore-scale flow prediction, integrating topology-aware geometry encoding and log-time conditioning to accelerate LBM simulations across unseen porous geometries.",
+      "llm_tldr_cn": "针对重复格子玻尔兹曼模拟在孔隙尺度流动设计与查询中计算昂贵的问题，该文提出连续时间孔隙尺度流代理模型CT-PoreFlow。模型将瞬态预测形式化为几何条件化的查询时算子，引入拓扑感知几何编码、压缩谱混合和对数时间条件化，并采用末期通量校准目标。研究构建了包含7606个结构及大量模拟状态的QSGS-Transient-7606基准，在未见测试几何上验证了模型的准确预测能力。该方法为孔隙介质流动的快速仿真与生成式设计提供了高效工具，对地下水数值模拟的智能代理建模具有重要参考价值。",
+      "llm_tldr": "针对重复格子玻尔兹曼模拟在孔隙尺度流动设计与查询中计算昂贵的问题，该文提出连续时间孔隙尺度流代理模型CT-PoreFlow。模型将瞬态预测形式化为几何条件化的查询时算子，引入拓扑感知几何编码、压缩谱混合和对数时间条件化，并采用末期通量校准目标。研究构建了包含7606个结构及大量模拟状态的QSGS-Transient-7606基准，在未见测试几何上验证了模型的准确预测能力。该方法为孔隙介质流动的快速仿真与生成式设计提供了高效工具，对地下水数值模拟的智能代理建模具有重要参考价值。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.21652v1",
+      "source": "arxiv",
+      "title": "GeoQ: Geometry-Aware Conditional Quantile Error Estimation for Scientific Surrogate Models",
+      "abstract": "Neural-network surrogate models are increasingly used to accelerate scientific simulations, but their deployment in extrapolative and autoregressive settings requires input-dependent estimates of prediction error. In this work, we introduce GeoQ (Geometry-Aware Conditional Quantile Error Estimation), a non-intrusive calibration framework for estimating surrogate error at individual query points. GeoQ represents the error at a query point as an anchor-averaged calibration error plus a learned nonnegative correction. This correction is modeled as an upper conditional quantile of the anchor-relative error increment, using geometry-based features that encode representation-space displacement and local support density. A cross-fitting procedure generates approximately out-of-sample calibration tuples, while a feature-space k-nearest-neighbor support score identifies regions \\textcolor{black}{where the learned error model is supported by calibration data}. We evaluate GeoQ on scalar regression, chaotic dynamics, medium-range weather forecasting, and Richtmyer-Meshkov instability prediction. The results demonstrate that geometry-aware conditional quantile modeling provides a practical and non-intrusive approach for validity-aware error estimation in scientific surrogate models.",
+      "authors": [
+        "Khoa Nguyen",
+        "Daniel Serino",
+        "Aviral Prakash",
+        "Marc Klasky"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "published": "2026-08-21T21:47:16+00:00",
+      "link": "https://arxiv.org/pdf/2608.21652v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Non-intrusive error calibration framework for neural surrogate models; improves reliability of surrogate-based groundwater flow simulation",
+      "llm_evidence_cn": "面向神经代理模型的非侵入式误差校准框架，提升地下水流代理模拟的可靠性",
+      "llm_evidence": "面向神经代理模型的非侵入式误差校准框架，提升地下水流代理模拟的可靠性",
+      "canonical_evidence": "面向神经代理模型的非侵入式误差校准框架，提升地下水流代理模拟的可靠性",
+      "llm_tldr_en": "GeoQ is a geometry-aware calibration framework that estimates query-dependent prediction errors for neural surrogate models, using anchor-averaged calibration and learned geometric corrections to support extrapolative and autoregressive deployment.",
+      "llm_tldr_cn": "神经代理模型在加速科学模拟时，外推和自回归部署需要输入依赖的误差估计以保证可信度。该文提出GeoQ，一种非侵入式几何感知条件分位数误差校准框架，将查询点误差表示为锚点平均校准误差与学习到的非负修正项之和，并用表征空间位移和局地支持密度等几何特征建模上条件分位数。通过交叉拟合程序，GeoQ能够在单个查询点上生成可靠的误差估计。该方法为地下水流等科学代理模型提供了通用误差评估工具，有助于提升AI驱动数值模拟的可靠性。",
+      "llm_tldr": "神经代理模型在加速科学模拟时，外推和自回归部署需要输入依赖的误差估计以保证可信度。该文提出GeoQ，一种非侵入式几何感知条件分位数误差校准框架，将查询点误差表示为锚点平均校准误差与学习到的非负修正项之和，并用表征空间位移和局地支持密度等几何特征建模上条件分位数。通过交叉拟合程序，GeoQ能够在单个查询点上生成可靠的误差估计。该方法为地下水流等科学代理模型提供了通用误差评估工具，有助于提升AI驱动数值模拟的可靠性。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.21767v1",
+      "source": "arxiv",
+      "title": "Physics-Knowledge-Guided Hybrid Neural Learning for Arctic Sea Ice Concentration Evolution and Short-Range Prediction",
+      "abstract": "Accurate modeling of sea ice concentration (SIC) evolution is essential for polar climate assessment and short?range sea ice prediction. Numerical and data-driven approaches constitute major foundations for SIC modeling, but the former often require complex parameterizations and substantial compu?tation, whereas the latter rarely encode physical dependencies explicitly. This study presents the Physics-Informed Hybrid Ice Model (PIHIM), a differentiable data-driven hybrid ice model for daily SIC evolution that organizes its network structure according to the physical dependencies encoded in the sea ice continuity equation and explicitly accounts for dynamical transport, ther?modynamically driven areal growth and loss, and unresolved local processes. PIHIM preserves the representation capacity of deep learning while providing a process-decomposed formulation of ice displacement, freeze-melt areal change, and local error closure. Two evaluation settings are adopted: reanalysis-forced simulation examines SIC evolution stability under reanalysis forcing, and forecast-forced prediction assesses short-range performance un?der forecast-forced conditions, with reanalysis and observational SIC serving as verification references. Results indicate enhanced ice-edge preservation and error-growth control in reanalysis?forced simulation, while PIHIM retains measurable short-range prediction skill under forecast-forced conditions. Our code will be made publicly available after the paper is accepted.",
+      "authors": [
+        "Maqun Zhang",
+        "Feng Gao",
+        "Wankun Chen",
+        "Hui Yu",
+        "Yanhai Gan",
+        "Junyu Dong"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-22T04:18:44+00:00",
+      "link": "https://arxiv.org/pdf/2608.21767v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "physics-informed hybrid neural model for sea ice concentration evolution, analogous to deep learning groundwater level prediction",
+      "llm_evidence_cn": "物理信息混合神经模型用于海冰密集度演变，与深度学习地下水位预测任务相通",
+      "llm_evidence": "物理信息混合神经模型用于海冰密集度演变，与深度学习地下水位预测任务相通",
+      "canonical_evidence": "物理信息混合神经模型用于海冰密集度演变，与深度学习地下水位预测任务相通",
+      "llm_tldr_en": "PIHIM organizes network structure by the sea ice continuity equation, explicitly modeling dynamical transport and thermodynamic growth, and shows improved short-range prediction accuracy and physical consistency.",
+      "llm_tldr_cn": "该论文提出物理信息混合冰模型（PIHIM），用于海冰密集度的日演变模拟和短期预测。模型按照海冰连续性方程所蕴含的物理依赖组织网络结构，显式刻画动力输运、热力面积增长等过程，使数据驱动学习受到物理约束。实验表明该方法在短期预测中优于纯数据驱动模型，并保持物理一致性。这种物理知识引导的混合神经学习策略，对地下水位等地球物理变量的数据驱动预测有直接借鉴意义。",
+      "llm_tldr": "该论文提出物理信息混合冰模型（PIHIM），用于海冰密集度的日演变模拟和短期预测。模型按照海冰连续性方程所蕴含的物理依赖组织网络结构，显式刻画动力输运、热力面积增长等过程，使数据驱动学习受到物理约束。实验表明该方法在短期预测中优于纯数据驱动模型，并保持物理一致性。这种物理知识引导的混合神经学习策略，对地下水位等地球物理变量的数据驱动预测有直接借鉴意义。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "deep learning groundwater level prediction",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.21677v1",
+      "source": "arxiv",
+      "title": "Read, Write, Relax: Why Neural PDE Surrogates Need Both Global and Local Processing",
+      "abstract": "Recent mesh-based simulation advances have, in no small part, relied on neural surrogates of two distinct families: global models that route information through a small set of latent tokens, and local models that perform message passing across mesh edges. Consistent with both classes is the inability to perform beyond low-dimensional problems and small-scale or oversimplified meshes, the simulation regimes where industrial problems reside. Our work shows this explicitly and presents a unified formulation. In global approaches, latent-token attention acts as a spatial low-pass filter, while local message passing lacks the global reach necessary to propagate information across large mesh spaces. Viewed through the error, the two operators are the halves of a multigrid cycle: one corrects errors at the lower end of the spectrum, the other at the higher end, and neither can do the other's job. We introduce Read-Write-Relax (RWR), which interleaves latent attention with message-passing relaxation under a unified formulation. The interleaved processor lowers error across the entire spectrum, making RWR the most accurate model in nearly every comparison across our industrial and public benchmarks. It is also markedly data-efficient in the scarce-data regimes, accurate on the engineering quantities of interest, and scales full-field predictions to challenging, large-scale problems.",
+      "authors": [
+        "Anuj Kumar",
+        "Heiko Zimmermann",
+        "Josiah Bjorgaard",
+        "Jacan Chaplais",
+        "Nikolaos Bouklas",
+        "Matteo Salvador",
+        "Alexander Lavin"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CE",
+        "physics.app-ph",
+        "physics.comp-ph"
+      ],
+      "published": "2026-08-21T22:47:02+00:00",
+      "link": "https://arxiv.org/pdf/2608.21677v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Neural PDE surrogates unifying global and local processing; directly relevant to ML surrogate models for groundwater flow simulation",
+      "llm_evidence_cn": "统一全局与局部处理的神经PDE代理模型，与地下水流动ML代理模型直接相关",
+      "llm_evidence": "统一全局与局部处理的神经PDE代理模型，与地下水流动ML代理模型直接相关",
+      "canonical_evidence": "统一全局与局部处理的神经PDE代理模型，与地下水流动ML代理模型直接相关",
+      "llm_tldr_en": "Shows global latent-token models act as spatial low-pass filters and local message passing lacks global reach, and proposes a unified formulation for scalable neural PDE surrogates.",
+      "llm_tldr_cn": "现有神经PDE代理模型分为全局潜在token和局部网格消息传递两类，但都难以扩展到低维和工业级网格模拟。本文通过误差分析揭示全局注意相当于空间低通滤波，而局部消息传递缺乏跨越大型网格的全局信息传播能力，并提出统一建模方案。新框架保留两类操作的优势，从而突破低维与小规模网格限制。该工作为地下水数值模拟等工业级PDE问题构建可扩展的机器学习代理模型提供了通用思路。",
+      "llm_tldr": "现有神经PDE代理模型分为全局潜在token和局部网格消息传递两类，但都难以扩展到低维和工业级网格模拟。本文通过误差分析揭示全局注意相当于空间低通滤波，而局部消息传递缺乏跨越大型网格的全局信息传播能力，并提出统一建模方案。新框架保留两类操作的优势，从而突破低维与小规模网格限制。该工作为地下水数值模拟等工业级PDE问题构建可扩展的机器学习代理模型提供了通用思路。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.23297v1",
+      "source": "arxiv",
+      "title": "ADDA: a Modular Framework for Representing, Simulating and Assimilating Dynamics with End-to-end Differentiability",
+      "abstract": "Data assimilation (DA) is an essential tool for prediction and understanding in the geosciences. DA combines simulation programs representing scientific knowledge with observations that constrain system dynamics, resulting in analyses and forecasts that incorporate both knowledge and data. DA tasks can be addressed with a diverse toolset, including variational, ensemble and learning-based methods. In particular, many recent works have proposed using automatic differentiation tools for variational, learning-based or hybrid methods. However, comprehensive comparisons across algorithms and dynamical systems remain challenging, due to the incompatibility of simulation and assimilation codes, inflexible handling of spatial and temporal discretizations, specialization of DA methods to specific simulations, and limited support for automatic differentiation and parallel computation in simulations. To address this challenge, we introduce Automatic Differentiation for Data Assimilation (ADDA), a software framework for defining and working with system states, simulations, observation schemes and DA methods. ADDA provides a powerful and flexible set of base classes for representing dynamical systems and observation operators, with support for collocated and staggered grids, unstructured meshes, Lagrangian state variables and irregular or continuous-time observations. Parallel processing and differentiability are first-class features, with support for batch axes and automatic differentiation throughout. ADDA is implemented in PyTorch library, but supports DA for JAX-based computation of dynamics and their gradients. To demonstrate its features, we further provide differentiable, ADDA-compatible implementations of 10 dynamical systems of various dimensionalities and scales, from which we design multiple illustrative DA examples. All of our code is publicly available at https://github.com/m-dml/ADDA.",
+      "authors": [
+        "Anthony Frion",
+        "Vien Minh Nguyen-Thanh",
+        "Ali Can Bekar",
+        "Pauleo R. Nimtz",
+        "Vadim Zinchenko",
+        "David S. Greenberg"
+      ],
+      "primary_category": "cs.MS",
+      "categories": [
+        "cs.MS",
+        "cs.LG"
+      ],
+      "published": "2026-08-24T14:22:04+00:00",
+      "link": "https://arxiv.org/pdf/2608.23297v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Modular end-to-end differentiable framework for simulating and assimilating dynamics, enabling AI-enhanced numerical simulations",
+      "llm_evidence_cn": "模块化端到端可微框架用于动力学模拟与同化，支持AI增强数值模拟",
+      "llm_evidence": "模块化端到端可微框架用于动力学模拟与同化，支持AI增强数值模拟",
+      "canonical_evidence": "模块化端到端可微框架用于动力学模拟与同化，支持AI增强数值模拟",
+      "llm_tldr_en": "ADDA is a modular end-to-end differentiable framework for representing, simulating, and assimilating dynamics, enabling unified comparisons of variational, ensemble, and learning-based data assimilation methods.",
+      "llm_tldr_cn": "地球科学中的资料同化需要将模拟程序与观测数据结合，但不同算法和动力系统之间的代码不兼容阻碍系统比较。本文提出ADDA框架，以统一方式表示、模拟和同化动力学，并实现端到端可微。它支持变分、集合和基于学习的方法在同一环境下对比，并兼容自动微分工具。该框架为水文/地下水流数值模拟与观测融合提供了可复用的基础设施，有助于构建物理约束的AI同化系统。",
+      "llm_tldr": "地球科学中的资料同化需要将模拟程序与观测数据结合，但不同算法和动力系统之间的代码不兼容阻碍系统比较。本文提出ADDA框架，以统一方式表示、模拟和同化动力学，并实现端到端可微。它支持变分、集合和基于学习的方法在同一环境下对比，并兼容自动微分工具。该框架为水文/地下水流数值模拟与观测融合提供了可复用的基础设施，有助于构建物理约束的AI同化系统。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "artificial intelligence enhanced groundwater numerical simulation methods",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
