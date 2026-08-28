@@ -1,0 +1,800 @@
+Title: Gaussian process learning with flow map refinement for parameter estimation in dynamical systems
+
+URL Source: https://arxiv.org/pdf/2608.22324v1
+
+Published Time: Tue, 25 Aug 2026 01:20:50 GMT
+
+Number of Pages: 20
+
+Markdown Content:
+# Gaussian process learning with flow map refinement for parameter estimation in dynamical systems 
+
+Yue Hao a, Dongwei.Ye b, ∗
+
+> aSchool of Mathematical Science, Suzhou University of Science and Technology, Suzhou, PR China
+> bDepartment of Applied Mathematics, Xi’an Jiaotong-Liverpool University, Suzhou, PR China
+
+Abstract 
+
+Parameter estimation is a central task in data-driven learning of dynamical systems. It aims to recover the under-lying physical parameters from observed time-series data, thereby providing interpretable insights into the physical mechanisms governing the system. Gradient /derivative matching methods based on Gaussian process provide an ef-ficient way to perform parameter estimation. Those methods avoid repeated numerical integration and enforce local derivative consistency. However, such local matching may result in global inconsistency with the governing flow map, particularly under scarce and noisy observations. To address this limitation, we propose a framework based on Gaussian process learning with flow map refinement (GPL-FMR), a two-stage parameter estimation framework. The first stage is based on Gaussian process learning algorithm and the posterior obtained from which is transferred as an informative prior to the second stage based on flow-map refinement. The second stage further improves the parameter estimation via optimisation based on global dynamical constraints. We demonstrate and analyse its performance on multiple numerical examples, including the Van der Pol oscillator, the Lotka-Volterra model, and the Lorenz-63 sys-tem. The results show that the proposed framework consistently improves parameter estimation accuracy, particularly under scarce and noisy observations. 
+
+Keywords: Data-driven learning, Gaussian process, Uncertainty quantification, Dynamical systems, Parameter estimation 
+
+1. Introduction 
+
+Data-driven learning of dynamical systems is one of the cutting-edge topics in scientific machine learning. The primary objective is to accurately infer the underlying system dynamics from observations, either in a continuous-or discrete-time formulation. It could subsequently serve as surrogate models in parametric scenarios, such as op-timisation and control [1, 2], and uncertainty quantification [3, 4, 5]. Alternatively, it can provide insights into the underlying mechanisms of the system by inferring physically meaningful parameters or identifying characteristic structural behaviours [6, 7]. In general, data-driven learning can be categorised into three types depending on the purpose and prior knowledge of the system. The first type of learning assumes that no prior knowledge of the system is available and aims to uncover the underlying dynamical mechanism directly from data. Such scenarios are commonly referred as system identification [8, 9, 10]. Sparse identification of nonlinear dynamics (SINDy) is one of the examples [9]. The core idea of SINDy is to identify the active terms governing the dynamics by promoting sparsity from a candidate library of nonlinear functions of the states. Typically, the active terms and their associated coe ffi cients identified through sparse regression retain physical interpretability and will facilitate subsequent analysis of the system dynamics. The second type of learning mainly focuses on approximating the dynamics within a prescribed space rather than identifying the actual representation of dynamics globally [11, 12, 13, 14]. Such reparametrisation of the system depends on the     
+
+> ∗Corresponding authors
+> Email addresses: y.hao@usts.edu.cn (Yue Hao), Dongwei.Ye@xjtlu.edu.cn (Dongwei.Ye) arXiv:2608.22324v1 [cs.LG] 23 Aug 2026
+
+chosen approximation paradigm. A representative example in continuous form is the NeuralODE, where the system dynamics are approximate by a neural network [11]. The model parameters, i.e., weights and biases of nodes, are trained to adequately represent the dynamics through observed data. Those model parameters typically do not have any physical meaning unless constructed intentionally. Dynamics mode decomposition-based methods also fall in this category [14]. It bridges time-discrete solution sequences with linear transformation based on spectral bases. The last type of methods stem from scenarios where partial prior knowledge of the system is available, such as its governing structure, while the exact values of the physical parameters remain unknown. The problem consequently boils down to parameter estimation, aiming to infer the parameter values that best explain the observations [15, 16, 17]. This setting is also closely related to inverse uncertainty quantification, where uncertain model parameters are inferred from observational data and their associated uncertainties are propagated to improve the predictive capability of the underlying model [18]. Most data-driven approaches to parameter estimation, such as [11, 14, 17, 19], calibrate the governing model through trajectory fitting. Specifically, the unknown parameters are determined by minimising the discrepancy be-tween the observed states and the model-based trajectory obtained by numerical time integration, either within a deterministic optimisation framework or through a probabilistic formulation. Although trajectory fitting directly enforces agreement between the simulated and observed dynamics over time, it requires repeated numerical inte-gration throughout the optimisation process. This can result in substantial computational cost, particularly for high-dimensional, sti ff , or multiscale systems. On the other hand, gradient /derivative matching methods provide an alter-native by replacing global trajectory fitting with a local comparison between the model vector field and the estimated time derivatives of the observed states [20, 9, 21, 22]. Such methods can substantially reduce the computational bur-den associated with parameter estimation by avoiding repeated solution of the governing di ff erential equations. Their performance, however, depends critically on the accuracy of the derivative estimates. Direct numerical di ff erentiation, for example, finite di ff erence approximation, amplifies observational noise and introduces discretisation errors. Fur-thermore, although derivative matching avoids explicit long-time integration, finite di ff erence derivative estimates are still interpreted as local one-step discrete-time evolution approximations [23]. Consequently, developing a more sta-ble and reliable alternative to direct numerical di ff erentiation remains a central challenge in derivative matching-based parameter estimation. Gaussian processes (GPs) provide a natural alternative to direct numerical di ff erentiation. In regression, a GP places a prior over the unknown function specified by a mean function and a covariance kernel, and updates this prior by conditioning on the observed data [24]. The resulting posterior provides a nonparametric approximation of the underlying function and the quantification of the associated predictive uncertainty. A particularly useful property of GP is that a GP remains its Gaussianity under linear operations. Provided that the covariance kernel is su ffi ciently smooth, the derivative of the GP-smoothed trajectories can be obtained analytically through di ff erentiation of the kernel. This property has motivated GP-based gradient /derivative matching methods, initially formulated through product-of-experts (PoE) constructions [25, 21, 20]. In such formulations, one probabilistic expert represents the derivative distribution induced by the GP reconstruction, while the other represents the derivative implied by the governing di ff erential equation for a given parameter set. Their product therefore favours parameter values that assign high probability under both derivative descriptions simultaneously. Ye et al. [22] proposed Gaussian process learning (GPL) within a Bayesian inference framework to address derivative estimation under sparse and noisy observations. Latent force models are also closely related [26, 27], but they place GP priors on latent inputs, whereas GP derivative matching uses GPs to reconstruct the states and their derivatives. Despite these advantages, GP-based derivative matching still inherits the intrinsic limitation of derivative matching methods, i.e., it lacks the global dynamical constraint imposed by the ODE flow map. The method enforces only local consistency between the GP-estimated derivatives and the model vector field at a finite set of observations. Such pointwise agreement does not necessarily ensure that the reconstructed states lie on a single trajectory generated by the inferred di ff erential equation. This issue is particularly pronounced when observations are scarce and noisy since the GP reconstruction and derivative estimates may then be strongly influenced by the bias-variance trade-o ff in such scenarios. Consequently, small local reconstruction errors can yield a low derivative matching residual but still produce a trajectory that is globally inconsistent with the observed dynamics. In this work, we propose a two-stage parameter estimation method, namely Gaussian process learning with flow map refinement (GPL-FMR). In the first stage, Gaussian process learning is employed to obtain a computationally effi cient parameter estimate through probabilistic derivative matching. This estimate, together with its associated 2uncertainty, is subsequently transferred to the second stage as an informative prior. The second stage performs multi-shooting trajectory refinement through the ODE flow map, thereby enforcing the global dynamical constraint that is absent from the first stage. The informative initialisation provided by the first stage substantially improves the effi ciency and robustness of the trajectory-based inference, while the flow map likelihood supports better parameter estimates. The proposed method is evaluated on several numerical examples, including the Van der Pol oscillator, the Lotka-Volterra model, and the Lorenz-63 system, to evaluate its performance against feature regression and GPL. 
+
+2. Preliminary 
+
+2.1. Problem statement 
+
+Consider an autonomous dynamical system, ˙x(t) = f (x(t); θ) with x(t0) = x0 (1) where x(t) = [x1(t), x2(t), · · · , xN (t)] T ∈ RN denotes the state vector of the system, x0 specifies the initial condition at t = t0, and f (·; θ) defines the vector field characterising the dynamics of the system parametrised by θ ∈ RNp . A time series of states observations X = {z(ti)}Nt 
+
+> i=1
+
+is collected at time instances T = {ti}Nt
+
+> i=1
+
+, with additive Gaussian white noise ϵ ∼ N (0 , R), i.e., 
+
+z(ti) = x(ti) + ϵ, (2) where z(ti) = [z1(ti), · · · , zN (ti)] ⊤, R = diag( σ2
+
+> n
+
+) and σ2 
+
+> n
+
+= [σ2
+
+> n,1
+
+, · · · , σ 2 
+
+> n,N
+
+]⊤ ∈ RN denotes the variance vector of the noise constructing the diagonal covariance matrix R. Note that the observation can also be denoted component-wisely as {z(ti)}Nt 
+
+> i=1
+
+= {ui}Ni=1, where ui = [zi(t1), zi(t2), · · · , zi(tNt )] ⊤. We aim to infer the unknown parameters θ that lead to those observations with uncertainty quantification. 
+
+2.2. Gaussian process and regression 
+
+Here we present a general description of GP and its regression formulation. A GP can be viewed as a stochastic process that defines a distribution over functions. In particular, any finite collection of random variable {F(xi)}mi=1
+
+drawn from a GP F(x) defined on a non-empty set x ∈ X with mean function s(·) and covariance function k(·, ·) for any finite set of {x1, · · · , xm} ∈ X follows a joint Gaussian distribution, 
+
+
+
+F(x1)
+
+...
+
+F(xm)
+
+ ∼ N 
+
+
+
+s(x1)
+
+...
+
+s(xm)
+
+ ,
+
+
+
+k(x1, x1) · · · k(x1, xm)
+
+... . . . ...
+
+k(xm, x1) · · · k(xm, xm)
+
+ . (3) while the corresponding GP is denoted as, 
+
+F(·) ∼ GP (s(·), k(·, ·)) . (4) The covariance function k(·, ·) is a positive definite kernel and the choice of which should reflect the properties of 
+
+F(x). For example, the squared-exponential kernel implies sample paths that are infinitely mean-square di ff erentiable, whereas the smoothness of a Matérn kernel depends on its smoothness parameter [24]. In terms of regression tasks, consider y ∈ R is the response of a physical process or computer experiment y =
+
+F(x) + ϵ with zero-mean Gaussian noise ϵ ∼ N (0 , σ 2). The latent mapping F(x) follows a GP prior as stated in Equation (4) with zero mean and a defined covariance function, i.e., 
+
+F(·) ∼ GP 0, kϕ(·, ·), (5) where ϕ denotes the collection of hyperparameters from the chosen kernel function, including the noise variance σ2.With observed data ( X, y) = (xi, yi) Nu
+
+> i=1
+
+, those hyperparameters ϕ that forms covariance matrix K can be estimated via minimising negative log marginal likelihood function, ˜ϕ = arg max  
+
+> ϕ
+
+log p(y|ϕ) = 12 log |K| + 12 y⊤K−1y + Nu
+
+2 log 2 π (6) 3Figure 1: Schematic diagram of the proposed two-stage parameter estimation framework. The first stage employs Gaussian process learning (blue), while the second stage applies flow-map refinement (red) to further refine the parameter estimates. 
+
+where the covariance matrix element [ K]i j = kϕ(xi, x j) + σ2δ(xi, x j). With the GP prior, a joint distribution between the existing data y and the prediction F(x∗) at a new point x∗ can be constructed, 
+
+" y
+
+F(x∗)
+
+#
+
+X, ˜ϕ ∼ N 0,
+
+" K k⊤∗
+
+k∗ k ˜ϕ(x∗, x∗)
+
+#! 
+
+, (7) where k∗ = k ˜ϕ (x∗, X). Therefore the corresponding predictive distribution of sample point F(x∗) can be achieved by conditioning on the observation y,
+
+F(x∗)| y, X, ˜ϕ ∼ N  ¯F(x∗), v(x∗) (8) with mean function ¯ F(x∗) = k∗K−1y and variance vu(x∗) = k ˜ϕ(x∗, x∗) − k∗K−1k⊤∗ .
+
+3. Two-stage parameter estimation with uncertainty quantification 
+
+A schematic diagram of the proposed two-stage parameter estimation method is demonstrated in Figure 1. In the first stage, Gaussian process learning is used to obtain an initial probabilistic estimate of the unknown parameters through a derivative-matching likelihood. This stage is computationally e ffi cient and explicitly accounts for the uncer-tainty of the GP-induced derivative estimates. In the second stage, the GPL posterior is transferred as an informative empirical prior for a flow map refinement process. This stage constructs a likelihood with two complementary com-ponents, an observation model that links the latent states to the measured data, and a multi-shooting flow map model that enforces dynamical consistency between consecutive latent states. In this way, the proposed framework retains the computational e ffi ciency of local derivative matching while refining its parameter estimates through observation fidelity and dynamical constraints imposed by the ODE flow map. 
+
+3.1. Stage one: Gaussian process learning based on derivative matching likelihood 
+
+Consider the ith state variable xi(t) : R → R with GP prior, 
+
+xi(t) ∼ GP (0 , kϕi (·, ·)) , i = 1, · · · , N (9) 4The core idea of Gaussian process learning stems from the fact that a GP is closed under linear operators. Therefore, the derivative process is jointly Gaussian with the original process provided the kernel is su ffi ciently di ff erentiable, 
+
+"xi(t)˙xi(t)
+
+#
+
+| ϕi ∼ vec-GP 
+
+"00
+
+#
+
+,
+
+" kϕi (t, t′) ∂t′ kϕi (t, t′)
+
+∂tkϕi (t, t′) ∂t∂t′ kϕi (t, t′)
+
+#! 
+
+, i = 1, · · · , N. (10) This vector-valued GP is parametrised by the hyperparameters ϕi of the kernel associated with the ith state variable. By further denoting time derivative di =  ˙xi(t1), . . . , ˙xi(tNt )⊤ of trajectory xi = xi(t1), . . . , xi(tNt )⊤ corresponding to the observations ui = ui(t1), . . . , ui(tNt )⊤, the joint distribution of the discrete observation and the time derivative of its trajectory over time can be expressed as, 
+
+"ui
+
+di
+
+#
+
+| ϕi ∼ N 
+
+"00
+
+#
+
+,
+
+"Kuu i Kud i
+
+Kdu i Kdd i
+
+#! 
+
+. (11) where 
+
+Kuu i = kϕi (T , T ) + σ2
+
+> n,i
+
+I, Kud i = ∂t′ kϕi (T , T ) = (Kdu i )⊤, Kdd i = ∂t∂t′ kϕi (T , T ).
+
+Therefore the GP conditional mean of the time derivative and the corresponding variance that quantifies the uncertainty associated with the derivative estimate can be written as, 
+
+p di | ui, ϕi, σ 2
+
+> n,i
+
+ = N Kdu i (Kuu i )−1ui, Kdd i − Kdu i
+
+ Kuu i
+
+−1 Kud i
+
+ , (12) To account for a possible discrepancy between the assumed vector field and the derivative of the latent trajectory, we introduce the probabilistic dynamical constraint, 
+
+di = Fi( ˆ X; θi) + ζi, ζi ∼ N 0, γ 2 
+
+> i
+
+INt
+
+ , (13) where γ2 
+
+> i
+
+denotes the dynamical-model discrepancy variance, and Fi( ˆ X; θi) = [ fi(ˆ x(t1); θi) , · · · , fi
+
+ ˆx(tNt ); θi
+
+]⊤ denotes the evaluation of the ith component of the vector field with regressed state ˆ X = {ˆx(t j)}Nt 
+
+> j=1
+
+at the observation times. Consequently, 
+
+p di | ˆX, θi, γ i
+
+ = N di | Fi( ˆ X; θi), γ 2 
+
+> i
+
+INt
+
+ . (14) Since N di | Fi( ˆ X; θi), γ 2 
+
+> i
+
+INt
+
+ = N Fi( ˆ X; θi) | di, γ 2 
+
+> i
+
+INt
+
+ as Gaussian distributions, integrating the product of (12) and (14) with respect to di gives, 
+
+p Fi( ˆ X; θi) | ui, ϕi, γ 2 
+
+> i
+
+, σ 2
+
+> n,i
+
+ =
+
+Z
+
+p Fi( ˆ X; θi) | di, γ 2
+
+> i
+
+ p di | ui, ϕi, σ 2
+
+> n,i
+
+ ddi
+
+= N Fi( ˆ X; θi) | Kdu i (Kuu i )−1ui, Kdd i − Kdu i
+
+ Kuu i
+
+−1 Kud i + γ2 
+
+> i
+
+INt . , (15) Integrating out the time derivative di off ers a marginal derivative-matching likelihood for θi, which measures the compatibility between the vector-field derivative Fi( ˆ X; θi) and the GP-induced derivative distribution. Consider a prior distribution on dynamical system parameters θi,
+
+p(θi) ∝ exp − 12 ∥θi∥2
+
+> Λi
+
+!
+
+. (16) Using the prior and the derivative-matching likelihood, the posterior distribution of θi is, 
+
+pGPL (θi | ui, ϕi, γ 2 
+
+> i
+
+, σ 2
+
+> n,i
+
+) ∝ p(θi)p Fi( ˆ X; θi) | ui, ϕi, γ 2 
+
+> i
+
+, σ 2
+
+> n,i
+
+ , (17) 
+
+∝ exp − 12
+
+
+
+Fi( ˆ X; θi) − ˆdi
+
+> 2
+> Qi
+
++ ∥θi∥2
+
+> Λi
+
+! 
+
+(18) where ∥ • ∥ Qi = √•⊤Qi•, Qi =
+
+
+
+Kdd i − Kdu i
+
+Kuu i
+
+−1
+
+Kud i + γ2 
+
+> i
+
+INt
+
+−1
+
+and ˆ di = Kdu i (Kuu i )−1ui. In the exponential of Equation (18), a regularised weighted least squares estimator of θi with precision matrix Qi is presented. The first term presents the data fidelity of how the vector field is compatible with time derivatives approximated by Gaussian process regression [22], while the prior behaviour serves as a regularisation term. The precision matrix Qi for the data fidelity term introduces the uncertainty of the derivative into the posterior estimation. 5Remark. Note that here we present the prior distributions on parameters θi of each individual dimension of the state for notation simplicity. It is straightforward to adapt to the case where physical parameters are shared across di ff erent equations, pGPL 
+
+θ | { ui}Ni=1
+
+ ∝ exp 
+
+− 12
+
+> N
+
+X
+
+> i=1
+
+
+
+Fi( ˆ X; θ) − ˆdi
+
+> 2
+> Qi
+
++ ∥θ∥2
+
+> Λi
+
+ (19) 
+
+where θ = θ1 ∪ · · · ∪ θN denotes the collection of all physical parameters in the system. Here we drop parameters 
+
+ϕi, γ 2 
+
+> i
+
+, σ 2 
+
+> n,i
+
+for notation simplicity. 
+
+For the linear-in-parameter scenarios, the ith component of the vector field, i.e., Fi(x; θi) = gi(x)⊤θi, where gi is a prescribed vector-valued function. Under the standard Gaussian prior p(θi) ∝ exp − 12 ∥θi∥22
+
+ and evaluating the vector field at the GP-reconstructed states ˆ X, the posterior distribution of θi can be written as, 
+
+pGPL (θi | ui) ∝ exp − 12
+
+∥Giθi − ˆdi∥2 
+
+> Qi
+
++ ∥θi∥22
+
+!
+
+(20) where Gi = [gi(ˆ x(t1)) | · · · | gi(ˆ x(tNt ))] ⊤. This is essentially a quadratic w.r.t θi, hence the posterior follows a Gaussian distribution, 
+
+pGPL (θi | ui) ∼ N (μGPL ,i, ΣGPL ,i), (21) where posterior covariance ΣGPL ,i = G⊤ 
+
+> i
+
+QiGi + I−1
+
+, and posterior mean μGPL ,i = ΣGPL ,iG⊤ 
+
+> i
+
+Qi ˆdi. For nonlinear model parametrisation, the resulting posterior distribution can be approximated using standard numerical techniques, such as Markov chain Monte Carlo [28] or variational inference [29]. 
+
+3.2. Stage two: Bayesian flow-map refinement 
+
+The derivative-matching likelihood in the first stage provides a probabilistic estimate of the unknown physical parameters by comparing the vector field with the GP-induced derivative distribution at given time instances. However, derivative matching is a local-in-time construction and does not directly impose the time evolution of the dynamical system. Therefore, in the second stage, a Bayesian flow-map refinement procedure is conducted, aiming to further improve the estimation of physical parameters θ = θ1 ∪ · · · ∪ θN as well as latent states {x(ti)}Ni=1 additionally. Note that the latent states are not the main quantity of interest here and can be considered as nuisance variables. The refinement is mainly based on the Bayesian inference with a likelihood induced by the ODE flow map with multi-shooting algorithms and priors inherited from GPL. The ODE flow-map likelihood essentially performs trajectory fitting by comparing the observed states with the trajectory generated through numerical integration from a given initial condition over the observation window. Con-sequently, errors in the initial state, parameter estimates, or numerical integration will accumulate over time and result in a highly sensitive and poorly conditioned optimisation problem. To alleviate this issue, we adopt a multi-shooting strategy that partitions the trajectory into shorter integration intervals and introduces the latent states of each data as additional optimisation variables. Each local trajectory segment is therefore fitted over a shorter time horizon, reduc-ing error accumulation and sensitivity to parameter perturbations, while continuity constraints are imposed between neighbouring segments to recover a globally consistent trajectory. Let t j be an arbitrary observation time instance, and the corresponding unknown latent state is denoted by x(t j). For a given parameter vector θ and initial state x(t j), the multi-shooting of the dynamical system from time instance 
+
+t j to t j+1 can be written as, 
+
+x(t j+1) = Φht j+1 (x(t j); θ), j = 1, . . . , Nt − 1, (22) where Φht j+1 (x(t j); θ) denotes the numerically approximation of the exact flow, 
+
+Φt j+1 (x(t j); θ) = x(t j) +
+
+Z t j+1 
+
+> tj
+
+f (x(τ); θ)d τ
+
+from t j to t j+1. The corresponding flow consistency model can be subsequently constructed by assuming x(t j+1) =
+
+Φht j+1 (x(t j); θ) + ξ, where ξ ∼ N (0 , σ 2 
+
+> f
+
+I). Here the ξ represents a soft relaxation of the multi-shooting continuity 6condition as well as numerical integration error. Together with Equation (2), the physical parameters and the latent states can be inferred simultaneously through the likelihood, 
+
+p {z(t j)}Nt
+
+> j=1
+
+, {x(t j)}Nt 
+
+> j=2
+
+| θ, {x(t j)}Nt
+
+> j=1
+
+, R, σ 2
+
+> f
+
+ =
+
+> Nt
+
+Y
+
+> j=1
+
+N(z(t j)|x(t j), R) 
+
+> Nt−1
+
+Y
+
+> j=1
+
+N x(t j+1) | Φht j+1 (x(t j); θ), σ2 
+
+> f
+
+I . (23) The first term in the likelihood enforces consistency between the latent states and the observed data, while the second term enforces dynamical consistency between consecutive latent shooting states through the numerical flow map. It is important to note that x(t j) appears as both observations and variables in the likelihood. This is because the latent states {x(t j)}Nt 
+
+> j=1
+
+are all treated as unknown shooting variables, meanwhile the latent states at next time instances 
+
+{x(t j)}Nt 
+
+> j=2
+
+are also considered as the observation after flow mapping, which constraints the model with the continuity of the dynamics. To inherit the information from GPL posterior, Equation (18) is used as an informative prior for the physical parameters in this stage. Similarly, a prior can be assigned to the latent states. Combining the priors and the flow-map likelihood, the posterior of the physical parameters and latent states is given by 
+
+pFMR 
+
+θ, {x(t j)}Nt 
+
+> j=1
+
+| { z(t j)}Nt
+
+> j=1
+
+ ∝ pGPL (θ)p(S)
+
+> Nt
+
+Y
+
+> j=1
+
+N(z(t j)|x(t j), R) 
+
+> Nt−1
+
+Y
+
+> j=1
+
+N x(t j+1) | Φht j+1 (x(t j); θ), σ2 
+
+> f
+
+I . (24) where S = [x(t1)⊤, · · · , x(tNt )⊤]⊤ denotes the random vector that stack all latent shooting states. 
+
+Remark. When observations are noise-free, the latent states are fixed to the observations, and QNt 
+
+> j=1
+
+N(z(t j)|x(t j), R)
+
+in Equation (23) will disappear. Parameter inference is then governed solely by the flow-map consistency term, 
+
+QNt −1 
+
+> j=1
+
+N x(t j+1) | Φht j+1 (x(t j); θ), σ2 
+
+> f
+
+I, where the discrepancy is controlled by σ2 
+
+> f
+
+. In the limiting case σ2 
+
+> f
+
+→ 0 and with an exact flow map, this likelihood reduces to Dirac measures supported on trajectories satisfying the governing dynamics exactly, and the posterior is consequently concentrated on parameter values that reproduce the trajectory passing the observations. 
+
+The number of unknowns in (24) is Np + Nt N, where Np denotes the number of physical parameters, N is the dimension of the state space and Nt denotes the number of time instances where data are observed. In practice, when either the number of observations or the state dimension becomes large, approximating the full posterior distribution can be computationally prohibitive. We therefore seek the maximum a posteriori (MAP) estimate instead, reducing the Bayesian inference problem to an optimisation problem, 
+
+θ∗
+
+> FMR
+
+, {x∗(t j)}Nt
+
+> j=1
+
+ = argmin   
+
+> θ,{x(tj)}Nt j=1
+
+J (25) where 
+
+J = 12
+
+> Nt
+
+X
+
+> j=1
+
+z(t j) − x(t j)⊤
+
+R−1 z(t j) − x(t j) + 12σ2 
+
+> fNt−1
+
+X
+
+> j=1
+
+x(t j+1) − Φht j+1
+
+x(t j); θ 2
+
++ 12 (θ − μGPL )⊤ Σ−1GPL (θ − μGPL ) + 12
+
+S − ˆSGP 
+
+⊤ ˆΣ−1
+
+> S
+
+S − ˆSGP 
+
+ .
+
+(26) Here, the vector ˆ SGP denotes the prior mean vector of the latent shooting states, while ˆ ΣS denotes the associated covariance. Note that Equation (24) includes the prior p(S) to provide a general Bayesian formulation for the la-tent shooting states. In practice, one may take values from the GP-regressed state estimates evaluated in the GPL stage, or simply drop this term in optimisation to avoid propagating potential smoothing bias or miscalibrated uncer-tainty from GP regression into the FMR stage. Consequently, the final objective function is determined directly by the observation-fidelity and flow-map consistency terms, whereas the GPL posterior information is transferred only through the informative prior on the physical parameters. The precision matrices in Equation (26) act as weighting matrices in the MAP optimisation. In particular, R−1 determines the contribution of the observation fidelity, whereas 
+
+σ−2 
+
+> f
+
+I controls the contribution of the flow-map consistency. A larger precision assigns a stronger penalty to the corre-sponding residual, while a smaller precision permits greater deviation in accordance with the assumed uncertainty. 710% noise level 20% noise level 30% noise level                                                                                                                                                                              
+
+> NtFR GPL GPL-FMR FR GPL GPL-FMR FR GPL GPL-FMR 20 1.16 4.65 ±(2 .87 ×10 −2)3.12 ±(7 .18 ×10 −3)1.19 5.44 ±(2 .72 ×10 −2)3.25 ±(7 .70 ×10 −3)1.19 6.44 ±(2 .80 ×10 −2)2.89 ±(6 .87 ×10 −3)30 1.21 2.84 ±(6 .54 ×10 −2)3.05 ±(6 .97 ×10 −3)1.22 3.08 ±(1 .11 ×10 −1)3.07 ±(7 .42 ×10 −3)1.17 2.96 ±(1 .69 ×10 −1)3.17 ±(7 .59 ×10 −3)40 1.02 2.30 ±(5 .60 ×10 −2)3.03 ±(6 .84 ×10 −3)1.00 1.91 ±(8 .86 ×10 −2)2.97 ±(6 .40 ×10 −3)0.98 1.66 ±(1 .27 ×10 −1)2.98 ±(6 .36 ×10 −3)50 0.88 2.28 ±(5 .49 ×10 −2)2.99 ±(6 .85 ×10 −3)0.88 1.86 ±(8 .59 ×10 −2)2.99 ±(6 .73 ×10 −3)0.88 1.65 ±(1 .19 ×10 −1)3.09 ±(7 .18 ×10 −3)100 1.28 3.16 ±(4 .71 ×10 −2)3.01 ±(5 .29 ×10 −3)1.15 2.26 ±(7 .10 ×10 −2)3.02 ±(5 .26 ×10 −3)1.02 1.78 ±(7 .92 ×10 −2)3.01 ±(5 .14 ×10 −3)
+
+Table 1: Mean ± standard deviation of the estimated Van der Pol oscillator parameter under 10%, 20%, and 30% noise levels with Nt = 20 and 
+
+Nt = 100 observations 
+
+.Apart from MAP estimates, one can also quantify the local posterior uncertainty of the refined physical parameters with Laplace approximation [30]. It only requires the local curvature of the negative log-posterior at the MAP estimate, and hence provides an e ffi cient Gaussian approximation to the parameter posterior. 
+
+Remark. In the present formulation, the latent shooting states are regarded as nuisance variables since they are not primary quantities of interest. Their introduction serves mainly to decompose long-time numerical integration into a sequence of shorter local integrations, thereby reducing sensitivity to perturbations in the initial state and physical parameters. Consequently, their estimated values should not be interpreted as the final reconstructed trajectory, but rather as auxiliary variables that indicate how e ff ectively local flow-map consistency is enforced across consecutive shooting intervals. 
+
+4. Numerical Experiments 
+
+In this section, the performance of the proposed GPL-FMR method is evaluated on three numerical examples. We mainly focus on the results of parameter estimation, i.e., the relative errors of MAP estimates from the FMR stage and their corresponding standard deviation from Laplace approximation. To quantify the accuracy, the relative error is computed as, 
+
+e = 100% ×
+
+ ∥θGT − θ∗
+
+> FMR
+
+∥22
+
+∥θGT ∥22
+
+
+
+> 1/2
+
+(27) where θGT denotes the parameter vectors of ground truth. We compare the performance of the proposed method with feature regression (FR) with trend filter and Gaussian process learning (GPL) itself. Apart from the physical parameter estimates, we also report the inferred auxiliary shooting states to present the complete MAP solution and compare them with the GP-smoothed trajectory in the GPL stage to illustrate how the flow map refinement improves dynamical consistency. 
+
+4.1. Van der Pol oscillator 
+
+Van der Pol oscillator describes a non-conservative, oscillating system with nonlinear damping [31]. It is a second-order di ff erential equation and can be written as, 
+
+
+
+˙x1 = x2
+
+˙x2 = μ(1 − x21)x2 − x1
+
+(28) where x1 and x2 denote the position and velocity of the system, respectively. The parameter μ controls the strength of nonlinear damping. For a small μ, the stable limit cycle has an amplitude of approximately 2, independent of the initial condition after the transient has disappeared. When μ increases, the waveform becomes more asymmetric and non-sinusoidal with a relatively slow build-up process and a rapid release. We test our proposed algorithm on the 
+
+μ = 3 scenario. The trajectory of the system is generated from numerical integration via an implicit multi-step variable-order method [32] with a discrete time-step size d t = 10 −3 over [0 , T ] where T = 40. The initial condition is chosen as 8Figure 2: Trajectory reconstruction for the Van der Pol oscillator using the estimated parameters and the prescribed initial condition, with Nt = 20 and Nt = 100 observations under 10% and 30% noise levels. The uncertainty bands correspond to two standard deviations obtained from the Laplace approximation. 
+
+x1(0) = 2 and x2(0) = 0. Subsequently, the observational data are randomly chosen from the trajectory. In order to test the performance of GPL-FMR, we test multiple scenarios with the number of observational data increasing from 20 to 100 gradually. The experiments are conducted under 10%, 20% and 30% noise levels. The noise is assumed to follow a zero-mean Gaussian distribution with its standard deviation specified as the prescribed noise level multiplied by the mean magnitude of the data. The variances in Equation (26) are set to be σ2 
+
+> f
+
+= 1 × 10 −6 and R = σ2
+
+> n
+
+I where 
+
+σ2 
+
+> n
+
+= 1 × 10 −4. Note that the variances here behave as weights for each term in the optimisation rather than actual calibration of the data and flow variances. The comparison of parameter estimation results using three methods is demonstrated in Table 1. The best result in each case is highlighted in bold. Overall, the proposed GPL-FMR outperforms the other two methods in nearly all test cases, with only one exception occurring at Nt = 30 under 30% noise level. The GPL-FMR remains capable 9Figure 3: Comparison between the trajectories reconstructed from the inferred latent states and the GP-smoothed trajectories obtained from the GPL stage for the Van der Pol oscillator under 30% noise. 
+
+of recovering μ close to the ground truth value even under challenging conditions, such as 30% noise with only 20 observations. In contrast, feature regression performs poorly in most cases. Its estimated values deviate substantially from the ground truth μ = 3 and cluster around 1. GPL provides reasonable estimates when the noise level is moderate and su ffi cient observations are available. However, its performance deteriorates as the noise level increases and becomes less stable when the observations are scarce. Apart from mean estimates, the standard deviation obtained from the Laplace approximation is also shown in Table 1. A substantial reduction in posterior uncertainty can be observed after the flow-map refinement. While the GPL estimates exhibit standard deviations of approximately 10 −1 to 10 −2, the corresponding GPL-FMR uncertainties are consistently reduced to the order of 10 −3 across di ff erent data sizes and noise levels. Moreover, the GPL un-certainty generally increases as the observation noise becomes stronger, whereas the GPL-FMR uncertainty remains comparatively stable. The trajectories reconstructed by the inferred parameters and the prescribed initial condition x1(0) = 2, x2(0) = 0are shown in Figure 2. The red dashed line denotes the reconstructed trajectories, while the black solid lines are the ground truth. The noise-corrupted data are presented in grey cross markers. As one can see, the reconstructed trajectories agree closely with the ground truth. For the scenarios with Nt = 20, slight deviation gradually emerge over time under both 10% and 30% noise. In contrast, the inferred parameter reproduces the ground truth trajectory with high accuracy when Nt = 100. The latent states jointly inferred with the physical parameters in Equation (26) are also visualised in Figure 3. The blue curves denote trajectories generated by evolving the system from the inferred latent states using the estimated physical parameters, while the red dashed curves show the GP-smoothed trajectories obtained from the GPL stage, and the red markers denote the observations under 30% noise. For the sparse case with Nt = 20, neither reconstruction fully agrees with the ground truth. Nevertheless, the trajectories based on the inferred latent states preserve the overall dynamical pattern except that a slight temporal shift remains. In contrast, the GP-smoothed trajectories fail to capture several local features of the true dynamics. For example, the peak behaviour of x2 around t = 4 is flattened. When 
+
+Nt = 100, both reconstructions improve substantially. The trajectories generated from the inferred latent states closely follow the ground truth, whereas the GP-smoothed trajectories still miss some detailed dynamical features. 10 10% noise level 
+
+Nt = 20 Nt = 100 Parameters FR GPL GPL-FMR FR GPL GPL-FMR GT 
+
+α 1.03 1.35 ± (1 .05 × 10 −1) 1.54 ± (3 .77 × 10 −3) 1.50 1.46 ± (3 .53 × 10 −2) 1.48 ± (1 .70 × 10 −3) 1.5 
+
+β 1.03 1.01 ± (8 .40 × 10 −2) 0.99 ± (2 .54 × 10 −3) 1.02 0.97 ± (2 .20 × 10 −2) 1.00 ± (1 .07 × 10 −3) 1
+
+σ 1.16 1.28 ± (5 .80 × 10 −2) 0.99 ± (2 .71 × 10 −3) 0.90 0.93 ± (1 .50 × 10 −2) 1.01 ± (1 .19 × 10 −3) 1
+
+ρ 2.17 3.21 ± (1 .29 × 10 −1) 2.94 ± (7 .59 × 10 −3) 2.65 2.79 ± (4 .64 × 10 −2) 3.04 ± (3 .90 × 10 −3) 320% noise level 
+
+Nt = 20 Nt = 100 Parameters FR GPL GPL-FMR FR GPL GPL-FMR GT 
+
+α 1.17 1.25 ± (1 .88 × 10 −1) 1.60 ± (3 .98 × 10 −3) 1.53 1.39 ± (7 .01 × 10 −2) 1.47 ± (1 .73 × 10 −3) 1.5 
+
+β 1.20 0.93 ± (1 .52 × 10 −1) 0.97 ± (2 .52 × 10 −3) 1.04 0.92 ± (4 .32 × 10 −2) 1.00 ± (1 .11 × 10 −3) 1
+
+σ 1.00 1.24 ± (1 .08 × 10 −1) 0.99 ± (2 .65 × 10 −3) 0.82 0.86 ± (2 .81 × 10 −2) 1.02 ± (1 .23 × 10 −3) 1
+
+ρ 1.80 2.90 ± (2 .41 × 10 −1) 2.87 ± (7 .28 × 10 −3) 2.45 2.58 ± (8 .70 × 10 −2) 3.07 ± (4 .01 × 10 −3) 330% noise level 
+
+Nt = 20 Nt = 100 Parameters FR GPL GPL-FMR FR GPL GPL-FMR GT 
+
+α 1.24 1.15 ± (3 .05 × 10 −1) 1.68 ± (4 .30 × 10 −3) 1.52 1.31 ± (1 .07 × 10 −1) 1.47 ± (1 .80 × 10 −3) 1.5 
+
+β 1.27 0.89 ± (2 .49 × 10 −1) 0.97 ± (2 .55 × 10 −3) 1.03 0.87 ± (6 .54 × 10 −2) 1.02 ± (1 .19 × 10 −3) 1
+
+σ 0.80 1.02 ± (1 .67 × 10 −1) 0.98 ± (2 .59 × 10 −3) 0.74 0.79 ± (4 .00 × 10 −2) 1.03 ± (1 .27 × 10 −3) 1
+
+ρ 1.41 2.12 ± (3 .45 × 10 −1) 2.80 ± (7 .00 × 10 −3) 2.24 2.40 ± (1 .25 × 10 −1) 3.08 ± (4 .13 × 10 −3) 3
+
+Table 2: Mean ± standard deviation of the estimated Lotka-Volterra model’s parameters under 10%, 20%, and 30% noise levels with Nt = 20 and 
+
+Nt = 100 observations. 
+
+Figure 4: Comparison of the relative errors in parameter estimation for the Lotka-Volterra model using feature regression (FR), GPL, and the proposed GPL-FMR method, with 20,30,40,50, and 100 observations under 10%, 20%, and 30% noise levels. 
+
+4.2. Lotka-Volterra model 
+
+The two-dimensional Lotka-Volterra equation models the population dynamics between two species in an ecolog-ical system. The system can be written as, 
+
+˙x1 = αx1 − βx1 x2 ,
+
+˙x2 = δx1 x2 − ρx2 , (29) 11 Figure 5: Trajectory reconstruction for the Lotka-Volterra model using the estimated parameters and prescribed initial condition, with Nt = 20 and   
+
+> Nt=100 observations under 10% and 30% noise levels. The uncertainty bands correspond to two standard deviations obtained from the Laplace approximation.
+
+where x1 and x2 denote the population states of two species respectively. The parameters α and ρ govern the growth rate of the species, while β and δ characterise the interaction between the two species. In this example, the system parameters are set to be [ α, β, δ, ρ ] = [1 .5, 1, 1, 3]. Similar to the Van der Pol oscillator, the observation of the system is generated from numerical integration from a prescribed initial condition x1(0) = 1 and x2(0) = 1 via an implicit multi-step variable-order method. The discrete time step size is d t = 10 −3 and the entire time window is [0 , T ] where 
+
+T = 20. The same scenarios (20 to 100 observations as well as 10% 20% and 30% noise levels) are set to test the performance of the proposed method. Table 2 compares the parameter estimates obtained by three methods for the Lotka-Volterra model under 20 and 100 observations and 10% and 30% noise levels. Among the three methods, GPL-FMR again provides the most consistently accurate estimates across the four physical parameters. The improvement is particularly evident for ρ,12 Figure 6: Comparison between the trajectories reconstructed from the inferred latent states and the GP-smoothed trajectories obtained from the GPL stage for the Lotka-Volterra model under 30% noise. 
+
+where both FR and GPL exhibit substantial bias as the noise level increases. GPL-FMR on the other hand remains much closer to the ground truth. A similar improvement is observed for β and σ. For α, GPL-FMR also performs well in most of the cases, with a few exceptions that are slightly outperformed by another method. Moreover, Figure 4 visualises the relative errors of all estimated parameters, computed using Equation (27). The blue, orange, and red curves represent the results obtained by feature regression, GPL, and GPL-FMR, respectively. Consistent with the results reported in Table 2, GPL-FMR consistently achieves the lowest relative errors across most test scenarios. In the test case with Nt = 50, the GPL performance is comparable to GPL-FMR. Meanwhile, GPL also shows a significant advantage over the feature regression method. The GPL posterior standard deviations range approximately from 10 −2 to 10 −1 and generally increase with the observation noise, whereas the GPL-FMR standard deviations obtained from the Laplace approximation remain con-sistently of order 10 −3. Increasing the number of observations from Nt = 20 to Nt = 100 further reduces the GPL-FMR uncertainty for all parameters. The reconstructed trajectories using the estimated parameters and the prescribed initial condition in Figure 5 for the Lotka-Volterra model exhibit close agreement with the ground truth across the di ff erent noise levels. For 
+
+Nt = 20, small deviations gradually accumulate over time, whereas for Nt = 100, the trajectories reconstructed using the inferred parameters remain highly consistent with the ground-truth dynamics. Besides, the trajectories generated from the inferred latent states using the estimated physical parameters reproduce the underlying dynamics accurately for both Nt = 20 and Nt = 100, as shown in Figure 6. In contrast, the GP-smoothed trajectories from the GPL stage fail to recover the true oscillatory behaviour reliably, particularly in the case with less data. This indicates that the flow-map refinement provides latent states that are more dynamically consistent with the governing system than the GP regression alone. 
+
+4.3. Lorenz-63 Model 
+
+The Lorenz-63 model is a classic numerical example of dynamical systems, originally introduced as a simplified model of atmospheric convection. The behaviour of the state variables x1, x2, and x3 are defined as, 
+
+
+
+˙x1 = σ(x2 − x1),
+
+˙x2 = x1(ρ − x3) − x2,
+
+˙x3 = x1 x2 − βx3,
+
+(30) 13 10% noise level 
+
+Nt = 20 Nt = 100 Parameters FR GPL GPL-FMR FR GPL GPL-FMR GT 
+
+σ 1.04 3.63 ± (1 .84 × 10 0) 9.38 ± (2 .91 × 10 −3) 5.97 8.93 ± (1 .33 × 10 −1) 10.06 ± (2 .43 × 10 −3) 10 
+
+ρ 31.20 28.16 ± (9 .47 × 10 −1) 28.28 ± (2 .12 × 10 −3) 26.31 27.97 ± (4 .75 × 10 −2) 27.90 ± (1 .03 × 10 −3) 28 
+
+β 1.45 2.31 ± (7 .99 × 10 −2) 2.73 ± (4 .12 × 10 −4) 1.80 2.66 ± (1 .42 × 10 −2) 2.65 ± (2 .01 × 10 −4) 8/320% noise level 
+
+Nt = 20 Nt = 100 Parameters FR GPL GPL-FMR FR GPL GPL-FMR GT 
+
+σ 1.05 3.41 ± (1 .90 × 10 0) 9.66 ± (3 .18 × 10 −3) 5.38 7.51 ± (1 .50 × 10 −1) 10.18 ± (2 .39 × 10 −3) 10 
+
+ρ 29.93 27.35 ± (1 .13 × 10 0) 28.13 ± (2 .09 × 10 −3) 25.96 26.71 ± (6 .58 × 10 −2) 27.78 ± (1 .03 × 10 −3) 28 
+
+β 1.43 2.43 ± (7 .39 × 10 −2) 2.79 ± (4 .23 × 10 −4) 1.92 2.01 ± (9 .48 × 10 −2) 2.63 ± (2 .00 × 10 −4) 8/330% noise level 
+
+Nt = 20 Nt = 100 Parameters FR GPL GPL-FMR FR GPL GPL-FMR GT 
+
+σ 0.91 2.77 ± (1 .85 × 10 0) 9.73 ± (3 .14 × 10 −3) 4.37 6.10 ± (9 .97 × 10 −1) 10.45 ± (2 .45 × 10 −3) 10 
+
+ρ 30.34 28.78 ± (2 .20 × 10 0) 28.01 ± (2 .08 × 10 −3) 25.76 26.86 ± (3 .24 × 10 −1) 27.66 ± (1 .03 × 10 −3) 28 
+
+β 1.43 1.89 ± (1 .01 × 10 0) 2.90 ± (4 .36 × 10 −4) 2.01 1.54 ± (1 .27 × 10 −1) 2.60 ± (1 .97 × 10 −4) 8/3       
+
+> Table 3: Mean ±standard deviation of the estimated Lorenz-63 model’s parameters under 10%, 20%, and 30% noise levels with Nt=20 and
+> Nt=100 observations.
+> Figure 7: Comparison of the relative errors in parameter estimation for the Lotka-Volterra model using feature regression (FR), GPL, and the proposed GPL-FMR method, with 20,30,40,50, and 100 observations under 10%, 20%, and 30% noise levels.
+
+where σ, ρ, and β are the physical parameters governing the dynamics, representing the Prandtl number, the Rayleigh number, and a geometric factor related to the fluid layer, respectively. We consider the standard parameter setting 
+
+σ = 10, ρ = 28, and β = 8/3, under which the system exhibits chaotic behaviour. In this regime, the trajectory evolves around two unstable lobes and is highly sensitive to perturbations in both the initial condition and the model parameters. The Lorenz-63 system therefore provides a challenging benchmark for assessing whether GPL-FMR can recover dynamically consistent parameter estimates from scarce and noisy observations. The reference trajectory of the Lorenz-63 system is generated with a time-step size of dt = 10 −2 over the interval [0 , T ], where T = 8. The initial condition is prescribed as x1(0) = 7, x2(0) = 7, and x3(0) = 7. Gaussian noise is subsequently added to construct observation scenarios with 10%, 20%, and 30% noise levels. The parameter estimation results with Nt = 20 and Nt = 100 observations under 10% and 30% noise are reported in Table 3. Both feature regression and GPL are noticeably a ff ected by observational noise. Their estimation accuracy 14 Figure 8: Trajectory reconstruction for the Lorenz-63 model using the estimated parameters and prescribed initial condition, with Nt = 20 and Nt =
+
+100 observations under 10% noise levels. The uncertainty bands correspond to two standard deviations obtained from the Laplace approximation. 
+
+Figure 9: Trajectory reconstruction for the Lorenz-63 model using the estimated parameters and prescribed initial condition, with Nt = 20 and Nt =
+
+100 observations under 30% noise levels. The uncertainty bands correspond to two standard deviations obtained from the Laplace approximation. 
+
+deteriorates as the noise level increases. GPL generally outperforms feature regression and provides reasonably accu-rate estimates at 10% noise level, but its performance degrades substantially under 20% and 30% noise scenarios. In 15 Figure 10: Comparison between the trajectories reconstructed from the inferred latent states and the GP-smoothed trajectories obtained from the GPL stage for the Lorenz-63 system under 30% noise. 
+
+contrast, the proposed GPL-FMR consistently yields more accurate parameter estimates across the tested cases, even with the challenging setting of only 20 observations and 30% noise. We also present a more detailed comparison of the estimation errors in Figure 7, where results are reported for 
+
+Nt = 20, 30, 40, 50, and 100. Overall, the proposed GPL-FMR method substantially outperforms both feature regres-sion and GPL, with the parameter discrepancies reduced by approximately one order of magnitude in most cases. It can be observed that the GPL-FMR error does not decrease monotonically as the number of observations increases, particularly under the 30% noise level. This behaviour can be attributed to the strongly anisotropic parameter sensitiv-ity of the Lorenz-63 system. Di ff erent parameter perturbations a ff ect the trajectory to di ff erent extents, and therefore a better trajectory reconstruction does not necessarily correspond to a uniformly smaller error in every parameter. As shown in Figure 9, the reconstructed trajectory for Nt = 100 under 30% noise agrees more closely with the ground truth than that obtained with Nt = 20, despite the absence of a corresponding monotonic reduction in the overall parameter error as shown in Figure 7. Since the MAP objective in Equation (26) is driven by trajectory and flow-map discrepancies rather than the parameter error itself, the optimisation naturally favours parameter combinations that best reproduce the observed dynamics. Nevertheless, GPL-FMR consistently provides more accurate parameter estimates than feature regression and GPL across the considered scenarios. The trajectory reconstructions obtained from the estimated parameters with a prescribed initial condition are pre-sented in Figures 8 and 9 for 10% and 30% noise levels respectively. For the Nt = 20 cases, the reconstructed trajectories agree well with the ground truth up to approximately t = 3, after which noticeable deviations emerge. This behaviour is expected for the Lorenz-63 system because its chaotic dynamics are highly sensitive to perturba-tions in both the physical parameters and the initial state. The agreement improves substantially when Nt = 100. The reconstructed trajectories remain close to the ground truth up to approximately t = 5.5. Among the three state variables, the reconstruction of x3 is generally more accurate due to its comparatively smoother temporal behaviour. Moreover, Figure 10 shows that the trajectories generated from the jointly inferred latent states and physical parameters accurately reproduce the underlying chaotic dynamics for both Nt = 20 and Nt = 100 under 30% noise. 16 In contrast, the GP-smoothed trajectories fail to capture local dynamical features, including the oscillatory transitions and rapid variations characteristic of the Lorenz attractor. A particularly evident example can be observed for x3 when 
+
+Nt = 20, where the GP over-smooths the data completely. Remarkably, even in the sparse case with Nt = 20, the jointly inferred latent states recover these features with high fidelity. This demonstrates that the proposed flow-map refinement remains e ff ective for chaotic systems. 
+
+5. Discussion 
+
+The proposed GPL-FMR framework combines GP-based derivative matching with the dynamical consistency im-posed by the ODE flow map. The numerical results indicate that the flow map refinement plays an essential role in correcting the limitations inherited from the GPL stage. Under scarce and noisy observations, the GP-smoothed states and their derivative estimates can deviate substantially from the underlying dynamics, as illustrated in Fig-ure 3, Figure 6 and Figure 10. Those poor estimates therefore influence the performance of parameter estimation of derivative matching methods. The FMR stage in the proposed GPL-FMR jointly refines the physical parameters and latent shooting states to constrain the inference through both observation fidelity and local flow-map consistency. The reconstructed trajectories further demonstrate that the inferred latent states provide a more dynamically consistent representation than the GP-smoothed states, especially when the latter fail to resolve important local features of the dynamics. The use of multi-shooting is also critical in this setting. Instead of propagating a single initial condition over the entire observation window, the trajectory is decomposed into shorter integration intervals, which reduces sensitivity to perturbations in the initial state and physical parameters. Moreover, conditional on the shooting states and parameters, the numerical integrations over individual intervals are independent and can therefore be evaluated in parallel, which provides an additional computational advantage during optimisation. Although the formulation of FMR is Bayesian, approximating the full joint posterior of the physical parame-ters and latent shooting states through sampling methods such as MCMC can be computationally expensive. The dimension of the inference problem grows with the number of observations and state variables, while each poste-rior evaluation additionally requires numerical integration over all shooting intervals. The Laplace approximation therefore provides a practical compromise. After obtaining the MAP estimate, the local curvature of the negative log-posterior is used to construct a Gaussian approximation around the posterior mode. The resulting covariance characterises the local uncertainty of the inferred parameters and reflects how strongly the posterior constrains di ff er-ent parameter directions. This interpretation di ff ers from sampling-based Bayesian inference, which characterises the full posterior distribution and can represent skewness, multimodality, and other non-Gaussian structures. Therefore, the approximation may become inaccurate when the posterior is strongly non-Gaussian, and may consequently under-estimate uncertainty in highly nonlinear problems. Nevertheless, in the present framework, the Laplace approximation provides an e ff ective and computationally e ffi cient approach to uncertainty quantification. 
+
+6. Conclusion 
+
+This work proposed a two-stage framework for parameter estimation in dynamical systems from scarce and noisy observations. The first stage employs Gaussian process learning to obtain an e ffi cient probabilistic parameter estimate through local derivative matching, while the second stage introduces a multi-shooting Bayesian flow-map refinement that jointly infers the physical parameters and latent shooting states. The GPL posteriors are incorporated as informa-tive empirical priors, allowing the second stage to refine the estimates. To reduce the computational cost associated with full posterior estimation, MAP is employed, and the corresponding parameter uncertainty is quantified through a Laplace approximation. Numerical experiments on dynamical systems show that GPL-FMR generally improves the accuracy and robustness of parameter estimation over feature regression and the original GPL, particularly under sparse and noisy observations. These results demonstrate the benefit of combining the computational e ffi ciency of derivative matching with the global dynamical information provided by the ODE flow map. 
+
+Acknowledgement 
+
+D.Ye acknowledge the supports of Research Development Funding from Xi’an Jiaotong-Liverpool University under agreement RDF-25-01-009. 17 Data availability 
+
+All the data and source codes to reproduce the results in this study are available on GitHub at https://github. com/yhao9s9/gpl-fmr .
+
+References 
+
+[1] Böttcher L, Antulov-Fantulin N, Asikis T. AI Pontryagin or how artificial neural networks learn to control dynamical systems. Nature Communications. 2022 Jan;13(1):333. Available from: https://doi.org/10. 1038/s41467-021-27590-0 .[2] Zolman N, Lagemann C, Fasel U, Kutz JN, Brunton SL. SINDy-RL for interpretable and e ffi cient model-based reinforcement learning. Nature Communications. 2025 Nov;16(1):10714. Available from: https://doi.org/ 10.1038/s41467-025-65738-4 .[3] Mai CV, Spiridonakos MD, Chatzi EN, Sudret B. Surrogate Modeling for Stochastic Dynamical Systems by Combining Nonlinear Autoregressive with Exogenous Input Models and Polynomial Chaos Expansions. Inter-national Journal for Uncertainty Quantification. 2016;6(4):313-39. [4] Qin T, Chen Z, Jakeman JD, Xiu D. Deep Learning of Parameterized Equations with Applications to Uncertainty Quantification. International Journal for Uncertainty Quantification. 2021;11(2):63-82. [5] Cheng S, Quilodrán-Casas C, Ouala S, Farchi A, Liu C, Tandeo P, et al. Machine Learning With Data Assim-ilation and Uncertainty Quantification for Dynamical Systems: A Review. IEEE /CAA Journal of Automatica Sinica. 2023;10(6):1361-87. [6] Prokop B, Gelens L. Data-driven discovery of dynamical models in biology. Nature Reviews Physics. 2026 Jun. Available from: https://doi.org/10.1038/s42254-026-00955-4 .[7] Gilpin W, Huang Y, Forger DB. Learning dynamics from large biological data sets: Machine learning meets systems biology. Current Opinion in Systems Biology. 2020;22:1-7. Available from: https://www. sciencedirect.com/science/article/pii/S2452310020300147 .[8] Jin B, Maass P. Sparsity regularization for parameter identification problems. Inverse Problems. 2012 nov;28(12):123001. Available from: https://doi.org/10.1088/0266-5611/28/12/123001 .[9] Brunton SL, Proctor JL, Kutz JN. Discovering governing equations from data by sparse identification of non-linear dynamical systems. Proceedings of the National Academy of Sciences. 2016;113(15):3932-7. Available from: https://www.pnas.org/doi/abs/10.1073/pnas.1517384113 .[10] Fattahi S, Sojoudi S. Data-Driven Sparse System Identification. In: 2018 56th Annual Allerton Conference on Communication, Control, and Computing (Allerton); 2018. p. 462-9. [11] Chen RTQ, Rubanova Y, Bettencourt J, Duvenaud DK. Neural Ordinary Di ff erential Equations. In: Bengio S, Wallach H, Larochelle H, Grauman K, Cesa-Bianchi N, Garnett R, editors. Advances in Neural Information Pro-cessing Systems. vol. 31. Curran Associates, Inc.; 2018. Available from: https://proceedings.neurips. cc/paper_files/paper/2018/file/69386f6bb1dfed68692a24c8686939b9-Paper.pdf .[12] Greydanus S, Dzamba M, Yosinski J. Hamiltonian Neural Networks. In: Wallach H, Larochelle H, Beygelzimer A, d'Alché-Buc F, Fox E, Garnett R, editors. Advances in Neural Information Processing Systems. vol. 32. Curran Associates, Inc.; 2019. Available from: https://proceedings.neurips.cc/paper_files/paper/ 2019/file/26cd8ecadce0d4efd6cc8a8725cbd1f8-Paper.pdf .[13] Rath K, Albert CG, Bischl B, von Toussaint U. Symplectic Gaussian process regression of maps in Hamiltonian systems. Chaos: An Interdisciplinary Journal of Nonlinear Science. 2021 05;31(5):053121. Available from: 
+
+https://doi.org/10.1063/5.0048129 .18 [14] Schmid PJ. Dynamic Mode Decomposition and Its Variants. Annual Review of Fluid Mechanics. 2022;54(Vol-ume 54, 2022):225-54. Available from: https://www.annualreviews.org/content/journals/10. 1146/annurev-fluid-030121-015835 .[15] Beck JV, Arnold KJ. Parameter estimation in engineering and science. James Beck; 1977. [16] Lillacci G, Khammash M. Parameter Estimation and Model Selection in Computational Biology. PLOS Compu-tational Biology. 2010 03;6(3):1-17. Available from: https://doi.org/10.1371/journal.pcbi.1000696 .[17] Guo M, McQuarrie SA, Willcox KE. Bayesian operator inference for data-driven reduced-order modeling. Computer Methods in Applied Mechanics and Engineering. 2022;402:115336. A Special Issue in Honor of the Lifetime Achievements of J. Tinsley Oden. Available from: https://www.sciencedirect.com/science/ article/pii/S0045782522004273 .[18] Smith RC. Uncertainty quantification: theory, implementation, and applications. SIAM; 2024. [19] Kramer B, Peherstorfer B, Willcox KE. Learning Nonlinear Reduced Models from Data with Operator Inference [Journal Article]. Annual Review of Fluid Mechanics. 2024;56(Volume 56, 2024):521-48. Available from: 
+
+https://www.annualreviews.org/content/journals/10.1146/annurev-fluid-121021-025220 .[20] Dondelinger F, Husmeier D, Rogers S, Filippone M. ODE parameter inference using adaptive gradient matching with Gaussian processes. In: Carvalho CM, Ravikumar P, editors. Proceedings of the Sixteenth International Conference on Artificial Intelligence and Statistics. vol. 31 of Proceedings of Machine Learning Research. Scottsdale, Arizona, USA: PMLR; 2013. p. 216-28. Available from: https://proceedings.mlr.press/ v31/dondelinger13a.html .[21] Wenk P, Gotovos A, Bauer S, Gorbach NS, Krause A, Buhmann JM. Fast Gaussian process based gradi-ent matching for parameter identification in systems of nonlinear ODEs. In: Chaudhuri K, Sugiyama M, editors. Proceedings of the Twenty-Second International Conference on Artificial Intelligence and Statistics. vol. 89 of Proceedings of Machine Learning Research. PMLR; 2019. p. 1351-60. Available from: https: //proceedings.mlr.press/v89/wenk19a.html .[22] Ye D, Guo M. Gaussian process learning of nonlinear dynamics. Communications in Nonlinear Science and Numerical Simulation. 2024;138:108184. Available from: https://www.sciencedirect.com/science/ article/pii/S1007570424003691 .[23] David M, Méhats F. Symplectic learning for Hamiltonian neural networks. Journal of Computational Physics. 2023;494:112495. Available from: https://www.sciencedirect.com/science/article/pii/ S0021999123005909 .[24] Williams CK, Rasmussen CE. Gaussian processes for machine learning. vol. 2. MIT press Cambridge, MA; 2006. [25] Calderhead B, Girolami M, Lawrence N. Accelerating Bayesian Inference over Nonlinear Di ff erential Equations with Gaussian Processes. In: Koller D, Schuurmans D, Bengio Y, Bottou L, editors. Advances in Neural Infor-mation Processing Systems. vol. 21. Curran Associates, Inc.; 2008. Available from: https://proceedings. neurips.cc/paper_files/paper/2008/file/07563a3fe3bbe7e3ba84431ad9d055af-Paper.pdf .[26] Álvarez M, Luengo D, Lawrence ND. Latent Force Models. In: van Dyk D, Welling M, editors. Proceedings of the Twelfth International Conference on Artificial Intelligence and Statistics. vol. 5 of Proceedings of Machine Learning Research. Hilton Clearwater Beach Resort, Clearwater Beach, Florida USA: PMLR; 2009. p. 9-16. [27] Álvarez MA, Luengo D, Lawrence ND. Linear Latent Force Models Using Gaussian Processes. IEEE Transac-tions on Pattern Analysis and Machine Intelligence. 2013;35(11):2693-705. 19 [28] Jones GL, Qin Q. Markov Chain Monte Carlo in Practice [Journal Article]. Annual Review of Statistics and Its Application. 2022;9(Volume 9, 2022):557-78. Available from: https://www.annualreviews.org/ content/journals/10.1146/annurev-statistics-040220-090158 .[29] Blei DM, Kucukelbir A, McAuli ff e JD. Variational Inference: A Review for Statisticians. Journal of the Amer-ican Statistical Association. 2017;112(518):859-77. [30] Geisser S, Hodges J, Press S, ZeUner A. The validity of posterior expansions based on Laplace’s method. Bayesian and likelihood methods in statistics and econometrics. 1990;7:473. [31] van der Pol Jun B. LXXXVIII. On “relaxation-oscillations”. The London, Edinburgh, and Dublin Philosoph-ical Magazine and Journal of Science. 1926;2(11):978-92. Available from: https://doi.org/10.1080/ 14786442608564127 .[32] Shampine LF, Reichelt MW. The MATLAB ODE Suite. SIAM Journal on Scientific Computing. 1997;18(1):1-22. Available from: https://doi.org/10.1137/S1064827594276424 .20

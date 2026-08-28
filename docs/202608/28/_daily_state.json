@@ -1,9 +1,9 @@
 {
   "date": "20260828",
   "date_label": "",
-  "generated_at": "2026-08-28 03:41:36 UTC",
+  "generated_at": "2026-08-28 22:22:02 UTC",
   "recommend_exists": true,
-  "run_count": 1,
+  "run_count": 2,
   "papers": [
     {
       "paper_id": "2608.25850v1",
@@ -17,9 +17,9 @@
         }
       ],
       "score": 9.0,
-      "evidence": "神经网络代理加速多尺度有限元求解多孔介质PDE",
+      "evidence": "神经网络加速的多尺度HDG求解器针对多孔介质PDE，可直接用于地下水数值模拟",
       "first_seen_at": "2026-08-28 03:41:36 UTC",
-      "updated_at": "2026-08-28 03:41:36 UTC"
+      "updated_at": "2026-08-28 22:22:02 UTC"
     },
     {
       "paper_id": "2608.26303v1",
@@ -33,9 +33,41 @@
         }
       ],
       "score": 9.0,
-      "evidence": "面向耦合孔隙弹性地下流动的物理信息神经网络求解器",
+      "evidence": "面向Biot孔隙弹性模型的PINN求解器，是直接涉及地下水数值模拟的耦合地下流问题",
       "first_seen_at": "2026-08-28 03:41:36 UTC",
-      "updated_at": "2026-08-28 03:41:36 UTC"
+      "updated_at": "2026-08-28 22:22:02 UTC"
+    },
+    {
+      "paper_id": "2608.24970v1",
+      "route": "202608/28/2608.24970v1-physics-informed-error-field-learning-a-post-training-optimization-framework-for-physics-informed-neural-networks",
+      "title": "Physics-Informed Error Field Learning: A Post-Training Optimization Framework for Physics-Informed Neural Networks",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "适用于地下水流PDE求解器的PINN优化框架",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 22:22:02 UTC"
+    },
+    {
+      "paper_id": "2608.25084v1",
+      "route": "202608/28/2608.25084v1-the-frame-kernel-method-for-multiscale-operator-learning",
+      "title": "The Frame Kernel Method for Multiscale Operator Learning",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向多尺度PDE代理建模的算子学习方法，直接适用于地下水流代理模型",
+      "first_seen_at": "2026-08-28 22:22:02 UTC",
+      "updated_at": "2026-08-28 22:22:02 UTC"
     },
     {
       "paper_id": "2608.25454v1",
@@ -49,9 +81,9 @@
         }
       ],
       "score": 8.0,
-      "evidence": "物理引导的生成式代理建模管道，可用于地下水流代理模型",
+      "evidence": "参数化流动的物理引导生成代理，可迁移至地下水代理建模",
       "first_seen_at": "2026-08-28 03:41:36 UTC",
-      "updated_at": "2026-08-28 03:41:36 UTC"
+      "updated_at": "2026-08-28 22:22:02 UTC"
     },
     {
       "paper_id": "2608.26549v1",
@@ -65,25 +97,9 @@
         }
       ],
       "score": 8.0,
-      "evidence": "提出免反向传播的物理信息神经网络框架，可求解正演与反演微分方程，直接支持地下水流物理信息建模。",
+      "evidence": "提出无反向传播的物理信息神经网络求解非线性微分方程，可迁移至地下水流控制方程",
       "first_seen_at": "2026-08-28 03:41:36 UTC",
-      "updated_at": "2026-08-28 03:41:36 UTC"
-    },
-    {
-      "paper_id": "2608.24970v1",
-      "route": "202608/28/2608.24970v1-physics-informed-error-field-learning-a-post-training-optimization-framework-for-physics-informed-neural-networks",
-      "title": "Physics-Informed Error Field Learning: A Post-Training Optimization Framework for Physics-Informed Neural Networks",
-      "section": "quick",
-      "tags": [
-        {
-          "kind": "query",
-          "label": "ag"
-        }
-      ],
-      "score": 7.0,
-      "evidence": "面向物理信息神经网络的通用后训练优化框架，可提升地下水流PINN模型的精度与效率",
-      "first_seen_at": "2026-08-28 03:41:36 UTC",
-      "updated_at": "2026-08-28 03:41:36 UTC"
+      "updated_at": "2026-08-28 22:22:02 UTC"
     },
     {
       "paper_id": "2608.25564v1",
@@ -97,9 +113,153 @@
         }
       ],
       "score": 7.0,
-      "evidence": "面向非线性PDE的PINN剪枝方法，可迁移至地下水流物理信息模拟",
+      "evidence": "面向非线性PDE求解器的物理信息神经网络剪枝",
       "first_seen_at": "2026-08-28 03:41:36 UTC",
-      "updated_at": "2026-08-28 03:41:36 UTC"
+      "updated_at": "2026-08-28 22:22:02 UTC"
+    },
+    {
+      "paper_id": "2608.25932v1",
+      "route": "202608/28/2608.25932v1-continually-learning-neural-operator-surrogate-for-three-dimensional-airborne-electromagnetic-bayesian-inversion",
+      "title": "Continually learning neural-operator surrogate for three-dimensional airborne electromagnetic Bayesian inversion",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "用于地下贝叶斯反演中三维正演求解器的神经算子代理",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 22:22:02 UTC"
+    },
+    {
+      "paper_id": "2608.22324v1",
+      "route": "202608/28/2608.22324v1-gaussian-process-learning-with-flow-map-refinement-for-parameter-estimation-in-dynamical-systems",
+      "title": "Gaussian process learning with flow map refinement for parameter estimation in dynamical systems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向动力系统的高斯过程参数估计方法，可应用于数据驱动地下水模型校准",
+      "first_seen_at": "2026-08-28 22:22:02 UTC",
+      "updated_at": "2026-08-28 22:22:02 UTC"
+    },
+    {
+      "paper_id": "2608.24833v1",
+      "route": "202608/28/2608.24833v1-real-time-inverse-solutions-via-neural-matrix-operators",
+      "title": "Real-time inverse solutions via neural matrix operators",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用于实时PDE反问题和数据同化的降基神经算子",
+      "first_seen_at": "2026-08-28 22:22:02 UTC",
+      "updated_at": "2026-08-28 22:22:02 UTC"
+    },
+    {
+      "paper_id": "2608.25744v1",
+      "route": "202608/28/2608.25744v1-a-constitutive-markov-physics-informed-neural-operator-mpno-for-autoregressive-stability-in-transient-dynamics",
+      "title": "A Constitutive Markov Physics-Informed Neural Operator (MPNO) for Autoregressive Stability in Transient Dynamics",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向含时PDE的物理信息神经算子与马尔可夫稳定化，可迁移至地下水流建模",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 22:22:02 UTC"
+    },
+    {
+      "paper_id": "2608.25823v1",
+      "route": "202608/28/2608.25823v1-learning-continuous-regional-temperature-fields-with-lead-time-and-resolution-queries",
+      "title": "Learning Continuous Regional Temperature Fields with Lead-Time and Resolution Queries",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "神经场实现可查询提前期和分辨率的连续时空预测，可迁移到地下水位预测",
+      "first_seen_at": "2026-08-28 22:22:02 UTC",
+      "updated_at": "2026-08-28 22:22:02 UTC"
+    },
+    {
+      "paper_id": "2608.25879v1",
+      "route": "202608/28/2608.25879v1-a-compensated-koopman-neural-operator-with-selective-state-space-dynamics-for-unsteady-flows",
+      "title": "A Compensated Koopman Neural Operator with Selective State-Space Dynamics for Unsteady Flows",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向非定常流的库普曼神经算子代理模型，可作为地下水流模拟的机器学习代理方法",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 22:22:02 UTC"
+    },
+    {
+      "paper_id": "2608.26510v1",
+      "route": "202608/28/2608.26510v1-wavelet-based-bayesian-hierarchical-modeling-with-regularized-horseshoe-priors-for-spatially-correlated-functional-data",
+      "title": "Wavelet-Based Bayesian Hierarchical Modeling with Regularized Horseshoe Priors for Spatially Correlated Functional Data",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向函数型数据的贝叶斯层次空间预测，可迁移至地下水监测",
+      "first_seen_at": "2026-08-28 22:22:02 UTC",
+      "updated_at": "2026-08-28 22:22:02 UTC"
+    },
+    {
+      "paper_id": "2608.26711v1",
+      "route": "202608/28/2608.26711v1-snappinn-pressure-and-energy-dissipation-reconstruction-from-a-sparse-and-noisy-velocity-snapshot",
+      "title": "SnapPINN: Pressure and Energy Dissipation Reconstruction from a Sparse and Noisy Velocity Snapshot",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "利用物理信息神经网络从稀疏含噪数据重构流场，可迁移至地下水流反演",
+      "first_seen_at": "2026-08-28 22:22:02 UTC",
+      "updated_at": "2026-08-28 22:22:02 UTC"
+    },
+    {
+      "paper_id": "2608.27256v1",
+      "route": "202608/28/2608.27256v1-enforcing-dirichlet-boundary-conditions-in-operator-learning",
+      "title": "Enforcing Dirichlet Boundary Conditions in Operator Learning",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "在算子学习中强制施加Dirichlet边界条件的神经网络算子架构",
+      "first_seen_at": "2026-08-28 22:22:02 UTC",
+      "updated_at": "2026-08-28 22:22:02 UTC"
     },
     {
       "paper_id": "2608.22422v1",
@@ -114,54 +274,6 @@
       ],
       "score": 6.0,
       "evidence": "最近邻非高斯空间过程用于地统计建模，可应用于数据驱动水文",
-      "first_seen_at": "2026-08-28 03:41:36 UTC",
-      "updated_at": "2026-08-28 03:41:36 UTC"
-    },
-    {
-      "paper_id": "2608.25744v1",
-      "route": "202608/28/2608.25744v1-a-constitutive-markov-physics-informed-neural-operator-mpno-for-autoregressive-stability-in-transient-dynamics",
-      "title": "A Constitutive Markov Physics-Informed Neural Operator (MPNO) for Autoregressive Stability in Transient Dynamics",
-      "section": "quick",
-      "tags": [
-        {
-          "kind": "query",
-          "label": "ag"
-        }
-      ],
-      "score": 6.0,
-      "evidence": "物理信息神经算子用于瞬态动力学自回归稳定，可借鉴于地下水流代理模型",
-      "first_seen_at": "2026-08-28 03:41:36 UTC",
-      "updated_at": "2026-08-28 03:41:36 UTC"
-    },
-    {
-      "paper_id": "2608.25879v1",
-      "route": "202608/28/2608.25879v1-a-compensated-koopman-neural-operator-with-selective-state-space-dynamics-for-unsteady-flows",
-      "title": "A Compensated Koopman Neural Operator with Selective State-Space Dynamics for Unsteady Flows",
-      "section": "quick",
-      "tags": [
-        {
-          "kind": "query",
-          "label": "ag"
-        }
-      ],
-      "score": 6.0,
-      "evidence": "面向非定常流的神经算子代理模型，可迁移至地下水流代理建模",
-      "first_seen_at": "2026-08-28 03:41:36 UTC",
-      "updated_at": "2026-08-28 03:41:36 UTC"
-    },
-    {
-      "paper_id": "2608.25932v1",
-      "route": "202608/28/2608.25932v1-continually-learning-neural-operator-surrogate-for-three-dimensional-airborne-electromagnetic-bayesian-inversion",
-      "title": "Continually learning neural-operator surrogate for three-dimensional airborne electromagnetic Bayesian inversion",
-      "section": "quick",
-      "tags": [
-        {
-          "kind": "query",
-          "label": "ag"
-        }
-      ],
-      "score": 6.0,
-      "evidence": "神经算子代理三维正演求解器；可迁移至地下水流动模拟的机器学习代理模型。",
       "first_seen_at": "2026-08-28 03:41:36 UTC",
       "updated_at": "2026-08-28 03:41:36 UTC"
     }

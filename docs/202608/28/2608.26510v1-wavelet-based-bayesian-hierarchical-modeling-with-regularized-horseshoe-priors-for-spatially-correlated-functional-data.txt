@@ -1,0 +1,1084 @@
+Title: Wavelet-Based Bayesian Hierarchical Modeling with Regularized Horseshoe Priors for Spatially Correlated Functional Data
+
+URL Source: https://arxiv.org/pdf/2608.26510v1
+
+Published Time: Fri, 28 Aug 2026 00:22:28 GMT
+
+Number of Pages: 39
+
+Markdown Content:
+# Wavelet-Based Bayesian Hierarchical Modeling with Regularized Horseshoe Priors for Spatially Correlated Functional Data 
+
+Alvaro Alexander Burbano-Moreno a * , Alex Rodrigo dos Santos Sousa a, Luiz Koodi Hotta aaInstituto de Matemática, Estatística e Computação Científica. Universidade Estadual de Campinas (UNICAMP), Campinas, SP, Brasil 
+
+Abstract 
+
+Environmental monitoring networks increasingly record pollutant levels as curves observed over time at fixed stations. Yet, exposure and risk assessment often require predicting these curves, with their uncertainty, at unmonitored locations. Conventional smooth-basis methods for such spatially correlated functional data, including spline-based kriging, tend to over-smooth acute, high-frequency episodes such as pollution peaks. We propose a parsimonious wavelet-based Bayesian hierarchical model that anchors a single, shared Matérn correlation matrix at each resolution level, avoiding the parameter inflation of coefficient-specific spatial processes. Adaptive sparsity is enforced through a spatially informed regular-ized horseshoe prior, allowing the model to borrow strength across neighboring locations. At the same time, a non-centered parameterization ensures stable inference under the No-U-Turn Sampler. In sim-ulation studies across distinct signal-to-noise regimes, incorporating spatial dependence substantially stabilizes reconstruction under severe noise relative to strictly independent models. Applied to PM 10 
+
+concentrations from Mexico City and benchmarked against ordinary kriging for functional data and a hierarchical Bayesian wavelet alternative, the model captures acute pollution events and, beyond improv-ing point prediction, delivers sharper and better-calibrated credible intervals at unobserved locations. 
+
+Keywords: Functional data analysis; Multiresolution analysis; Global-local shrinkage; Spatial prediction; Uncertainty quantification; Particulate matter PM 10 .
+
+> **
+
+Corresponding author. Email address: aamoreno@unicamp.br 
+
+1arXiv:2608.26510v1 [stat.ME] 27 Aug 2026 1 Introduction 
+
+The rapid advancement of automated monitoring networks and sensor technologies has funda-mentally transformed the collection and analysis of environmental, epidemiological, and phys-ical datasets. Measurements previously treated as discrete longitudinal vectors are now often analyzed as continuous functional curves over specific domains. This methodological shift has driven significant progress in Functional Data Analysis (FDA) (Ramsay and Silverman, 2005; Ferraty and Vieu, 2006; Kokoszka and Reimherr, 2017). Although early FDA methodologies primarily assumed statistical independence among sampled curves, contemporary applications often involve data that violate this assumption. In domains such as air-quality monitoring, regional meteorological studies, and epidemiological tracking, functional observations are in-trinsically associated with geographic coordinates (Cressie, 1993; Banerjee et al., 2014). The complex interplay between functional dynamics and geographic proximity requires method-ological frameworks that can model spatially correlated functional data (Mateu and Giraldo, 2021). This requirement is particularly pronounced in air-quality monitoring, where networks record pollutant concentrations at fixed stations, yet decisions regarding exposure and health risk frequently pertain to unmonitored locations. Consequently, predicting complete pollutant curves at unobserved sites, along with a rigorous quantification of their associated uncertainty, constitutes a central inferential objective. Traditional spatial functional methodologies, such as Ordinary Kriging for Functional Data (OKFD) (Giraldo et al., 2011), have primarily relied on basis expansion techniques, including B-splines and Fourier series, to address the infinite-dimensional nature of curves. Although these conventional bases are effective for modeling smooth, global trends, they often fail to capture non-stationary features or sudden localized spikes. In particular, spline-based spatial models tend to over-smooth functional trajectories, systematically underestimating sharp lo-cal variations. In environmental monitoring, such localized features often correspond to acute episodes, such as sudden pollution peaks, whose accurate reconstruction is directly relevant to exposure assessment and risk evaluation. To overcome these limitations, wavelets (Daubechies, 1992; Vidakovic, 1999; Vidakovic and Ruggeri, 2001; Mallat, 2008) provide a robust alterna-tive. Owing to their multiresolution properties, wavelets can represent both smooth macro-2scopic characteristics and localized irregularities using a relatively small number of non-zero coefficients. However, applying the discrete wavelet transform results in a high-dimensional parameter space, necessitating robust sparsity-inducing techniques. In Bayesian wavelet modeling, spar-sity has typically been enforced through discrete spike-and-slab priors (Zhou and Pati, 2021; Vannucci, 2021). Although theoretically grounded, these priors can present significant compu-tational challenges when exploring complex posterior spaces, particularly for gradient-based sampling algorithms such as Hamiltonian Monte Carlo (HMC) and the No-U-Turn Sampler (NUTS). To maintain theoretical identifiability while ensuring computational feasibility, level-dependent continuous shrinkage strategies provide a highly tractable alternative. Among these approaches, the Regularized Horseshoe (RHS) prior (Piironen and Vehtari, 2017) has been ex-tensively studied and applied with strong results across diverse statistical contexts, owing to its robust shrinkage and adaptive selection properties (Uribe et al., 2023; Chen et al., 2025; Fan et al., 2026). The intersection of FDA, geostatistics, and wavelet methodologies has yielded significant advancements that inform the present study. Early research by Morris and Carroll (2006) in-troduced wavelet-based functional mixed models, offering a unified framework for modeling complex, irregular functional data by projecting observed profiles into the wavelet domain to flexibly accommodate covariance structures. Building on this, Fernández-Pascual et al. (2015) proposed moment regression and Bayesian wavelet techniques tailored for spatially correlated functional data. More recently, Song and Mallick (2019) developed a hierarchical Bayesian framework for predicting spatially correlated curves in the wavelet domain. This framework assigns distinct spatial covariance matrices, each with its own variance and decay parameters, to the wavelet coefficients across all multiresolution levels and translations. Although this ap-proach provides considerable flexibility, it requires estimating hundreds of spatial hyperparam-eters, each informed by the number of monitoring sites, resulting in substantial computational demands and identifiability challenges for the spatial decay and variance parameters. Antici-pating these issues, Song and Mallick (2019) suggested employing level-wise spatial process priors for the coefficients to reduce the number of model parameters and alleviate computa-3tional complexity. The present study adopts and extends this recommendation beyond a simple level-wise reduction. Bayesian approaches to spatially correlated functional data have also been developed outside the wavelet domain, using alternative basis systems and dependence structures (Baladandayuthapani et al., 2008; Zhang et al., 2016). Continuous global-local shrinkage methods have also been adapted to incorporate spatial structure, but typically in contexts distinct from the present study. For example, spatial horse-shoe priors have been proposed for signal detection on regular image grids (Jhuang et al., 2019), and spatially dependent global-local priors have been developed for areal selection under con-ditional autoregressive dependence (Zhu et al., 2026). Horseshoe-type shrinkage has further been examined in the wavelet domain for sparse sequence problems (Zhai and Roˇ cková, 2026). These approaches operate on lattice or areal supports and do not address curve prediction at unobserved coordinates. To our knowledge, these methodological developments have not yet been integrated for spatially correlated functional data with point-referenced support. Specif-ically, the RHS prior remains largely unexplored in combination with wavelet-based multires-olution representations and an explicit geostatistical correlation structure over the continuous domain of curve-generating locations, which is essential for spatial prediction at unmonitored sites. This gap is not simply a matter of unexplored methodology; coupling continuous shrink-age with an explicit spatial process requires a modeling choice that the integration renders un-avoidable. When the spatial process is specified through a full covariance matrix, its marginal variance and the local shrinkage penalty both scale the same coefficients, rendering them non-identifiable. This confounding differs from the decay-versus-variance identifiability issues pre-viously discussed for Song and Mallick (2019); it arises specifically from the interaction be-tween continuous shrinkage and spatial variance, an interaction that, to our knowledge, has not been made explicit in the wavelet RHS context. We accordingly anchor spatial dependence through a Matérn correlation matrix with unit marginal variance, a standard identification strat-egy in hierarchical spatial models, so that the level-wise shrinkage scale alone governs the amplitude of the coefficients (Section 2.3). To address this gap, this study introduces a parsimonious Wavelet-Based Bayesian Hierar-chical Model that adapts the RHS prior for spatially correlated functional data. The approach 4integrates Bayesian hierarchical modeling, wavelet basis decomposition, and a streamlined spa-tial dependence structure. Rather than estimating independent spatial processes for thousands of coefficients, the proposed framework anchors a single, shared Matérn spatial process at each resolution level, embedding spatial dependence directly into the RHS regularization mecha-nism. This integration enables adaptive thresholding that suppresses noise while preserving genuine high-frequency features by borrowing strength across neighboring locations, rather than acting on each site in isolation. Consequently, even when local data are heavily affected by observational noise, information from neighboring locations guides the continuous shrink-age. Although each component is well established individually, their combination yields this behavior. Two design choices make this construction viable. First, a single shared Matérn cor-relation, rather than a full covariance, is anchored at each resolution level, in contrast to the per-coefficient spatial processes of Song and Mallick (2019), thereby removing the confound-ing between spatial scale and local shrinkage penalty (Section 2.3). Second, we formulate the full hierarchy using a strictly non-centered parameterization, which mitigates the funnel-shaped posterior geometries that hinder gradient-based sampling of horseshoe-type priors and supports stable inference under the NUTS algorithm. Additionally, prediction at unobserved sites reduces to a closed-form Gaussian conditioning step in the wavelet domain, enabling recovery of complete functional trajectories with well-calibrated credible intervals without re-quiring additional posterior simulation (Section 2.4). The proposal is evaluated through a comprehensive simulation study and a real-data appli-cation against two baselines: the classical OKFD method (Giraldo et al., 2011) and the hierar-chical Bayesian wavelet model of Song and Mallick (2019), the latter re-implemented within the same Stan environment so that observed differences reflect the underlying statistical ar-chitectures rather than implementation details. Applied to daily PM 10 concentrations from Mexico City’s monitoring network, the proposed methodology outperforms OKFD in point prediction while providing the calibrated predictive intervals that kriging cannot offer, and it yields sharper, better-calibrated intervals than the Song and Mallick (2019) benchmark. The remainder of this paper is organized as follows. Section 2 presents the theoretical framework, detailing the wavelet background, the hierarchical formulation of the spatial Regularized Horse-5shoe prior, and the closed-form scheme for spatial prediction. Section 3 reports the simulation study, organized around three objectives: recovering signals across three SNR regimes, quan-tifying the gain from borrowing spatial strength relative to a strictly independent baseline, and evaluating predictive performance at unobserved locations. Section 4 applies the methodology to PM 10 concentrations in Mexico City, and Section 5 concludes with a discussion of the main findings and future directions. 
+
+# 2 Theoretical Framework 
+
+## 2.1 Background on Wavelets 
+
+Wavelets are basis functions that enable efficient approximation of other functions using a relatively small number of non-zero wavelet coefficients. The construction of a family of wavelets relies on two carefully chosen orthonormal basis functions: the scaling function 
+
+φ
+
+and the mother wavelet 
+
+ψ. From these functions, a system of wavelets is generated through dilation and translation operations applied to 
+
+φ and 
+
+ψ, yielding the following expressions: 
+
+φl,k(t) = 2l/2
+
+φ (2lt − k) and 
+
+ψl,k(t) = 2l/2
+
+ψ(2lt − k), where l ∈ Z denotes the scale level (or resolution), and k ∈ Z represents the translation index. The normalization factor 2 l/2 ensures that the generated functions preserve orthonormality in the Hilbert space L2(R). In this man-ner, the family {
+
+ψl,k}l,k∈Z, combined with the basis generated by {
+
+φl0,k}k∈Z for a fixed level l0,constitutes an orthonormal basis of L2(R). This allows functions in this class to be represented as weighted sums of these wavelets. This construction is part of multiresolution analysis (MRA), a theoretical framework that or-ganizes functions into various levels of detail or resolution. In this context, the scaling function 
+
+φ generates a sequence of approximation spaces Vl that capture the smooth or global charac-teristics of functions. Conversely, the wavelets 
+
+ψl,k create the detail spaces Wl , responsible for describing the fluctuations or irregularities that occur between successive resolution lev-els. Formally, this structure leads to the orthogonal decomposition: L2(R) = ⊕
+
+> l∈Z
+
+Wl , with 
+
+Vl+1 = Vl ⊕ Wl , where the symbol ⊕ denotes orthogonal direct sum. This formalism allows 6us to represent any function f ∈ L2(R) as f (t) = ∑
+
+> k
+
+αl0,k
+
+φl0,k(t) + 
+
+> ∞
+
+# ∑
+
+> l=l0
+
+# ∑
+
+> k
+
+βl,k
+
+ψl,k(t), where the coefficients 
+
+αl0,k represent the coarse approximation of the function at a base level l0. The co-efficients 
+
+βl,k describe the progressive details of the function at finer levels. There are several wavelet functions; examples are shown in Figure 1 for Daubechies wavelets with one (Haar or Daub1), two (Daub2), four (Daub4), and ten (Daub10) vanishing moments. For a complete and rigorous mathematical description, refer to several classic works, such as those by Mallat (1989a,b), Daubechies (1992), Meyer (1992), Vidakovic (1999), and Mehra (2018).                     
+
+> Daub4 Daub10 Haar Daub2
+> −5.0 −2.5 0.0 2.5 5.0 −5.0 −2.5 0.0 2.5 5.0 −5.0 −2.5 0.0 2.5 5.0 −5.0 −2.5 0.0 2.5 5.0 −1 01−1.0 −0.5 0.0 0.5 −1.0 −0.5 0.0 0.5 1.0 −1.0 −0.5 0.0 0.5 1.0
+
+t
+
+> ψ(t)
+
+Figure 1: Daubechies wavelet functions with N = 1 (Haar wavelet), 2 (Daub2), 4 (Daub4) and 10 (Daub10) vanishing moments. 
+
+## 2.2 Statistical Model 
+
+Let s j ∈ D ⊂ Rd represent the spatial location of the j-th function, where j = 1, . . ., m and typically d = 2 in most applications. Consider t ∈ T = [ a, b] ⊂ R as the common continuum domain for all functions, which is discretized into n = 2L equally spaced points, denoted as 
+
+t = t1, . . . , tn. The functional observation corresponding to location s j at time t is denoted by 
+
+Ys j (t). We assume a non-parametric regression model to describe this configuration 
+
+Ys j (t) = Xs j (t) + 
+
+εs j (t). (1) 7The term 
+
+εs j (t) represents independent noise that follows a normal distribution, specifically Normal (0,
+
+σ 2 
+
+> ε
+
+). This noise is independent across different spatial locations s j and different time points ti for i = 1, . . ., n. The latent function Xs j (·), defined over the interval [a, b], belongs to the space L2([ a, b]) and can be approximated by an expansion in a wavelet basis involving multiple levels of resolution and translation, indexed by l and k, respectively 
+
+Xs j (t) ≈ 
+
+> 2l0−1
+
+# ∑
+
+> k=0
+
+α j,l0,k
+
+φl0,k(t) + 
+
+> L−1
+
+# ∑ 
+
+> l=l0
+> 2l−1
+
+# ∑
+
+> k=0
+
+β j,l,k
+
+ψl,k(t), (2) where {
+
+φl0,k}2l0 −1 
+
+> k=0
+
+are scaling functions at the coarsest level l0 and {
+
+ψl,k} are wavelet functions at levels l = l0, . . ., L−1. We collect the scaling coefficients at level l0 into 
+
+ααα j = ( 
+
+α j,l0,0, . . ., 
+
+α j,l0,2l0 −1)⊤ ∈
+
+R2l0 . For each finer level l ≥ l0, we write 
+
+βββ j,l =
+
+(
+
+β j,l,0, . . . , 
+
+β j,l,2l−1
+
+)⊤
+
+∈ R2l
+
+. Collectively, we refer to 
+
+θθθ j =
+
+(ααα j,
+
+βββ j,l0 ,
+
+βββ j,l0+1, . . ., 
+
+βββ j,L−1
+
+)
+
+as the full wavelet coefficient vector for Xs j (t).Let W be the orthonormal matrix of the discrete wavelet transform (DWT) of dimension 
+
+n × n, corresponding to the decomposition levels l0, l0 + 1, . . . , L − 1. By applying this matrix to the vectorized observations at location s j, denoted Ys j = (Ys j (t1), . . ., Ys j (tn))⊤, we obtain the vector of empirical wavelet coefficients, given by d j = W⊤Ys j . In matrix form, the measure-ment model can be expressed as follows: 
+
+Ys j = W
+
+θθθ j +
+
+εεε j,
+
+εεε j ∼ Normal (0,
+
+σ 2 
+
+> ε
+
+In
+
+), (3) and since W is orthonormal, we have 
+
+d j = W⊤Ys j =
+
+θθθ j +
+
+εεε∗ 
+
+> j
+
+,
+
+εεε∗ 
+
+> j
+
+= W⊤
+
+εεε j ∼ Normal (0,
+
+σ 2 
+
+> ε
+
+In
+
+). (4) Thus, in the wavelet domain, each location s j produces observed coefficients d j ∈ Rn that consist of the true coefficient vector 
+
+θθθ j plus independent noise 
+
+εεε∗ 
+
+> j
+
+.
+
+## 2.3 Bayesian Hierarchical Model and the Regularized Horseshoe Prior 
+
+In Song and Mallick (2019), a specific spatial process is assigned to each pair of indices (l, k),applied to a vector of wavelet coefficients. In this scheme, ΣΣΣl,k ∈ Rm×m represents a particular 8covariance matrix associated with the level l and the translation k. Although this approach provides remarkable flexibility in modeling spatial dependence, it involves estimating ∑L−1 
+
+> l=l0
+
+2l
+
+distinct covariance matrices, which incurs a high computational cost and increases the risk of identifiability issues for the spatial parameters. As an alternative, we propose a more parsimo-nious approach in which all coefficients corresponding to the same level l share a single spatial process. 
+
+The first stage (data): For each level l = l0, . . ., L−1, and each translation k = 0, . . . , 2l −1, we define the vector of empirical coefficients that correspond to all spatial locations as d·lk =(d1lk , . . . , dmlk )⊤, which follows: 
+
+d·,l,k |
+
+θθθ ·,l,k,
+
+σ 2 
+
+> ε
+
+∼ Normal m(
+
+θθθ ·,l,k,
+
+σ 2 
+
+> ε
+
+Im).
+
+The second stage (spatial process and sparsity): In wavelet-based modeling, it is well known that the coefficients capture various features of the underlying function at different resolution levels. Coarse levels reflect the global, smooth characteristics of the functions, where most coefficients are expected to be non-zero. In contrast, fine-resolution levels rep-resent highly localized fluctuations and are typically sparse. These levels often contain mostly noise, with only a few non-zero coefficients corresponding to true sharp features. Traditionally, sparsity in Bayesian wavelet models has been induced using discrete spike-and-slab priors, which are mixtures of a point mass at zero and a continuous distribution. However, exploring the resulting highly multimodal posterior space poses significant computational challenges for gradient-based sampling algorithms, such as HMC and NUTS, as implemented in Stan . To en-sure both theoretical identifiability and computational feasibility, we propose a level-dependent continuous shrinkage strategy that utilizes the RHS prior (Piironen and Vehtari, 2017). A crucial modeling decision is to divide the resolution levels into two sets: coarse levels, denoted by l ≤ Lc (modeled as strictly dense), and fine levels, denoted by l > Lc (undergo-ing shrinkage). To determine the threshold Lc separating these two sets, we use the primary resolution-level formulation proposed by Angelini and Vidakovic (2004). Based on the asymp-totic considerations established by Härdle et al. (1998), the number of coarse levels is explic-itly defined as Lc = ⌊log 2(log n)⌋ + 1. This threshold effectively identifies the initial levels at 9which the sparsity assumption no longer holds, thereby safeguarding the fundamental shape and primary energy of the curves from excessive regularization. Furthermore, integrating con-tinuous shrinkage with spatial dependence requires a modeling choice that the coupling itself renders unavoidable. If we model the spatial process using a standard full covariance matrix 
+
+ΣΣΣl =
+
+σ 2 
+
+> l
+
+RRRl, the total variance of a fine-level coefficient becomes the product 
+
+σ 2 
+
+> l
+
+×
+
+τ2 
+
+> l
+
+˜
+
+λ 2
+
+> l,k
+
+. This induces a non-identifiability issue, as the model cannot differentiate between a large spatial variance ( 
+
+σ 2 
+
+> l
+
+) and a strong local curve feature captured by the shrinkage penalty ( ˜
+
+λ 2
+
+> l,k
+
+), since both scale the same coefficients. This confounding is distinct from the decay-versus-variance identifiability concerns associated with assigning a separate spatial process to every coefficient (Song and Mallick, 2019); it arises specifically from the interaction between continuous shrink-age and spatial variance, an interaction that, to our knowledge, has not been made explicit in the wavelet RHS setting. To resolve it, we restrict the Matérn function to a spatial correlation matrix RRRl ∈ Rm×m, fixing its marginal variance to 1, so that the level-wise shrinkage scale alone governs the amplitude of the coefficients. The spatial dependence among wavelet coefficients is modeled using an isotropic Matérn correlation function. For each resolution level l, the correlation matrix RRRl is defined as RRRl [ j, j′] = 
+
+ρ(h j, j′ ;
+
+ϕl ,
+
+ν), where h j, j′ = || s j − s j′ || represents the Euclidean distance between the spatial lo-cations s j and s j′ . The Matérn family of correlation functions (Diggle and Ribeiro, 2007) is given by: ρ(h;
+
+ϕl,
+
+ν) = 12
+
+> ν−1
+
+Γ(
+
+ν) (h/
+
+ϕl) 
+
+> ν
+
+K 
+
+> ν
+
+(h/
+
+ϕl).
+
+In this formulation, the parameter 
+
+ϕl > 0 represents the spatial decay (or range) parameter, while 
+
+ν > 0 controls the smoothness of the field. The value of 
+
+ν determines the degree of mean-square differentiability of the trajectories of the underlying Gaussian process. By setting 
+
+ν = 1.5, we ensure that the trajectories are once differentiable in L2. This specific choice also yields a closed-form expression, enhancing the computational efficiency of the inferential procedure (Stein, 1999; Diggle and Ribeiro Jr, 2002; Gneiting et al., 2010). Additionally, Γ(·)
+
+is the gamma function, and K 
+
+> ν
+
+(·) the modified Bessel function of the second kind of order 
+
+ν.For coarse approximation levels (where l ≤ Lc), the spatial coefficient vectors for each 10 translation k at the same resolution level are modeled straightforwardly as 
+
+θ·,l,k |
+
+σ 2 
+
+> l
+
+, RRRl ∼ Normal m(0,
+
+σ 2 
+
+> l
+
+RRRl ), (5) where 
+
+σl > 0 is a level-specific scale parameter that governs the overall amplitude of the dense coarse signal. For the sparse fine detail levels ( l > Lc), the coefficient vectors are modeled using the multivariate extension of the RHS 
+
+θ·,l,k |
+
+λl,k,
+
+τl, cl, RRRl ∼ Normal m(0,
+
+τ2 
+
+> l
+
+˜
+
+λ 2
+
+> l,k
+
+RRRl). (6) In this context, 
+
+τl serves as the global shrinkage parameter for level l, which pulls all coef-ficients toward zero. On the other hand, 
+
+λl,k functions as the local shrinkage parameter, en-abling individual translation coefficients to move away from the global shrinkage when the data strongly indicate the presence of a true local feature. The modified local penalty, denoted as ˜
+
+λ 2
+
+> l,k
+
+, is defined as ˜
+
+λ 2 
+
+> l,k
+
+= (c2
+
+> l
+
+λ 2
+
+> l,k
+
+)/(c2 
+
+> l
+
++
+
+τ2
+
+> l
+
+λ 2
+
+> l,k
+
+). This formulation ensures that for small sig-nals, where 
+
+τ2
+
+> l
+
+λ 2 
+
+> l,k
+
+≪ c2 
+
+> l
+
+, the prior functions similarly to the standard horseshoe, effectively reducing the noise to zero. In contrast, for large true signals, where 
+
+τ2
+
+> l
+
+λ 2 
+
+> l,k
+
+≫ c2 
+
+> l
+
+, the prior vari-ance approaches c2 
+
+> l
+
+RRRl , which helps prevent excessive smoothing of sharp features in the curve. The parameter cl serves as the slab width. To complete the hierarchical specification, we assign independent Half-Cauchy marginal priors to both the local and global shrinkage parameters, and an Inverse-Gamma prior to the slab scale. The explicit theoretical structure is provided by 
+
+λl,k ∼ Half-Cauchy (0, 1),
+
+τl |
+
+τ0, l ∼ Half-Cauchy (0,
+
+τ0,l),
+
+c2 
+
+> l
+
+∼ Inv-Gamma (
+
+νc/2,
+
+νc s2 
+
+> c
+
+/2) ,
+
+where the slab hyperparameters are fixed at sc = 2.0 for the scale and 
+
+νc = 4.0 for the degrees of freedom. While this marginal formulation clearly defines the shrinkage behavior, directly sampling from heavy-tailed Half-Cauchy distributions can lead to problematic funnel shapes in HMC. To facilitate effective exploration of the posterior space, these priors are applied us-ing a strictly Non-Centered Parameterization (NCP), which is explained in detail in Section 11 3.1. Finally, instead of treating the global shrinkage scale 
+
+τ0, l as completely unknown, we calibrate it using prior information about the expected sparsity. Following the approach of Piironen and Vehtari (2017), we inform the scale parameter 
+
+τ0, l analytically based on the effec-tive number of non-zero parameters p0, l that we expect a priori at level l. Specifically, 
+
+τ0, l is defined as p0, l
+
+Dl − p0, l
+
+σε
+
+√m, where Dl = 2l represents the total number of translation coefficients at that level, m is the number of spatial locations, and 
+
+σε is the observation noise standard de-viation. As the resolution level l increases, p0, l is designed to reflect an increasingly smaller fraction of the total Dl coefficients. This approach naturally incorporates the multiresolution decay of energy into the data-driven regularization scheme. 
+
+In the third stage , the hierarchical model is completed by assigning weakly informative prior distributions to the hyperparameters that control spatial dependence and amplitude scales 
+
+ϕl ∼ Lognormal (log (0.35 · dmax ), 1),
+
+σl ∼ Half-Student-t(4, 0, 1),
+
+σε ∼ Half-Student-t(4, 0, 1).
+
+Here, dmax = max j, j′ ‖s j − s j′ ‖ represents the maximum observed Euclidean distance between any pair of spatial locations in the domain. The lognormal prior for the spatial decay parameter 
+
+ϕl is intentionally centered around log (0.35 · dmax ). This heuristic formulation ensures that the effective spatial range spans a plausible fraction of the domain, thereby preventing the Matérn correlation structure from either degenerating into pure spatial independence (when the range approaches zero) or becoming indistinguishable from a global flat field (when the range approaches infinity). For the scale parameters governing the dense coarse signal ( 
+
+σl) and the observational noise ( 
+
+σε ), Half-Student-t distributions serve as weakly informative priors with heavier tails than the Gaussian. This property lets the data, rather than the prior, drive the estimation of large-variance components while, for a moderate number of degrees of freedom, retaining finite variance that maintains well-behaved posterior geometry under gradient-based sampling. This choice also avoids the artificial concentration away from zero that Inverse-Gamma priors can impose on scale parameters in hierarchical models. 12 2.4 Spatial Prediction at Unobserved Locations 
+
+A key objective of the proposed framework is to predict complete functional trajectories at lo-cations with no observed data. The estimation process is performed using the NUTS algorithm in Stan , as detailed in Section 3.1. However, prediction requires no additional posterior sim-ulation. This subsection demonstrates that once the joint posterior is obtained, the predictive distribution can be expressed in a closed conditional form. Consequently, prediction simplifies to a direct sampling step, which we implement within the same Stan run. This step can also be replicated as a post-processing task in any environment. Let So = {s1, . . . , sm} represent the observed locations, and let S∗ = {s∗
+
+> 1
+
+, . . . , s∗
+
+> q
+
+} denote a set of q new, unsampled locations where we aim to make predictions. Our prediction process operates directly within the multiresolution domain rather than in a continuous functional space. For each resolution level l and translation k, we augment the coefficient vector 
+
+θθθ ·,l,k ∈ Rm with its unobserved counterpart 
+
+θθθ ∗·,l,k ∈ Rq. A key observation is that both the coarse-level prior (as shown in Equation (5)) and the fine-level Regularized Horseshoe prior (as seen in Equation (6)) are zero-mean multivariate normal distributions. The covariance of these distributions factors into a scalar scale times a level-specific Matérn correlation matrix. We define this scalar as follows: 
+
+vl,k =
+
+
+
+σ 2 
+
+> l
+
+, l ≤ Lc (dense coarse levels) ,τ2 
+
+> l
+
+˜
+
+λ 2 
+
+> l,k
+
+, l > Lc (sparse fine levels) .
+
+(7) In both cases, we can express the relationship as 
+
+θθθ ·,l,k | Ξ ∼ Normal m(0, vl,kRl ), where Ξ rep-resents all hyperparameters of the hierarchy discussed in Section 2.3. This unified expression arises from restricting the Matérn function to a correlation matrix. The matrix Rl does not contribute any variance itself; thus, the overall scale of the process whether derived from the coarse amplitude 
+
+σl or from the shrinkage profile 
+
+τl ˜
+
+λl,k is encapsulated in the single scalar vl,k.This separation simplifies the prediction process, making it clearer and more computationally efficient. During the implementation phase, √vl,k is the per-coefficient scale that was already established when constructing the latent field during estimation. As a result, we do not need to recompute any quantities specifically for prediction. Extending the Matérn correlation func-13 tion to all pairwise distances among So ∪ S∗ yields the augmented matrix R+ 
+
+> l
+
+∈ R(m+q)×(m+q),partitioned in blocks as 
+
+R+ 
+
+> l
+
+=
+
+
+
+Roo Ro∗
+
+R∗o R∗∗ 
+
+ , Roo ∈ Rm×m, R∗∗ ∈ Rq×q, R∗o = R⊤
+
+> o∗
+
+, (8) where Roo collects the correlations among observed sites, R∗∗ those among the new sites, and 
+
+R∗o the cross-correlations between the two sets. Every block is evaluated from the same level-specific decay 
+
+ϕl , so that no additional parameter is introduced by the prediction step. Under the augmented hierarchy, the joint prior of the stacked vector is 
+
+
+
+θθθ ·,l,k
+
+θθθ ∗·,l,k
+
+∣∣∣ Ξ ∼ Normal m+q
+
+(0, vl,k R+
+
+> l
+
+) . (9) Applying standard multivariate normal conditioning to (9) gives, for every pair (l, k),
+
+θθθ ∗·,l,k |
+
+θθθ ·,l,k, Ξ ∼ Normal q
+
+(ml,k, Vl,k
+
+), (10) with conditional mean and covariance 
+
+ml,k = R∗o R−1
+
+> oo
+
+θθθ ·,l,k, Vl,k = vl,k
+
+(R∗∗ − R∗o R−1 
+
+> oo
+
+Ro∗
+
+). (11) Note that the scale vl,k cancels in the mean but survives in the covariance. This has three consequences. The mean is a simple-kriging predictor in coefficient space, with interpolation weights R∗oR−1 
+
+> oo
+
+that depend only on 
+
+ϕl and are shared by all translations within the level. The covariance, by retaining vl,k, inherits the model’s regularization: a coefficient shrunk toward zero at the observed sites predicts near zero at the new sites, whereas one that escaped shrink-age remains diffuse, so the adaptive sparsity learned in estimation propagates coherently to prediction. Finally, since Roo depends only on 
+
+ϕl , one Cholesky factorization per level serves all 2 l translations, O(L) factorizations per draw, versus O(n) under a coefficient-specific con-struction. 14 Posterior predictive distribution. Let Y1: m denote the observed curves and 
+
+θθθ ,
+
+θθθ ∗ the coef-ficients at the observed and new locations. Since a latent curve is recovered deterministically as X∗ = W
+
+θθθ ∗, integrating the conditional law (10) over the joint posterior gives the posterior predictive distribution of the latent curve, 
+
+p(X∗ | Y1: m
+
+) =
+
+> ∫
+
+p(X∗ |
+
+θθθ ∗) p(
+
+θθθ ∗ |
+
+θθθ , Ξ)
+
+π(
+
+θθθ , Ξ | Y1: m
+
+) d
+
+θθθ ∗ d
+
+θθθ dΞ. (12) The latent curve X∗ represents the noise-free process at the new site and serves as the point predictor throughout the analysis. A new observation, Y∗, reflects the value recorded by a sensor and includes measurement error, as described in Equation (1). Specifically, Y∗ |
+
+θθθ ∗,
+
+σε ∼
+
+Normal n(W
+
+θθθ ∗,
+
+σ 2 
+
+> ε
+
+In), which results in wider prediction intervals. Which target is used for coverage depends on what is knowable. In the simulation study, the noise-free curve Z j is known, so coverage is assessed for X∗ against Z j; in the application, the latent process is never observed, so coverage is assessed for Y∗ against the held-out measurements. In each case, the interval and target share the same noise structure, which the alternative pairing would violate. The integral presented in Equation (12) is difficult to compute directly. However, it can be approximated by using composition sampling from the closed-form Gaussian shown in Equa-tion (10), without requiring additional posterior simulations. In our implementation, this pro-cess is carried out within the generated-quantities block, but it can also be performed as a post-processing step on saved samples. The procedure is summarized in Algorithm 1. Two additional notes complete the description. The algorithm is applied to the padded co-efficients under the symmetric padding method described in Section 3.1. The mirrored regions are trimmed only after the inverse transform, which helps maintain the structure of the dyadic wavelet tree. To ensure numerical stability, jitter is added to the diagonals of Roo and S(g) 
+
+> l
+
+, and the latter is symmetrized. We use the algorithm in Section 3.5 and in the application discussed in Section 4. 15 Algorithm 1 Posterior predictive sampling of curves at unobserved locations 
+
+Require: Posterior draws {(
+
+θθθ (g), Ξ(g))}Gg=1; locations So, S∗; basis W; target ( X∗ or Y∗) 
+
+> 1:
+
+for g = 1, . . ., G do  
+
+> 2:
+
+for l = l0, . . . , L − 1 do  
+
+> 3:
+
+Partition R+( g) 
+
+> l
+
+from 
+
+ϕ(g) 
+
+> l
+
+as in (8); factorize Roo = L(g) 
+
+> l
+
+(L(g) 
+
+> l
+
+)⊤ ⊲ once per level  
+
+> 4:
+
+K(g) 
+
+> l
+
+← (L(g) 
+
+> l
+
+)−1Ro∗; S(g) 
+
+> l
+
+← R∗∗ − (K(g) 
+
+> l
+
+)⊤K(g) 
+
+> l
+> 5:
+
+for k = 0, . . . , 2l − 1 do  
+
+> 6:
+
+v(g) 
+
+> l,k
+
+← Eq. (7); m(g) 
+
+> l,k
+
+← (K(g) 
+
+> l
+
+)⊤(L(g) 
+
+> l
+
+)−1
+
+θθθ (g) 
+
+> ·,l,k
+> 7:
+
+Draw 
+
+θθθ ∗(g) 
+
+> ·,l,k
+
+∼ Normal q(m(g) 
+
+> l,k
+
+, v(g) 
+
+> l,k
+
+S(g) 
+
+> l
+
+) 
+
+> 8:
+
+end for  
+
+> 9:
+
+end for  
+
+> 10:
+
+X∗(g) ← W
+
+θθθ ∗(g); if target is Y∗, add 
+
+εεε(g) ∼ Normal n(0,
+
+σ 2(g) 
+
+> ε
+
+In) 
+
+> 11:
+
+end for  
+
+> 12:
+
+Summarize the draws pointwise (predictive mean) 
+
+# 3 Simulation Studies 
+
+To validate the proposed hierarchical spatial wavelet model, we conducted a comprehensive simulation study. Using synthetic data provides complete control over the data-generating pro-cess, enabling evaluation of the model’s performance along three complementary dimensions. The first objective is to assess the signal-recovery capability of the spatial Regularized Horse-shoe prior across varying levels of difficulty. For this purpose, we simulate functional datasets with strictly controlled noise variances, establishing distinct high-, moderate-, and low-SNR regimes (Section 3.3). The second objective is to quantify the empirical advantage of borrow-ing spatial strength. We evaluate this by comparing our spatial formulation against an Indepen-dent Regularized Horseshoe (IRHS) baseline (Section 3.4), which retains the same shrinkage prior but treats the m functional curves as strictly independent, thereby neglecting the underly-ing spatial topology. The third objective is to evaluate predictive performance at unobserved locations (Section 3.5). Here, we benchmark our approach against two reference models: the classical OKFD method (Giraldo et al., 2011) and the hierarchical Bayesian wavelet model of Song and Mallick (2019). To assess robustness against model misspecification, the true la-tent spatially correlated coefficients are generated from an Exponential covariance function (
+
+ν = 0.5), while inference is performed under a smoother Matérn 3/2 structure ( 
+
+ν = 1.5). This design evaluates whether the model can recover the true functional parameters even when the 16 assumed spatial smoothness differs from the data-generating mechanism. 
+
+## 3.1 Computational Setup and Bayesian Inference 
+
+On the technical side, we implemented the simulation environment and data preprocessing in 
+
+R (R Core Team, 2026) using the wavethresh package. A common methodological challenge when applying the DWT to finite signals is boundary effects, which have been extensively docu-mented in the wavelet literature (see Mallat, 2008, Chapter 7). The standard periodic boundary condition ( bc="periodic" ) connects the end of the signal back to its beginning. However, if the values at these two endpoints differ significantly, this periodic wrapping creates an arti-ficial discontinuity (a sharp jump). The DWT interprets this jump as high-frequency energy, resulting in spurious detail coefficients that can severely distort the Regularized Horseshoe shrinkage process at the boundaries. To mitigate this issue while strictly preserving the dyadic length (2 L) required by the hierarchical wavelet tree, we implemented a dynamic symmetric padding strategy. The original functional curves of length n were mirrored at both ends by prepending the reversed first half and appending the reversed second half-effectively creating a continuous, artifact-free extended sequence of length 2 n. The DWT was then applied to these padded curves using Daubechies Extremal Phase wavelets with four vanishing moments (family="DaubExPhase", filter.number=4 ). After performing Bayesian estimation and the Inverse DWT, the padded regions were symmetrically trimmed, perfectly recovering the artifact-free signal in its original domain. The statistical inference engine used in this study was Stan (Stan Development Team, 2025), which employs the NUTS algorithm (Hoffman and Gelman, 2014). This algorithm is a highly efficient Markov Chain Monte Carlo (MCMC) method. Given the extreme dimensionality of the latent wavelet space and the heavy-tailed nature of the Half-Cauchy distributions within the Regularized Horseshoe prior, we opted for a strict NCP for both the spatial Gaussian fields (z) and the local shrinkage parameters. This architectural decision is crucial for decoupling the dependence between the location and scale hyperparameters. It helps to avoid the prob-lematic "funnel" geometries that can obstruct convergence in complex hierarchical models (Betancourt et al., 2017). We do not sample directly from the marginal Half-Cauchy distribu-17 tions described in Section 2.3. Instead, we implement the NCP by representing the shrinkage parameters as scale mixtures of Normal and Inverse-Gamma distributions. The structure of the latent variables, as coded for the MCMC, is defined as follows: For the local shrinkage parame-ters, we have 
+
+λl,k = u1, l,k√u2, l,k, where u1, l,k ∼ Normal (0, 1) and u2, l,k ∼ Inv-Gamma (0.5, 0.5).For the level-specific global shrinkage parameters, we define 
+
+τl = v1, l √v2, l
+
+τ0, l , where v1, l ∼
+
+Normal (0, 1) and v2, l ∼ Inv-Gamma (0.5, 0.5).This structure prevents problematic funnel geometries in the joint posterior space, thereby improving the efficiency of the NUTS algorithm. We assessed the frequentist properties of the Bayesian estimators in Simulation Studies 1 and 2 using a Monte Carlo (MC) scheme with 300 independent replicates. In Simulation Study 3, the computational cost associated with the Song and Mallick (2019) benchmark limited the Bayesian-versus-Bayesian comparison to the first 100 replicates, as described in Section 3.5. For each replicate and both Bayesian models, we approximated the posterior distribution using four parallel NUTS chains, each with 2,000 warm-up and 1,000 sampling iterations, yielding 4,000 posterior draws per parameter. To ensure robust exploration of the complex posterior geometry, the acceptance probability ( adapt_delta ) was set to 0.99 and the maximum tree depth to 12. Convergence and sampling efficiency were evaluated using the rank-normalized potential scale reduction factor ( ˆ R ≤ 1.01) and the bulk and tail effective sample sizes (ESS) (Vehtari et al., 2021). The latter metric is particularly important due to the heavy-tailed Half-Cauchy components of the Regularized Horseshoe prior. All reported estimates met these diagnostic criteria. 
+
+## 3.2 Data Generation Process 
+
+To thoroughly evaluate the proposed hierarchical spatial wavelet model, we simulated func-tional data that replicate the complex, non-linear behaviors often observed in environmental and epidemiological time series. The simulation encompassed m = 20 spatial locations as shown in Panel (a) of Figure 2, with functional curves recorded at a regular discrete grid of 
+
+n = 128 time points. The actual generated curves are depicted in Panel (b) of the same figure. At each location s j and time t, the true underlying latent signal, denoted as Z j(t), was con-18 12345678910 11 12 13 14 15 16 17 18 19 20 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 
+
+Coordinate 1 Coordinate 2         
+
+> a )
+> 123456016 32 48 64 80 96 112 128
+> Domain Value
+> b )
+
+Figure 2: Graphs are from the simulation. Panel (a) shows a grid of simulated locations. Panel 
+
+(b) presents the target curves without noise. structed as the sum of a fixed deterministic trend and a spatially correlated random functional component. The deterministic trend, 
+
+μ(t), was designed as a trimodal function to produce dis-tinct, sharp peaks (high-frequency features) alongside smooth valleys (low-frequency features). This base trend is defined by a global intercept and three Gaussian peaks, represented by the following equation 
+
+μ(t) = 3.1+1.8 exp (−0.008 (t − 26 )2)+ 0.8 exp (−0.003 (t − 64 )2) + 1.0 exp (−0.008 (t − 109 )2).
+
+To introduce functional variability across the spatial domain, we utilized a spatial basis expansion approach. We defined a set of K = 8 cubic B-spline basis functions (of order 4), denoted by Φ(t). The latent curve for the j-th spatial location was then generated as follows 
+
+Z j(t) = 
+
+μ(t) + 
+
+> K
+
+# ∑
+
+> k=1
+
+ak, jΦk(t),
+
+where the basis coefficients ak j are spatially dependent. For each basis function k, the vector of coefficients across all m locations, aaak = ( ak1, . . ., akm )⊤, was drawn from a multivariate normal distribution aaak ∼ Normal m(0, ΣΣΣ). The spatial covariance matrix ΣΣΣ was constructed using 19 an exponential covariance function Σ j, j∗ =
+
+σ 2 
+
+> s
+
+exp (−d j, j∗ /
+
+ϕs
+
+), where d j, j∗ is the Euclidean distance between locations j and j∗. We fixed the marginal variance at 
+
+σ 2 
+
+> s
+
+= 0.5 and the spatial decay parameter at 
+
+ϕs = 0.4, ensuring moderate spatial correlation. 
+
+## 3.3 Simulation Study 1: Signal-to-Noise Ratio 
+
+We created the synthetic datasets by adding independent Gaussian white noise to the true latent curves. This can be expressed mathematically as Yj(t) = Z j(t)+ 
+
+ε j(t),
+
+ε j(t) ∼ Normal (0,
+
+σ 2noise ).To systematically assess the effectiveness of the Regularized Horseshoe spatial prior in recov-ering the true signal, we designed three distinct simulation scenarios based on the SNR. For spatial functional data, the overall challenge of recovering the signal is best represented by the average curve-wise SNR across all spatial locations, which is defined as: SNR = 1
+
+m
+
+> m
+
+# ∑
+
+> j=1
+
+Var (Z j)
+
+σ 2noise 
+
+.
+
+This formulation allows us to quantify the relationship between the variance of the true signal and the variance of the noise, facilitating a comprehensive evaluation of the recovery task. By controlling the noise standard deviation ( 
+
+σnoise ), we designed the following Monte Carlo scenarios, each consisting of 300 independent replicates: 1. Scenario 1 (High SNR / Low Noise) : Setting 
+
+σnoise = 0.15 results in an average SNR of approximately 14.41. This scenario tests the model’s ability to maintain the true shape of the curves without over-smoothing or excessively flattening genuine signal peaks. 2. Scenario 2 (Moderate SNR) : With 
+
+σnoise = 0.30, we obtain an average SNR of about 3.60. In this scenario, minor fluctuations in the function begin to blend with the noise, thereby challenging the model’s thresholding capabilities. 3. Scenario 3 (Low SNR / High Noise) : Here, 
+
+σnoise = 0.60 leads to an average SNR of approximately 0.90. This is the most challenging scenario, where the variance of the observational noise significantly overshadows that of the true signal. It serves as the ultimate stress test for assessing the mathematical advantage of leveraging information 20 from spatial neighbors to recover heavily corrupted features.                      
+
+> 0.000 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 12345678910 11 12 13 14 15 16 17 18 19 20
+> Sites RISE
+> Scenario 1 Scenario 2 Scenario 3
+
+Figure 3: Distribution of the RISE across 20 locations from 300 MC simulations. Boxplots show the model’s effectiveness at recovering target curves across three noise regimes: low, moderate, and high. Figure 3 shows the distribution of the Relative Integrated Squared Error (RISE) obtained from 300 Monte Carlo simulations. This illustrates how effectively the spatial hierarchical formulation recovers the original target curves across three different SNRs. By standardizing the reconstruction error relative to the total energy of the true latent curves, the RISE yields a scale-free metric that enables clearer evaluation of the model’s performance. For a detailed theoretical formulation of this discrepancy measure, refer to Appendix A. In Scenario 1, which is characterized by a low-noise environment with a noise standard devi-ation of 
+
+σnoise = 0.15 and a high average SNR of approximately 14.41, the model demonstrates excellent accuracy. The RISE values are closely clustered around zero across all 20 locations. This outcome highlights the effectiveness of the spatial formulation of the RHS in maintaining the true shape of the curves by avoiding excessive smoothing and preventing the undesired flat-tening of the signal’s genuine high-frequency peaks. Moreover, the local regularization param-eter ( 
+
+λl,k) serves effectively to prevent the true detail coefficients from being globally shrunk to zero. In Scenario 2, with a moderate SNR of approximately 3.60 ( 
+
+σnoise = 0.30), we observe a 21 critical situation where smaller fluctuations in the function begin to merge with the background noise. This results in a natural yet carefully controlled increase in both the dispersion and the magnitude of the RISE values. However, the median relative error remains low, demonstrating the model’s robustness in distinguishing true spatial variability from random fluctuations. Finally, Scenario 3 presents the most severe stress test, evaluating a low-SNR environment in which the noise level rises to 
+
+σnoise = 0.60, resulting in an average SNR of approximately 0.90. In this situation, the observational noise magnitude significantly exceeds that of the underlying signal. As expected, both the overall magnitude and variance of the RISE reach their highest levels, with upper quartiles approaching 0.008 at certain locations. Nevertheless, maintaining a relative error of less than 1% (RISE ≤ 0.01) under such extreme conditions un-derscores the necessity of the borrowing-of-spatial-strength mechanism. The model can still achieve effective functional reconstruction by employing continuous shrinkage guided by the Matérn correlation structure, thereby stabilizing heavily corrupted local features through infor-mation sharing across neighboring locations.                                                 
+
+> 23456016 32 48 64 80 96 112 128
+> Domain Value Scenario 1 − Site 6
+> 23456016 32 48 64 80 96 112 128
+> Domain Value Site 20
+> 23456016 32 48 64 80 96 112 128
+> Domain Value Scenario 2 − Site 6
+> 23456016 32 48 64 80 96 112 128
+> Domain Value Site 20
+> 23456016 32 48 64 80 96 112 128
+> Domain Value Scenario 3 − Site 6
+> 23456016 32 48 64 80 96 112 128
+> Domain Value Site 20
+
+Figure 4: Functional reconstruction of the latent curves at Sites 6 and 20 across the three noise scenarios. Red dotted: true latent curve. Solid blue: point estimate (average of the 300 posterior-mean curves across MC replicates). Gray shaded: average of the 300 corresponding 95% HPD intervals. Figure 4 shows the proposed spatial model’s ability to reconstruct the functional curves 22 across three noise scenarios at two geographic locations: Sites 6 and 20. In this figure, the red dotted line represents the true underlying latent curve. To summarize the simulation study’s overall performance, the solid blue line shows the point estimate, calculated as the average of the 300 smoothed posterior mean curves across Monte Carlo replicates. Additionally, the gray shaded area represents the average of the 300 corresponding 95% Highest Posterior Density (HPD) credible intervals. Selecting these two locations demonstrates the model’s spatial robustness across various topological configurations. As shown in the spatial grid (Figure 2a), Site 6 is situated at the upper-right boundary of the domain, representing a peripheral area with fewer neighbors. In contrast, Site 20 is located in the lower central region. In Scenario 1 (left panels), which is characterized by a low-noise environment, the model captures the functional dynamics excep-tionally well. The averaged blue posterior mean aligns closely with the true red curve, and the averaged 95% HPD interval is remarkably narrow. This demonstrates that the RHS prior does not excessively penalize high-frequency coefficients when the signal is clear, thereby ef-fectively preserving the amplitude of the three characteristic peaks of the original function. As the noise variance increases in Scenario 2, the average gray uncertainty band naturally widens to reflect reduced signal clarity. Despite this, the mean estimate remains remarkably stable and true to the original geometry, highlighting the hierarchical model’s effectiveness as a robust thresholding mechanism against random fluctuations. Scenario 3 (right panels) provides clear visual evidence of the model’s effectiveness under extreme noise conditions ( 
+
+σnoise = 0.60). Even when observational variance significantly ob-scures the underlying signal, the averaged estimated curves show neither erratic oscillations (indicating overfitting) nor severe flattening (suggesting over-smoothing). The average 95% HPD interval conservatively widens to fully encompass the true curve from end to end, ensur-ing accurate statistical coverage. Notably, even at Site 6, a location near a geometric boundary, the curve is reconstructed with good functional accuracy. This visually demonstrates the me-chanics of spatial strength borrowing: the Matérn correlation structure compensates for poor local data quality by leveraging topological information from surrounding stations, enabling the RHS to reconstruct heavily corrupted features confidently. 23 3.4 Simulation Study 2: Comparison of Spatial and Independent Models 
+
+The goal of this second simulation study is to evaluate the statistical benefits of explicitly in-cluding spatial dependence when modeling correlated curves. To accomplish this, we compare our proposed hierarchical spatial model with a constrained version that assumes complete inde-pendence across all geographic locations. This baseline reference model, called the IRHS, has the same architecture, hierarchical structure, and continuous shrinkage priors as our proposed model. The key difference is that the Matérn spatial correlation matrix ( RRRl ) is completely removed and replaced with the identity matrix ( IIIm). This change effectively eliminates any "borrowing of strength" between neighboring curves during inference. To ensure a fair comparison, we keep all other structural components the same, includ-ing the NCP and the distinction between coarse and sparse levels. Thus, any improvement observed in predictive performance or parameter estimation of the proposed model can be directly attributed to its spatial framework. The comparative analysis focuses on the moder-ate noise regime, characterized by an average SNR of approximately 3.60. This aligns with the scenario where the noise standard deviation, 
+
+σnoise , is set at 0.30, as detailed in Section 3.3. This scenario is particularly insightful because it marks a critical threshold at which lo-cal, high-frequency features of the trimodal signal begin to merge with observational noise. Under these conditions, recovering the signal becomes highly challenging for independent esti-mators. Through 300 Monte Carlo simulations, we aim to demonstrate that the spatial model’s ability to leverage neighborhood information yields more accurate estimates. Additionally, we quantify the deterioration in statistical quality, including increased reconstruction error and compromised credible-interval coverage, that occurs when spatial dependence is not accounted for. Figure 5 provides a detailed comparison of the reconstruction accuracy between the pro-posed hierarchical spatial model and the baseline IRHS model. This evaluation is performed in a moderate-noise regime, a critical threshold at which local high-frequency features begin to merge with observational noise. Panel (a) shows the distributions of the Integrated Squared Error (ISE), while Panel (b) depicts the Integrated Absolute Error (IAE) across all 20 spatial lo-cations. Both ISE and IAE serve as formal discrepancy metrics that quantify global estimation 24 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20                     
+
+> ISE
+> IRHS Model Proposed Model
+> a)
+> 0510 15 20 12345678910 11 12 13 14 15 16 17 18 19 20
+> Sites IAE b)
+
+Figure 5: Reconstruction accuracy of the proposed model versus the IRHS baseline under the moderate-noise regime. (a) ISE and (b) IAE across all 20 locations over 300 MC simulations. error over the entire functional domain; a detailed theoretical formulation of these discrepancy measures is provided in Appendix A. The results clearly demonstrate the empirical advantage of explicitly incorporating spatial dependence. In both evaluation metrics, the proposed spatial model (green boxplots) consis-tently shows lower median errors and significantly narrower interquartile ranges than the IRHS baseline (purple boxplots) across the entire spatial domain. The IRHS model, which limits inference by completely excluding the Matérn spatial correlation matrix and assuming strictly independent curves, tends to show systematically higher estimation errors and a greater vul-nerability to extreme outliers. This performance gap underscores a fundamental limitation of independent estimators: without the ability to leverage neighboring locations, the indepen-dent continuous shrinkage prior struggles to accurately distinguish genuine local signal fluctu-ations from random background noise. By utilizing the underlying spatial topology through the Matérn correlation structure, the proposed model effectively shares information across the network. This spatial framework stabilizes parameter estimation, significantly reducing both squared and absolute reconstruction errors, and prevents the decline in statistical quality that commonly occurs when spatial dependence is ignored. 25 3.5 Simulation Study 3: Predictive Performance 
+
+In this third simulation study, we evaluate the proposed framework’s predictive capabilities for estimating functional trajectories at unobserved geographic coordinates. Building upon the moderate-noise regime (Scenario 2, 
+
+σnoise = 0.30) established in Section 3.3, this analysis compares our methodology against two distinct baseline models: the classical OKFD approach (Giraldo et al., 2011) and the hierarchical Bayesian wavelet model proposed by Song and Mallick (2019). To facilitate a rigorous and equitable methodological comparison within a unified com-putational environment, we reconstructed the Song and Mallick (2019) framework (hereafter S&M) using Stan. As the original implementation was developed in MATLAB and, to the best of our knowledge, its source code is not publicly available, we carefully adapted the framework to reproduce their theoretical specifications. In particular, we assigned a distinct exponential spatial process to each wavelet coefficient and employed their Laplace spatial prior configura-tion. Implementing both Bayesian approaches in Stan ensures that any observed differences in estimation accuracy or execution time are attributable solely to the underlying statistical archi-tectures, rather than to discrepancies in programming languages or sampling algorithms. The parameter inflation inherent to the Song and Mallick (2019) model necessitates computing and Cholesky-factorizing distinct spatial covariance matrices for every coefficient at each leapfrog step of the NUTS, rendering evaluation of the full set of 300 Monte Carlo replicates compu-tationally prohibitive. Therefore, we conducted the predictive assessment using the first 100 independent replicates from Scenario 2. This subset provides a robust, statistically sufficient sample size to characterize the distribution of predictive errors and assess MCMC efficiency, preserving the rigor of the comparative analysis while remaining computationally feasible. As illustrated in the spatial grid in Panel (a) of Figure 2, spatial locations 9 and 19 were intentionally excluded from the model training phase. This exclusion allows for the evaluation of predictive performance under different topological constraints. Site 9 is situated in a cen-tral area with a high density of neighboring stations, while Site 19 is located at the periphery of the domain and is geographically isolated. These two locations serve as new, unobserved points, requiring the models to predict their functional trajectories based solely on geographic 26 coordinates and the observed data from neighboring stations. Figure 6 and Table 1 jointly summarize the assessment. Figure 6 presents the full ISE and IAE distributions for the three competing models. At the same time, Table 1 reports the corre-sponding means (MISE, MIAE) and, for the two Bayesian models, the empirical coverage and mean width of the pointwise 95% HPD intervals. Since OKFD provides only point predictions, the interval-based comparison is limited to the proposed model and S&M. Predictive error at the held-out sites S 9 (central) and S 19 (peripheral) is evaluated over 100 MC replicates of Sce-nario 2. The panels display the distributions of the ISE and IAE for the proposed model, the S&M model, and OKFD. Point-prediction accuracy depends strongly on the density of neigh-boring stations around the target site. At the central site S 9, the proposed model achieves the lowest and most concentrated error distributions in Figure 6, a result confirmed numerically. Compared to S&M, it reduces the MISE from 12.75 to 9.04 and the MIAE from 33.05 to 28.30. When neighboring stations are dense, the model benefits from abundant spatial information, which enhances the reconstruction of localized, high-frequency features. At the isolated peripheral site S 19 , the three error distributions overlap substantially, and the ranking becomes far less clear-cut. The proposed model retains a marginal edge on the squared error metric (MISE 29.96 versus 30.55), whereas S&M attains a slightly lower absolute error (MIAE 56.04 versus 59.36). This apparent reversal follows from what each metric rewards. The ISE weights deviations quadratically and is therefore dominated by the few sharp peaks that the wavelet basis recovers faithfully. Still, the smoother competitors flatten, keeping the proposed model ahead on MISE. The IAE weights every point in proportion to its error, so those flattened peaks contribute only linearly; there, with little neighboring information to exploit, the proposed model leaves a small, diffuse error that accumulates over the long smooth stretches and slightly exceeds the concentrated peak error of the smoother methods. This near-parity is consistent with the edge effects observed elsewhere in the study: an isolated site offers little spatial information to any method, which narrows the gap between competitors. The primary distinction between the two Bayesian models lies in the quality of their predic-tive intervals. At both sites, the proposed model achieves an empirical coverage of 0.97, which is close to the nominal value of 0.95, while generating substantially narrower intervals, with 27 mean widths of 1.01 at S 9 and 1.47 at S 19 . In comparison, the S&M model attains a coverage of 1.00 at both sites, but only by producing intervals approximately twice as wide (2.06 and 2.82). Thus, the S&M model achieves higher coverage at the expense of informativeness, whereas the proposed model maintains coverage near the nominal level with considerably more precise intervals.       
+
+> ISE IAE
+> S9 S19 S9 S19 30 40 50 60 10 20 30
+> Sites
+> Proposed S&M OKFD
+
+Figure 6: Predictive error at the held-out sites S 9 (central) and S 19 (peripheral) over 100 Monte Carlo replicates of Scenario 2 
+
+σnoise = 0.30. Panels show the distributions of the ISE and the IAE for the proposed model, the Song and Mallick (2019) model (S&M), and the OKFD. Table 1: Predictive performance at the held-out sites S 9 and S 19 : mean integrated squared error (MISE), mean integrated absolute error (MIAE), empirical coverage of the pointwise 95% HPD intervals, and their mean length, for the proposed model and for S&M. Site Method MISE MIAE 95% HPD coverage Mean length S9
+
+Proposed 9.04 28.30 0.97 1.01 S&M 12.75 33.05 1.00 2.06 S19 
+
+Proposed 29.96 59.36 0.97 1.47 S&M 30.55 56.04 1.00 2.82 28 4 Real Data Application 
+
+Interactions between geographic conditions and seasonal weather cycles directly influence at-mospheric particulate matter (PM 10 ) concentrations. In the Valley of Mexico, the high altitude and mountainous terrain often hinder pollutant dispersion. While temperature and intense solar radiation at tropical latitudes catalyze atmospheric chemical reactions, the lack of precipitation and a stable mixing layer are the main drivers of the accumulation of suspended solid and liquid particles. Excess PM 10 poses a severe risk to respiratory and cardiovascular health, a concern that intensifies during the transition from the dry season to the rainy season.                 
+
+> 12345678910 11 12 13 14 15 16 17 ABC
+> 18.9 19.2 19.5 19.8 20.1 −99.75 −99.50 −99.25 −99.00 −98.75 −98.50
+> Longitude Latitude
+> a )
+> 123456016 32 48 64 80 96 112 128
+> Day log (PM 10 )
+> b )
+
+Figure 7: (a) Monitoring stations in Mexico City, highlighting the three held-out stations (A, B, and C) excluded from training for cross-validation. (b) Daily log (PM 10 ) profiles for the monitored stations over 128 days from February 15 to June 22, 2025. This study aims to assess PM 10 concentrations (measured in micrograms per cubic me-ter, 
+
+μg/m3) in Mexico City during a critical period of atmospheric transition in 2025. The Atmospheric Monitoring Network (RAMA - Red Automática de Monitoreo Atmosférico) col-lected the data using strategically located stations to capture air quality variability across the metropolitan area. The dataset includes consecutive hourly readings from early morning on February 15, 2025, through the end of the day on June 22, 2025. This timeframe enables ob-servation of the pollutant’s behavior under conditions of extreme aridity and the initial effects of the first convective summer rains. The raw data are publicly accessible on Mexico City’s 29 air quality portal at http://www.aire.cdmx.gob.mx . Given that environmental records often contain technical errors or maintenance periods (missing values), we needed to address gaps in the PM 10 data to create a continuous time series. To accomplish this, we used the missForest 
+
+package in R for data imputation. This non-parametric method, based on random forests, is par-ticularly effective for atmospheric time series because it captures nonlinear interactions among variables without assuming rigid distributional forms. We implemented the algorithm with 100 trees and five iterations to ensure stable reconstructed values. Each time series consists of 3,072 equally spaced observations, which correspond to 128 units in the daily time domain. To create a daily-level aggregated representation, each series is divided into 128 blocks, each containing 24 consecutive observations. The median is used as the measure of central tendency for each block, rather than the mean, because it is more robust against outliers and better accounts for potential deviations from normality in the distribution of PM 10 concentrations. As a result of this procedure, each series is represented by a vector of 128 daily PM 10 values, corresponding to the period from February 15 to June 22. To assess predictive performance in a real-world setting, we conducted spatial hold-out cross-validation. Three stations, labeled A, B, and C in Figure 7, Panel a), were entirely withheld from the training set to probe distinct geographic regimes. Station C is located in a densely instrumented, central region and serves as a test of interpolation. Station A is situated in a comparatively isolated region and evaluates performance under sparse-neighborhood sup-port. Station B, positioned on the southeastern boundary of the network, tests stability under extrapolation. At these three coordinates, the proposed wavelet model was compared against two baselines: the classical OKFD method (Giraldo et al., 2011) and the hierarchical Bayesian wavelet model of S&M, re-implemented in Stan as described in Section 3.5. Because only the two Bayesian models yield full posterior predictive distributions, we assess uncertainty quan-tification, empirical coverage, and the mean width of the 95% HPD intervals for the proposed model and S&M. In contrast, we compare OKFD solely on point-prediction accuracy. Figure 8 presents a comparison of the posterior predictive reconstructions generated by the proposed model and S&M at the three held-out stations. Both Bayesian models effectively capture the highly non-stationary and localized dynamics of the series, including the acute 30 CBA            
+
+> 016 32 48 64 80 96 112 128 123456123456123456
+> Day log (PM 10 )
+> Observed Proposed S&M 95% HPD (S&M) 95% HPD (Proposed)
+
+Figure 8: Predictive performance and uncertainty quantification at the three held-out sta-tions (A, B, and C), comparing the proposed model with S&M. Solid black: observed log-transformed PM 10 . Dashed blue: proposed posterior predictive mean, with its 95% HPD inter-val as the gray shaded region. Two-dash orange: S&M posterior predictive mean, with its 95% HPD interval bounded by dashed green lines. pollution episode observed around day 32. Their 95% HPD bands encompass nearly all held-out observations, aligning with the empirical coverage reported in Table 2. However, the two models differ significantly in the precision of their uncertainty estimates. The HPD band of the proposed model is consistently narrower than that of S&M at each station, particularly at the central station C and the boundary station B, where the S&M intervals are notably wider. Consequently, the proposed model achieves valid coverage while providing substantially more informative predictive intervals. Figure 9 compares the point predictions of the three methods against the observed curves. OKFD, which relies on a penalized B-spline basis, over-smooths the trajectories and systemati-cally underestimates the sharp, high-frequency peaks that characterize daily air-quality dynam-ics. Both wavelet-based models, by contrast, resolve these localized features far more faithfully: the multiresolution wavelet basis, coupled with the spatially informed Regularized Horseshoe prior, allows the proposed model to reconstruct smooth global trends and abrupt local spikes within a single adaptive framework. 31 CBA           
+
+> 016 32 48 64 80 96 112 128 2.0 2.7 3.4 4.1 4.8 5.5 2.0 2.7 3.4 4.1 4.8 5.5 2.0 2.7 3.4 4.1 4.8 5.5
+> Day log (PM 10 )
+> Observed Proposed S&M OKFD
+
+Figure 9: Point estimates at the held-out stations (A, B, and C). Solid black: observed log (PM 10 ). Dashed blue: proposed model. Two-dash orange: S&M. Dotdash: OKFD. Table 2 presents the quantitative assessment. Compared to OKFD, the proposed model reduces both the ISE and the IAE at all three stations. Specifically, the ISE decreases from 12.47 to 7.66 at Station A, from 10.50 to 4.70 at Station B, and from 2.67 to 1.87 at Station C. Additionally, unlike OKFD, the proposed model provides calibrated predictive intervals. In comparison with S&M, the results are more nuanced. At the central (C) and boundary (B) sta-tions, the proposed model achieves lower ISE and IAE values. However, at the isolated Station A, the S&M model demonstrates superior point accuracy (ISE 5.66 versus 7.66; IAE 21.42 versus 25.46). This outcome aligns with the anticipated reduction in the benefit of level-wise strength borrowing under sparse-neighborhood support, as previously observed in the simula-tion study. The proposed model consistently outperforms S&M in uncertainty quantification: its 95% HPD intervals are narrower at every station (1.60 versus 1.84 at A, 0.81 versus 1.14 at B, and 0.47 versus 0.79 at C), and its empirical coverage remains at or above the nominal 0.95, aligning more closely with the nominal level at Stations B and C (0.96 and 0.95, compared to 0.98 and 1.00 for S&M, which tends to over-cover). In summary, the proposed model outper-forms OKFD across all stations and metrics, matches or exceeds S&M except in point accuracy at the most isolated station, and consistently provides sharper and better-calibrated predictive 32 Table 2: Predictive performance at the three held-out stations (A, B, and C). ISE and IAE of the point predictions are reported for each method; empirical coverage and mean width of the 95% HPD intervals are additionally reported for the two Bayesian models (the proposed model and S&M). Bold indicates the best value across the three methods for each metric. Station Method ISE IAE Coverage Mean width AProposed 7.66 25.46 1.00 1.60 S&M 5.66 21.42 1.00 1.84 OKFD 12.47 31.51 – –BProposed 4.70 19.04 0.96 0.81 
+
+S&M 5.95 22.75 0.98 1.14 OKFD 10.50 31.08 – –CProposed 1.87 12.24 0.95 0.47 
+
+S&M 2.05 12.97 1.00 0.79 OKFD 2.67 15.07 – –uncertainty. This combination of accuracy and well-quantified uncertainty is particularly valu-able for prediction at unobserved environmental-monitoring locations. 
+
+# 5 Conclusions 
+
+This study introduces a Wavelet-Based Bayesian Hierarchical Model for modeling spatially correlated functional data. To address the computational limitations and parameter inflation found in previous approaches, we developed a parsimony-driven architecture that utilizes a single Matérn spatial process at each resolution level. By integrating this spatial structure with the RHS continuous shrinkage prior and employing a non-centered parameterization, our model maintains computational feasibility and inference stability through the NUTS algorithm in Stan .Results from both simulated and real data demonstrate the methodology’s consistent perfor-mance. In the simulation study, the model’s ability to leverage spatial structure enabled accurate recovery of the true latent signal. The methodology proved robust even under extreme noise (low signal-to-noise ratio), maintaining control over the RISE and demonstrating superior over-all accuracy compared to a reference model that assumes spatial independence. When applied to real PM 10 pollution data in Mexico City, the model showed significant advantages over the classical OKFD method. Using wavelet bases helped avoid the excessive smoothing typically 33 associated with spline-based approaches, enabling adaptive reconstruction of acute pollution spikes at unobserved locations and providing well-calibrated functional credible intervals. While the methodology offers a robust, computationally efficient alternative, this article does not cover certain aspects, leaving significant opportunities for future research. Firstly, the model’s spatial structure relies on an isotropic Matérn correlation function. In environmental contexts with complex topography, such as mountain ranges or deep valleys, using anisotropic covariance functions or non-stationary spatial fields can provide greater flexibility in capturing directional spatial decay. Secondly, the use of the DWT imposes significant structural con-straints, requiring the functional data to be organized on a regular grid and to have a length of n = 2L. In this study, we addressed these requirements through random forest imputation (missForest) and symmetric filling strategies to mitigate edge effects. However, a promising avenue for future research could involve developing models that natively handle curves with non-equidistant sampling. As discussed by Song and Mallick (2019), integrating the lifting wavelet transform, which does not require regularly spaced samples, into our Bayesian frame-work could be beneficial. Finally, this study focused on univariate functional trajectories. A logical next step, with significant practical implications, would be to extend the hierarchical structure to a multivariate context. This would enable the joint modeling of multiple air pollu-tants or correlated climate variables. Such an advancement would facilitate the exploration of interdependencies among functional processes, thereby enhancing the methodology’s predic-tive power and applicability in complex environmental monitoring networks. 
+
+Acknowledgments 
+
+This study was financed by the São Paulo Research Foundation (FAPESP), Brazil. Process numbers 2023/18036-3 and 2023/02538-0. 
+
+Conflict of interest 
+
+The authors declare no potential conflict of interest. 34 Data Availability Statement 
+
+The R code used for simulations in Section 3 and the analysis of real data in Section 4 are available at https://github.com/aaburbano/SFDA-Horseshoe-Wavelets .
+
+# References 
+
+Claudia Angelini and Brani Vidakovic. 
+
+γ-minimax wavelet shrinkage: a robust incorporation of information about energy of a signal in denoising applications. Statistica Sinica , 14:103–125, 2004. Veerabhadran Baladandayuthapani, Bani K. Mallick, Mee Young Hong, Joanne R. Lupton, Nancy D. Turner, and Raymond J. Carroll. Bayesian hierarchical spatially correlated func-tional data analysis with application to colon carcinogenesis. Biometrics , 64:64–73, 2008. doi: 10.1111/j.1541-0420.2007.00846.x. S. Banerjee, B. P. Carlin, and A. E. Gelfand. Hierarchical Modeling and Analysis for Spatial Data . Chapman and Hall/CRC, London, 2 edition, 2014. Michael Betancourt, Simon Byrne, Sam Livingstone, and Mark Girolami. The geometric foundations of Hamiltonian Monte Carlo. Bernoulli , 23:2257–2298, 2017. doi: 10.3150/ 16-BEJ810. Xu Chen, Lilong Sima, Zhen Wei, Xingde Duan, Ping Feng, and Fuhong Song. Variational sparse Bayesian neural networks with regularized horseshoe priors and scale mixture priors. 
+
+AIMS Mathematics , 10:21929–21952, 2025. doi: 10.3934/math.2025977. Noel Cressie. Statistics for Spatial Data . John Wiley & Sons, New York, 1993. Ingrid Daubechies. Ten Lectures on Wavelets . SIAM, Philadelphia, 1992. Peter J. Diggle and Paulo Justiniano Ribeiro. Model-based Geostatistics . Springer Science & Business Media, New York, 2007. 35 Peter J Diggle and Paulo J Ribeiro Jr. Bayesian inference in Gaussian model-based geostatistics. 
+
+Geographical and Environmental Modelling , 6:129–146, 2002. Kun Fan, Srijana Subedi, Vishmi Dissanayake, and Cen Wu. Robust Bayesian high-dimensional variable selection and inference with the horseshoe family of priors. Compu-tational Statistics & Data Analysis , 219:108358, 2026. doi: 10.1016/j.csda.2026.108358. R. M. Fernández-Pascual, R. M. Espejo, and M. D. Ruiz-Medina. Moment and Bayesian wavelet regression from spatially correlated functional data. Stochastic Environmental Re-search and Risk Assessment , 30:523–557, 2015. doi: 10.1007/s00477-015-1130-5. F. Ferraty and P. Vieu. Nonparametric Functional Data Analysis: Theory and Practice .Springer, New York, 2006. J.E. Gentle. Computational Statistics . Springer, New York, 2009. R. Giraldo, P. Delicado, and J. Mateu. Ordinary kriging for function-valued spatial data. Envi-ronmental and Ecological Statistics , 18:411–426, 2011. doi: 10.1007/s10651-010-0143-y. Tilmann Gneiting, William Kleiber, and Martin Schlather. Matérn cross-covariance functions for multivariate random fields. Journal of the American Statistical Association , 105:1167– 1177, 2010. doi: 10.1198/jasa.2010.tm09420. Wolfgang Härdle, Gerard Kerkyacharian, Dominique Picard, and Alexander Tsybakov. 
+
+Wavelets, Approximation, and Statistical Applications , volume 129. Springer Science & Business Media, New York, 1998. M. D. Hoffman and A. Gelman. The No-U-Turn sampler: Adaptively setting path lengths in Hamiltonian Monte Carlo. Journal of Machine Learning Research , 15:1593–1623, 2014. An-Ting Jhuang, Montserrat Fuentes, Jacob L. Jones, Giovanni Esteves, Chris M. Fancher, Marschall Furman, and Brian J. Reich. Spatial signal detection using continuous shrinkage priors. Technometrics , 61:494–506, 2019. doi: 10.1080/00401706.2018.1546622. P. Kokoszka and M. Reimherr. Introduction to Functional Data Analysis . Chapman and Hall/CRC, London, 2017. 36 Stéphane Mallat. A Wavelet Tour of Signal Processing: The Sparse Way . Elsevier, Amsterdam, 3 edition, 2008. Stephane G Mallat. Multiresolution approximations and wavelet orthonormal bases of l2(R).
+
+Transactions of the American Mathematical Society , 315:69–87, 1989a. doi: 10.1090/ S0002-9947-1989-1008470-5. Stephane G Mallat. A theory for multiresolution signal decomposition: The wavelet representa-tion. IEEE Transactions on Pattern Analysis and Machine Intelligence , 11:674–693, 1989b. doi: 10.1109/34.192463. J. Mateu and R. Giraldo. Geostatistical Functional Data Analysis . John Wiley and Sons, Hoboken, 2021. Mani Mehra. Wavelets Theory and Its Applications: A First Course . Springer, Singapore, 2018. Yves Meyer. Wavelets and Operators , volume 37. Cambridge University Press, Cambridge, 1992. Jeffrey S Morris and Raymond J Carroll. Wavelet-based functional mixed models. Journal of the Royal Statistical Society Series B: Statistical Methodology , 68:179–199, 2006. doi: 10.1111/j.1467-9868.2006.00539.x. Juho Piironen and Aki Vehtari. Sparsity information and regularization in the horseshoe and other shrinkage priors. Electronic Journal of Statistics , 11:5018–5051, 2017. doi: 10.1214/ 17-EJS1337SI. R Core Team. R: A Language and Environment for Statistical Computing . R Foundation for Statistical Computing, Vienna, Austria, 2026. URL https://www.R-project.org/ .J. Ramsay and B. W. Silverman. Functional Data Analysis . Springer, New York, 2 edition, 2005. John Shamshoian, Nicholas Marco, Damla ¸ Sentürk, Shafali Jeste, and Donatello Telesca. Bayesian covariance regression in functional data analysis with applications to functional 37 brain imaging. The International Journal of Biostatistics , 21:115–128, 2025. doi: 10.1515/ ijb-2023-0029. J. J. Song and B. Mallick. Hierarchical Bayesian models for predicting spatially correlated curves. Statistics , 53:196–209, 2019. doi: 10.1080/02331888.2018.1547905. Stan Development Team. Stan Modeling Language Users Guide and Reference Manual , 2025. URL https://mc-stan.org/ . version 2.36.0. Michael L. Stein. Interpolation of Spatial Data: Some Theory for Kriging . Springer Science & Business Media, New York, 1999. doi: 10.1007/978-1-4612-1494-6. Felipe Uribe, Yiqiu Dong, and Per Christian Hansen. Horseshoe priors for edge-preserving linear Bayesian inversion. SIAM Journal on Scientific Computing , 45:B337–B365, 2023. doi: 10.1137/22M1510364. Marina Vannucci. Discrete spike-and-slab priors: Models and computational aspects. In Hand-book of Bayesian Variable Selection , pages 3–24. Chapman and Hall/CRC, 2021. Aki Vehtari, Andrew Gelman, Daniel Simpson, Bob Carpenter, and Paul-Christian Bürkner. Rank-normalization, folding, and localization: An improved ˆ R for assessing convergence of MCMC (with discussion). Bayesian Analysis , 16:667–718, 2021. doi: 10.1214/20-BA1221. B. Vidakovic. Statistical Modeling by Wavelets . Wiley, New York, 1999. Brani Vidakovic and Fabrizio Ruggeri. BAMS method: Theory and simulations. Sankhy¯ a: The Indian Journal of Statistics, Series B , 63:234–249, 2001. M. P. Wand and M. C. Jones. Kernel Smoothing . Chapman and Hall/CRC, New York, 1994. Percy S. Zhai and Veronika Roˇ cková. Horseshoe predictive inference, 2026. arXiv:2604.16661. Lin Zhang, Veerabhadran Baladandayuthapani, Hongxiao Zhu, Keith A. Baggerly, Tadeusz Majewski, Bogdan A. Czerniak, and Jeffrey S. Morris. Functional CAR models for large spatially correlated functional datasets. Journal of the American Statistical Association , 111: 772–786, 2016. doi: 10.1080/01621459.2015.1042581. 38 Shuang Zhou and Debdeep Pati. Recent theoretical advances with the discrete spike-and-slab priors. In Handbook of Bayesian Variable Selection , pages 25–56. Chapman and Hall/CRC, 2021. Zihan Zhu, Xueying Tang, and Shuang Zhou. Bayesian region selection and predic-tion in Poisson regression with spatially dependent global-local shrinkage prior, 2026. arXiv:2605.05396. 
+
+# A Measures of Discrepancy 
+
+Estimating a function at a point is analogous to estimating a scalar parameter, and expecta-tions ( E[·]) and variances ( V[·]) are computed with respect to the (unknown) distribution of the associated random variable, in practice approximated by the empirical distribution. For esti-mation at a single point t, a common metric is the Mean Squared Error (MSE), MSE [̂Y (t)] = 
+
+E[( ̂Y (t) −Y (t)) 2] = [ E[̂Y (t)] −Y (t)] 2 + V[̂Y (t)] .To evaluate the estimator over the entire domain rather than at a fixed point, a global crite-rion measuring the distance between ̂ Y (t) and Y (t) is required. The Lp norm (Wand and Jones, 1994; Gentle, 2009) of the error is given by 
+
+(∫
+
+> T
+
+|̂Y (t) −Y (t)|pdt 
+
+)1/p
+
+, where T is the domain of the true function Y , over which ̂ Y (t) must also be defined, and the integral need not always exist. The L2 norm yields the integrated squared error (ISE), ISE (̂Y (t)) = 
+
+> ∫
+> T
+
+(̂Y (t) −Y (t)) 2dt ,and the L1 norm is the integrated absolute error (IAE), IAE (̂Y (t)) = 
+
+> ∫
+> T
+
+|̂Y (t) −Y (t)|dt .The latter is invariant under monotonic transformations of the coordinate axes, unlike the 
+
+L2 norm. The magnitude of the ISE is largely influenced by the scale and total energy of the true function, which can be misleading when curves have varying amplitudes or when assess-ing performance across different SNRs. To obtain a scale-free metric, the Relative Integrated Squared Error (RISE) (Shamshoian et al., 2025) standardizes the ISE by the total energy (the squared L2 norm) of the true latent signal, RISE (̂Y (t)) = 
+
+> ∫
+> T
+
+(̂Y (t) −Y (t)) 2dt 
+
+/ ∫
+
+> T
+
+(Y (t)) 2dt .Since the data are modeled on a discrete grid of n points across T , these integrals are approximated numerically using the trapezoidal rule. 39
