@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-25</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-28</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 5 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 10 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>4</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>4</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>6</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-25 21:03:59 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-28 03:41:36 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,9 +62,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日精读一篇孔隙尺度流动预测与生成设计论文（8.0分），另速读三篇科学机器学习相关研究。</p>
-<p>最值得关注：瞬态二维孔隙流动的查询时预测框架，以及代理模型的不确定性量化与全局-局部处理需求。</p>
-<p>建议普通读者优先浏览精读论文，了解其生成设计思路，其余可作拓展阅读。</p>
+<p>今日精读聚焦AI求解多孔介质偏微分方程，提出神经网络与混合间断伽辽金结合新方法；另基于Biot模型开发固定应力分裂与能量自然梯度下降的物理信息网络方案。最值得关注方向：物理信息神经网络在渗流力学中的精度提升与稳健优化。下一篇建议可尝试误差场学习或稀疏剪枝策略，辅助增强模型泛化与效率。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -73,12 +71,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">1 篇</strong>
+    <strong class="dpr-home-dashboard-count">4 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="A Query-Time Framework for Transient 2D Pore-Scale Flow Prediction and Generative Design">A Query-Time Framework for Transient 2D Pore-Scale Flow Prediction and Generative Design</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="A Neural-network-based multiscale Hybridizable Discontinuous Galerkin method for solving PDEs in porous media">A Neural-network-based multiscale Hybridizable Discontinuous Galerkin method for solving PDEs in porous media</span></li><li><span class="dpr-home-dashboard-paper-title" title="Physics-Informed Neural Networks for Biot&#x27;s Model via Fixed-Stress Splitting and Energy Natural Gradient Descent">Physics-Informed Neural Networks for Biot&#x27;s Model via Fixed-Stress Splitting and Energy Natural Gradient Descent</span></li><li><span class="dpr-home-dashboard-paper-title" title="Physics-Guided Generative Surrogates for Parametric Rarefied Flows with Neural-Field Auto-Decoders: A Pipeline-Level Study of Flow Matching and Diffusion">Physics-Guided Generative Surrogates for Parametric Rarefied Flows with Neural-Field Auto-Decoders: A Pipeline-Level Study of Flow Matching and Diffusion</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>4</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -86,12 +84,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">4 篇</strong>
+    <strong class="dpr-home-dashboard-count">6 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="GeoQ: Geometry-Aware Conditional Quantile Error Estimation for Scientific Surrogate Models">GeoQ: Geometry-Aware Conditional Quantile Error Estimation for Scientific Surrogate Models</span></li><li><span class="dpr-home-dashboard-paper-title" title="Read, Write, Relax: Why Neural PDE Surrogates Need Both Global and Local Processing">Read, Write, Relax: Why Neural PDE Surrogates Need Both Global and Local Processing</span></li><li><span class="dpr-home-dashboard-paper-title" title="Physics-Knowledge-Guided Hybrid Neural Learning for Arctic Sea Ice Concentration Evolution and Short-Range Prediction">Physics-Knowledge-Guided Hybrid Neural Learning for Arctic Sea Ice Concentration Evolution and Short-Range Prediction</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Physics-Informed Error Field Learning: A Post-Training Optimization Framework for Physics-Informed Neural Networks">Physics-Informed Error Field Learning: A Post-Training Optimization Framework for Physics-Informed Neural Networks</span></li><li><span class="dpr-home-dashboard-paper-title" title="Physics-Informed Foresight Pruning for Sparse PINN Solvers of Nonlinear PDEs">Physics-Informed Foresight Pruning for Sparse PINN Solvers of Nonlinear PDEs</span></li><li><span class="dpr-home-dashboard-paper-title" title="Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling">Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>4</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>6</strong></span></div>
 </section>
 </div>
 

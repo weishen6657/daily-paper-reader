@@ -1,0 +1,169 @@
+{
+  "date": "20260828",
+  "date_label": "",
+  "generated_at": "2026-08-28 03:41:36 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.25850v1",
+      "route": "202608/28/2608.25850v1-a-neural-network-based-multiscale-hybridizable-discontinuous-galerkin-method-for-solving-pdes-in-porous-media",
+      "title": "A Neural-network-based multiscale Hybridizable Discontinuous Galerkin method for solving PDEs in porous media",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "神经网络代理加速多尺度有限元求解多孔介质PDE",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 03:41:36 UTC"
+    },
+    {
+      "paper_id": "2608.26303v1",
+      "route": "202608/28/2608.26303v1-physics-informed-neural-networks-for-biots-model-via-fixed-stress-splitting-and-energy-natural-gradient-descent",
+      "title": "Physics-Informed Neural Networks for Biot's Model via Fixed-Stress Splitting and Energy Natural Gradient Descent",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "面向耦合孔隙弹性地下流动的物理信息神经网络求解器",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 03:41:36 UTC"
+    },
+    {
+      "paper_id": "2608.25454v1",
+      "route": "202608/28/2608.25454v1-physics-guided-generative-surrogates-for-parametric-rarefied-flows-with-neural-field-auto-decoders-a-pipeline-level-study-of-flow-matching-and-diffusion",
+      "title": "Physics-Guided Generative Surrogates for Parametric Rarefied Flows with Neural-Field Auto-Decoders: A Pipeline-Level Study of Flow Matching and Diffusion",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "物理引导的生成式代理建模管道，可用于地下水流代理模型",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 03:41:36 UTC"
+    },
+    {
+      "paper_id": "2608.26549v1",
+      "route": "202608/28/2608.26549v1-physics-informed-stochastic-configuration-machine-a-backpropagation-free-neural-network-with-fast-training-for-nonlinear-differential-equations",
+      "title": "Physics-Informed Stochastic Configuration Machine: A Backpropagation-Free Neural Network with Fast Training for Nonlinear Differential Equations",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "提出免反向传播的物理信息神经网络框架，可求解正演与反演微分方程，直接支持地下水流物理信息建模。",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 03:41:36 UTC"
+    },
+    {
+      "paper_id": "2608.24970v1",
+      "route": "202608/28/2608.24970v1-physics-informed-error-field-learning-a-post-training-optimization-framework-for-physics-informed-neural-networks",
+      "title": "Physics-Informed Error Field Learning: A Post-Training Optimization Framework for Physics-Informed Neural Networks",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向物理信息神经网络的通用后训练优化框架，可提升地下水流PINN模型的精度与效率",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 03:41:36 UTC"
+    },
+    {
+      "paper_id": "2608.25564v1",
+      "route": "202608/28/2608.25564v1-physics-informed-foresight-pruning-for-sparse-pinn-solvers-of-nonlinear-pdes",
+      "title": "Physics-Informed Foresight Pruning for Sparse PINN Solvers of Nonlinear PDEs",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向非线性PDE的PINN剪枝方法，可迁移至地下水流物理信息模拟",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 03:41:36 UTC"
+    },
+    {
+      "paper_id": "2608.22422v1",
+      "route": "202608/28/2608.22422v1-nearest-neighbor-non-gaussian-processes-for-geostatistical-modeling",
+      "title": "Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "最近邻非高斯空间过程用于地统计建模，可应用于数据驱动水文",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 03:41:36 UTC"
+    },
+    {
+      "paper_id": "2608.25744v1",
+      "route": "202608/28/2608.25744v1-a-constitutive-markov-physics-informed-neural-operator-mpno-for-autoregressive-stability-in-transient-dynamics",
+      "title": "A Constitutive Markov Physics-Informed Neural Operator (MPNO) for Autoregressive Stability in Transient Dynamics",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "物理信息神经算子用于瞬态动力学自回归稳定，可借鉴于地下水流代理模型",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 03:41:36 UTC"
+    },
+    {
+      "paper_id": "2608.25879v1",
+      "route": "202608/28/2608.25879v1-a-compensated-koopman-neural-operator-with-selective-state-space-dynamics-for-unsteady-flows",
+      "title": "A Compensated Koopman Neural Operator with Selective State-Space Dynamics for Unsteady Flows",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向非定常流的神经算子代理模型，可迁移至地下水流代理建模",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 03:41:36 UTC"
+    },
+    {
+      "paper_id": "2608.25932v1",
+      "route": "202608/28/2608.25932v1-continually-learning-neural-operator-surrogate-for-three-dimensional-airborne-electromagnetic-bayesian-inversion",
+      "title": "Continually learning neural-operator surrogate for three-dimensional airborne electromagnetic Bayesian inversion",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "神经算子代理三维正演求解器；可迁移至地下水流动模拟的机器学习代理模型。",
+      "first_seen_at": "2026-08-28 03:41:36 UTC",
+      "updated_at": "2026-08-28 03:41:36 UTC"
+    }
+  ]
+}

@@ -1,0 +1,398 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-28T03:31:00.962148+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2608.25850v1",
+      "source": "arxiv",
+      "title": "A Neural-network-based multiscale Hybridizable Discontinuous Galerkin method for solving PDEs in porous media",
+      "abstract": "We develop a neural-network-accelerated multiscale hybridizable discontinuous Galerkin method for elliptic problems with heterogeneous coefficients. The method preserves the standard MsHDG local-to-global structure: fine-scale HDG problems on coarse blocks define discrete Dirichlet-to-Neumann operators, which are assembled through the standard MsHDG global skeleton equations. To reduce the cost of constructing these local operators, we train a neural network on coefficient fields defined on a reference block and use the predicted operators in place of repeated fine-scale local solves.   The numerical experiments assess both the accuracy and online efficiency of the resulting NN-MsHDG method. For two-dimensional binary permeability fields with moderate contrast, the neural method reproduces the standard MsHDG solution with relative modeling errors of a few percent while reducing the total online computational cost by factors of approximately 5 to 16, depending on the coarse trace dimension. In the high-contrast regime, the chosen polynomial coarse trace spaces already yield substantial discretization errors in the standard MsHDG method, indicating the need for more effective coarse spaces, such as coefficient-adapted spectral trace spaces. In addition, the learned local operators introduce modeling errors that become severe as the trace space is enriched. These results demonstrate the potential of neural surrogates for accelerating multiscale HDG computations while also highlighting the need for improved operator representations and a better understanding of error amplification in high-contrast problems.",
+      "authors": [
+        "Tony Haines",
+        "Ke Shi"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-08-26T14:24:01+00:00",
+      "link": "https://arxiv.org/pdf/2608.25850v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Neural-network surrogate for multiscale finite element method solving PDEs in porous media",
+      "llm_evidence_cn": "神经网络代理加速多尺度有限元求解多孔介质PDE",
+      "llm_evidence": "神经网络代理加速多尺度有限元求解多孔介质PDE",
+      "canonical_evidence": "神经网络代理加速多尺度有限元求解多孔介质PDE",
+      "llm_tldr_en": "Develops a neural-network-accelerated multiscale hybridizable discontinuous Galerkin method for elliptic PDEs with heterogeneous coefficients, typical of porous media flow; predicts local Dirichlet-to-Neumann operators to replace costly fine-scale solves.",
+      "llm_tldr_cn": "针对多孔介质中椭圆型偏微分方程的数值模拟，提出一种神经网络加速的多尺度混合间断伽辽金方法。该方法利用神经网络预测参考块上的局部算子，替代重复的细尺度求解，从而保持MsHDG局部到全局结构的精度同时降低在线计算成本。二维数值实验验证了精度与效率提升，为人工智能增强的地下水流数值模拟提供了可行途径。",
+      "llm_tldr": "针对多孔介质中椭圆型偏微分方程的数值模拟，提出一种神经网络加速的多尺度混合间断伽辽金方法。该方法利用神经网络预测参考块上的局部算子，替代重复的细尺度求解，从而保持MsHDG局部到全局结构的精度同时降低在线计算成本。二维数值实验验证了精度与效率提升，为人工智能增强的地下水流数值模拟提供了可行途径。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.26303v1",
+      "source": "arxiv",
+      "title": "Physics-Informed Neural Networks for Biot's Model via Fixed-Stress Splitting and Energy Natural Gradient Descent",
+      "abstract": "Physics-Informed Neural Networks (PINNs) have recently gained considerable attention as a mesh-free framework for solving partial differential equations. Nevertheless, their performance deteriorates when applied to strongly coupled multiphysics systems, such as Biot's consolidation model, due to severely ill-conditioned optimization landscapes. In this work, we propose a robust PINN-based solver, termed FS-ENGD-PINN, which synergistically integrates physics-based decoupling with geometry-aware optimization. Specifically, the Fixed-Stress (FS) splitting scheme is employed to decompose the coupled poroelastic system into contractive mechanics and flow subproblems, thereby significantly improving training stability and convergence. To further accelerate optimization, we adopt Energy Natural Gradient Descent (ENGD), which approximates the Newton direction in function space effectively mitigates stiffness-induced slow convergence. Moreover, to address volumetric locking arising in the nearly incompressible regime, we incorporate a three-field mixed formulation with an additional total pressure variable into the PINN framework. Extensive numerical experiments demonstrate that the proposed FS-ENGD-PINN consistently outperforms standard PINN formulations in terms of accuracy and robustness, providing a unified and reliable learning-based solver for poroelasticity across a wide range of material parameters.",
+      "authors": [
+        "Kexin Sun",
+        "Qiang Liu",
+        "Minfu Feng",
+        "Mingchao Cai"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "math.OC"
+      ],
+      "published": "2026-08-26T18:34:59+00:00",
+      "link": "https://arxiv.org/pdf/2608.26303v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Physics-informed neural network solver for coupled poroelastic subsurface flow",
+      "llm_evidence_cn": "面向耦合孔隙弹性地下流动的物理信息神经网络求解器",
+      "llm_evidence": "面向耦合孔隙弹性地下流动的物理信息神经网络求解器",
+      "canonical_evidence": "面向耦合孔隙弹性地下流动的物理信息神经网络求解器",
+      "llm_tldr_en": "FS-ENGD-PINN combines fixed-stress splitting and energy natural gradient descent to stabilize physics-informed neural networks for Biot consolidation, improving training and accuracy on strongly coupled multiphysics subsurface flow problems.",
+      "llm_tldr_cn": "针对强耦合多物理场问题中物理信息神经网络（PINN）训练不稳定的问题，提出FS-ENGD-PINN，将固定应力分裂与能量自然梯度下降相结合，把Biot固结方程解耦为力学和流动两个子问题并改进优化几何。实验表明该方法显著提升训练稳定性与求解精度，为地下水流和变形耦合数值模拟提供了可靠PINN工具。",
+      "llm_tldr": "针对强耦合多物理场问题中物理信息神经网络（PINN）训练不稳定的问题，提出FS-ENGD-PINN，将固定应力分裂与能量自然梯度下降相结合，把Biot固结方程解耦为力学和流动两个子问题并改进优化几何。实验表明该方法显著提升训练稳定性与求解精度，为地下水流和变形耦合数值模拟提供了可靠PINN工具。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.25454v1",
+      "source": "arxiv",
+      "title": "Physics-Guided Generative Surrogates for Parametric Rarefied Flows with Neural-Field Auto-Decoders: A Pipeline-Level Study of Flow Matching and Diffusion",
+      "abstract": "We present a conditional latent generative framework for parametric rarefied flows that separates neural-field representation, latent transport, and frozen physics adaptation. Neural-field auto-decoders compress discrete-velocity cavity solutions and direct simulation Monte Carlo cylinder solutions into shared coordinate decoders. Train-only principal-component charts support conditional flow matching (FM) and diffusion without a deterministic condition-to-latent backbone, and structured low-rank adapters correct selected decoder outputs while the upstream pipeline remains frozen. On two steady benchmarks, the frozen pipelines interpolate out-of-sample conditions with cavity kinetic relative $L_1$ errors at the $10^{-5}$ level and cylinder per-field area-weighted RMSEs of 0.038 (density), 0.041 (temperature), and below 0.01 (velocities). For the cavity, physics adaptation reduces the matched-grid Bhatnagar--Gross--Krook diagnostic by 28.65% while preserving field accuracy; for the cylinder, the analytic wall map enforces no-penetration exactly and, jointly with the learned FM adapter, reduces the inlet violation to 0.277 and the global mass-balance ratio to 0.963 of the frozen values with negligible field-error change. A five-seed controlled comparison with deterministic condition-to-chart multilayer perceptrons shows that, although the generative pipelines do not surpass the compact MLP in point accuracy on these single-valued steady problems, the results validate sampling-based conditional transport on the shared representation as an effective steady surrogate, with a natural route to multivalued or stochastic solution families.",
+      "authors": [
+        "Yiming Qi",
+        "Guan Zhang",
+        "Xu Wang",
+        "Yonghao Zhang",
+        "Tianbai Xiao"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-08-26T07:18:12+00:00",
+      "link": "https://arxiv.org/pdf/2608.25454v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "physics-guided generative surrogate pipeline for parametric flows, transferable to groundwater flow surrogate modeling",
+      "llm_evidence_cn": "物理引导的生成式代理建模管道，可用于地下水流代理模型",
+      "llm_evidence": "物理引导的生成式代理建模管道，可用于地下水流代理模型",
+      "canonical_evidence": "物理引导的生成式代理建模管道，可用于地下水流代理模型",
+      "llm_tldr_en": "A physics-guided generative surrogate pipeline for parametric rarefied flows with neural-field auto-decoders, flow matching, and diffusion, plus frozen low-rank adapters. It accurately predicts out-of-sample conditions on benchmarks, providing a transferable framework for ML surrogates in groundwater flow simulation.",
+      "llm_tldr_cn": "该论文提出一个用于参数化稀薄流的物理引导生成式代理管道，将神经场表示、潜空间传输与冻结物理自适应分离。神经场自解码器压缩数值解，条件流匹配与扩散在训练主成分潜空间上生成新工况，并通过结构化低秩适配器修正输出。两个基准实验表明，冻结管道能准确内插样本外条件，验证了该方法对物理约束的保持与生成能力。该管道为地下水流等过程的机器学习代理建模提供了可迁移的通用范式，有助于实现人工智能驱动的物理仿真代理。",
+      "llm_tldr": "该论文提出一个用于参数化稀薄流的物理引导生成式代理管道，将神经场表示、潜空间传输与冻结物理自适应分离。神经场自解码器压缩数值解，条件流匹配与扩散在训练主成分潜空间上生成新工况，并通过结构化低秩适配器修正输出。两个基准实验表明，冻结管道能准确内插样本外条件，验证了该方法对物理约束的保持与生成能力。该管道为地下水流等过程的机器学习代理建模提供了可迁移的通用范式，有助于实现人工智能驱动的物理仿真代理。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.26549v1",
+      "source": "arxiv",
+      "title": "Physics-Informed Stochastic Configuration Machine: A Backpropagation-Free Neural Network with Fast Training for Nonlinear Differential Equations",
+      "abstract": "While Physics-Informed Neural Networks (PINNs) have emerged as a transformative paradigm for solving complex differential equations, their reliance on backpropagation-based gradient descent and automatic differentiation (AD) imposes significant computational bottlenecks and severe non-convex optimization challenges. To overcome these fundamental limitations, we propose the Physics-Informed Stochastic Configuration Machine (PI-SCM), a novel backpropagation-free framework for both forward and inverse problems in differential equations. The core mathematical contribution lies in the analytical evaluation of local Jacobians for nonlinear differential operators, which facilitates a linearized representation of the physical loss and projects it into a unified, linearized algebraic subspace. This reformulation allows for the explicit determination of optimal network weights via a sequence of generalized linear least squares solvers, effectively bypassing the iterative traps of traditional nonlinear optimizers. We develop a progressive algorithmic suite comprising localized construction (PI-SC-I), sliding-window updating (PI-SC-II), and global updating (PI-SC-III), and rigorously establish their universal approximation properties. Extensive experiments demonstrate that PI-SCM achieves high-fidelity predictive accuracy and robust parameter identification while accelerating the training process by orders of magnitude compared to standard PINNs. Our work provides a highly efficient and scalable foundation for next-generation, real-time Scientific Machine Learning applications.",
+      "authors": [
+        "Yuehao Song",
+        "Zhong Chen",
+        "Lihui Cen",
+        "Liang Wu",
+        "Kai Zhang"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "cs.AI",
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-08-27T02:40:11+00:00",
+      "link": "https://arxiv.org/pdf/2608.26549v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "backpropagation-free physics-informed neural network framework for forward/inverse differential equations; directly enables physics-informed modeling of subsurface flow",
+      "llm_evidence_cn": "提出免反向传播的物理信息神经网络框架，可求解正演与反演微分方程，直接支持地下水流物理信息建模。",
+      "llm_evidence": "提出免反向传播的物理信息神经网络框架，可求解正演与反演微分方程，直接支持地下水流物理信息建模。",
+      "canonical_evidence": "提出免反向传播的物理信息神经网络框架，可求解正演与反演微分方程，直接支持地下水流物理信息建模。",
+      "llm_tldr_en": "Proposes a backpropagation-free Physics-Informed Stochastic Configuration Machine (PI-SCM) that analytically evaluates local Jacobians to train PINNs quickly for forward and inverse problems of nonlinear differential equations, avoiding AD bottlenecks.",
+      "llm_tldr_cn": "物理信息神经网络（PINN）依赖反向传播与自动微分，训练慢且容易陷入非凸优化困难。本文提出物理信息随机配置机，通过解析求解非线性微分算子局部雅可比矩阵，实现免反向传播的快速训练，可同时处理正演与反演问题。该框架避免了自动微分的高昂成本，大幅提升训练效率。这种快速PINN变体为大规模求解地下水流等偏微分方程提供了可行选择。",
+      "llm_tldr": "物理信息神经网络（PINN）依赖反向传播与自动微分，训练慢且容易陷入非凸优化困难。本文提出物理信息随机配置机，通过解析求解非线性微分算子局部雅可比矩阵，实现免反向传播的快速训练，可同时处理正演与反演问题。该框架避免了自动微分的高昂成本，大幅提升训练效率。这种快速PINN变体为大规模求解地下水流等偏微分方程提供了可行选择。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.24970v1",
+      "source": "arxiv",
+      "title": "Physics-Informed Error Field Learning: A Post-Training Optimization Framework for Physics-Informed Neural Networks",
+      "abstract": "Physics-Informed Neural Networks (PINNs) have emerged as an important class of numerical methods for solving partial differential equations (PDEs). However, during the late-stage optimization process, further parameter updates often yield diminishing accuracy improvements while increasing computational costs. To address this issue, this paper proposes a Physics-Informed Error Field Learning (PIEFL) framework for PINNs. Unlike conventional approaches that continuously approximate the solution field using a single network, PIEFL introduces an auxiliary error network after the primary network achieves satisfactory accuracy and shifts the learning objective from the solution field to the error field. By deriving error control equations under physical constraints, the error network learns the discrepancy between the current approximation and the exact solution, and the learned error correction is combined with the primary prediction to improve solution accuracy. The proposed framework avoids continuous optimization of the entire solution space and focuses computational resources on correcting existing prediction errors. Moreover, PIEFL requires no modification to the primary network architecture, making it compatible with existing PINN models and applicable as a general post-training optimization strategy. Numerical experiments on representative PDEs demonstrate that PIEFL achieves higher solution accuracy under the same computational budget, validating its effectiveness in improving the performance of PINNs.",
+      "authors": [
+        "Jiuyun Sun",
+        "Yong Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-25T09:34:46+00:00",
+      "link": "https://arxiv.org/pdf/2608.24970v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Generic post-training optimization framework for Physics-Informed Neural Networks, improving PINN accuracy and efficiency for PDE solving including flow",
+      "llm_evidence_cn": "面向物理信息神经网络的通用后训练优化框架，可提升地下水流PINN模型的精度与效率",
+      "llm_evidence": "面向物理信息神经网络的通用后训练优化框架，可提升地下水流PINN模型的精度与效率",
+      "canonical_evidence": "面向物理信息神经网络的通用后训练优化框架，可提升地下水流PINN模型的精度与效率",
+      "llm_tldr_en": "This paper proposes Physics-Informed Error Field Learning (PIEFL), a post-training framework that introduces an auxiliary error network to learn the residual error of a trained PINN, shifting the objective from solution to error field to achieve better accuracy with lower late-stage computational cost.",
+      "llm_tldr_cn": "物理信息神经网络（PINN）在训练后期往往精度提升缓慢且计算开销大。该文提出物理信息误差场学习（PIEFL）框架，在主网络达到一定精度后，引入辅助误差网络将学习目标从解场转向误差场，从而以较低附加成本进一步提升整体精度。实验表明该框架能有效改善PINN的收敛性与最终精度。该方法可广泛应用于各类偏微分方程求解，包括地下水流与输运模拟中的物理约束学习。",
+      "llm_tldr": "物理信息神经网络（PINN）在训练后期往往精度提升缓慢且计算开销大。该文提出物理信息误差场学习（PIEFL）框架，在主网络达到一定精度后，引入辅助误差网络将学习目标从解场转向误差场，从而以较低附加成本进一步提升整体精度。实验表明该框架能有效改善PINN的收敛性与最终精度。该方法可广泛应用于各类偏微分方程求解，包括地下水流与输运模拟中的物理约束学习。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.22422v1",
+      "source": "arxiv",
+      "title": "Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling",
+      "abstract": "We develop a general class of nearest-neighbor non-Gaussian processes (NNnGP) for modeling geostatistical data. By introducing non-linear conditional mean functions into the Vecchia approximation, NNnGP extends the popular nearest-neighbor Gaussian process (NNGP) to effectively capture complex, non-Gaussian spatial characteristics. To ensure coherent spatial predictions from a single realization, we propose a regularized homogeneity condition across the univariate conditionals. We then formulate a Bayesian non-parametric construction of the conditional mean using Gaussian processes and embed the resulting NNnGP as a non-Gaussian spatial prior within a hierarchical regression model. For posterior computation and prediction, we adopt a normalizing flow-based variational inference approach. Numerical experiments on synthetic data and real-world PRISM precipitation anomalies demonstrate that NNnGP captures local non-linear dependencies and significantly mitigates the underestimation of extreme spatial events, all the while maintaining global predictive accuracy.",
+      "authors": [
+        "Penghui Fu",
+        "Yuhan Dong",
+        "Jianhua Z. Huang"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-08-23T13:53:25+00:00",
+      "link": "https://arxiv.org/pdf/2608.22422v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Nearest-neighbor non-Gaussian spatial process for geostatistical modeling, applicable to data-driven hydrology",
+      "llm_evidence_cn": "最近邻非高斯空间过程用于地统计建模，可应用于数据驱动水文",
+      "llm_evidence": "最近邻非高斯空间过程用于地统计建模，可应用于数据驱动水文",
+      "canonical_evidence": "最近邻非高斯空间过程用于地统计建模，可应用于数据驱动水文",
+      "llm_tldr_en": "NNnGP extends Vecchia-approximated Gaussian processes with nonlinear conditional means to capture non-Gaussian spatial dependence, providing a coherent Bayesian geostatistical model useful for groundwater data.",
+      "llm_tldr_cn": "针对地统计数据中常见偏离高斯分布的空间依赖，提出最近邻非高斯过程（NNnGP），在Vecchia近似中引入非线性条件均值函数，并利用规则化齐性条件与高斯过程条件均值构建贝叶斯非参数模型，能够捕捉复杂非高斯空间特征并保证单次实现下空间预测的一致性。结合归一化流进行后验推断与预测，为水文地质等领域的非高斯空间建模提供了灵活工具。",
+      "llm_tldr": "针对地统计数据中常见偏离高斯分布的空间依赖，提出最近邻非高斯过程（NNnGP），在Vecchia近似中引入非线性条件均值函数，并利用规则化齐性条件与高斯过程条件均值构建贝叶斯非参数模型，能够捕捉复杂非高斯空间特征并保证单次实现下空间预测的一致性。结合归一化流进行后验推断与预测，为水文地质等领域的非高斯空间建模提供了灵活工具。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "data-driven groundwater hydrology",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.25564v1",
+      "source": "arxiv",
+      "title": "Physics-Informed Foresight Pruning for Sparse PINN Solvers of Nonlinear PDEs",
+      "abstract": "Physics-informed neural networks (PINNs) often rely on over-parameterized models to optimize coupled solution and differential-residual objectives, leaving unclear how much capacity is necessary and what pruning should preserve. We study foresight pruning at initialization for sparse PirateNet PDE solvers. Standard neural tangent kernel spectrum-aware pruning (NTK-SAP) aims to preserve output-side training dynamics but may overlook parameters whose main influence arises through derivatives in the governing equations. We introduce physics-informed spectrum-aware pruning (PI-SAP), which assigns saliency using sensitivity of the PDE residual. Experiments on the Gray-Scott equations, complex Ginzburg-Landau equation, Burgers' equation, and linear convection equation show that PI-SAP more consistently preserves Gray-Scott residual fidelity and is competitive under aggressive sparsity. However, no criterion is uniformly optimal across equations or sparsity levels. Small-batch PINN-NTK diagnostics further show that residual fidelity, solution accuracy, and kernel conditioning are distinct objectives, motivating pruning methods that explicitly balance solution-side and residual-side training dynamics during optimization.",
+      "authors": [
+        "Ahmad Ishaque Karimi",
+        "Uvini Balasuriya Mudiyanselage",
+        "Kookjin Lee"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-08-26T09:16:24+00:00",
+      "link": "https://arxiv.org/pdf/2608.25564v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Physics-informed spectrum-aware pruning for sparse PINN PDE solvers; transferable to physics-informed subsurface flow simulation",
+      "llm_evidence_cn": "面向非线性PDE的PINN剪枝方法，可迁移至地下水流物理信息模拟",
+      "llm_evidence": "面向非线性PDE的PINN剪枝方法，可迁移至地下水流物理信息模拟",
+      "canonical_evidence": "面向非线性PDE的PINN剪枝方法，可迁移至地下水流物理信息模拟",
+      "llm_tldr_en": "Introduces physics-informed spectrum-aware pruning (PI-SAP) that prunes PINN parameters based on PDE residual sensitivity at initialization, improving sparse PirateNet solvers for nonlinear PDEs while preserving derivative-driven training dynamics.",
+      "llm_tldr_cn": "针对物理信息神经网络（PINN）因过度参数化导致容量冗余、而标准剪枝可能忽略导数敏感参数的问题，论文提出物理信息频谱感知剪枝（PI-SAP）。该方法在初始化阶段依据偏微分方程残差灵敏度分配参数重要性，用于稀疏PirateNet PDE求解器。在Gray-Scott、复Ginzburg-Landau、Burgers等方程上的实验表明，相比NTK-SAP，该剪枝能更好地保留控制方程导数项的训练动态。该工作为PINN在非线性偏微分方程包括地下水流等场景中的高效求解提供了通用技术支撑。",
+      "llm_tldr": "针对物理信息神经网络（PINN）因过度参数化导致容量冗余、而标准剪枝可能忽略导数敏感参数的问题，论文提出物理信息频谱感知剪枝（PI-SAP）。该方法在初始化阶段依据偏微分方程残差灵敏度分配参数重要性，用于稀疏PirateNet PDE求解器。在Gray-Scott、复Ginzburg-Landau、Burgers等方程上的实验表明，相比NTK-SAP，该剪枝能更好地保留控制方程导数项的训练动态。该工作为PINN在非线性偏微分方程包括地下水流等场景中的高效求解提供了通用技术支撑。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.25744v1",
+      "source": "arxiv",
+      "title": "A Constitutive Markov Physics-Informed Neural Operator (MPNO) for Autoregressive Stability in Transient Dynamics",
+      "abstract": "Neural operators applied to transient-dynamics PDEs with strong discontinuities exhibit autoregressive instability: in concrete-penetration stress-field prediction, the wavelet neural operator (WNO) diverges in autoregressive rollout, while MeshGraphNets collapse to zero predictions. WNO's instability stems from the lack of a structural constraint on the spectral radius of its propagation operator; the Fourier neural operator (FNO) is stable in these measurements but only emergently, not by construction. We propose a constitutive Markov physics-informed neural operator (MPNO) modeling one-step evolution as a Markov (row-stochastic) propagation operator. Physics-coupled edge weights (acoustic-impedance harmonic mean, contact area, and traction amplitude) encode material-interface constitutive information into a nonnegative symmetric adjacency matrix W; after normalizing the graph Laplacian L = D - W by lambda_max, the propagator P = I - alpha*L~ is constructively constrained to spectral radius rho(P) <= 1, suppressing exponential amplification of autoregressive errors. Stability is thus a designable architectural property, not an optimized loss objective. On three PDEs (Burgers and two-dimensional transverse-section concrete penetration), MPNO rolls out stably with bounded error on all test seeds at 100/135/165 m/s; the single-step relative L2 error is 0.7304 +/- 0.0008, better than WNO and comparable to FNO at about one quarter of FNO's parameters. The edge-weight formula transfers across scenarios by replacing material-property variables. With about 20K parameters, MPNO delivers roughly 10^5x inference speedup over LS-DYNA.",
+      "authors": [
+        "Wenpu Du",
+        "Peng Zhou",
+        "Yunlong Xia",
+        "Sinuo Xin",
+        "Congcong Zhang",
+        "Boyang Zhang",
+        "Yi Zhang",
+        "Wenzheng Xu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-26T12:54:37+00:00",
+      "link": "https://arxiv.org/pdf/2608.25744v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Physics-informed neural operator for stable autoregressive transient dynamics, transferable to subsurface flow surrogate modeling",
+      "llm_evidence_cn": "物理信息神经算子用于瞬态动力学自回归稳定，可借鉴于地下水流代理模型",
+      "llm_evidence": "物理信息神经算子用于瞬态动力学自回归稳定，可借鉴于地下水流代理模型",
+      "canonical_evidence": "物理信息神经算子用于瞬态动力学自回归稳定，可借鉴于地下水流代理模型",
+      "llm_tldr_en": "The paper proposes a Constitutive Markov Physics-Informed Neural Operator (MPNO) that models one-step evolution as a row-stochastic Markov propagation operator with physics-coupled edge weights to ensure autoregressive stability in transient dynamics, outperforming WNO and MeshGraphNets in concrete-penetration stress prediction.",
+      "llm_tldr_cn": "神经算子在含强间断的瞬态动力学偏微分方程中常出现自回归不稳定，例如波动神经算子(WNO)发散、MeshGraphNets输出归零。该文提出本构马尔可夫物理信息神经算子（MPNO），将单步演化建模为行随机马尔可夫传播算子，并通过物理耦合边权重约束频谱半径，从而保证自回归稳定性。在混凝土侵彻应力场预测中，MPNO获得了稳定且准确的长期预测。该方法可推广到其它含间断的瞬态流动模拟，如地下多相流等。",
+      "llm_tldr": "神经算子在含强间断的瞬态动力学偏微分方程中常出现自回归不稳定，例如波动神经算子(WNO)发散、MeshGraphNets输出归零。该文提出本构马尔可夫物理信息神经算子（MPNO），将单步演化建模为行随机马尔可夫传播算子，并通过物理耦合边权重约束频谱半径，从而保证自回归稳定性。在混凝土侵彻应力场预测中，MPNO获得了稳定且准确的长期预测。该方法可推广到其它含间断的瞬态流动模拟，如地下多相流等。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.25879v1",
+      "source": "arxiv",
+      "title": "A Compensated Koopman Neural Operator with Selective State-Space Dynamics for Unsteady Flows",
+      "abstract": "Stable prediction of unsteady flows requires accurate multiscale spatial representation and robust temporal propagation. We introduce the Compensated Koopman U-shaped Neural Operator (CoKo-UNO), which combines a U-shaped spectral backbone with Koopman-dominated latent propagation. Finite-dimensional Koopman truncation produces a state-dependent residual that is repeatedly reinjected during autoregressive rollout. CoKo-UNO models this residual with a selective state-space model (SSM), a principled input-dependent compensation mechanism, together with resolution-adaptive compensatory skip connections and an overlapping-warmup rollout strategy. \\NEW{Across four benchmark problems, CoKo-UNO achieves the lowest mean rollout error among all compared methods. Its largest gain is a $76.76\\%$ reduction relative to the strongest baseline, while requiring about $41.40\\%$ of RNO's training time.} These results show that explicit residual compensation improves stable autoregressive prediction of unsteady flows.",
+      "authors": [
+        "Tangying Lv",
+        "Yuanjun Dai",
+        "Zhenxu Sun"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-08-26T14:51:50+00:00",
+      "link": "https://arxiv.org/pdf/2608.25879v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Neural operator surrogate for unsteady flows, transferable to groundwater flow surrogates",
+      "llm_evidence_cn": "面向非定常流的神经算子代理模型，可迁移至地下水流代理建模",
+      "llm_evidence": "面向非定常流的神经算子代理模型，可迁移至地下水流代理建模",
+      "canonical_evidence": "面向非定常流的神经算子代理模型，可迁移至地下水流代理建模",
+      "llm_tldr_en": "Introduces CoKo-UNO, a compensated Koopman neural operator combining U-shaped spectral backbone and selective state-space residual compensation for stable autoregressive prediction of unsteady flows over four benchmarks.",
+      "llm_tldr_cn": "针对非定常流预测中多尺度空间表达与时间稳定性难以兼顾的问题，提出补偿式Koopman U型神经算子（CoKo-UNO），将U型谱骨干与Koopman主导的潜变量传播结合，并用选择性状态空间模型反复注入状态相关残差。在四个基准问题上的平均推出误差最低，验证了该方法对时空动力系统长期预测的有效性，可推广至地下水流等科学计算替代任务。",
+      "llm_tldr": "针对非定常流预测中多尺度空间表达与时间稳定性难以兼顾的问题，提出补偿式Koopman U型神经算子（CoKo-UNO），将U型谱骨干与Koopman主导的潜变量传播结合，并用选择性状态空间模型反复注入状态相关残差。在四个基准问题上的平均推出误差最低，验证了该方法对时空动力系统长期预测的有效性，可推广至地下水流等科学计算替代任务。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.25932v1",
+      "source": "arxiv",
+      "title": "Continually learning neural-operator surrogate for three-dimensional airborne electromagnetic Bayesian inversion",
+      "abstract": "Three-dimensional probabilistic inversion of time-domain airborne electromagnetic (AEM) data is limited by the cost of the forward solve. Even though one simulation takes only tens of seconds, a Bayesian inversion of a survey of millions of soundings requires of order $10^{10}$ forward evaluations. To address this, we develop a continually learning neural-operator surrogate of the three-dimensional AEM forward operator that replaces the solver inside the Bayesian inversion. We start from the point of view that regardless of what geological prior is specified, Maxwell's laws remain invariant. Secondly, we avoid the limitation of learning on a single prior by continual learning on consecutive priors, which means our surrogate becomes richer as it is applied in future case studies, either by the authors, or by the scientific community. We use a validity check built on ensemble disagreement to divert cases with measurements outside the training range to the solver. Driven by the surrogate, the identical Markov chain Monte Carlo sampler reproduces the full-solver posterior, and its credible intervals cover the truth within 2.6 percentage points. Applied to the 2013 Capricorn TEMPEST survey in Western Australia, the surrogate inverts over two million soundings in seconds, a computation infeasible for the solver. Testing the geological prior against the entire survey costs minutes. The framework delivers uncertainty-quantified conductivity imaging at survey scale, which we believe is essential to perform near real-time mineral-systems targeting with geophysics.",
+      "authors": [
+        "Jaehong Chung",
+        "Andrew Lockwood",
+        "Jef Caers"
+      ],
+      "primary_category": "physics.geo-ph",
+      "categories": [
+        "physics.geo-ph",
+        "cs.LG"
+      ],
+      "published": "2026-08-26T15:43:10+00:00",
+      "link": "https://arxiv.org/pdf/2608.25932v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "neural-operator surrogate of a 3D forward solver; transferable to ML surrogate models for groundwater flow simulation",
+      "llm_evidence_cn": "神经算子代理三维正演求解器；可迁移至地下水流动模拟的机器学习代理模型。",
+      "llm_evidence": "神经算子代理三维正演求解器；可迁移至地下水流动模拟的机器学习代理模型。",
+      "canonical_evidence": "神经算子代理三维正演求解器；可迁移至地下水流动模拟的机器学习代理模型。",
+      "llm_tldr_en": "Develops a continually learning neural-operator surrogate to replace the 3D airborne electromagnetic forward solver inside Bayesian inversion, reducing millions of forward evaluations and enabling probabilistic subsurface characterization.",
+      "llm_tldr_cn": "针对航空电磁三维贝叶斯反演中正演计算成本过高的问题，提出一种持续学习的神经算子代理模型，能够在不同地质先验间持续学习并替代正演求解器。该方法以麦克斯韦方程不变性为基础，通过逐次先验训练降低对单一先验的依赖，从而大幅减少贝叶斯反演所需的正演调用次数。实验表明该代理在保证精度的同时显著加速反演。该策略可推广到地下水流动等需要反复调用数值模拟的领域。",
+      "llm_tldr": "针对航空电磁三维贝叶斯反演中正演计算成本过高的问题，提出一种持续学习的神经算子代理模型，能够在不同地质先验间持续学习并替代正演求解器。该方法以麦克斯韦方程不变性为基础，通过逐次先验训练降低对单一先验的依赖，从而大幅减少贝叶斯反演所需的正演调用次数。实验表明该代理在保证精度的同时显著加速反演。该策略可推广到地下水流动等需要反复调用数值模拟的领域。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
