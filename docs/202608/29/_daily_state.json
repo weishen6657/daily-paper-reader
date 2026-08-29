@@ -1,0 +1,25 @@
+{
+  "date": "20260829",
+  "date_label": "",
+  "generated_at": "2026-08-29 19:11:28 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.22422v1",
+      "route": "202608/29/2608.22422v1-nearest-neighbor-non-gaussian-processes-for-geostatistical-modeling",
+      "title": "Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "非高斯过程地统计建模，适用于数据驱动地下水空间分析",
+      "first_seen_at": "2026-08-29 19:11:28 UTC",
+      "updated_at": "2026-08-29 19:11:28 UTC"
+    }
+  ]
+}

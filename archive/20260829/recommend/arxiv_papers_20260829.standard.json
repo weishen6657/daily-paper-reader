@@ -1,0 +1,54 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-29T19:11:07.415910+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.22422v1",
+      "source": "arxiv",
+      "title": "Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling",
+      "abstract": "We develop a general class of nearest-neighbor non-Gaussian processes (NNnGP) for modeling geostatistical data. By introducing non-linear conditional mean functions into the Vecchia approximation, NNnGP extends the popular nearest-neighbor Gaussian process (NNGP) to effectively capture complex, non-Gaussian spatial characteristics. To ensure coherent spatial predictions from a single realization, we propose a regularized homogeneity condition across the univariate conditionals. We then formulate a Bayesian non-parametric construction of the conditional mean using Gaussian processes and embed the resulting NNnGP as a non-Gaussian spatial prior within a hierarchical regression model. For posterior computation and prediction, we adopt a normalizing flow-based variational inference approach. Numerical experiments on synthetic data and real-world PRISM precipitation anomalies demonstrate that NNnGP captures local non-linear dependencies and significantly mitigates the underestimation of extreme spatial events, all the while maintaining global predictive accuracy.",
+      "authors": [
+        "Penghui Fu",
+        "Yuhan Dong",
+        "Jianhua Z. Huang"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-08-23T13:53:25+00:00",
+      "link": "https://arxiv.org/pdf/2608.22422v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "geostatistical modeling with non-Gaussian processes, relevant to data-driven groundwater spatial analysis",
+      "llm_evidence_cn": "非高斯过程地统计建模，适用于数据驱动地下水空间分析",
+      "llm_evidence": "非高斯过程地统计建模，适用于数据驱动地下水空间分析",
+      "canonical_evidence": "非高斯过程地统计建模，适用于数据驱动地下水空间分析",
+      "llm_tldr_en": "Extends Vecchia-approximated Gaussian processes to non-Gaussian geostatistics via nonlinear conditional means and a regularized homogeneity condition. The proposed NNnGP captures complex spatial dependencies with Bayesian nonparametric mean and normalizing-flow inference, applicable to groundwater spatial data.",
+      "llm_tldr_cn": "针对传统最近邻高斯过程难以刻画非高斯空间特征的问题，本文提出最近邻非高斯过程(NNnGP)，在Vecchia近似中引入非线性条件均值函数，并通过正则化齐次条件保证单次实现的空间预测一致性。结合贝叶斯非参数条件均值与归一化流推断，该方法能有效捕捉复杂非高斯空间结构，为地统计建模提供新工具，可应用于地下水数据的空间预测与不确定性量化。",
+      "llm_tldr": "针对传统最近邻高斯过程难以刻画非高斯空间特征的问题，本文提出最近邻非高斯过程(NNnGP)，在Vecchia近似中引入非线性条件均值函数，并通过正则化齐次条件保证单次实现的空间预测一致性。结合贝叶斯非参数条件均值与归一化流推断，该方法能有效捕捉复杂非高斯空间结构，为地统计建模提供新工具，可应用于地下水数据的空间预测与不确定性量化。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "data-driven groundwater hydrology",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

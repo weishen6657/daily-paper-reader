@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-29 <!--dpr-date:20260829-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/29/2608.22422v1-nearest-neighbor-non-gaussian-processes-for-geostatistical-modeling" data-sidebar-item="{&quot;title&quot;: &quot;Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.22422v1-nearest-neighbor-non-gaussian-processes-for-geostatistical-modeling&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ag&quot;}], &quot;evidence&quot;: &quot;非高斯过程地统计建模，适用于数据驱动地下水空间分析&quot;}">Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling</a>
   * 2026-08-28 <!--dpr-date:20260828-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/28/2608.25850v1-a-neural-network-based-multiscale-hybridizable-discontinuous-galerkin-method-for-solving-pdes-in-porous-media" data-sidebar-item="{&quot;title&quot;: &quot;A Neural-network-based multiscale Hybridizable Discontinuous Galerkin method for solving PDEs in porous media&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.25850v1-a-neural-network-based-multiscale-hybridizable-discontinuous-galerkin-method-for-solving-pdes-in-porous-media&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ag&quot;}], &quot;evidence&quot;: &quot;神经网络加速的多尺度HDG求解器针对多孔介质PDE，可直接用于地下水数值模拟&quot;}">A Neural-network-based multiscale Hybridizable Discontinuous Galerkin method for solving PDEs in porous media</a>

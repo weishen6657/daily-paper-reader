@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-28</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-29</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 17 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 1 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
-    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>2 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>6</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>11</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>1</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-28 22:22:02 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-29 19:11:28 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日17篇论文聚焦AI求解PDE，精读两篇高分工作分别提出多尺度神经HDG法与Biot模型固定应力分裂方案。最值得关注多孔介质PDE的多尺度神经网络格式与地球物理反演中的神经算子持续学习。建议读者优先精读两篇9分论文，速读可关注稀疏PINN剪枝方向。</p>
+<p>今日仅速读1篇论文，暂无精读，聚焦地理统计建模方法。</p>
+<p>最值得关注的是《Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling》（6.0分），涉及非高斯空间数据建模。</p>
+<p>建议后续补读该文核心算法，并关注高斯过程在地统计中的扩展应用。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -71,12 +73,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">6 篇</strong>
+    <strong class="dpr-home-dashboard-count">0 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="A Neural-network-based multiscale Hybridizable Discontinuous Galerkin method for solving PDEs in porous media">A Neural-network-based multiscale Hybridizable Discontinuous Galerkin method for solving PDEs in porous media</span></li><li><span class="dpr-home-dashboard-paper-title" title="Physics-Informed Neural Networks for Biot&#x27;s Model via Fixed-Stress Splitting and Energy Natural Gradient Descent">Physics-Informed Neural Networks for Biot&#x27;s Model via Fixed-Stress Splitting and Energy Natural Gradient Descent</span></li><li><span class="dpr-home-dashboard-paper-title" title="Physics-Informed Error Field Learning: A Post-Training Optimization Framework for Physics-Informed Neural Networks">Physics-Informed Error Field Learning: A Post-Training Optimization Framework for Physics-Informed Neural Networks</span></li></ul>
+<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>6</strong></span></div>
+
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -84,12 +86,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">11 篇</strong>
+    <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Physics-Informed Foresight Pruning for Sparse PINN Solvers of Nonlinear PDEs">Physics-Informed Foresight Pruning for Sparse PINN Solvers of Nonlinear PDEs</span></li><li><span class="dpr-home-dashboard-paper-title" title="Continually learning neural-operator surrogate for three-dimensional airborne electromagnetic Bayesian inversion">Continually learning neural-operator surrogate for three-dimensional airborne electromagnetic Bayesian inversion</span></li><li><span class="dpr-home-dashboard-paper-title" title="Gaussian process learning with flow map refinement for parameter estimation in dynamical systems">Gaussian process learning with flow map refinement for parameter estimation in dynamical systems</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling">Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>11</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>1</strong></span></div>
 </section>
 </div>
 
