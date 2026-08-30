@@ -1,0 +1,316 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-30T18:51:16.464887+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2608.24205v1",
+      "source": "arxiv",
+      "title": "Robust training and rigorous error analysis of physics-informed neural networks for the $p$-Laplace equation",
+      "abstract": "With the rise of scientific machine learning, physics-informed neural networks (PINNs) have been extensively applied to a wide range of problems. Nevertheless, most theoretical analyses of PINNs remain confined to linear equations, and a substantial gap persists between PINNs and classical numerical analysis for nonlinear problems. To address this issue, we propose a robust training framework for PINNs solving nonlinear partial differential equations, together with a rigorous error analysis. Specifically, for the $p$-Laplace equation, we introduce a novel loss formulation that combines a dual residual loss measured in $W^{-1,p'}$ with a boundary loss measured in a fractional Sobolev norm $W^{1-\\frac{1}{p},p}$. This formulation is designed to accommodate the limited regularity of weak solutions and enables us to establish rigorous \\textit{a priori} and \\textit{a posteriori} error estimates. Moreover, the proposed framework and its analysis are extended to a parametric setting in which the exponent, the source term, and the boundary condition may all vary with the parameters. Finally, we present numerical experiments that substantiate our theoretical findings.",
+      "authors": [
+        "Kyueon Choi",
+        "Seungchan Ko",
+        "Dohyun Kwon"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-08-25T08:16:25+00:00",
+      "link": "https://arxiv.org/pdf/2608.24205v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "PINN robust training and error analysis for nonlinear PDEs; foundational for subsurface flow PINNs",
+      "llm_evidence_cn": "面向非线性PDE的PINN稳健训练与误差分析，是地下水流PINN建模的基础方法",
+      "llm_evidence": "面向非线性PDE的PINN稳健训练与误差分析，是地下水流PINN建模的基础方法",
+      "canonical_evidence": "面向非线性PDE的PINN稳健训练与误差分析，是地下水流PINN建模的基础方法",
+      "llm_tldr_en": "Proposes a novel loss formulation combining dual residual and fractional Sobolev boundary losses for PINNs solving nonlinear p-Laplace equations, with rigorous error analysis; improves robustness and theoretical foundations of PINNs for nonlinear PDEs including subsurface flow.",
+      "llm_tldr_cn": "针对现有PINN理论大多限于线性方程、非线性问题缺乏严格误差保证的问题，提出求解p-Laplace方程的稳健训练框架和严格误差分析。新的损失形式将对偶残差损失与分数阶Sobolev边界损失相结合。该方法为非线性PDE的PINN求解提供了理论支撑和更可靠训练方式，可增强PINN在地下水流等非线性科学计算中的可信度。",
+      "llm_tldr": "针对现有PINN理论大多限于线性方程、非线性问题缺乏严格误差保证的问题，提出求解p-Laplace方程的稳健训练框架和严格误差分析。新的损失形式将对偶残差损失与分数阶Sobolev边界损失相结合。该方法为非线性PDE的PINN求解提供了理论支撑和更可靠训练方式，可增强PINN在地下水流等非线性科学计算中的可信度。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.24049v1",
+      "source": "arxiv",
+      "title": "Physics-Integrated Operator Learning via Gaussian Splatting Representations",
+      "abstract": "Neural operators provide efficient surrogates for spatiotemporal PDE systems, but purely data-driven formulations often accumulate substantial errors during long-horizon autoregressive prediction and may fail to exploit available governing-equation structure. Existing approaches incorporate physics primarily through residual-based training objectives or PDE-specific architectural constraints, which can introduce optimization difficulties or limit architectural generality. In this work, we introduce a representation-level approach to physics integration in which a feed-forward Gaussian splatting (FFGS) representation serves as a continuous interface between discretized solution fields and governing operators. The FFGS representation reconstructs the state as a continuous Gaussian field with closed-form spatial derivatives, allowing available physical PDE operators to be integrated directly within the learned evolution map without introducing a physics-residual loss. We evaluate the framework across two- and three-dimensional PDE systems, including advection, diffusion, nonlinear self-advection, and reaction dynamics. Over long-horizon autoregressive rollouts, the proposed framework reduces relative $\\ell_2$ error by $1.5\\times$--$2.2\\times$ compared with the strongest purely data-driven baseline across the benchmark suite, while consistently improving spectral fidelity. The framework also remains effective when the governing equations are partially known, demonstrating robustness to incomplete physics. These results demonstrate that continuous field representations can provide a practical interface for incorporating known physical structure into generic neural-operator surrogates.",
+      "authors": [
+        "Jihao Zhang",
+        "Junyi Guo",
+        "Jian-Xun Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-25T04:18:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.24049v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Physics-integrated operator learning for PDE surrogates; central to AI-driven numerical simulation theme",
+      "llm_evidence_cn": "面向PDE代理的物理集成算子学习方法，契合AI驱动数值模拟主题",
+      "llm_evidence": "面向PDE代理的物理集成算子学习方法，契合AI驱动数值模拟主题",
+      "canonical_evidence": "面向PDE代理的物理集成算子学习方法，契合AI驱动数值模拟主题",
+      "llm_tldr_en": "Introduces feed-forward Gaussian splatting representation as a continuous interface between PDE solution fields and governing operators, enabling physics-integrated operator learning that reduces long-horizon autoregressive errors and improves surrogate modeling for spatiotemporal PDEs.",
+      "llm_tldr_cn": "针对纯数据驱动神经算子长期自回归预测误差累积且难以利用支配方程结构的问题，提出前馈高斯溅射表示作为离散解场与物理算子之间的连续界面，在表示层面集成物理信息。该方法避免残差损失或特定网络结构带来的困难，在时空PDE系统上改善长时程预测精度。为物理增强的神经算子代理建模提供新范式，可推广到地下水流动等数值模拟场景。",
+      "llm_tldr": "针对纯数据驱动神经算子长期自回归预测误差累积且难以利用支配方程结构的问题，提出前馈高斯溅射表示作为离散解场与物理算子之间的连续界面，在表示层面集成物理信息。该方法避免残差损失或特定网络结构带来的困难，在时空PDE系统上改善长时程预测精度。为物理增强的神经算子代理建模提供新范式，可推广到地下水流动等数值模拟场景。",
+      "llm_tags": [
+        "query:ag:composite"
+      ],
+      "matched_query_tag": "query:ag:composite",
+      "matched_query_text": "Papers central to 帮我检索近十年的关于人工智能驱动的地下水数值模拟的英文文献, especially work that connects or combines: LSTM groundwater forecasting; data-driven groundwater hydrology; physics-informed neural network subsurface flow; artificial intelligence groundwater simulation; deep learning groundwater level prediction; machine learning approaches for groundwater flow and transport simulation; physics informed neural network subsurface flow; artificial intelligence enhanced groundwater numerical simulation methods; machine learning based surrogate models for groundwater flow simulation.",
+      "matched_requirement_id": "req-composite-ag",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.26064v1",
+      "source": "arxiv",
+      "title": "Neural-Network and Reduced-order Modeling Workflows for AI-Driven CFD: Fast Response Surfaces, Reduced Dynamics and Jet in Cross-flow Examples",
+      "abstract": "Highly resolved computational fluid dynamics (CFD) simulations are essential for design but too expensive for dense design-space sampling. This chapter presents an AI-driven CFD workflow that combines scalar-response modeling and reduced-order dynamics using jet-in-cross-flow examples. A reacting hydrogen jet-in-cross-flow study is first used to train a multilayer perceptron (MLP) mapping injector spacing to unburnt hydrogen throughput, wall heat transfer, and bulk temperature concentration, with shape-preserving interpolation as a baseline. The CFD samples show a non-monotonic spacing response, and the MLP identifies an intermediate-to-wide favorable region near eight jet diameters. Leave-one-sample-out validation shows strong dependence on the predicted quantity: the bulk temperature concentration is robust, while heat transfer and unburnt hydrogen throughput are substantially harder to predict. Sparse Identification of Nonlinear Dynamics (SINDy) is then used as a reduced-order modeling framework for field-derived Reynolds-stress statistics. The parametric SINDy model provides compact field-level predictions at simulated and out-of-sample spacings, though its aggregate spacing-mean Reynolds-stress error is $6.7\\%$ higher than the POD-basis reconstruction because of degradation at selected cases. The broader conclusion is that AI-driven CFD is not a single-model prescription: MLPs are effective for fast scalar responses, while POD--SINDy is better suited when transient reduced dynamics and field-derived statistics are central to the question.",
+      "authors": [
+        "Kaku E. Eduku",
+        "Pavel P. Popov",
+        "Gustaaf Jacobs"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-08-26T17:32:41+00:00",
+      "link": "https://arxiv.org/pdf/2608.26064v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "AI-driven CFD workflow with neural-network surrogate and reduced-order modeling",
+      "llm_evidence_cn": "AI驱动的CFD工作流：神经网络响应面与降阶建模",
+      "llm_evidence": "AI驱动的CFD工作流：神经网络响应面与降阶建模",
+      "canonical_evidence": "AI驱动的CFD工作流：神经网络响应面与降阶建模",
+      "llm_tldr_en": "Presents AI-driven CFD workflows combining MLP response surfaces and reduced-order dynamics to accelerate design-space sampling for jet-in-cross-flow.",
+      "llm_tldr_cn": "针对高保真CFD模拟无法密集采样设计空间的问题，该文提出一种AI驱动的工作流，结合多层感知机响应面与降阶动力学建模。以射流横流为例，训练MLP将注入器间距映射到关键工程量，并识别有利设计区域。该方法给出了从CFD数据到快速代理模型的完整流程，可迁移到地下水流模拟的代理模型构建与应用。",
+      "llm_tldr": "针对高保真CFD模拟无法密集采样设计空间的问题，该文提出一种AI驱动的工作流，结合多层感知机响应面与降阶动力学建模。以射流横流为例，训练MLP将注入器间距映射到关键工程量，并识别有利设计区域。该方法给出了从CFD数据到快速代理模型的完整流程，可迁移到地下水流模拟的代理模型构建与应用。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.22277v2",
+      "source": "arxiv",
+      "title": "DAW: Dynamics-Aware Weighting for Deep Learning Forecasts of Chaotic Systems",
+      "abstract": "Deep learning surrogates for forecasting chaotic dynamical systems suffer from catastrophic error accumulation over long-term autoregressive rollouts. This behavior is partly tied to the underlying systems: chaotic spatiotemporal systems, such as the Kuramoto-Sivashinsky (KS) equation, visit phase space unevenly - dominated by recurrent, low-dimensional quiescent states (e.g., near-laminar flows) and punctuated by rare, dynamically complex topological transitions (e.g., wave-merging events). Under a sample-wise uniform objective, standard neural surrogates allocate their finite capacity to the statistically numerous quiescent states, under-representing the transient regimes that trigger disproportionate, localized errors. Existing imbalanced-regression methods reweight samples by target-space density. However, statistical target-space rarity need not coincide with the intrinsic dynamical rarity - the recurrence geometry of the attractor that is the source of the imbalance. To address this, we introduce Dynamics-Aware Weighting (DAW), a data-centric objective reweighting framework. Using the local dimension $d$ from dynamical systems theory as an a priori measure of a state's active degrees of freedom, DAW reshapes the loss landscape to allocate representational capacity toward the sparse, high-$d$ regimes where forecast errors are systematically large. On the chaotic KS equation, DAW consistently outperforms uniform training, purely statistical density weighting, and its randomly permuted ablation, reducing long-term autoregressive error relative to all baselines. Event-level analysis shows that DAW achieves this by suppressing the localized error amplifications incurred during sharp jumps in $d$, which accompany complex physical processes such as wave-merging in the KS system.",
+      "authors": [
+        "Zhou Fang",
+        "Gianmarco Mengaldo"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.comp-ph"
+      ],
+      "published": "2026-08-23T08:07:03+00:00",
+      "link": "https://arxiv.org/pdf/2608.22277v2",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "dynamics-aware weighting for deep learning forecasts of chaotic systems",
+      "llm_evidence_cn": "面向混沌系统深度学习预测的动力学感知加权",
+      "llm_evidence": "面向混沌系统深度学习预测的动力学感知加权",
+      "canonical_evidence": "面向混沌系统深度学习预测的动力学感知加权",
+      "llm_tldr_en": "Proposes a dynamics-aware weighting method to improve long-term deep learning forecasts of chaotic spatiotemporal systems by allocating capacity to rare transient regimes.",
+      "llm_tldr_cn": "针对深度学习代理模型在长期自回归预测中误差累积严重的问题，该文提出动力学感知加权策略。其核心是根据混沌时空系统访问相空间的不均匀性，对样本施加动态权重，使模型能力更多分配给稀有但关键的瞬时状态。该方法可提升混沌系统长期预测的准确性，对地下水等复杂时空动力系统的深度学习预测具有参考价值。",
+      "llm_tldr": "针对深度学习代理模型在长期自回归预测中误差累积严重的问题，该文提出动力学感知加权策略。其核心是根据混沌时空系统访问相空间的不均匀性，对样本施加动态权重，使模型能力更多分配给稀有但关键的瞬时状态。该方法可提升混沌系统长期预测的准确性，对地下水等复杂时空动力系统的深度学习预测具有参考价值。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "LSTM groundwater forecasting",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.22026v1",
+      "source": "arxiv",
+      "title": "One-Step Evolution for Long-Time Extrapolation: An Error-Bound-Informed and Prior-Guided Neural Residual Framework for Autonomous PDEs",
+      "abstract": "Accurate simulation of the long-time evolution of systems governed by partial differential equations (PDEs) is central to scientific computing. Among existing deep learning?based approaches for solving PDEs, neural operators typically rely on extensive trajectory data, whereas physics-informed meth?ods often exhibit limited stability during long-time extrapolation. For a well-posed autonomous PDE, long-time trajectories can be generated by repeated composition of a fixed-step evolution operator; hence, long-time extrapolation depends on controlling the approximation error of this operator and the propagation of that error under recursive composition. Accordingly, we propose a numerical-prior-guided, physics-constrained method trained without ground-truth trajectory supervision: a low-cost numerical prior reduces the difficulty of approximating the one?step evolution operator, while a weak-form PDE residual provides a computable proxy for the one-step error term in the error?propagation bound. We validate the method on five benchmark cases spanning four PDE classes and compare it with ten physics?informed learning methods under a unified protocol that excludes ground-truth trajectories from training and model selection. The results indicate that, in all five cases, the proposed method reduces long-time extrapolation error relative to the numerical prior and outperforms the best competing baseline in each case, thereby improving long-time simulation accuracy across different PDEs without ground-truth trajectory supervision. The source code developed for this paper will be made publicly available upon acceptance of the manuscript.",
+      "authors": [
+        "Maqun Zhang",
+        "Feng Gao",
+        "Wankun Chen",
+        "Hui Yu",
+        "Yanhai Gan",
+        "Junyu Dong"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-08-22T16:04:18+00:00",
+      "link": "https://arxiv.org/pdf/2608.22026v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Neural residual framework for long-time PDE simulation, supporting AI-enhanced numerical simulation of groundwater flow",
+      "llm_evidence_cn": "面向长时间PDE模拟的神经残差框架，可支持人工智能增强的地下水数值模拟",
+      "llm_evidence": "面向长时间PDE模拟的神经残差框架，可支持人工智能增强的地下水数值模拟",
+      "canonical_evidence": "面向长时间PDE模拟的神经残差框架，可支持人工智能增强的地下水数值模拟",
+      "llm_tldr_en": "Proposes an error-bound-informed, prior-guided neural residual framework that composes a fixed-step evolution operator for stable long-time extrapolation of autonomous PDEs.",
+      "llm_tldr_cn": "针对神经算子依赖大量轨迹数据而物理信息方法长时间外推不稳定的问题，本文提出一种误差界引导与先验引导的神经残差框架，通过固定步长演化算子的反复组合来生成长时间轨迹，并显式控制近似误差及其递归传播。该方法在自治PDE上实现了更稳定的长时间预测，可推广到地下水流动等基于PDE的数值模拟任务中。",
+      "llm_tldr": "针对神经算子依赖大量轨迹数据而物理信息方法长时间外推不稳定的问题，本文提出一种误差界引导与先验引导的神经残差框架，通过固定步长演化算子的反复组合来生成长时间轨迹，并显式控制近似误差及其递归传播。该方法在自治PDE上实现了更稳定的长时间预测，可推广到地下水流动等基于PDE的数值模拟任务中。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "artificial intelligence enhanced groundwater numerical simulation methods",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.23119v1",
+      "source": "arxiv",
+      "title": "Quantum Reservoir Computing with Physics-Informed Correction for Reduced-Order PDE Forecasting",
+      "abstract": "We study a hybrid proposal--correction architecture for reduced-order PDE forecasting in which a pure-state quantum reservoir computer (QRC) predicts latent coefficient dynamics and a PINN-based physics-informed corrector (PIC) refines local rollout windows. The method is evaluated on Burgers and Kuramoto--Sivashinsky (KS), with KS as the primary chaotic benchmark. On KS, QRC+PIC consistently improves over QRC alone in RMSE, NRMSE, and PDE residual, while Burgers highlights a regime in which simple baselines remain strong. These results suggest that QRC proposals with local physics-informed correction are a viable benchmark-dependent reduced-order forecasting strategy.",
+      "authors": [
+        "Krishna Bhatia",
+        "Harsh",
+        "Shalini Devendrababu"
+      ],
+      "primary_category": "quant-ph",
+      "categories": [
+        "quant-ph",
+        "cs.LG"
+      ],
+      "published": "2026-08-24T11:28:49+00:00",
+      "link": "https://arxiv.org/pdf/2608.23119v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Hybrid quantum reservoir with PINN corrector for reduced-order PDE forecasting; transferable to groundwater transport simulation",
+      "llm_evidence_cn": "量子储备计算结合PINN校正的降阶PDE预测，可迁移至地下水运移模拟",
+      "llm_evidence": "量子储备计算结合PINN校正的降阶PDE预测，可迁移至地下水运移模拟",
+      "canonical_evidence": "量子储备计算结合PINN校正的降阶PDE预测，可迁移至地下水运移模拟",
+      "llm_tldr_en": "Proposes a hybrid proposal-correction architecture where a quantum reservoir computer predicts latent coefficients and a PINN-based corrector refines rollout windows; on KS benchmark it improves RMSE, NRMSE and PDE residual, showing viability for reduced-order PDE forecasting.",
+      "llm_tldr_cn": "针对降阶PDE预测中潜变量模型误差累积的问题，提出量子储备计算与物理信息神经网络校正器混合的提议-校正架构。量子储备计算机预测潜系数动力学，PINN校正器细化局部滚动窗口。在Kuramoto-Sivashinsky基准上，加入PINN校正后RMSE、NRMSE和PDE残差均优于单独量子储备计算。结果表明该混合策略是一种可行的降阶预测方法，可迁移至地下水流运移模拟。",
+      "llm_tldr": "针对降阶PDE预测中潜变量模型误差累积的问题，提出量子储备计算与物理信息神经网络校正器混合的提议-校正架构。量子储备计算机预测潜系数动力学，PINN校正器细化局部滚动窗口。在Kuramoto-Sivashinsky基准上，加入PINN校正后RMSE、NRMSE和PDE残差均优于单独量子储备计算。结果表明该混合策略是一种可行的降阶预测方法，可迁移至地下水流运移模拟。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics informed neural network subsurface flow",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26748v1",
+      "source": "arxiv",
+      "title": "Self-Augmented Diffusion Guidance for Physics-Informed Generation",
+      "abstract": "Diffusion models can be used to generate spatiotemporal signals of physical phenomena, such as time-series images of fluid dynamics. However, a major limitation of standard diffusion models is that they do not incorporate constraints derived from the underlying physical laws. Consequently, generated samples may appear visually plausible while deviating substantially from the true dynamics. In this study, we propose a simple yet effective physics-informed approach based on diffusion guidance with self-generated data augmentation. The proposed method learns the data distribution conditioned on the degree of deviation from the physically correct dynamics and generates samples by explicitly setting the deviation condition to be zero. The method decouples the evaluation of the governing equations from the diffusion model training and sampling processes, avoiding the need to solve the governing equations at every iteration of the denoising process. This design makes the method applicable to problems requiring computationally expensive numerical simulations and enables faster sample generation. Experimental results demonstrate that the proposed model not only significantly reduces the deviations compared with standard diffusion models but also achieves further reductions when combined with existing physics-constrained diffusion methods.",
+      "authors": [
+        "Akira Osaka",
+        "Naoya Takeishi",
+        "Takehisa Yairi"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-27T07:44:03+00:00",
+      "link": "https://arxiv.org/pdf/2608.26748v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Physics-informed diffusion generation for spatiotemporal physical signals, an AI method enforcing physical laws, relevant to physics-aware groundwater data generation.",
+      "llm_evidence_cn": "面向时空物理信号的物理信息扩散生成方法，通过物理偏差约束生成符合物理定律的数据，对物理感知的地下水数据生成有借鉴意义。",
+      "llm_evidence": "面向时空物理信号的物理信息扩散生成方法，通过物理偏差约束生成符合物理定律的数据，对物理感知的地下水数据生成有借鉴意义。",
+      "canonical_evidence": "面向时空物理信号的物理信息扩散生成方法，通过物理偏差约束生成符合物理定律的数据，对物理感知的地下水数据生成有借鉴意义。",
+      "llm_tldr_en": "Proposes self-augmented diffusion guidance that conditions generation on deviation from physical laws, yielding physically consistent spatiotemporal samples.",
+      "llm_tldr_cn": "论文指出标准扩散模型生成物理时空信号时可能偏离真实动力学，导致视觉合理但物理不一致的样本。为此提出基于自增强数据增强的扩散引导方法，学习以与正确物理动态的偏差为条件的数据分布，并将偏差条件设为零来生成样本。该方法将评估与生成过程解耦，能有效提高生成样本的物理一致性。对于缺乏完整物理规律的地下水过程数据生成与模拟，这种物理信息引导策略具有重要的参考价值。",
+      "llm_tldr": "论文指出标准扩散模型生成物理时空信号时可能偏离真实动力学，导致视觉合理但物理不一致的样本。为此提出基于自增强数据增强的扩散引导方法，学习以与正确物理动态的偏差为条件的数据分布，并将偏差条件设为零来生成样本。该方法将评估与生成过程解耦，能有效提高生成样本的物理一致性。对于缺乏完整物理规律的地下水过程数据生成与模拟，这种物理信息引导策略具有重要的参考价值。",
+      "llm_tags": [
+        "query:ag:composite"
+      ],
+      "matched_query_tag": "query:ag:composite",
+      "matched_query_text": "Papers central to 帮我检索近十年的关于人工智能驱动的地下水数值模拟的英文文献, especially work that connects or combines: LSTM groundwater forecasting; data-driven groundwater hydrology; physics-informed neural network subsurface flow; artificial intelligence groundwater simulation; deep learning groundwater level prediction; machine learning approaches for groundwater flow and transport simulation; physics informed neural network subsurface flow; artificial intelligence enhanced groundwater numerical simulation methods; machine learning based surrogate models for groundwater flow simulation.",
+      "matched_requirement_id": "req-composite-ag",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26907v1",
+      "source": "arxiv",
+      "title": "Climate Physics Dynamic Matching",
+      "abstract": "Deep generative models such as flow matching and diffusion models have shown potential for learning complex dynamical systems, but typically act as black boxes that neglect underlying physical structure, while physics-based models governed by partial differential equations are often incomplete due to missing source terms, or uncertain parametrisations. We present Climate Physics Dynamic Matching (ClimPhyDM), a variational simulation-free dynamics informed framework for weather forecasting that combines an advection-type physics prior with data-driven components in a variational framework. % to capture the stochasticity and multi-modality of unresolved atmospheric dynamics. On the ERA5 benchmark at hourly (42-hour) and monthly (5-month) resolutions, ClimPhyDM outperforms ClimODE, and GB-DM, keeping the lower error at extended horizon, indicating improved temporal stability and resistance to error accumulation, while its simulation-free paradigm also enables training on a single modest 12 GB consumer GPU.",
+      "authors": [
+        "Gurjeet Sangra Singh",
+        "Frantzeska Lavda",
+        "Alexandros Kalousis"
+      ],
+      "primary_category": "stat.AP",
+      "categories": [
+        "stat.AP"
+      ],
+      "published": "2026-08-27T10:07:40+00:00",
+      "link": "https://arxiv.org/pdf/2608.26907v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Physics-informed generative framework for dynamical systems applicable to subsurface flow",
+      "llm_evidence_cn": "物理信息生成框架可用于地下水流等动力系统模拟",
+      "llm_evidence": "物理信息生成框架可用于地下水流等动力系统模拟",
+      "canonical_evidence": "物理信息生成框架可用于地下水流等动力系统模拟",
+      "llm_tldr_en": "Climate Physics Dynamic Matching combines an advection-type physics prior with data-driven components in a variational framework for weather forecasting, outperforming ClimODE and GB-DM on ERA5 and offering transferable physics-informed modeling for subsurface flow.",
+      "llm_tldr_cn": "针对深度生成模型忽略物理结构、纯物理模型不完备的问题，该文提出气候物理动态匹配（ClimPhyDM），融合平流型物理先验与数据驱动组件的变分框架进行天气预测。在ERA5基准上，该框架在42小时和5个月分辨率上优于现有模型，为地下水流等受控物理过程的人工智能模拟提供了可借鉴的物理信息建模思路。",
+      "llm_tldr": "针对深度生成模型忽略物理结构、纯物理模型不完备的问题，该文提出气候物理动态匹配（ClimPhyDM），融合平流型物理先验与数据驱动组件的变分框架进行天气预测。在ERA5基准上，该框架在42小时和5个月分辨率上优于现有模型，为地下水流等受控物理过程的人工智能模拟提供了可借鉴的物理信息建模思路。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

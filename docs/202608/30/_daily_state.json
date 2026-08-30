@@ -1,0 +1,137 @@
+{
+  "date": "20260830",
+  "date_label": "",
+  "generated_at": "2026-08-30 18:58:24 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.24049v1",
+      "route": "202608/30/2608.24049v1-physics-integrated-operator-learning-via-gaussian-splatting-representations",
+      "title": "Physics-Integrated Operator Learning via Gaussian Splatting Representations",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向PDE代理的物理集成算子学习方法，契合AI驱动数值模拟主题",
+      "first_seen_at": "2026-08-30 18:58:24 UTC",
+      "updated_at": "2026-08-30 18:58:24 UTC"
+    },
+    {
+      "paper_id": "2608.24205v1",
+      "route": "202608/30/2608.24205v1-robust-training-and-rigorous-error-analysis-of-physics-informed-neural-networks-for-the-p-laplace-equation",
+      "title": "Robust training and rigorous error analysis of physics-informed neural networks for the $p$-Laplace equation",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向非线性PDE的PINN稳健训练与误差分析，是地下水流PINN建模的基础方法",
+      "first_seen_at": "2026-08-30 18:58:24 UTC",
+      "updated_at": "2026-08-30 18:58:24 UTC"
+    },
+    {
+      "paper_id": "2608.26064v1",
+      "route": "202608/30/2608.26064v1-neural-network-and-reduced-order-modeling-workflows-for-ai-driven-cfd-fast-response-surfaces-reduced-dynamics-and-jet-in-cross-flow-examples",
+      "title": "Neural-Network and Reduced-order Modeling Workflows for AI-Driven CFD: Fast Response Surfaces, Reduced Dynamics and Jet in Cross-flow Examples",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "AI驱动的CFD工作流：神经网络响应面与降阶建模",
+      "first_seen_at": "2026-08-30 18:58:24 UTC",
+      "updated_at": "2026-08-30 18:58:24 UTC"
+    },
+    {
+      "paper_id": "2608.22277v2",
+      "route": "202608/30/2608.22277v2-daw-dynamics-aware-weighting-for-deep-learning-forecasts-of-chaotic-systems",
+      "title": "DAW: Dynamics-Aware Weighting for Deep Learning Forecasts of Chaotic Systems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向混沌系统深度学习预测的动力学感知加权",
+      "first_seen_at": "2026-08-30 18:58:24 UTC",
+      "updated_at": "2026-08-30 18:58:24 UTC"
+    },
+    {
+      "paper_id": "2608.22026v1",
+      "route": "202608/30/2608.22026v1-one-step-evolution-for-long-time-extrapolation-an-error-bound-informed-and-prior-guided-neural-residual-framework-for-autonomous-pdes",
+      "title": "One-Step Evolution for Long-Time Extrapolation: An Error-Bound-Informed and Prior-Guided Neural Residual Framework for Autonomous PDEs",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向长时间PDE模拟的神经残差框架，可支持人工智能增强的地下水数值模拟",
+      "first_seen_at": "2026-08-30 18:58:24 UTC",
+      "updated_at": "2026-08-30 18:58:24 UTC"
+    },
+    {
+      "paper_id": "2608.23119v1",
+      "route": "202608/30/2608.23119v1-quantum-reservoir-computing-with-physics-informed-correction-for-reduced-order-pde-forecasting",
+      "title": "Quantum Reservoir Computing with Physics-Informed Correction for Reduced-Order PDE Forecasting",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "量子储备计算结合PINN校正的降阶PDE预测，可迁移至地下水运移模拟",
+      "first_seen_at": "2026-08-30 18:58:24 UTC",
+      "updated_at": "2026-08-30 18:58:24 UTC"
+    },
+    {
+      "paper_id": "2608.26748v1",
+      "route": "202608/30/2608.26748v1-self-augmented-diffusion-guidance-for-physics-informed-generation",
+      "title": "Self-Augmented Diffusion Guidance for Physics-Informed Generation",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向时空物理信号的物理信息扩散生成方法，通过物理偏差约束生成符合物理定律的数据，对物理感知的地下水数据生成有借鉴意义。",
+      "first_seen_at": "2026-08-30 18:58:24 UTC",
+      "updated_at": "2026-08-30 18:58:24 UTC"
+    },
+    {
+      "paper_id": "2608.26907v1",
+      "route": "202608/30/2608.26907v1-climate-physics-dynamic-matching",
+      "title": "Climate Physics Dynamic Matching",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "物理信息生成框架可用于地下水流等动力系统模拟",
+      "first_seen_at": "2026-08-30 18:58:24 UTC",
+      "updated_at": "2026-08-30 18:58:24 UTC"
+    }
+  ]
+}

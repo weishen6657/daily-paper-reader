@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-29</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-30</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 1 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 8 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>1</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>3</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>5</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-29 19:11:28 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-30 18:58:24 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,9 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日仅速读1篇论文，暂无精读，聚焦地理统计建模方法。</p>
-<p>最值得关注的是《Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling》（6.0分），涉及非高斯空间数据建模。</p>
-<p>建议后续补读该文核心算法，并关注高斯过程在地统计中的扩展应用。</p>
+<p>今日聚焦物理信息机器学习与算子学习，共读8篇，精读2篇高分论文。</p>
+<p>最值得看的是高斯溅射物理集成算子学习，以及p-Laplace方程PINN的稳健训练与误差分析，均获8.0分。</p>
+<p>下一步可关注混沌系统预测的动力学加权方法，或量子储备池计算在降阶PDE预测中的应用。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -73,12 +73,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">0 篇</strong>
+    <strong class="dpr-home-dashboard-count">3 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Physics-Integrated Operator Learning via Gaussian Splatting Representations">Physics-Integrated Operator Learning via Gaussian Splatting Representations</span></li><li><span class="dpr-home-dashboard-paper-title" title="Robust training and rigorous error analysis of physics-informed neural networks for the $p$-Laplace equation">Robust training and rigorous error analysis of physics-informed neural networks for the $p$-Laplace equation</span></li><li><span class="dpr-home-dashboard-paper-title" title="Neural-Network and Reduced-order Modeling Workflows for AI-Driven CFD: Fast Response Surfaces, Reduced Dynamics and Jet in Cross-flow Examples">Neural-Network and Reduced-order Modeling Workflows for AI-Driven CFD: Fast Response Surfaces, Reduced Dynamics and Jet in Cross-flow Examples</span></li></ul>
   </div>
-
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>3</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -86,12 +86,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">1 篇</strong>
+    <strong class="dpr-home-dashboard-count">5 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling">Nearest-Neighbor Non-Gaussian Processes for Geostatistical Modeling</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="DAW: Dynamics-Aware Weighting for Deep Learning Forecasts of Chaotic Systems">DAW: Dynamics-Aware Weighting for Deep Learning Forecasts of Chaotic Systems</span></li><li><span class="dpr-home-dashboard-paper-title" title="One-Step Evolution for Long-Time Extrapolation: An Error-Bound-Informed and Prior-Guided Neural Residual Framework for Autonomous PDEs">One-Step Evolution for Long-Time Extrapolation: An Error-Bound-Informed and Prior-Guided Neural Residual Framework for Autonomous PDEs</span></li><li><span class="dpr-home-dashboard-paper-title" title="Quantum Reservoir Computing with Physics-Informed Correction for Reduced-Order PDE Forecasting">Quantum Reservoir Computing with Physics-Informed Correction for Reduced-Order PDE Forecasting</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>5</strong></span></div>
 </section>
 </div>
 
