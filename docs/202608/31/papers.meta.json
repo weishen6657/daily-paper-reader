@@ -1,0 +1,69 @@
+{
+  "label": "2026-08-31",
+  "date": "2026-08-31",
+  "generated_at": "2026-08-31T19:12:20",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202608/31/2608.24049v1-physics-integrated-operator-learning-via-gaussian-splatting-representations",
+      "section": "quick",
+      "title_en": "Physics-Integrated Operator Learning via Gaussian Splatting Representations",
+      "authors": "Jihao Zhang, Junyi Guo, Jian-Xun Wang",
+      "date": "2026-08-25",
+      "pdf": "https://arxiv.org/pdf/2608.24049v1",
+      "score": "7.0",
+      "evidence": "面向PDE代理模型的物理集成算子学习，直接关联地下水流模拟的机器学习替代模型。",
+      "tldr": "神经算子作为偏微分方程时空系统的代理模型，纯数据驱动方法在长期自回归预测中误差累积且难以利用已知方程结构。现有物理融入方式依赖残差训练或专用架构，存在优化困难或普适性受限。本文提出表示层物理融合方法，以前馈高斯溅射表示作为离散解场与算子间的连续接口，利用闭式空间导数将物理PDE算子直接集成到学习演化映射中。在二维和三维平流、扩散、非线性自平流及反应动力学系统上，该框架相比最强纯数据基线将相对ℓ2误差降低1.5至2.2倍，并提升谱保真度，且对部分已知方程仍稳健，证明连续场表示能有效为通用神经算子代理融入物理结构。",
+      "tags": "query:ag",
+      "abstract_en": "Neural operators provide efficient surrogates for spatiotemporal PDE systems, but purely data-driven formulations often accumulate substantial errors during long-horizon autoregressive prediction and may fail to exploit available governing-equation structure. Existing approaches incorporate physics primarily through residual-based training objectives or PDE-specific architectural constraints, which can introduce optimization difficulties or limit architectural generality. In this work, we introduce a representation-level approach to physics integration in which a feed-forward Gaussian splatting (FFGS) representation serves as a continuous interface between discretized solution fields and governing operators. The FFGS representation reconstructs the state as a continuous Gaussian field with closed-form spatial derivatives, allowing available physical PDE operators to be integrated directly within the learned evolution map without introducing a physics-residual loss. We evaluate the framework across two- and three-dimensional PDE systems, including advection, diffusion, nonlinear self-advection, and reaction dynamics. Over long-horizon autoregressive rollouts, the proposed framework reduces relative $\\ell_2$ error by $1.5\\times$--$2.2\\times$ compared with the strongest purely data-driven baseline across the benchmark suite, while consistently improving spectral fidelity. The framework also remains effective when the governing equations are partially known, demonstrating robustness to incomplete physics. These results demonstrate that continuous field representations can provide a practical interface for incorporating known physical structure into generic neural-operator surrogates.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/31/2608.27883v1-beyond-pairwise-graphs-in-science-hypergraph-adaptive-wavelet-operators-for-parametric-pdes",
+      "section": "quick",
+      "title_en": "Beyond Pairwise Graphs in Science: Hypergraph Adaptive Wavelet Operators for Parametric PDEs",
+      "authors": "Rajat Sarkar, Venkataramana Runkana, Souvik Chakraborty",
+      "date": "2026-08-28",
+      "pdf": "https://arxiv.org/pdf/2608.27883v1",
+      "score": "7.0",
+      "evidence": "基于超图自适应小波的参数偏微分方程算子学习方法，可直接迁移至地下水代理模型",
+      "tldr": "物理系统的参数化偏微分方程求解常需处理非结构网格，传统成对图难以捕捉网格单元间的群体耦合。为此提出超图自适应小波算子HALO，将计算域提升为超图，采用Chebyshev多项式构造谱小波滤波器，避免显式特征分解，以线性稀疏成本获得局部化多尺度谱核。在2D/3D多种离散化基准上，HALO达到最佳或接近最佳精度，且能稳定进行多步滚动预测。该方法可扩展到工业气动网格，在数十万点规模上与最强变换器相当甚至更优，并保持分辨率等变性。",
+      "tags": "query:ag",
+      "abstract_en": "Physical systems are often modeled by solution operators that map input fields, parameters, geometries, or past states to steady or future physical states. Learning these maps is difficult, especially for time-dependent systems that must assimilate history and remain stable under autoregressive rollout. Many neural operators work best on regular, structured grids, while realistic simulations often require unstructured meshes or point clouds to resolve complex geometries; in such settings, grid-centric representations can lose accuracy. Graph neural operators handle these domains through message passing or spectral graph filtering, but pairwise edges do not directly capture group-wise couplings among mesh cells, local neighborhoods, or conservation volumes. We introduce the Hypergraph Adaptive waveLet Operator (HALO), which lifts the domain to a hypergraph and learns in its spectral wavelet domain. HALO avoids explicit hypergraph-Laplacian eigendecomposition through Chebyshev polynomial wavelet filters, giving localized spectral kernels at linear sparse-matrix cost. Its trainable dyadic wavelet scales are regularized toward tight-frame coverage, allowing the frequency response to adapt to each PDE while encouraging stable multi-scale spectral coverage. Across 2D and 3D benchmarks on structured and unstructured discretizations, HALO achieves best or near-best accuracy among frequency-, transformer-, DeepONet-, state-space-, and graph-based baselines and sustains stable multi-step rollouts. The same model scales to industrial aerodynamic geometries: on meshes of a few hundred thousand points it is on par with, or better than, the strongest fixed-discretization transformers, while remaining resolution-equivariant.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/31/2608.28515v1-conformal-uncertainty-quantification-guarantees-for-neural-operators",
+      "section": "quick",
+      "title_en": "Conformal Uncertainty Quantification Guarantees for Neural Operators",
+      "authors": "Tom Stent, Nicolas Boullé",
+      "date": "2026-08-28",
+      "pdf": "https://arxiv.org/pdf/2608.28515v1",
+      "score": "7.0",
+      "evidence": "为神经算子代理模型提供共形不确定性量化，可复用于地下水流机器学习代理模拟",
+      "tldr": "神经算子为函数空间之间的映射提供快速代理模型，但预测缺乏不确定性量化。本文提出分裂共形框架，保证校准后的逐点带宽在至少1-γ的评估域上包含真解，概率至少1-α。通过将归一化残差场降至空间(1-γ)分位数，并利用留出校准集计算缩放因子，证明任意可测残差场的边际覆盖保证。在Darcy流和Navier-Stokes方程上验证，所得带宽比现有修正更紧且保持目标覆盖。",
+      "tags": "query:ag",
+      "abstract_en": "Neural operators provide fast surrogate models for approximating operators between function spaces, but their predictions often lack uncertainty quantification. We develop a split conformal framework to guarantee that a calibrated pointwise band around the neural operator output contains the true solution on at least a $1-γ$ fraction of the evaluation domain, with probability at least $1-α$ over test and calibration inputs, where $α,γ\\in(0,1)$. Our method reduces a normalized residual field to its spatial $(1-γ)$-quantile and computes a scaling factor using a held-out calibration dataset. We prove marginal coverage guarantees for measurable residual fields defined on arbitrary probability spaces, covering both continuum domains and fixed discretizations. Under mild assumptions on the data distribution, we show that the coverage conditional on the calibration set follows a Beta distribution, which we verify with numerical experiments on Darcy flow and Navier--Stokes equations, where our calibration yields bands consistently tighter than existing corrections while retaining the target coverage.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/31/2608.25698v1-modeling-spatio-temporal-locality-in-multi-step-forecasting-of-geo-referenced-time-series",
+      "section": "quick",
+      "title_en": "Modeling spatio-temporal locality in multi-step forecasting of geo-referenced time series",
+      "authors": "Annunziata D'Aversa, Gianvito Pio, Michelangelo Ceci",
+      "date": "2026-08-26",
+      "pdf": "https://arxiv.org/pdf/2608.25698v1",
+      "score": "6.0",
+      "evidence": "面向地理参考时间序列多步预测的时空局部性建模，可迁移用于地下水位预测。",
+      "tldr": "面向地理分布式传感器产生的多步预测问题，空间自相关使邻近位置的时序相互依赖，但现有方法通常全局建模空间维度。本文提出SPALT方法，通过线性模型树局部刻画时空关系：在树分裂时依据趋势相似性分组序列，仅对组内选择性注入空间特征，并基于改进的剪枝策略保持时空局部性。在三个真实可再生能源数据集上，SPALT能同时预测多个站点未来多个时刻的发电量，效果优于多种树模型及融合时空的深度学习模型。",
+      "tags": "query:ag",
+      "abstract_en": "Forecasting future measurements from geographically distributed sensors is essential across many domains. However, the spatial distribution of these sensors raises multiple challenges, primarily due to spatial autocorrelation phenomena, that introduce inter-dependencies among nearby locations, that cannot therefore be treated independently. While some existing approaches can capture such phenomena, they generally model the spatial dimension globally across all locations. On the other hand, the method we propose in this paper, called SPALT, focuses on capturing spatial relationships among time series with similar trends, even if they occur at different times, thus modeling the spatio-temporal locality. SPALT leverages linear model trees, which allow us to consider the spatial autocorrelation locally: during the tree-building process, the adopted heuristics group time series exhibiting similar trends into the same node, on which additional features considering the spatial dimension are selectively injected. Additionally, we propose a new pruning strategy, based on Reduced Error Pruning, that also considers the spatio-temporal locality during the tree simplification. Designed for a multi-step setting, SPALT provides forecasts for multiple future time steps across multiple sensors simultaneously. The characteristics exhibited by SPALT can provide significant benefits in different domains, where measurements come from distributed sensors. In this paper, we focus on data produced by sensors located in multiple renewable power plants measuring their energy production at regular, short intervals. Experiments on 3 real-world datasets demonstrate the effectiveness of SPALT in forecasting the production of energy at different time horizons, and its superior performance in comparison with tree-based models and state-of-the-art neural networks that incorporate both temporal and spatial dimensions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
