@@ -1,0 +1,185 @@
+{
+  "date": "20260901",
+  "date_label": "",
+  "generated_at": "2026-09-01 19:54:46 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.29448v1",
+      "route": "202609/01/2608.29448v1-ss-esoap-self-scaled-adaptive-preconditioning-for-physics-informed-learning",
+      "title": "SS-ESOAP: Self-Scaled Adaptive Preconditioning for Physics-Informed Learning",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "专为物理信息神经网络训练设计的优化器，在多个PDE基准上提升精度；可直接支撑基于PINN的地下水流模型",
+      "first_seen_at": "2026-09-01 19:54:46 UTC",
+      "updated_at": "2026-09-01 19:54:46 UTC"
+    },
+    {
+      "paper_id": "2608.29499v1",
+      "route": "202609/01/2608.29499v1-enpinn-energy-norm-guided-gradient-enhanced-pinns-for-generalized-transport-problems-with-sharp-gradients",
+      "title": "ENPINN: Energy-Norm-Guided Gradient-Enhanced PINNs for Generalized Transport Problems with Sharp Gradients",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "能量范数梯度增强的PINN方法面向尖锐梯度输运问题，可直接迁移至地下水流与溶质运移模拟",
+      "first_seen_at": "2026-09-01 19:54:46 UTC",
+      "updated_at": "2026-09-01 19:54:46 UTC"
+    },
+    {
+      "paper_id": "2608.29888v1",
+      "route": "202609/01/2608.29888v1-sensitivity-constrained-neural-operators-for-data-efficient-forward-and-inverse-modeling-of-partial-differential-equation-systems",
+      "title": "Sensitivity-Constrained Neural Operators for Data-Efficient Forward and Inverse Modeling of Partial Differential Equation Systems",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "利用求解器雅可比监督训练神经算子，提升PDE正反演的数据效率",
+      "first_seen_at": "2026-09-01 19:54:46 UTC",
+      "updated_at": "2026-09-01 19:54:46 UTC"
+    },
+    {
+      "paper_id": "2608.29892v1",
+      "route": "202609/01/2608.29892v1-joint-spatiotemporal-spectral-neural-operators-for-learning-pdes-on-irregular-domains",
+      "title": "Joint Spatiotemporal Spectral Neural Operators for Learning PDEs on Irregular Domains",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向不规则域的神经算子，可作地下水流动代理模型",
+      "first_seen_at": "2026-09-01 19:54:46 UTC",
+      "updated_at": "2026-09-01 19:54:46 UTC"
+    },
+    {
+      "paper_id": "2608.29895v1",
+      "route": "202609/01/2608.29895v1-physics-informed-kolmogorov-arnold-networks-for-viscoelastic-fluid-equations",
+      "title": "Physics-Informed Kolmogorov-Arnold networks for viscoelastic fluid equations",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向粘弹性流体方程的物理信息神经网络框架(PI-KAN)，可直接迁移至地下水流方程求解",
+      "first_seen_at": "2026-09-01 19:54:46 UTC",
+      "updated_at": "2026-09-01 19:54:46 UTC"
+    },
+    {
+      "paper_id": "2608.28935v1",
+      "route": "202609/01/2608.28935v1-neuralflownet-towards-data-free-physics-informed-neural-network-solutions-of-navier-stokes-equations-across-low-and-high-reynolds-numbers",
+      "title": "NeuralFlowNet: Towards Data-Free Physics-Informed Neural Network Solutions of Navier-Stokes Equations Across Low and High Reynolds Numbers",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "无数据物理信息神经网络方法，将控制方程嵌入学习，可应用于地下水流模拟",
+      "first_seen_at": "2026-09-01 19:54:46 UTC",
+      "updated_at": "2026-09-01 19:54:46 UTC"
+    },
+    {
+      "paper_id": "2608.29082v1",
+      "route": "202609/01/2608.29082v1-a-learnable-multigrid-framework-via-graph-convolutions",
+      "title": "A Learnable Multigrid Framework via Graph Convolutions",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "可学习多重网格将图卷积与PDE求解器结合，实现AI增强的数值模拟",
+      "first_seen_at": "2026-09-01 19:54:46 UTC",
+      "updated_at": "2026-09-01 19:54:46 UTC"
+    },
+    {
+      "paper_id": "2608.29532v1",
+      "route": "202609/01/2608.29532v1-python-fortran-hybrid-programming-to-fuse-ai-and-physical-models-examples-of-ai-lda-in-climate-and-weather-models-hf2pmdav10",
+      "title": "Python-Fortran Hybrid Programming to Fuse AI and Physical Models: Examples of AI-LDA in climate and weather models (Hf2pMDA_v1.0)",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "AI与物理模型融合的数值模拟框架，可迁移至地下水模拟",
+      "first_seen_at": "2026-09-01 19:54:46 UTC",
+      "updated_at": "2026-09-01 19:54:46 UTC"
+    },
+    {
+      "paper_id": "2608.30328v1",
+      "route": "202609/01/2608.30328v1-learning-pde-time-stepping-with-neural-cellular-automata",
+      "title": "Learning PDE Time-Stepping with Neural Cellular Automata",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "用神经细胞自动机学习PDE时间演化，与PINN和FNO对比，可作为地下水流动代理模型",
+      "first_seen_at": "2026-09-01 19:54:46 UTC",
+      "updated_at": "2026-09-01 19:54:46 UTC"
+    },
+    {
+      "paper_id": "2608.29069v1",
+      "route": "202609/01/2608.29069v1-spectral-embedded-operator-learning-for-three-phase-interfacial-flow-a-ternary-cahn-hilliard-navier-stokes-benchmark",
+      "title": "Spectral-Embedded Operator Learning for Three-Phase Interfacial Flow: A Ternary Cahn-Hilliard-Navier-Stokes Benchmark",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向复杂多相流PDE的算子学习代理基准，其方法可迁移至地下水流代理模型",
+      "first_seen_at": "2026-09-01 19:54:46 UTC",
+      "updated_at": "2026-09-01 19:54:46 UTC"
+    },
+    {
+      "paper_id": "2608.30909v1",
+      "route": "202609/01/2608.30909v1-learning-dynamically-consistent-flow-reconstructions-from-limited-observations",
+      "title": "Learning dynamically consistent flow reconstructions from limited observations",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "基于可微分正演模型从稀疏观测中无标签重建动力学流场，可迁移至数据驱动地下水建模",
+      "first_seen_at": "2026-09-01 19:54:46 UTC",
+      "updated_at": "2026-09-01 19:54:46 UTC"
+    }
+  ]
+}

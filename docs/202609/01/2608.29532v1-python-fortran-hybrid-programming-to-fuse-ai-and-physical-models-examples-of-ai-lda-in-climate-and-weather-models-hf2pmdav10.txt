@@ -1,0 +1,2373 @@
+Title: Blank
+
+URL Source: https://arxiv.org/pdf/2608.29532v1
+
+Published Time: Tue, 01 Sep 2026 01:04:42 GMT
+
+Number of Pages: 48
+
+Markdown Content:
+1
+
+# Python -Fortran Hybrid Programming  to Fuse AI and  Physical 
+
+# Models: Examples of AI -LDA in climate and weather models 
+
+# (Hf2pMDA _v1.0 )
+
+# Xianrui Zhu 1+, Zikuan Lin 2+, Shaoqing Zhang 2*, Zebin Lu 2, Songhua Wu 3,4, Xiangyun Hou 2, Zhisheng 
+
+# Xiao 3, Zhicheng Ren 3, Ji angyu Li 5, Jing Xu 5, Yang Gao 6, Rixu Hao 7, Xiaolin Yu 2, Mingkui Li 2,
+
+# Guangliang Liu 8
+
+> 1
+
+Chongben Honors College, Ocean University of China, Qingdao , 266100 , Chin a
+
+> 2
+
+Key Laboratory of Physical Oceanography, Ministry of Education , and  Institute for Advanced Ocean Study , and  Frontiers 
+
+Science Center for Deep Ocean Multispheres and Earth System (FDOMES), College of Oceanic and Atmospheric Sciences, 
+
+Ocean University of China, Qingdao , 266100 , China 
+
+> 3
+
+Qingdao Leice Transient Technology Co., Ltd., Qingdao , 266100 , China 
+
+> 4
+
+College of Marine Technology, Ocean Remote Sensing Institute, Ocean University of China, Qingdao, China 
+
+> 5
+
+Qingdao Marine and Meteorological Institute, Qingdao , 266100 , China 
+
+> 6
+
+Key Laboratory of Marine Environmental Science and Ecology, Ministry of Education, Frontiers Science Center for Deep 
+
+Ocean Multispheres and Earth System (FDOMES), Ocean University of China, Qingdao, 266100, China 
+
+> 7
+
+College of Intelligent Systems Science and Engineering, and Engineering Research Center of Navigation Instruments, 
+
+Ministry of Education, Harbin Engineering University, Harbin, 150001, China. 
+
+> 8
+
+State Key Laboratory of Physical Oceanography and Artificial Intelligence, Jinan, China. 
+
+> +
+
+Co -first authors who contributed equally to this work. 
+
+*Correspondence to:  Shaoqing Zhang  (szhang@ouc.edu.cn )
+
+Abstract.  Artificial intelligence (AI) provides an unprecedented opportunity for advancing  physics  numerical modeling 
+
+including data assimilation, which  is a  high ly  efficient and  critically -important tool for  advancing our  understanding  on  Earth 
+
+system and  its  applications . At the same time, deep  incorporation of AI and  physical  modeling can make great  driving to 
+
+advance  AI by injecting it rich physics from long time physics -based modeling development . However, since s uch physics 
+
+models  are  conven tionally  cod ed in Fortran and AI algorithm s usually are  conveniently designed in Python, difficult ies exist 
+
+to directly  incorporate  AI algorithm s into  physics  models , vice versa . Here,  based on  the  F2PY ( Fortran to Python interface 
+
+generator ) protocol , we have  developed a procedure that  implement s an infrastructure  which conveniently conducts Python 
+
+and Fortran hybrid modeling and data assimilation (H f2p MDA) to form a program entity so that  AI algorithm s and phys ic al 
+
+models can invoke mutually. As examples, within H f2p MDA,  a climate  coupled data assimilation (CDA)  system is naturally 2
+
+upgraded to a  strongly  CDA  (SCDA) system, and a 1 km high -resolution weather DA system is conveniently implemented 
+
+within a multi -layer downscaling model that has multiscale DA in different nesting layers. In the climate  SCDA  system,  a
+
+coupled general circulation model (CGCM) and  a multiscale filtering algorithm is integrated by a Python main control ler 
+
+(PMC)  that  call s Fortran  CGCM  components  and  Weakly -CDA modules  as well as a data -trained SC DA algorithm  by latent 
+
+space  autoencod er  (AE)  in Python . In th e high -resolution weather DA system, the downscaled model consisting of traditional 
+
+Fortran DA modules in all mother domains and Python AE  DA algorithm  in the central child domain is integrated by  a P MC 
+
+that  organize s these components . With convenient realization of deep incorporation of any AI algorithm and physics model, 
+
+the H f2p MDA has a great potential to make progress on both AI and scientific modeling. 
+
+1 Introduction 
+
+Since the first Electronic Numerical Integrator and Computer (ENIAC) was born in  the  1940s, numerical weather prediction 
+
+(NWP) models have been developed progressively (Benjamin et al. , 2019) and advanced rapidly in recent years (Haarsma et 
+
+al. , 2016). An NWP model is a set of discretized momentum (dynamics) and energy (thermodynamics) budget equations of 
+
+multi -sphere fluid motions, which can be dated back to the 17th century Newtonian mechanics (Newton , 1687) and 19th 
+
+century Mayer’s and Joule’s energy conservation law (Mayer , 1842; Joule , 1843). Nowadays, an NWP model has advanced 
+
+as an Earth system model (ESM) that consists of coupled atmosphere, ocean, sea -ice, land as well as biogeochemical processes 
+
+etc. multi -sphere components (e.g., Kay et al. , 2015; Danabasoglu et al. , 2020). Now, the ESM is pursuing precise simulation 
+
+and prediction for weather -climate variations through resolving multiscale interactions in the geofluid by developing high -
+
+resolution (HR) model (Zhang et al. , 2023; Mouallem et al. , 2025), which is a critically -important platform for Earth science 
+
+studies (Haarsma et al. , 2016). 
+
+However,  as  the spatial resolution continuously increases, physics -based modeling encounters many challenges (Chang et al. ,
+
+2020; Marotzke , 2023). For example, as a consequence of water phase changing with strong nonlinearity, the genesis and 
+
+melting processes of sea -ice have scales from millimeters (freezing coagulations, for instance) to hundreds of kilometers 
+
+(glaciers, for instance) and r ich scale processes such as melt ponds (e.g. Feng et al. , 2022), ice leads (e.g. Qu et al. , 2024) and 
+
+polynyas (e.g. Diao et al. , 2022) between them. Each scale band plays  a relatively independent and important role ( Golden  et 
+
+al., 2020). Such a multiscale nature makes particular difficulties on HR modeling of sea -ice, since any HR model needs a 
+
+specific parameterization for its sub -grid processes (Gou et al. , 2025). The other outstanding example on HR ESM challenges 
+
+is parameterization of planetary boundary layer (PBL) processes (Jia and Zhang , 2020). When the model horizontal resolution 
+
+comes to a level of kilometers, classic PBL parameterization that deals with low resolution sub -grid boundary processes is no 
+
+longer suitable for describing turbulences induced by differently -featured underneath  underlying  surface structures, such as 
+
+mechanical (roughness), thermal (urban heat) and shear -induced turbulences etc. (Kadivar et al. , 2021). 3
+
+Machine learning artificial intelligence (AI) technology provides unprecedented opportunities to resolve the challenging issu es 
+
+of physics -based HR modeling described above. As long as  data sufficiently represent  an end -to -end process, no matter how 
+
+complex the process is,  the process can be resolved  by a data -training procedure based on neural (deep learning) network 
+
+(Hopfield , 1982; Rumelhart et al. , 1986). Starting from the basic principle of least -square fitting to resolve optimal weighting 
+
+coefficients on a network, AI algorithms advance very rapidly and help greatly enhance accuracy of weather forecasts (Bi et 
+
+al. , 2023) and climate predictions (Ham et al. , 2019).  Studies have revealed that applications of AI techniques can help improve 
+
+traditional physics -based models on frontier challenging issues such as subgrid  parameterizations (e.g. O’ Gorman & Dwyer, 
+
+2018; Han et al., 2020; Yuval & O’ Gorman, 2020) and nonlinear data assimilation (e.g. Wahle et al., 2015; Ruckstuhl et al., 
+
+202 1; Lin et al., 2025).  While data -driven AI technology rapidly spreads into almost every engineering and scientific discipline, 
+
+the data -driven nature limits its further advancement and therefore physics -guided AI merges explosively (Faroughi et al. ,
+
+2024 ; Yuan and Guo, 2024 ). 
+
+Deep incorporation of AI and physical models (let’s call so for wording convenience) can make unbelievable opportunities to 
+
+drive both  of them  even more rapidly advancing by injecting AI rich physics from long time physics -based modeling 
+
+development and letting physical models use any trained AI algorithm. Nevertheless, physical models are conventionally coded 
+
+in Fortran (or Fortran -C hybrid) la nguage and AI algorithms are designed and trained in Python language. Although great 
+
+efforts are made for combining utilities of different languages together (Mü ller et al. , 202 5), deep incorporation of AI and 
+
+physical models is still very difficult because of the lack of convenient infrastructure friendly to physical modelers betwee n
+
+Fortran and Python. At present, on the one hand, most of the physics -guided AI employs some simpl ified physical expressions 
+
+by Python (e.g. Hä fner et al. , 2018; Kochkov et al., 2024; Shu et al., 2025; Hao et al., 2025). On the other hand, physical 
+
+models can only use some selected AI  algorithms that can be translated into Fortran (Heuer et al., 2024) with FTorch library 
+
+that does still not fully support all Torch application interfaces (Atkinson et al., 2025). 
+
+In this study, we document our developing process of Python -Fortran  hybrid programming to establish a convenient 
+
+infrastructure platform on which AI and physical modeling and data assimilation can deeply incorporate with respect to each 
+
+other, called H f2p MDA, based on  the  F2PY ( Fortran to Python interface generator ) protocol (Harris et al., 2020). Basically, 
+
+through 3 steps of preparations in environment setting, recompiling of Fortran codes of physical model and plug interface, an d
+
+simple programming of Python main controller, H f2p MDA conveniently realizes the online deep incorporation of AI and 
+
+physical modeling and data assimilation.  Through exhibitions of two applications on  a coupled  climate  model and a regional 
+
+weather model , we show that H f2p MDA is a readily us er -friendly platform to physical modelers and researchers.  The former 
+
+present s an application of AI latent space data assimilation (LDA) to implement stron gly -coupled DA which has long been 
+
+challenging in climate studies, while the lat ter confirms  that  the AI -LDA can render  high -precision weather  analysis by 
+
+assimilati ng  Lidar  measurements  which include turbulence information. 
+
+This paper is organized as follows.  After the introduction,  Sect . 2 describes the baseline of  F2PY  protocol and outlines the 
+
+general procedure to construct the framework of online Python -Fortran hybrid modeling and data assimilation (H f2p MDA)  and 
+
+as an example of AI algorithms applied in  Hf2p MDA , Sect. 3  describes a variational autoencoder -based AI -LDA algorithm .4
+
+Sect ion s 4 and  5 give examples of detailed implementation  of  applying H f2p MDA to a climate model  to realize strongly -
+
+coupled data assimilation  and a  weather model to fulfill fine -scale convection data assimilation with Lidar measurements .
+
+Finally, summary and discussions are given in  Sec t. 6 .
+
+2 Hf2p MDA  - F2PY -based  Python -Fortran hybrid  programm ing  to fuse AI and physical model and data assimilation 
+
+2.1  Implementation  of H f2p MDA  based on the  F2PY  protocol 
+
+The  F2PY  protocol  (Harris et al., 2020)  provides a basic idea for  design ing  online  Python -Fortran hybrid computation.  A
+
+Python coded program  with  a kind of interpreted  fashion  is directly executed without pre -compiling requirement as compiled 
+
+languages such as Fortran etc.  A natural way to realize hybrid computation of Python and Fortran is that Python -callable 
+
+Fortran (PCF) modules can be imported into a Python main controller (PMC) as callable objects and scientific Fortran 
+
+computation can call Python -coded AI algorithms  as subroutine or function. To that end, there are  four  aspects of concerns 
+
+that need to be addressed in an infrastructure of Python -Fortran hybrid modeling and data assimilation (Hf2pMDA) designed 
+
+in this study: (1) computational environment needs to be set to support both the Python and Fortran computations;  (2) Fortran 
+
+model codes need to be recompiled so that they become PCF modules;  (3) some of Python codes need to be Fortran -callable 
+
+so that they become  Fortran -callable Python (F CP)  modules  for which the Fortran program can directly call;  (4) a PMC needs 
+
+to be designed and  application -oriented interfaces need to be designed to link PCF modules to PMC, and let scientific Fortran 
+
+computation being able to call Python -coded AI algorithms.  We  describe  the details of implementation of 4 aspects above as 
+
+4 steps in  Text S1: General procedure of implementation of H f2p MDA.  Following the procedure above and taking care of 
+
+some key points noted in  Section 2.2 , we can  construct  Hf2p MDA . By these 4 steps , within the  Hf2p MDA, the scientific 
+
+modeling and machine learning can be  fused together as illustrated in  Fig. 1 . On the one hand, it readily realizes “AI for 
+
+science,” i.e., when AI algorithms can help resolve challenging issues in physical modeling and data assimilation, such 
+
+algorithms can be directly applied to legacy Fortran codes from lon g-time scientific advancement . On the other hand, the 
+
+Hf2p MDA  can help on “science for AI,” i.e., if necessary, the scientific computation results can directly join the training process. 
+
+Examples include reinforcement learning in which dynamics is used as a part of training constraint (Banerjee et al., 2025; Su n
+
+et  al., 2025). 5         
+
+> Fig ure 1: A schematic illustration of the designed H f2p MDA to fuse Fortran scientific model sand Python machine learning.
+
+Next, after addressing innovative key points in Hf2pMDA implementation and Hf2pMDA ’s merits, we will  give application 
+
+examples of  Hf2p MDA , in which an AI DA algorithm is fused into climate and weather models to fulfill strongly -coupled DA 
+
+and fine -scale convection DA with Lidar measurements. 
+
+2.2  Notes of key points in  Hf2p MDA  implementation and  Hf2p MDA ’s merits 
+
+The  F2PY is a standard utility distributed with NumPy, which is one of the foundational libraries for numerical computing in 
+
+Python (Harris et al., 2020). It has been widely used to generate Python interfaces for Fortran routines and has become part  of 
+
+the sci entific Python build ecosystem, including applications in SciPy (Virtanen et al., 2020), WRF -Python ( Ladwig , 2017), 
+
+GeoCAT -f2py (UCAR/NCAR, 202 0), and related tools.  Although F2PY has traditionally been used to wrap individual Fortran 
+
+functions or libraries for Python -side invocation, its potential for coupling legacy scientific models with Python -based 
+
+algorithms has not been fully exploited. This is partly because F2 PY was originally designed for workflows in which Python 
+
+acts as the main “glue” language, whereas  usually  physical  Earth system model s (including data assimilation)  are organized 
+
+around compiled Fortran drivers, deeply nested physical parameterization routines, and tightly controlled time -stepping 6
+
+procedures. As a result, directly introducing Python -based machine learning or data assimilation algorithms into such models 
+
+is not always straightforward. 
+
+In H f2p MDA, F2PY is used in two complementary  path s to bridge this gap.  Here , the first  path  is referred to as  “PMC organizing 
+
+PCF modules ,” where a Python  main  control layer reorganizes and invokes Python -call able  Fortran  (PCF)  modules. The 
+
+second  path  is referred to as  “Fortran program calling FCP functions ,” where the original Fortran execution flow is largely 
+
+preserved and Python functions are invoked through callback interfaces. Together, these two  path s allow H f2p MDA to support 
+
+both Python -driven model orchestration and callback -based embedding of Python algorithms into existing Fortran model 
+
+workflows.  The key notes of these two paths will be described in detail in the following 2 subsections combined with  Fig. 3 
+
+together. 
+
+2.2.1 PMC organizing PCF modules 
+
+Similar to the strategy adopted in fv3gfs -wrapper (McGibbon et al., 2021), the path of PMC organizing PCF modules 
+
+decomposes the original Fortran model workflow into callable components. Key model routines and state variables are first 
+
+exported from the or iginal scientific model and then wrapped as Python -callable Fortran modules through F2PY utilities. The 
+
+PMC can subsequently invoke these wrapped components, reorganize the execution logic, and insert Python -side algorithms 
+
+such as pre -processing, machine  learning, data assimilation, and post -processing etc. 
+
+The major advantage of this path is its conceptual simplicity. Instead of embedding Python directly inside the original Fortr an 
+
+time -stepping loop, the model components are exposed to Python and then controlled externally by PMC. This makes the 
+
+Python -Fort ran coupling workflow eas y to  understand and debug, and makes algorithm development more flexible. Moreover, 
+
+the F2PY signature -file mechanism allows users to explicitly specify which Fortran routines should be exposed. Together with 
+
+support for static or dynamic libraries, this makes  it possible to integrate the wrapping process into an existing system without 
+
+manually writing C glue -code layers. In this sense, F2PY can automatically generate native Python C/API extension modules 
+
+that connect Python with the compiled Fortran component s. 
+
+The implementation procedure can be summarized as follows. First, the original Fortran workflow is decomposed into several 
+
+callable components, and the required data by Python -side algorithms are identified  (➊ in  Fig.  2a). Second, F2PY is used to 
+
+generate or customize the signature file  (➋ in  Fig.  2a). Third, the scientific model or selected components are compiled into a 
+
+linkable library and then wrapped by F2PY ( ➌ in  Fig.  2a). Finally, the PMC reorganizes the model logic and integrates Python -
+
+side algorithms into the workflow  (➍ in  Fig.  2a).7    
+
+> Fig ure 2: A schematic illustration of the path of a) PMC organizing PCF modules, and b) Fortran program calling FCP functions
+> in Hf2p MDA.
+
+2.2.2 Fortran program calling FCP functions 
+
+The path of PMC organizing PCF modules is effective when the main model workflow can be reasonably decomposed into 
+
+independent callable components. However, this strategy can become labor -intensive, or even impractical, for highly 
+
+undisassembled  models (multiple nested layers with recursive routine calls, for instance), especially when the variables 
+
+required by Python -side algorithms are produced or updated in lower -level routines rather than in the top -level driver. For 
+
+models such as WRF, whose  execution flow involves deeply nested physical and dynamical processes, extracting all relevant 
+
+components into a Python -controlled workflow may require extensive refactoring and change the original model organization. 
+
+To resolve this difficulty, H f2p MDA also supports a callback -based strategy by the path of Fortran program calling FCP 
+
+functions. This strategy is conceptually related to previous efforts such as WRF –ML v1.0 (Zhong et al., 2023), Arnold et al. 
+
+(2024), and Zhang et al. (2025), in which Py thon -side algorithms are invoked from Fortran model code. The  different  part of 
+
+Hf2pMDA is that the original Fortran program remains the primary execution driver, while selected Fortran routines call a 8
+
+callback -facing interface only when Python -side computation is required. The corresponding Python functions are registered 
+
+through the F2PY -generated layer and are subsequently invoked during model execution. 
+
+A key merit of this path is that it reduces intrusive refactoring of the host model. Instead of decomposing the entire model 
+
+workflow and reconstructing it under Python control, only a thin callback -facing Fortran interface is inserted at the locations 
+
+whe re Python -side algorithms need to interact with the host model. Lower -level Fortran routines can pass model states or 
+
+diagnostic variables to this interface, receive the computed results from Python, and then continue the original execution fl ow. 
+
+In this w ay, the Python -Fortran coupling is concentrated at well -defined interface points, while most of the host model 
+
+implementation, build structure, and runtime logic remain unchanged. 
+
+Nevertheless, this callback -based approach still requires a Python -side registration stage. The callback function is not simply 
+
+called as an ordinary external routine inside a standalone Fortran executable. Instead, it must first be registered through t he 
+
+F2PY -generated Python module, after which the pre -built Fortran logic can invoke the registered callback during execution. 
+
+In practice, this means that  the  PMC still need to initialize the coupling environment, register the Python callback, and launch 
+
+or coordinate the host -side Fortran entry point. This forms a two -stage workflow: the callback is registered at the Python/F2PY 
+
+boundary, whereas the actual cal lback invocation occurs later inside the host -side Fortran execution. 
+
+In contrast to  the path of PMC organizing PCF modules, t he workflow of the path of Fortran program calling FCP functions 
+
+can be summarized in  Fig.  2b. While sharing the fundamental logistics of  ➊-➍ in  Fig.  2a, the path of Fortran program calling 
+
+FCP functions needs to add Python callback statements and interface in  ➊-➋. The Fortran interface is defined to specify how 
+
+the host model communicates with Python -side functions, and the relevant lower -level Fortran routines are modified to call 
+
+this interface when Python -side computation is required.  While  ➌ remains nearly unchanged (except for including the  callback 
+
+interface -facing), in  ➍, the PMC needs to register callback utility and add  host_entry ()  as well as the required import 
+
+library .
+
+In practice, the two paths described above can of course be used together in the same job if necessary. From the following 
+
+Sect.  3 on, we will describe a Latent -3DVar (L3DVar) AI data assimilation schem e that uses autoencoder (AE) to carry out 
+
+latent space transformation and 3 -dimensional variational (3D -Var) minimization to absorb observational information. 
+
+3 An AE  Latent  Space  3D -Var (L3DVar) within H f2p MDA 
+
+In general, in the framework of H f2p MDA implemented in  Sect. 2 , any AI algorithm can be fused with Fortran -programmed 
+
+scientific computation. As application examples of H f2p MDA, here we describe a Latent Space 3D -Var (L3DVar) AI data 
+
+assimilation algorithm that will be applied to a climate model to realize SCDA ( Sect. 4 ) and a weather model to fulfill fine -
+
+scale Lidar observation assimilation ( Sect. 5 ). The L3DVar AI DA algorithm  consists of  AE  latent space transformation and 
+
+3D -Var  minimization  in the  latent space (Cheng et al., 2022 ; Melinc and Zaplotnik, 2024 ). 9
+
+3.1  The principle of  AE latent space transformation 
+
+Autoencoders (AEs) are neural representation -learning models that learn a compact latent representation of high -dimensional 
+
+inputs through an encoder –decoder architecture. In geophysical applications, multiple physical variables can be arranged as 
+
+separate  input channels, enabling the encoder to extract a joint low -dimensional representation of multivariate spatial structures 
+
+(Hinton and  Salakhutdinov 2006; Fan et al. 2025a, b; Fan et al. 2026).  Let  𝐱  ∈ ℝ𝑛  denote a normalized physical -space state 
+
+vector containing atmosphere, ocean, or other model variables. The trained encoder  𝐸  maps  𝐱  into a latent vector  𝐳  ∈ ℝ𝑟 , and 
+
+the trained decoder  𝐷  maps  𝐳  back to the physical space: 
+
+𝐳  = 𝐸 (𝐱 ), 𝐱 ˆ = 𝐷 (𝐳 ). (1)
+
+Here,  𝐱 ˆ is the reconstructed physical -space state. In this study, the AE is trained before data assimilation and then kept fixed 
+
+during the assimilation procedure. The detailed reconstruction loss, variable normalization strategy, and application -specific 
+
+trainin g settings are provided in the  Text S2:  Implementation details of an AE architecture,  while a schematic workflow of 
+
+AE -based transformation between the physical space and latent space is shown in  Fig. 3a .
+
+Variational autoencoders (VAEs), introduced by  Kingma and Welling  (20 13 ), extend this framework by imposing a 
+
+probabilistic latent prior, commonly a standard Gaussian distribution, through the Kullback –Leibler divergence term in the 
+
+variational objective. This regularization can produce a smoother and more structured latent space, but it may also degrade 
+
+reconstruction accuracy when the regularization is too strong. Because the performance of the subseq uent assimilation is 
+
+directly affected by the fidelity of the decoded analysis fields, we adopt a deterministic AE rather than a VAE in this study .
+
+Previous latent -space data assimilation studies have further shown that suitably trained autoencoders can yi eld latent 
+
+representations with weakly correlated or approximately diagonal background -error covariance structures, which makes 
+
+simplified covariance assumptions more plausible for latent -space variational assimilation, including latent -space 3DVar (Fan 
+
+et  al. 2026). 10 
+
+Fig ure  3:  Schematic workflow of the AE -based Latent Space 3D -Var (L3DVar) algorithm. (a) AE training provides a nonlinear 
+
+encoder –decoder transformation between the physical model space and a reduced latent space. (b) In the online assimilation stage, 
+
+the background  state  𝐱 𝒃  is encoded into the latent background vector  𝐳 𝒃 , observational information is incorporated through latent -
+
+space 3D -Var minimization, and the optimized latent vector  𝐳 𝒂  is decoded to produce the physical -space analysis field  𝐱 𝒂 . 𝐁 𝒛  and  𝐑 
+
+denote the latent -space background -error covariance matrix and the observation -error covariance matrix, respectively. 
+
+3.2  Latent space  minimization  in general 
+
+Based on the AE transformation described in  Sect. 3.1 , L3DVar introduces a variational minimization process in the latent 
+
+space, as illustrated in  Fig. 3b . Given a background physical -space state  𝐱 𝑏 , its latent representation is first obtained by the 
+
+trained encoder as  𝐳 𝑏  = 𝐸 (𝐱 𝑏 ). The analysis latent vector  𝐳 𝑎  is then estimated by minimizing a 3D -Var -type cost function in 
+
+the latent space :
+
+J(z) = 1
+
+2 ‖z − zb‖Bz 
+
+> −1
+> 2
+
++ 1
+
+2 ‖y − ℋ(D(z))‖R−1 
+
+> 2
+
+(2)
+
+In this formulation,  𝐁 𝑧  is the background -error covariance matrix in the latent space,  𝐑  is the observation -error covariance 
+
+matrix,  𝐲  denotes the observation vector, and  ℋ is the observation operator that maps the decoded physical -space state to the 
+
+observation space. The two covariance matrices weight and nondimensionalize the background and observation misfit terms, 11 
+
+respectively. After minimization, the physical -space analysis state is obtained by decoding the optimized latent vector, i.e., 
+
+𝐱 𝑎  = 𝐷 (𝐳 𝑎 ).
+
+This formulation differs from conventional physical -space 3D -Var in that the control variable is the reduced latent vector  𝐳 
+
+rather than the full model state  𝐱 . Therefore, the dimension of the minimization problem is substantially reduced, while the 
+
+observation constraint is still evaluated in the physical observation space through the decoded state  𝐷 (𝐳 ). Because the decoder 
+
+is nonlinear and consists of learned neural -network transformations, the resulting observational correction can represent 
+
+nonlinear cross -variable relationships even though the cost function retains a 3D -Var form. This property is par ticularly useful 
+
+for strongly coupled data assimilation, in which observations from one component, such as the atmosphere or ocean, are 
+
+expected to directly adjust the coupled state of another component through the learned latent representation (Cheng et a l., 2024; 
+
+Lin et al., 2025). 
+
+The L3DVar workflow shown in  Fig. 3b  therefore provides a general latent -space assimilation operator. The background state 
+
+𝐱 𝑏  is encoded into the latent background vector  𝐳 𝑏 , observational information is incorporated through variational minimization, 
+
+and the optimized latent state  𝐳 𝑎  is decoded back to the physical space as the analysis field  𝐱 𝑎 . This general workflow is 
+
+independent of the specific host model and can be coupled to different Fortran -based models through the H f2p MDA 
+
+infrastructure. 
+
+3.3  The  AE  data -training  process and 3D -Var  latent space  minimization  for L3DVar 
+
+The implementation of L3DVar in H f2p MDA consists of an offline AE training stage and an online assimilation stage. During 
+
+the offline stage, the encoder  𝐸  and decoder  𝐷  are trained using application -specific model states. The basic transformation 
+
+between physical and latent spaces follows the general AE architecture shown in  Fig. 3a , whereas the detailed network 
+
+structure, training samples, normalization procedure, and reconstruction loss are determined by the target application and ar e
+
+therefore documented in the Supplementary Information  and cited  in the corresponding application sections. 
+
+During the online assimilation stage, the trained AE is used as a fixed Python -side AI algorithm within H f2p MDA. At each 
+
+assimilation time, the background state  𝐱 𝑏  provided by the host model is passed to the encoder  𝐸  to obtain the latent 
+
+background vector  𝐳 𝑏 . The latent -space cost function  𝐽 (𝐳 ) is then minimized using an efficient PyTorch -based optimizer, such 
+
+as Adam (Kingma and Ba, 201 4) . When the prescribed convergence criterion is satisfied, the optimized latent vector  𝐳 𝑎  is 
+
+decoded by  𝐷  to generate the physical -space analysis field  𝐱 𝑎 . This analysis field is then returned to the host model and used 
+
+as the initial condition for the next model integration step. 
+
+This implementation design provides the algorithmic connection between the general H f2p MDA infrastructure in  Sect. 2  and 
+
+the model -specific applications in  Sects. 4 and 5 . In the climate application, the same L3DVar operator is inserted into the 
+
+coupled atmosphere –ocean data assimilation workflow to realize SCDA. In the weather application, the operator is coupled to 
+
+a high -resolution model workflow to assimilate fine -scal e Lidar observations. Thus,  this section  defines the application -12 
+
+independent L3DVar algorithm,  and  the following sections describe how this algorithm is embedded into specific Fortran -
+
+based modeling systems through H f2p MDA. 
+
+4 Hf2p MDA applied to  a climate model  to realize strongly -coupled data assimilation (SCDA) 
+
+4.1  The CM2  and its  weakly -coupled data assimilation (WCDA)  system 
+
+The CM2  is a fully -coupled Earth system  model consist ing  of the atmosphere , ocean , land and sea -ice components  (Lin, 2004; 
+
+Gnanadesikan  et al., 2006; Winton, 2000), having been an important member of the Coupled Model Intercomparison Project 
+
+(CMIP) (Delworth et al., 2006 b; Randall, 2007; Taylor et al., 2012; Eyring et al., 2016) . The  version we used in this study has 
+
+the  atmosphere model  with  2°latitude × 2.5°longitude  horizontal resolution and 24 vertical levels , and  the ocean  with 1° ×1° 
+
+horizontal resolution  and  50 vertical levels , time stepping with  30 minutes  and  2 hours  for atmosphere and ocean as well as 
+
+their coupling.  As the first CGCM ’s CDA system , the first version of CM2 -CDA was developed based on the ensemble Kalman 
+
+filter (EnKF) (Zhang and Anderson, 2003 ; Zhang et al., 2007),  implemented  in  a weakly -CDA ( WCDA ) manner , i.e., the 
+
+atmosphere and ocean conduct their DA in their own model components . However, a n EnKF  CDA system is very expensive 
+
+and has a limitation on extracting low -frequency observational signals (Yu et al., 2019). To resolv e this issue, based on scale 
+
+disassembling of a long time series of single model solution and the EnKF ’s framework, a multiscale high -efficiency 
+
+approximate EnKF (MSHea -EnKF) was designed (Yu et al., 2019) and implemented into the CM2 (Lu et al., 202 3). Therefore, 
+
+the current version of CM2 -CDA employed in this study uses a sequential WCDA procedure which forwards on single CM2 
+
+coupled model integrated with atmosphere -ocean observations as they are available.  In the way of  MSHea -EnKF , instead of 
+
+forwarding the coupled model in an ensemble manner, the multiscale background ensembles are initially constructed from a 
+
+long time series of single model solution  but innovated with the ongoing CDA procedure. 
+
+In a WCDA procedure, the atmosphere (ocean) observations only adjust the atmosphere (ocean)  its  own state and observational 
+
+information  is  transfer red  cross the atmosphere and ocean by coupled model exchanged fluxes. Without direct observational 
+
+adjustment between the atmosphere and ocean, imperfect coupling physics may still introduce errors into the coupled model 
+
+and CDA remains in an incomplete fashi on. The strongly -CDA (SCDA) has been pursued to fulfill sufficient balanced and 
+
+coherent coupled state estimation in CDA (Zhang et al., 2020) but  it remains challenging  (e.g. De Rosnay  et al., 2022) imposed 
+
+by the limitation of linear regression in traditional DA algorithms for such different characteristic scales cross the atmosp here 
+
+and ocean. The natural nonlinear nature of machine deep learning AI algorithms makes SCDA feasible if i t is inserted into a 
+
+WCDA system as an additional term. 
+
+Next, we will describe how to apply the H f2p MDA framework outlined in  Sect . 2 so that an AI SCDA scheme can be  fused 
+
+with the legacy  CM2 -CDA to  form  an H f2p MDA -CM2 SCDA .13 
+
+4.2  Hf2p MDA  fusing L3DVar with CM2 -CDA to form  Hf2p MDA -CM2 SCDA 
+
+In general, the CM2 model has a very clear modular feature, in which the atmosphere and ocean components have relatively -
+
+independent structure, with land as atmospheric boundary processes and sea -ice being the interface of atmosphere and ocean. 
+
+We use the path of PMC organizing PCF modules (as shown in  Fig. 2 a) to implement  Hf2p MDA -CM2 SCDA . The main controller 
+
+coupler_main  organizes all interfaces between model components and loops time integration as every half hour for the 
+
+atmosphere and every two hours for the ocean and atmosphere -ocean coupling . The weakly CDA conducts atmosphere (ocean) 
+
+DA computation within the atmosphere (ocean) component and it therefore does not change the basic logic structure of 
+
+coupler_main.  The entire  CM2 -CDA package of codes consists of 4 static libraries:  libfms.a , libland.a , libecda.a  and 
+
+libcoupler.a . Here  libfms.a  contains all the lowest shared information such as MPI and remapping functions etc. and  libland.a 
+
+is a relatively -independent application package for land model based on  libfms.a , while  libecda.a  includes all atmosphere and 
+
+ocean model components as well as CDA subroutines beside land model. Finally,  libcoupler.a  is the highest infrastructure to 
+
+connect all parts above together by  coupler_main . To make all Fortran modules in these static libraries becoming PCF modules, 
+
+we first partition the main controller  coupler_main.F90  as two parts,  cm2_cda_mainsubs.F90  and  cm2_cda_plugs.F90.  The 
+
+cm2_cda_mainsubs.F90  is basically a modified version of  coupler_main.F90 , in which  the main program is  disassembled into 
+
+a list of subroutines such as  cm2_cda_maininit() , atmos_step()  and  ocean_step()  etc. as module initialization and single step 
+
+model integration. The  cm2_cda_plugs.F90  simply organizes various model component integration of single step as plug -ins 
+
+(tool_atmos_step()  and  tool_ocean_step()  etc., for instance) for PMC. 
+
+Following the procedure described in  Sec t.  2, we first recompile 4 static libraries  libfms.a , libland.a , libecda.a  and  libcoupler.a 
+
+by adding  “-fPIC ” option tag. Then we use  f2py  to combine  cm2_cda_plugs.F90  with these 4  static libraries together to create 
+
+the signature file  cm2_cda.pyf  and DLL  cm2_cda.python -311 -x86_64 -linux -gnu.so . Finally, the DLL  cm2_cda.python -311 -
+
+x86_64 -linux -gnu.so  is copied  to work directory where  cm2_cda_main.py  is stored. 
+
+Based on  the guideline of PMC ’s structure described in  Text S1  Step -4 and  Sec t.  2. 2.1 , we construct the  PMC  of H f2p MDA -
+
+CM2 SCDA , called  cm2_cda_main.py.  In this case, as  arranging time integration of the coupled model,  cm2_cda_main.py  also 
+
+is responsible for  connecting the atmosphere -ocean interface with the AI SCDA algorithm implemented by  L3DVar  described 
+
+in  Sect . 3 . Then following the procedure described in  Text S1  Step -4, we can run  cm2_cda_main.py  to  complete the process 
+
+of H f2p MDA -CM2 SC DA ’s design and execution. 
+
+Since the PMC  cm2_cda_main.py  conducts the coupled model time integration and it explicitly controls the evolution of 
+
+coupling interface between the atmosphere and ocean, we can conveniently insert SCDA into the model integration.  Next, we 
+
+will  evaluate  the results of  AE  latent space reconstructing  coupling variables as well as resulted  SCDA  by  minimization  in the 
+
+latent space. 14 
+
+4.3 Test  results of SCDA by H f2p MDA -CM2 SCDA 
+
+4.3.1  The AE reconstruction of physical variables at air -sea interface  by latent space 
+
+In the H f2p MDA -CM2 SC DA  system, to produce SCDA results, we first train the encoder and decoder to reconstruct the reduced -
+
+order state in latent space using the atmosphere and ocean state variables at the air -sea interface. High -efficiently reconstructing 
+
+the latent space with n ecessary accuracy is the core of training scheme which consists of various selections on parameters and 
+
+loop levels as well as neural networks etc. For the CM2 -SCDA, we set the input vector  𝑥 0 consisting of the atmosphere surface 
+
+wind, temperature and pressure (U s, V s, T s, P s), and ocean surface currents, temperature and height (SSU, SSV, SST, SSH). 
+
+The concrete  architecture design and  training process  are  described  in  Text S2 .1 and S 2.2 . However, it  is worth to mention 
+
+that different from a general case in which the physical state usually only includes information within a component of multi -
+
+sphere geofluid, in this SCDA case, the physical state being transformed consists of atmospheric and oceanic info rmation with 
+
+different characteristic scales. Under this circumstance, the AE training process therefore includes a Cross Attention step w hich 
+
+consists of mixing and its inverse (separation). Apart from this point, the AE still follows a pretty general tra ining procedure 
+
+for  downsampling and upsampling. 
+
+All variables are normalized by their corresponding variable ranges before training. The training dataset is constructed from  a
+
+50 -year  free -running  CM2  simulation  sampled every 3 h  (totally 14600 samples in time) . The validation set contains 16060 
+
+samples and is used to evaluate the reconstruction accuracy. Because the main objective of this study is to evaluate the 
+
+feasibility of latent -space data assimilation rather than to develop a general -purpose reconstructi on model, the independent 
+
+assimilation cases are treated as the practical out -of -sample tests. 15   
+
+> Figure 4: Reconstruction of CM2 atmospheric air –sea interface variables in the AE latent space. Rows show surface pressure (Ps),
+> surface temperature (Ts), surface zonal wind (Us) and surface meridional wind (Vs). Columns show the original normalized fiel d,
+> the recon structed field decoded from the latent vector, the reconstruction error and the radially averaged power spectrum of the
+> original and reconstructed fields.
+
+Figures  4 and  5 show representative reconstruction examples for the atmospheric and oceanic variables, respectively. The 
+
+reconstructed fields  (middle -left panels)  preserve the main large -scale structures of the original variables  (left most  panels) ,
+
+and the corresponding errors  (middle -right panels)  remain small compared with the normalized field amplitudes. The spectra 
+
+(right most  panels)  further show that the reconstructed fields retain the dominant low -wavenumber structures and follow the 
+
+original spectral slopes over most resolved scales, although slight smoothing is still visible at the highest wavenumbers. Th is 
+
+behavior is expected for  an encoder –decoder representation and does not prevent the reconstructed fields from providing a 
+
+physically reasonable background for latent -space assimilation. 16    
+
+> Figure 5:Same as Fig. 4, but for CM2 oceanic air –sea interface variables, including sea surface height (SSH), sea surface temperature
+> (SST), surface zonal current (SSU) and surface meridional current (SSV).
+
+The quantitative metrics in  Table 1  confirm this visual assessment. Here, MSE, MAE and RMSE denote the mean squared 
+
+error, mean absolute error and root mean squared error of the normalized fields, respectively. SSIM denotes the structural 
+
+similarity index, and PSNR denotes the peak signal -to-noise ratio. The total SSIM reaches 0.9945, indicating that the AE 
+
+preserves the spatial structure of the coupled air –sea interface variables. Among the selected variables, the ocean current 
+
+components have relatively larger errors than the thermodynamic  variables, reflecting their stronger small -scale variability. 
+
+Overall, the reconstruction accuracy is sufficient for the following SCDA experiment. 17   
+
+> Table 1 :Validation -set reconstruction metrics for CM2 air –sea interface variables in the AE latent space. The metrics are calculated
+> from 16060 validation samples after variable normalization. “Total” denotes the metric averaged over all selected atmospheric and
+> oceanic variables.
+
+Variables  MSE  MAE  RMSE  SSIM  PSNR 
+
+Ps  0.0002  0.010  0.014  0.9996  51.53 
+
+Ts  0.0035  0.035  0.059  0.9977  39.10 
+
+Us  0.0040  0.045  0.063  0.9977  41.29 
+
+Vs  0.0054  0.053  0.074  0.9967  41.35 
+
+SSH  0.0013  0.024  0.036  0.9991  46.27 
+
+SST  0.0008  0.018  0.027  0.9992  40.88 
+
+SSU  0.0148  0.079  0.120  0.9918  38.90 
+
+SSV  0.0320  0.117  0.178  0.9854  39.90 
+
+Total  0.0109  0.056  0.104  0.9945  40.11 
+
+4.3.2  Latent -space evaluation and  𝐁 𝒛 -related correlation diagnosis 
+
+After verifying the reconstruction accuracy, we further examine whether the latent variables provide a suitable control space 
+
+for variational assimilation. In  L3DVar, the background -error covariance matrix  𝐁 𝑧  weights the departure of the analysis latent 
+
+vector from the background latent vector. A simplified  𝐁 𝑧  is only useful when the latent variables are not strongly correlated .
+
+Here we adopt  an NMC -like method  (Parrish and Derber, 1992)  to calculate the correlation of temporal differences to 
+
+approximate  the  𝐁 𝑧 .
+
+Figure  6 shows three complementary diagnostics. The channel -correlation matrix indicates that the latent channels are 
+
+dominated by diagonal elements, although weak off -diagonal structures remain. These residual correlations are not unexpected, 
+
+because the CM2 late nt vector represents coupled atmospheric and oceanic interface variables with different spatial scales. 
+
+The spatial -correlation matrix for a representative latent channel also shows a clear diagonal dominance, suggesting that the 
+
+latent representation does  not introduce strong long -range artificial dependence. Finally, the distribution of off -diagonal 
+
+correlations is sharply centered near zero, with 95% of absolute off -diagonal correlations smaller than about 0.29 0.
+
+These diagnostics indicate that the trained latent space is  sufficiently decorrelated for the present demonstration. The near -
+
+diagonal structure provides practical support for using a simplified  𝐁 𝑧  like a diagonal matrix  in the latent -space minimization. 18   
+
+> Figure 6:Latent -space correlation diagnosis for the CM2 AE representation. (a) Correlation matrix among latent channels. (b)
+> Spatial correlation matrix for a representative latent channel. (c) Probability density distribution of off -diagonal correlation
+> coefficien ts. The dashed vertical lines mark the 95% range of absolute off -diagonal correlations.
+
+4.3.3  The SCDA results 
+
+In the case of H f2p MDA -CM2 SCDA , through the AE training, we establish a latent space which is transformed from the air -sea 
+
+interface space so that we can efficiently conduct minimization to blend atmospheric and oceanic observations into the model 
+
+space. Here while the size of coupled  state vector in physical space is  339840 , through space transformation, the state vector 
+
+size in the latent space becomes  40500  with a reduction rate of  88 %, which makes fast and efficient minimization feasible. 
+
+Next, we will show that although only  12 % of physical space vector size is used in latent space minimization, the reconstruction 
+
+fields are reasonably represent ing  the background physical information for extracting observational information. 
+
+In this test case, we use the ERA5 (5 th  generation atmospheric reanalysis of European Centre for Medium -Range Weather 
+
+Forecasts) surface pressure Ps (with a 25 km horizontal resolution) and OISST (NOAA 1/4° Daily Optimum Interpolation Sea 
+
+Surface Temperature) as atmospheric and oceanic observati ons respectively.  With the usual observational errors of 5 hPa (for 
+
+Ps) and 0.5  oC (for SST),  we run the H f2p MDA -CM2 SCDA  system on the whole  year of  1982 and present a typical minimization 
+
+process and the whole year verification results in  Figs.  7a-b. The latent space can be comprehended as a reduced -order 
+
+holographic space that represents all nonlinear complex relationships of physical variables. In this space, as minimization 
+
+proceeds  (see details in  Text S3 ), when the observation loss decreases, the latent space state vector  z gets adjusted as the 
+
+background loss increases so that the observations are coherently incorporated into the background at the convergent point 
+
+that the background and observation reach equilibrium. 
+
+Fig ures . 7a-b show  that due to the low -frequency and quasi -linear nature of ocean motions, both WCDA and SCDA make the 
+
+model SST quickly converge to observations and keep in nearly RMSEs in most of the time. In the contrary, because of strong 
+
+internal variability of the atm osphere, the curves of Ps RMSEs in WCDA and SCDA quickly separate after a few days, but 
+
+SCDA does not show  its advantage  within a few months. After about 4~5 months, SCDA starts to show a little smaller RMSEs. 
+
+In terms of a 6 -month mean in July to December, SCDA reduces the WCDA ’s RMSE by roughly 4%, in which SCDA ’s RMSE 19 
+
+is 4.62 out of 4.81 of WCDA ’s.  The  examples of spatial distributions of differences of SST and P s RMSEs between SCDA 
+
+and WCDA are given in  Figs. 7 c-d, which show that the large effects of SCDA occur mainly in the tropics for SST and middle -
+
+high latitude storm track area for P s. More examples for SST produced by SCDA and WCDA and their differences are shown 
+
+in  Fig. 8 .                  
+
+> Fig ure 7:ab) The time series of root mean squared errors (RMSEs) of SST and Ps in free model control simulation (CTL) (blue),
+> and WCDA (orange ) as well as SCDA (green) produced by Hf2pMDA -CM2 CDA at the 200 th iteration of minimization. The WCDA
+> is a multiscale high -efficient approximate filter (MSHea -EnKF) . cd) Distributions of the mean differences of RMSEs of SST and Ps
+> in SCDA and WCDA (SCDA -WCDA) in the sub -time series from 1982 -10 -24 0130Z to 1982 -11 -8 0130Z (denoted by the dashed -
+> black box in panels a-b).
+
+Figure 8  indicates that SCDA can produce large effects on the tropical instability waves (TIWs) since very high -frequency 
+
+atmosphere -ocean flux exchanges occur and easily render strong nonlinearity.  It ’s worth to mention that in this H f2p MDA -
+
+CM2 CDA  case, the model resolution is pretty low (~200 km for the atmosphere and ~100 km for the ocean). Under the 
+
+circumstance, the coupled model dynamics in general is quasi -linear ( Perlwitz  et al., 2017), and it is possible that WCDA can 
+
+extract the most of observational information into the coupled model. However, our preliminary results using H f2p MDA -
+
+CM2 CDA  exhibit the promise that after a sufficient time scale, SCDA can create additional values to the CDA system , especially 
+
+for the active air -sea interaction (TIWs, for instance) regions . This may become critically -important as the model attempts to 
+
+resolve fine -scale and frequent air -sea coupling processes as a tropical cyclone or mesoscale eddy passes by. 
+
+The results above show that in this test case,  although only 6% of physical space vector size is used in latent space minimization, 
+
+the reconstruction fields are  able  to represent the background physical information for extracting observational information. 20        
+
+> Figure 8: The physical samples of SST and SSU at the four times. The dashed -black box i neach panel marks the area of active
+> tropical instability waves where the SCDA easily renders difference from WCDA as shown by t he middle -left and most -right
+> column s denoted as SCDA minus WCDA . 4 sets of SCDA SST and SSU and their increments from WCDA at 1982 -10 -29 0130Z,
+> 1982 -11 -01 0130Z, 1982 -11 -04 0130Z and 1982 -11 -07 0130Z are shown in the upper -left, upper -right, lower -left and lower -right.
+
+5 Hf2p MDA applied to  a weather  model  to realize fine -scale convection data assimilation (FSDA) 
+
+5.1  WRF and its multiscale  data assimilation  syste m
+
+Here we use  a version of  Weather Research and Forecasting (WRF, v 3.7.1 ) model  configured  as 3 -layer nesting  at 9 , 3 and 1 
+
+km horizontal resolution s for the West of China (D01), Central Sichuan Province (D02) and Chengdu City (D03) respectively 
+
+as shown in  Fig.  9a. The  WRF  model  is divided into  50  vertical levels from the surface to the model top at 50 hPa . The model 
+
+includ es  most of the  primary physic s such as the  Kain -Fritsch convection parameterization  (Kain, 2004),  Rapid Radiative 
+
+Transfer Model for GCMs (RRTMG) longwave and shortwave radiations  (Clough et al., 2005) and  Yonsei University (YSU) 
+
+boundary layer  (Hu et al., 2013) as well as  WRF single -moment 3 -class (WSM3) microphysics  (Hong et al., 2004) etc . The 
+
+initial and boundary conditions are  drawn  from the  ERA5  reanalysis dataset in this study . The original purpose of this WRF 
+
+configuration is to study the impact of lidar observations on the Chengdu City. Here we employ it to exhibit the capability t o
+
+conveniently carry out parallel experiments using H f2p MDA conducting traditional DA and AI L 3DVar .21      
+
+> Fig ure 9:The configurations of a) 3 -layer nesting model domain at 9, 3 and 1 km horizontal resolutions for the West China (D01),
+> Central Sichuan Province (D02) and Chengdu City (D03), b) conventional observation stations in D02, and c) Lidar stations deployed
+> in Chengdu City D03.
+
+Same as the CM2 -CDA described in  Sect . 3.1 , a multiscale high -efficiency approximate EnKF (MSHea -EnKF) (Yu et al., 
+
+2019) data assimilation algorithm is used in this multi -layer nesting WRF to carry out multiscale observational information 
+
+extraction (Wang et al., 2024). To do that, we conduct the  large scale  “observational ” constraint in D01 using ERA5 ’s wind 
+
+and temperature, local data constraint in D02 and D03 using the conventional observations shown in  Fig.  9b (in D02) as well 
+
+as additional Lidar observations shown in  Fig.  9c (in D03).  In this study, once the H f2p MDA -WRF FSD A system (will be 
+
+described in the next section) is set, we use it to conduct parallel assimilation experiments in the 1 km resolution Chengdu  City 
+
+core domain by the classic MSHea -EnKF and  AI  L3DVar  to test validation of the H f2p MDA -WRF FSD A.
+
+5.2  Hf2p MDA  fusing L3DVar with WRF DA  to form  Hf2p MDA -WRF FS DA 
+
+Unlike the CM2 model which is highly modularized, the WRF model uses a recursive function called  integrate  to perform 
+
+downscaling simulations by inputting differently -defined domain as its argument. Under this circumstance,  we use the path of 
+
+Fortran program calling FCP functions (as shown in  Fig. 3 b) to implement  Hf2p MDA -WRF FS DA . We adopt a strategy in which 
+
+the WRF main program is changed to a module containing subroutine  wrf  and the whole model and its DA codes are packed 
+
+as an entity that is used by  wrfda_plug.F90 . In this case, the  wrfda_plug.F90  only defines a subroutine called  call_wrf_main 
+
+which calls the subroutine  wrf  and defines an  external python_foo  before the subroutine call. The  python_foo  is passed in by 22 
+
+the  call_wrf_main  as an argument  from the PMC that will be described  below . The external  python_foo  is a trained LDA 
+
+algorithm which is used by  callback_python.F90  where a  python_da  interface is defined as a Fortran subroutine which is public 
+
+to any Fortran module if applicable. 
+
+Once the preparation described above is done, we follow the procedures described in  Text S1  to complete environment setting 
+
+and Fortran codes compiling. At this point, the signature file  wrfda.pyf  and the  “shared object ” wrfda.cpython -311 -x86_64 -
+
+linux -gnu.so  are ready for being imported to PMC. 
+
+In this case, the PMC  wrfda_main.py  is very concise. After importing necessary Fortran and Python modules including some 
+
+interfaces and utilities for usage of L 3DVar , the  wrfda_main.py  directly makes a Python call to  call_wrf_main  as 
+
+wrfda .wrfda_plug .call_wrf_main (transpond ). Here the  transpond  is the function that will become external  python_foo  in the 
+
+subroutine  call_wrf_main  by argument passing. Following the procedure described in  Sec t.  2.3.2 , we can execute the 
+
+Hf2p MDA -WRF DA  system. 
+
+5.3 Test  results of  FSDA by  Hf2p MDA -WRF FSD A
+
+5.3.1  The AE reconstruction of  WRF  D03  physical variables  by latent space 
+
+We use ERA5 dataset to create boundary and initial conditions and conduct 3 -layer nesting downscaling simulations as 
+
+described in  Sect . 5.1 . Each case is run for 36 hours with hourly output in D03. We discard the first 12 hours as downscaling 
+
+spinup and connect all data in last 24 hours of these cases in 2022 -2024 to form a 3 -year hourly dataset (totally  26280  samples 
+
+in time) for the AE reconstruction training . The  architecture  design  and  training process  are  described in details by  Text S2 .3
+
+and S 2.4 . It ’s worth to mention that in this case, pursuing 1 km resolution high -precision expression, we particularly concern 
+
+local small scale information, and therefore we set a relatively large latent_dim (196608) with only a reduction rate of roug hly 
+
+25%. 
+
+In this test case, we only assimilate the surface observations as shown in  Figs.  9b-c. We first show the reconstruction accuracy. 
+
+As examples, the reconstructed  moisture (q 1), temperature (T 1) and  surface wind (u 1, v 1) fields  are shown in  Figs.  10 , which 
+
+are randomly drawn from a 1 -month validation dataset of June 20  - July 20, 2025, for which we will conduct parallel MSHea -
+
+EnKF and  AI  L3DV ar  experiments using H f2p MDA -WRF DA  in D03.  Fig ure  10  show s that t he reconstructed fields reproduce 
+
+the main spatial structures of the original normalized fields. The error maps  (next -right column)  show that reconstruction errors 
+
+are generally small and spatially localized. The spectra  (most -right column)  further indicate that the reconstructed fields 
+
+preserve the main spectral distribution of the original fields, although weak high -wavenumber smoothing remains. 23 
+
+Fig ure  10 : Reconstruction of WRF D03 first model -level wind variables in the AE latent space. Rows show  𝐪 𝟏  , 𝐓 𝟏  , 𝐮 𝟏  and  𝐯 𝟏  .
+
+Columns show the original normalized field, the reconstructed field decoded from the latent vector, the reconstruction error  and 
+
+the radially averaged power spectrum of the original and reconstructed fields. The sample is taken from 00:00 UTC 23 June 202 5. 
+
+The validation metrics are summarized in  Table 2 . The total SSIM is 0.9966, indicating that the AE reconstruction retains the 
+
+spatial structure of the D03 near -surface variables. The small RMSE and MAE values further show that the reconstruction 
+
+error is limited after normalization. These results sugges t that the trained latent representation is sufficiently accurate for the 
+
+following D03 latent -space assimilation experiment. 24       
+
+> Table 2. Validation -set reconstruction metrics for WRF D03 near -surface variables in the AE latent space. The metrics are calculated
+> from 2183 validation samples after variable normalization. “Total” denotes the metric averaged over 𝐪 𝟏 ,𝐓 𝟏 ,𝐮 𝟏 and 𝐯 𝟏 .
+
+Variables  MSE  MAE  RMSE  SSIM  PSNR 
+
+q1 0.00018  0.0089  0.0127  0.9968  40.68 
+
+T1 0.00028  0.0107  0.0164  0.9989  42.91 
+
+u1 0.00387  0.0335  0.0597  0.9952  42.52 
+
+v1 0.00298  0.0314  0.0528  0.9954  42.76 
+
+Total  0.00183  0.0211  0.0427  0.9966  42.60 
+
+5.3.2  Latent -space evaluation and  𝐁 𝒛 -related correlation diagnosis 
+
+The latent -space correlation structure is also examined for the WRF D03 application. This diagnosis is used to evaluate whether 
+
+the latent variables provide a weakly correlated control space for L3DVar. As in the CM2 case, the purpose  is  to assess whether 
+
+a simplified  𝐁 𝑧  is acceptable for the present demonstration. 
+
+Figure 1 1 shows the latent -space correlation diagnostics for the trained WRF AE. Both the channel -correlation and 
+
+representative spatial -correlation matrices are strongly dominated by their diagonal elements. Compared with the CM2 case, 
+
+the off -diagonal structures  are weaker, which indicates a stronger decorrelation in the WRF latent representation. The off -
+
+diagonal correlation distribution is sharply peaked around zero, and 95% of absolute off -diagonal correlations are smaller than 
+
+about 0.117.  This result supports the use of a simplified latent -space  𝐁 𝑧  in the D03 LDA experiment. 
+
+> Figure 1 1. Latent -space correlation diagnosis for the WRF D03 AE representation. (a) Correlation matrix among latent channels.
+> (b) Spatial correlation matrix for a representative latent channel. (c) Probability density distribution of off -diagonal correlation
+> coeff icients. The dashed vertical lines mark the 95% range of absolute off -diagonal correlations.
+
+25 
+
+5.3.3  The  FS DA results in D03 
+
+Once the latent space AE is trained, the  minimization  in the latent space can be conducted with the Lidar observations in the 
+
+D03 to carry  out L3DVar. W e insert the  L3DVar  into the  WRF DA  system under  Hf2p MDA  to  replace the D03 DA procedure 
+
+form  Hf2p MDA -WRF FSD A system.  Setting an optional switch , we can perform DA experiments with classic multiscale  WRF DA 
+
+and new L 3DVar -WRF FSDA  within the H f2p MDA -WRF FSD A framework in a parallel fashion.  We insert the AE encoder and 
+
+decoder trained in  Text S2.3 and S2.4  and employ the latent space minimization described in  Text S3  to replace the D03 DA 
+
+procedure. In this way, we can perform DA experiments with classic multiscale MSHea -EnKF and new  AI L3DVar  within the 
+
+Hf2p MDA -WRF DA  framework in a parallel fashion.  With the observational error as 1 m/s (for wind), 1  oC (for atmospheric 
+
+temperature),  we run the system from 00UTC 21 June 2025 to 00UTC July 21 2025 with initial and boundary conditions 
+
+remapped from ERA5 reanalysis, in which the WRF model with 9/3 (1) km resolutions in D01/D02 (D03) assimilate s
+
+conventional surface station (Lidar) observations shown in  Fig s. 9b-c. We first show the distribution of analysis increments at 
+
+the first step assimilation in  Fig.  12 . We see very local u 1 and v 1 adjustments that distribute around Lidar locations ( Fig s. 12a-
+
+b), and although the Lidar only provides wind measurements in this case, the moisture  and  temperature  also get consistent 
+
+adjustments ( Fig s. 1 2c-d) under this AE -LDA multivariate nonlinear assimilation framework. 
+
+Fig ure  12: The distributions of analysis increments (the analysis minus the first guess from background) of the first model level  a)
+
+u-component  𝐮 𝟏  and  b) v -component  𝐯 𝟏  and  c) temperature  𝐓 𝟏  as well as  d) specific humidity  𝐪 𝟏  at the minimization  equilibrium 
+
+point of the first assimilation step in D03 L 3DVar  of  Hf2p MDA -WRF FSD A. The H f2p MDA -WRF FSD A system is run from 2025 -06 -21 
+
+0000Z  to 2025 -07 -21 0000Z  with initial and boundary conditions remapped from ERA5 reanalysis. The black asterisks denote the 
+
+locations of 8 Lidars . The red asterisk denotes the Lidar location that is used for the evaluation of L3DVar FSDA in Fig. 13. 26 
+
+Then, we present the time series of RMSEs of the first model level (near surface) u -component (called u 1) and v -component 
+
+(called v 1) produced by the classic multiscale DA (denoted by MDA) and new  AI  L3DVar  (denoted by LDA) in  Fig. 1 3.
+
+Within the H f2p MDA -WRF DA  it is very convenient to perform traditional DA and newly -developed AI  L3DVar  in a parallel 
+
+fashion. We see that except for the period of  06 00Z -10 00Z 21  June  2025 , in most of the time, both the MDA and L 3DVar 
+
+reduce the RMSEs from the CTL.  As an average in the whole assimilation period, the u 1’s RMSE of  L3DVar  is improved by 
+
+2% from the traditional MDA (the RMSEs of CTL, MDA, L3DVar are 2.78, 2.46 and 2.41, respectively).  However, we also 
+
+see that the  L3DVar’s v 1 gives equivalent results of classic MDA  (the RMSEs of CTL, MDA, L3DVar are 3.31, 2.92 and 2.93, 
+
+respectively) . Since the model version used in this study does still not resolve turbulence -featured extreme events (1 km 
+
+horizontal resolution and 100 m vertical resolution in planetary boundary layer in this case), when one of 8 Lidars measures 
+
+out a local gust event  at 06UTC -10UTC 21 June,  neither MDA  nor L 3DVar  does not capture this event. This leads to large 
+
+RMSEs during this period for all of CTL, MDA and L 3DVar . Future  studies will first detect the sensitivities of these DA 
+
+schemes on model horizontal and vertical resolutions, and then perform deep research on  L3DVar  to get optimal results, 
+
+serving for low -altitude economy environment safety insurance.            
+
+> Fig ure 13:The time series of root mean squared errors (RMSEs) of the first model level u -component (u 1) and v -component v 1in
+> free model control simulation (CTL) (blue), and multiscale high -efficient approximate filter (MSHea -EnKF) data assimilation (MDA,
+> orange ) as well as AE latent data assimilation (LDA, green) produced by Hf2pMDA -WRF FSD Ain the D03 domain. Both MDA and
+> LDA experiments are conducted under the configuration of multi -layer nested downscaling shown in Fig. 9ain which the WRF
+> model with 9/3 (1) km resolutions in D01/D02 (D03) assimilate sconventional surface station (Lidar) observations shown in Fig s.9b-
+> c. What are shown here are the results of the first two days in the one month test period o f2025 -06 -21 0000Z to 2025 -07 -21 0000Z
+> for a Lidar location denoted by a red asterisk in Fig. 12 .
+
+27 
+
+We use  Fig. 14  to show that although we only assimilate the surface wind measurements by Lidar into the downscaled model, 
+
+the online FSDA system is able to propagate the surface observational information vertically to constrain the model. While th e
+
+surface -only  L3DVar makes difference from the classic MDA ( panel  a), the small surface absolute error can impact on other 
+
+model levels gradually ( panels  b-g). However, this surface -only observational constraint is clearly insufficient and follow -up 
+
+studies shall use the profiles measured by Lidar to gain more vertical observational constraints.                     
+
+> Fig ure 14:Vertical structures of atmospheric wind u -component .(a) Locations of the lidar sites. The selected lidar site is marked
+> by the red asterisk (the same Lidar denoted by a red asterisk in Fig. 12) , and the black line indicates the radial transect used for the
+> vertical cross -sections in panels (d –g). (b) Time –height distribution of the L 3DVar minus MDA difference at the selected Lidar site.
+> (c) Time –height distribution of difference sof u-component ’s absolute error of L3DVar minus MDA. The colored markers below
+> panel s(b) and (c) indicate the time sn apshot s corresponding to the cross -sections in panels (d –g). (d –g) Vertical cross -sections of u-
+> component ’s difference of L3DVar minus MDA along the radial transect at (d) 0010 Z, (e) 0100 Z, (f) 0150 Z, and (g) 0240 Zon 2025 -
+> 06 -21 .
+
+6 Summary and discussions 
+
+Based on the  F2PY  protocol, a Fortran -Python hybrid programming infrastructure platform called H f2p MDA has been 
+
+developed for deep incorporation of AI and scientific modeling and data assimilation. In this H f2p MDA framework, any Python -
+
+coded (Fortran -coded) AI (scientific) algorithm (scheme) can be used by a scientific modeling and data assimilation module 28 
+
+(machine learning procedure). As two typical application examples of H f2p MDA, the implementations with a coupled global 
+
+climate model CM2 with modularized Fortran structures and a multi -layer nesting downscaling weather model WRF featured 
+
+as recursive Fortran integration, have been presented in details. The CM2 ’s (WRF ’s) H f2p MDA implementation establishes a 
+
+nonlinear strongly -coupled (high -precision) climate (weather) data assimilation system called  Hf2p MDA -CM2 SC DA  (H f2p MDA -
+
+WRF FSD A). Test results of  Hf2p MDA -CM2 SC DA  (H f2p MDA -WRF FSD A) show that while the H f2p MDA conveniently inserts an AI 
+
+latent DA algorithm into the CM2 CDA  (WRF DA ) system and fulfills global strongly -CDA (regional high -precision DA), it 
+
+readily improves the assimilation quality from a traditional DA method. Except for deeply evaluating scientific values in 
+
+Hf2p MDA -CM2 SCD A and H f2p MDA -WRF FSD A, follow -up studies also include incorporating more advanced AI DA algorithms 
+
+into H f2p MDA, for example, the generative assimilation and prediction (GAP) (Yang et al., 2025) based on image recognition 
+
+technology. 
+
+More generally, the H f2p MDA designed in this study is a high ly  efficient infrastructure platform for deep  incorporation of AI 
+
+and science since it only requires minimum change s on legacy Fortran codes of sciences that have a long persistently -
+
+developing history. Following the procedure of H f2p MDA, on the one hand, it is feasible to incorporate data -driven machine 
+
+deep learning algorithms to improve scientific modeling  to fulfill “AI for science .” For example, there are urgent demands of 
+
+new parameterization schemes for high -resolution (HR) Earth system model (e .g. Chang et al., 2020) or even resolving the 
+
+challenging problems of HR Earth system modeling (e.g. Gou et al., 2025). On the other hand, the rich achievements on 
+
+scientific modeling from long time development over more than a half century since 1950s can  directly advance development 
+
+of science -guided AI algorithms (e.g. Hao et al., 2025)  to advance  “science for AI .” In that sense, while the H f2p MDA has a 
+
+very wide scope of applications, it requires more efforts to optimize its structure and deepen its infrastructure development  so 
+
+that it can be more conveniently plugged in any a pplication  scenario .
+
+Code and data availability 
+
+The original ERA5 dataset (Hersbach et al., 2020) can be obtained from  https://doi.org/10.24381/cds.adbb2d47 .
+
+The original OISST v2.1 sea surface temperature dataset (Huang et al., 2021) can be obtained from 
+
+https://www.ncei.noaa.gov/products/optimum -interpolation -sst .
+
+The CM2.1 model (Delworth et al., 2006 b) can be obtained from  https://github.com/mom -ocean/MOM5  and the CM2.1 model 
+
+version with DA modules is also archived on Zenodo ( https://doi.org/10.5281/zenodo.18883209 ; Delworth et al., 2006 a). 
+
+The Weather Research and Forecasting model version 3.7.1 (WRF v3.7.1; Skamarock et al., 2008) can be obtained from 
+
+https://www2.mmm.ucar.edu/wrf/users/download/get_source.html. The exact version used in this study has also been archived 
+
+to ensure reproduci bility and long -term accessibility ( https://doi.org/10.5281/zenodo.19271007 ; University Corporation for 
+
+Atmospheric Research and NSF National Center for Atmospheric Research, 2015). 29 
+
+The model code for Hf2p MDA -CM2 SCDA  and Hf2p MDA -WRF FSDA  developed in this study is archived at 
+
+https://doi.org/10.5281/zenodo. 20710848  (Zhu et al., 2026b). The datasets used in the experiments, including the observation 
+
+data and the exact ERA5 and OISST data used in this study, are archived at  https://doi.org/10.5281/zenodo.19272242  (Zhu et 
+
+al., 2026a). 
+
+Author contributions 
+
+XZ  and  ZLin  are co -first authors who contributed equally to this work. Both of them conduct all test work on Python -Fortran 
+
+hybrid programming as well as AE and latent minimization and join the paper edits.  SZ  is the c orresponding author  who 
+
+proposes the idea, designs and organizes the research project, writes and edits the paper.  ZLu  participate d the test experiments 
+
+on WRF multiscale data assimilation and joins the discussions.  SW  and  XH  manage the Leice Transient team and OUC team 
+
+respectively, and join the discussions and make comments on the research work.  ZX  participate d the test experiments on WRF 
+
+AE training experiments and joins the discussions.  ZR, JL, JX, YG, RH, XY , ML  and GL  contribute to this research by joining 
+
+the discussions and making comments on the research and manuscript. 
+
+Competing interests 
+
+The authors declare that they have no conflict of interest. 
+
+Acknowledgement s
+
+This work is supported by the Science and Technology Innovation Project of Laoshan Laboratory under Grant s (Nos. 
+
+LSKJ202300400, LSKJ202300401 -03, LSKJ202202200, LSKJ202202201 -04), the National Natural Science Foundation of 
+
+China (42361164616), the Shandong Province’s “Taishan” Scientist Program (ts201712017) .
+
+Review statement 
+
+The review statement will be added by Copernicus Publications listing the handling editor as well as all contributing referee s
+
+according to their  status  anonym ous or identified .30 
+
+References 
+
+Arnold, C., Sharma, S., Weigel, T., and Greenberg, D. S.: Efficient and stable coupling of the SuperdropNet deep -learning -
+
+based cloud microphysics (v0.1.0) with the ICON climate and weather model (v2.6.5), Geosci. Model Dev., 17, 4017 –4029, 
+
+https://doi.org/10.5194/gmd -17 -4017 -2024 , 2024. 
+
+Atkinson, J., Elafrou, A., Kasoar, E., Wallwork, J. G., Meltzer, T., Clifford, S., Orchard, D., and Edsall, C.: FTorch: a lib rary 
+
+for coupling PyTorch  models to Fortran, JOSS, 10, 7602,  https://doi.org/10.21105/joss.07602 , 2025. 
+
+Banerjee, C., Nguyen, K., Fookes, C., and Raissi, M.: A survey on physics informed reinforcement learning: Review and open 
+
+problems, Expert Systems with Applications, 287, 128166,  https://doi.org/10.1016/j.eswa.2025.128166 , 2025. 
+
+Benjamin, S. G., Brown, J. M., Brunet, G., Lynch, P., Saito, K., and Schlatter, T. W.: 100 Years of Progress in Forecasting 
+
+and NWP Applications, Meteorological Monographs, 59, 13.1 -13.67,  https://doi.org/10.1175/AMSMONOGRAPHS -D-18 -
+
+0020.1 , 2019. 
+
+Bi, K., Xie, L., Zhang, H., Chen, X., Gu, X., and Tian, Q.: Accurate medium -range global weather forecasting with 3D neural 
+
+networks, Nature, 619, 533 –538,  https://doi.org/10.1038/s41586 -023 -06185 -3, 2023. 
+
+Chang, P., Zhang, S., Danabasoglu, G., Yeager, S. G., Fu, H., Wang, H., Castruccio, F. S., Chen, Y., Edwards, J., Fu, D., Jia ,
+
+Y., Laurindo, L. C., Liu, X., Rosenbloom, N., Small, R. J., Xu, G., Zeng, Y., Zhang, Q., Bacmeister, J., Bailey, D. A., Duan, 
+
+X.,  DuVivier , A. K., Li, D., Li, Y., Neale, R., Stö ssel, A., Wang, L., Zhuang, Y., Baker, A., Bates, S., Dennis, J., Diao, X., 
+
+Gan, B., Gopal, A., Jia, D., Jing, Z., Ma, X., Saravanan, R., Strand, W. G., Tao, J., Yang, H., Wang, X., Wei, Z., and Wu, L. :
+
+An Unprecedent ed Set of High‐Resolution Earth System Simulations for Understanding Multiscale Interactions in Climate 
+
+Variability and Change, J Adv Model Earth Syst, 12, e2020MS002298,  https://doi.org/10.1029/2020MS002298 , 2020. 
+
+Cheng, S., Prentice, I. C., Huang, Y., Jin, Y., Guo, Y. -K., and Arcucci, R.: Data -driven surrogate model with latent data 
+
+assimilation: Application to wildfire forecasting, Journal of Computational Physics, 464, 111302, 
+
+https://doi.org/10.1016/j.jcp.2022.111302 , 2022. 
+
+Cheng, S., Zhuang, Y., Kahouadji, L., Liu, C., Chen, J., Matar, O. K., and Arcucci , R.: Multi -domain encoder –decoder neural 
+
+networks for latent data assimilation in dynamical systems, Computer Methods in Applied Mechanics and Engineering, 430, 
+
+117201,  https://doi.org/10.1016/j.cma.2024.117201 , 2024. 
+
+Clough, S. A., Shephard, M. W., Mlawer, E. J., Delamere, J. S., Iacono, M. J., Cady -Pereira, K., Boukabara , S., and Brown, 
+
+P. D.: Atmospheric radiative transfer modeling: a summary of the AER codes, Journal of Quantitative Spectroscopy and 
+
+Radiative Transfer, 91, 233 –244,  https://doi.org/10.1016/j.jqsrt.2004.05.058 , 2005. 
+
+Danabasoglu, G., Lamarque, J. ‐F., Bacmeister, J., Bailey, D. A., DuVivier , A. K., Edwards, J., Emmons, L. K., Fasullo, J., 
+
+Garcia, R., Gettelman, A., Hannay, C., Holland, M. M., Large, W. G., Lauritzen, P. H., Lawrence, D. M., Lenaerts, J. T. M., 
+
+Lindsay, K., Lipscomb, W. H., Mills, M. J., Neale, R., Oleson, K. W., Otto‐Bliesne r, B., Phillips, A. S., Sacks, W., Tilmes, S., 
+
+Van Kampenhout, L., Vertenstein, M., Bertini, A., Dennis, J., Deser , C., Fischer, C., Fox‐Kemper, B., Kay, J. E., Kinnison, 
+
+D., Kushner, P. J., Larson, V. E., Long, M. C., Mickelson, S., Moore, J. K., Nienhouse, E., Polvani, L., Rasch, P. J., and St rand, 31 
+
+W. G.: The Community Earth System Model Version 2 (CESM2), J Adv Model Earth Syst, 12, e2019MS001916, 
+
+https://doi.org/10.1029/2019MS001916 , 2020. 
+
+Randall, D. A., Wood, R. A., Bony, S., Colman, R., Fichefet, T., Fyfe, J., Kattsov , V., Pitman, A., Shukla, J., Srinivasan, J., 
+
+Stouffer, R. J., Sumi, A., and Taylor, K. E.: Climate Models and Their Evaluation, in: Climate Change 2007: The Physical 
+
+Science Basis. Contribution of Working Group I to the Fourth Assessment Report of the Int ergovernmental Panel on Climate 
+
+Change [Solomon, S., D. Qin, M. Manning, Z. Chen, M. Marquis, K.B. Averyt, M.Tignor and H.L. Miller (eds.)], Cambridge 
+
+University Press, Cambridge, United Kingdom and New York, NY, USA, 589 –662, n.d. 
+
+De Rosnay, P., Browne, P., De Boissé son, E., Fairbairn, D., Hirahara, Y., Ochi, K., Schepers, D., Weston, P., Zuo, H., Alonso ‐
+
+Balmaseda, M., Balsamo, G., Bonavita, M., Borman, N., Brown, A., Chrust, M., Dahoui, M., Chiara, G., English, S., Geer, A., 
+
+Healy,  S., Hersbach, H., Laloyaux, P., Magnusson, L., Massart, S., McNally, A., Pappenberger, F., and Rabier, F.: Coupled 
+
+data assimilation at ECMWF: current status, challenges and future developments, Quart J Royal Meteoro Soc, 148, 2672 –
+
+2702,  https://doi.org/10.1002/qj.4330 , 2022. 
+
+Delworth, T. L., Broccoli, A. J., Rosati, A., Stouffer, R. J., Balaji, V., Cooke, W. F., Dixon, K. W., Dunne, J., Dunne, K. A ., 
+
+Durachta, J. W., Findell, K. L., Ginoux, P., Gnanadesikan, A., Gordon, C. T., Griffies, S. M., Gudgel, R., Harrison, M. J., H eld ,
+
+I. M., Hemler, R. S., Langenhorst, A. R., Lee, H. -C., Lin, S. -J., Lu, J., Malyshev, S. L., Milly, P. C. D., Ramaswamy, V., 
+
+Russell, J., Schwarzkopf, M. D., Shevliakova , E., Sirutis, J. J., Spelman, M. J., Stern, W. F., Winton, M., Wittenberg, A. T., 
+
+Wyman, B., Zeng, F., and Zhang, R.: CM2.1 Model, ,  https://doi.org/10.5281/ZENODO.18883209 , 2006a. 
+
+Delworth, T. L., Broccoli, A. J., Rosati, A., Stouffer, R. J., Balaji, V., Beesley, J. A., Cooke, W. F., Dixon, K. W., Dunne,  J., 
+
+Dunne, K. A., Durachta, J. W., Findell, K. L., Ginoux, P., Gnanadesikan , A., Gordon, C. T., Griffies, S. M., Gudgel, R., 
+
+Harrison, M. J., Held, I. M., Hemler, R. S., Horowitz, L. W., Klein, S. A., Knutson, T. R., Kushner, P. J., Langenhorst, A. R ., 
+
+Lee, H. -C., Lin, S. -J., Lu, J., Malyshev, S. L., Milly, P. C. D., Ramaswamy, V ., Russell, J., Schwarzkopf, M. D., Shevliakova, 
+
+E., Sirutis , J. J., Spelman, M. J., Stern, W. F., Winton, M., Wittenberg, A. T., Wyman, B., Zeng, F., and Zhang, R.: GFDL’s 
+
+CM2 Global Coupled Climate Models. Part I: Formulation and Simulation Characteristics, Journal of Climate, 19, 643 –674, 
+
+https://doi.org/10.1175/JCLI3629.1 , 2006b. 
+
+Diao, X., Stö ssel, A., Chang, P., Danabasoglu , G., Yeager, S. G., Gopal, A., Wang, H., and Zhang, S.: On the Intermittent 
+
+Occurrence of Open‐Ocean Polynyas in a Multi‐Century High‐Resolution Preindustrial Earth System Model Simulation, JGR 
+
+Oceans, 127, e2021JC017672,  https://doi.org/10.1029/2021JC017672 , 2022. 
+
+Eyring, V., Bony, S., Meehl, G. A., Senior, C. A., Stevens, B., Stouffer, R. J., and Taylor, K. E.: Overview of the Coupled 
+
+Model Intercomparison Project Phase 6 (CMIP6) experimental design and organization, Geosci. Model Dev., 9, 1937 –1958, 
+
+https://doi.org/10.5194/gmd -9-1937 -2016 , 2016. 
+
+Fan, H., Liu, Y., Huo, Z., Liu, Y., Shi, Y., and Li, Y.: A Novel Latent Space Data Assimilation Framework with Autoencoder -
+
+Observation to Latent Space (AE -O2L) Network. Part I: The Observation -Only Analysis Method, Monthly Weather Review, 
+
+153, 1335 –1348,  https://doi.org/10.1175/MWR -D-24 -0057.1 , 2025a. 32 
+
+Fan, H., Liu, Y., Liu, Y., Huo, Z., Chen, B., and Qin, Y.: A Novel Latent Space Data Assimilation Framework with 
+
+Autoencoder -Observation to Latent Space (AE -O2L) Network. Part II: Observation and Background Assimilation with 
+
+Interpretability, Monthly Weath er Review, 153, 1349 –1363,  https://doi.org/10.1175/MWR -D-24 -0058.1 , 2025b. 
+
+Fan, H., Bai, L., Fei, B., Xiao, Y., Chen, K., Liu, Y., Qu, Y., Ling, F., and Gentine , P.: Physically consistent global atmospheric 
+
+data assimilation with machine learning in latent space, Sci. Adv., 12, eaea4248,  https://doi.org/10.1126/sciadv.aea4248 , 2026. 
+
+Faroughi, S. A., Pawar, N. M., Fernandes, C., Raissi , M., Das, S., Kalantari, N. K., and Kourosh Mahjour, S.: Physics -Guided, 
+
+Physics -Informed, and Physics -Encoded Neural Networks and Operators in Scientific Computing: Fluid and Solid Mechanics, 
+
+Journal of Computing and Information Science in Engineering, 2 4, 040802,  https://doi.org/10.1115/1.4064449 , 2024. 
+
+Feng, J., Zhang, Y., Cheng, Q., and Tsou, J. Y.: Pan -Arctic melt pond fraction trend, variability, and contribution to sea ice 
+
+changes, Global and Planetary Change, 217, 103932,  https://doi.org/10.1016/j.gloplacha.2022.103932 , 2022. 
+
+Gnanadesikan , A., Dixon, K. W., Griffies, S. M., Balaji, V., Barreiro, M., Beesley, J. A., Cooke, W. F., Delworth, T. L., Gerdes, 
+
+R., Harrison, M. J., Held, I. M., Hurlin, W. J., Lee, H. -C., Liang, Z., Nong, G., Pacanowski, R. C., Rosati, A., Russell, J., 
+
+Samuels, B.  L., Song, Q., Spelman, M. J., Stouffer, R. J., Sweeney, C. O., Vecchi, G., Winton, M., Wittenberg, A. T., Zeng, 
+
+F., Zhang, R., and Dunne, J. P.: GFDL’s CM2 Global Coupled Climate Models. Part II: The Baseline Ocean Simulation, 
+
+Journal of Climate, 19, 675 –697,  https://doi.org/10.1175/JCLI3630.1 , 2006. 
+
+Gou, R., Lohmann, G., Chen, D., Xu, S., Shu, R., Zhang, S., and Wu, L.: Cracking the Code of Arctic Sea Ice: Why Models 
+
+Fail to Predict Its Retreat?,  https://doi.org/10.48550/arXiv.2511.04961 , 7 November 2025. 
+
+Haarsma, R. J., Roberts, M. J., Vidale, P. L., Senior, C. A., Bellucci, A., Bao, Q., Chang, P., Corti, S., Fučkar, N. S., Gue mas ,
+
+V., Von Hardenberg, J., Hazeleger, W., Kodama, C., Koenigk, T., Leung, L. R., Lu, J., Luo, J. -J., Mao, J., Mizielinski, M. S., 
+
+Mizuta, R., Nobre, P., Satoh, M., Scoccimarro, E., Semmler, T., Small, J., and Von Storch, J. -S.: High Resolution Model 
+
+Interco mparison Project (HighResMIP v1.0) for CMIP6, Geosci. Model Dev., 9, 4185 –4208,  https://doi.org/10.5194/gmd -9-
+
+4185 -2016 , 2016. 
+
+Hä fner, D., Jacobsen, R. L., Eden, C., Kristensen, M. R. B., Jochum, M.,  Nuterman, R., and Vinter, B.: Veros v0.1  – a fast and 
+
+versatile ocean simulator in pure Python, Geosci. Model Dev., 11, 3299 –3312,  https://doi.org/10.5194/gmd -11 -3299 -2018 ,
+
+2018. 
+
+Ham, Y. -G., Kim, J. -H., and Luo, J. -J.: Deep learning for multi -year ENSO forecasts, Nature, 573, 568 –572, 
+
+https://doi.org/10.1038/s41586 -019 -1559 -7, 2019. 
+
+Han, Y., Zhang, G. J., Huang, X., and Wang, Y.: A Moist Physics Parameterization Based on Deep Learning, J Adv Model 
+
+Earth Syst, 12, e2020MS002076,  https://doi.org/10.1029/2020MS002076 , 2020. 
+
+Hao, R., Zhao, Y., Zhang, S., Wang, G., and Deng, X.: Interpretable Cross -Sphere Multiscale Deep Learning Predicts ENSO 
+
+Skilfully Beyond 2 Years,  https://doi.org/10.48550/ARXIV.2503.21211 , 2025. 
+
+Harris, C. R., Millman, K. J., Van Der Walt, S. J., Gommers, R., Virtanen, P., Cournapeau, D., Wieser, E., Taylor, J., Berg,  S., 
+
+Smith, N. J., Kern, R., Picus, M., Hoyer, S., Van Kerkwijk, M. H., Brett, M., Haldane, A., Del Rí o, J. F., Wiebe, M., Peterso n, 33 
+
+P., Gé rard -Marchant, P., Sheppard, K., Reddy, T., Weckesser, W., Abbasi, H., Gohlke, C., and Oliphant, T. E.: Array 
+
+programming with NumPy, Nature, 585, 357 –362,  https://doi.org/10.1038/s41586 -020 -2649 -2, 2020. 
+
+Hersbach, H., Bell, B., Berrisford, P., Hirahara, S., Horányi, A., Muñoz‐Sabater, J., Nicolas, J., Peubey, C., Radu, R., Sche pers, 
+
+D., Simmons, A., Soci, C., Abdalla, S., Abellan, X., Balsamo, G., Bechtold, P., Biavati, G., Bidlot, J., Bonavita, M., De Chi ara, 
+
+G., Dahlgren, P., Dee, D., Diamantakis, M., Dragani, R., Flemming, J., Forbes, R., Fuentes, M., Geer, A., Haimberger, L., 
+
+Healy, S., Hogan, R. J., Hó lm, E., Janisková , M., Keeley, S., Laloyaux , P., Lopez, P., Lupu, C., Radnoti, G., De Rosnay, P., 
+
+Rozum, I., Vamborg, F., Villaume, S., and Thé paut, J.: The ERA5 global reanalysis, Quart J Royal Meteoro Soc, 146, 1999 –
+
+2049,  https://doi.org/10.1002/qj.3803 , 2020. 
+
+Heuer, H., Schwabe, M., Gentine, P., Giorgetta, M. A., and Eyring, V.: Interpretable Multiscale Machine Learning‐Based 
+
+Parameterizations of Convection for ICON, J Adv Model Earth Syst, 16, e2024MS004398, 
+
+https://doi.org/10.1029/2024MS004398 , 2024. 
+
+Hinton, G. E. and Salakhutdinov, R. R.: Reducing the Dimensionality of Data with Neural Networks, Science, 313, 504 –507, 
+
+https://doi.org/10.1126/science.1127647 , 2006. 
+
+Hong, S. -Y., Dudhia, J., and Chen, S. -H.: A Revised Approach to Ice Microphysical Processes for the Bulk Parameterization 
+
+of Clouds and Precipitation, Mon. Wea. Rev., 132, 103 –120,  https://doi.org/10.1175/1520 -
+
+0493(2004)132%253C0103:ARATIM%253E2.0.CO;2 , 2004. 
+
+Hopfield, J. J.: Neural networks and physical systems with emergent collective computational abilities., Proc. Natl. Acad. Sc i. 
+
+U.S.A., 79, 2554 –2558,  https://doi.org/10.1073/pnas.79.8.2554 , 1982. 
+
+Hu, X., Klein, P. M., and Xue, M.: Evaluation of the updated YSU planetary boundary layer scheme within WRF for wind 
+
+resource and air quality assessments, JGR Atmospheres, 118,  https://doi.org/10.1002/jgrd.50823 , 2013. 
+
+Huang, B., Liu, C., Banzon, V., Freeman, E., Graham, G., Hankins, B., Smith, T., and Zhang, H. -M.: Improvements of the 
+
+Daily Optimum Interpolation Sea Surface Temperature (DOISST) Version 2.1, Journal of Climate, 34, 2923 –2939, 
+
+https://doi.org/10.1175/JCLI -D-20 -0166.1 , 2021. 
+
+Jia, W. and Zhang, X.: The role of the planetary boundary layer parameterization schemes on the meteorological and aerosol 
+
+pollution simulations: A review, Atmospheric Research, 239, 104890,  https://doi.org/10.1016/j.atmosres.2020.104890 , 2020. 
+
+Joule, J. P.: On the calorific effects of magneto -electricity, and on the mechanical value of heat, The London, Edinburgh, and 
+
+Dublin Philosophical Magazine and Journal of Science, 23, 263 –276,  https://doi.org/10.1080/14786444308644730 , 1843. 
+
+Kadivar, M., Tormey, D., and McGranaghan, G.: A review on turbulent flow over rough surfaces: Fundamentals and theories, 
+
+International Journal of Thermofluids, 10, 100077,  https://doi.org/10.1016/j.ijft.2021.100077 , 2021. 
+
+Kain, J. S.: The Kain –Fritsch Convective Parameterization: An Update, J. Appl. Meteor., 43, 170 –181, 
+
+https://doi.org/10.1175/1520 -0450(2004)043%253C0170:TKCPAU%253E2.0.CO;2 , 2004. 
+
+Kay, J. E., Deser, C., Phillips, A., Mai, A., Hannay, C., Strand, G., Arblaster, J. M., Bates, S. C., Danabasoglu , G., Edwards, 
+
+J., Holland, M., Kushner, P., Lamarque, J. -F., Lawrence, D., Lindsay, K., Middleton, A., Munoz, E., Neale, R., Oleson, K., 
+
+Polvani, L., and Vertenstein, M.: The Community Earth System Model (CESM) Large Ensemble Project: A Community 34 
+
+Resource for Studying Climate Change in the Presence of Internal Climate Variability, Bulletin of the American 
+
+Meteorological Society, 96, 1333 –1349,  https://doi.org/10.1175/BAMS -D-13 -00255.1 , 2015. 
+
+Kingma, D. P. and Ba, J.: Adam: A Method for Stochastic Optimization,  https://doi.org/10.48550/ARXIV.1412.6980 , 2014. 
+
+Kingma, D. P. and Welling, M.: Auto -Encoding Variational Bayes,  https://doi.org/10.48550/ARXIV.1312.6114 , 2013. 
+
+Kochkov, D., Yuval, J., Langmore, I., Norgaard, P., Smith, J., Mooers, G., Klö wer, M., Lottes, J., Rasp, S., Dü ben , P., Hatfield, 
+
+S., Battaglia, P., Sanchez -Gonzalez, A., Willson, M., Brenner, M. P., and Hoyer, S.: Neural general circulation models for 
+
+weather and climate, Nature, 632, 1060 –1066,  https://doi.org/10.1038/s41586 -024 -07744 -y, 2024. 
+
+Ladwig, B.: wrf -python, , 5 MB,  https://doi.org/10.5065/D6W094P1 , 2017. 
+
+Lin, S. -J.: A “Vertically Lagrangian ” Finite -Volume Dynamical Core for Global Models, Mon. Wea. Rev., 132, 2293 –2307, 
+
+https://doi.org/10.1175/1520 -0493(2004)132%253C2293:AVLFDC%253E2.0.CO;2 , 2004. 
+
+Lin, Z.: A High -Efficiency Paleoclimate Reconstruction Approach by Online Strongly -Coupled Data Assimilation in Latent 
+
+Space, Climate Dynamics, under review, 2025. 
+
+Lu, L., Zhang, S., Jiang, Y., Yu, X., Li, M., Chen, Y., Chang, P., Danabasoglu , G., Liu, Z., Zhu, C., Lin, X., and Wu, L.: An 
+
+Improved Coupled Data Assimilation System with a CGCM Using Multi -Time -Scale High -Efficiency EnOI -Like Filtering, 
+
+Journal of Climate, 36, 6045 –6067,  https://doi.org/10.1175/JCLI -D-22 -0558.1 , 2023. 
+
+Marotzke, J.: From theory to RAPID AMOC observations: a personal voyage of discovery, Phil. Trans. R. Soc. A., 381, 
+
+20220192,  https://doi.org/10.1098/rsta.2022.0192 , 2023. 
+
+Mayer, J. R.: Bemerkungen über die Krä fte der unbelebten Natur, Justus Liebigs Ann. Chem., 42, 233 –240, 
+
+https://doi.org/10.1002/jlac.18420420212 , 1842. 
+
+McGibbon, J., Brenowitz, N. D., Cheeseman, M., Clark, S. K., Dahm, J. P. S., Davis, E. C., Elbert, O. D., George, R. C., Harr is, 
+
+L. M., Henn, B., Kwa, A., Perkins, W. A., Watt -Meyer, O., Wicky, T. F., Bretherton, C. S., and Fuhrer, O.: fv3gfs -wrapper: a 
+
+Py thon wrapper of the FV3GFS atmospheric model, Geosci. Model Dev., 14, 4401 –4409,  https://doi.org/10.5194/gmd -14 -
+
+4401 -2021 , 2021. 
+
+Melinc, B. and Zaplotnik , Ž.: 3D‐Var data assimilation using a variational autoencoder, Quart J Royal Meteoro Soc, 150, 
+
+2273 –2295,  https://doi.org/10.1002/qj.4708 , 2024. 
+
+Mouallem, J., Gao, K., Reichl, B. G., Chilutti, L., Harris, L., Benson, R., Zadeh, N., Chen, J., Chen, J. -H., and Zhang, C.: 
+
+Development of a high -resolution coupled SHiELD -MOM6 model  – Part 1: Model overview, coupling technique, and 
+
+validation in a region al setup, Geosci. Model Dev., 18, 6461 –6478,  https://doi.org/10.5194/gmd -18 -6461 -2025 , 2025. 
+
+Mü ller, S., Lange, M., Fischer, T., Kö nig, S., Kelbling, M., Leal Rojas, J. J., and Thober, S.: FINAM is not a model (v1.0):  a
+
+new Python -based model coupling framework, Geosci. Model Dev., 18, 4483 –4498,  https://doi.org/10.5194/gmd -18 -4483 -
+
+2025 , 2025. 
+
+Newton, I.: Philosophiae naturalis principia mathematica, Jussu Societatis Regiae ac Typis  Josephi Streater. Prostat apud plures 
+
+bibliopolas,  https://doi.org/10.5479/sil.52126.39088015628399 , 1687. 35 
+
+O’Gorman, P. A. and Dwyer, J. G.: Using Machine Learning to Parameterize Moist Convection: Potential for Modeling of 
+
+Climate, Climate Change, and Extreme Events, J Adv Model Earth Syst, 10, 2548 –2563, 
+
+https://doi.org/10.1029/2018MS001351 , 2018. 
+
+Parrish, D. F. and Derber, J. C.: The National Meteorological Center’s Spectral Statistical -Interpolation Analysis System, Mon. 
+
+Wea. Rev., 120, 1747 –1763,  https://doi.org/10.1175/1520 -0493(1992)120%253C1747:TNMCSS%253E2.0.CO;2 , 1992. 
+
+Perlwitz , J., Knutson, T., Kossin, J. P., and LeGrande, A. N.: Ch. 5: Large -Scale Circulation and Climate Variability. Climate 
+
+Science Special Report: Fourth National Climate Assessment, Volume I, U.S. Global Change Research Program, 
+
+https://doi.org/10.7930/J0RV0KVQ , 2017. 
+
+Qu, M., Lei, R., Liu, Y., and Li, N.: Arctic Sea ice leads detected using sentinel -1B SAR image and their responses to 
+
+atmosphere circulation and sea ice dynamics, Remote Sensing of Environment, 308, 114193, 
+
+https://doi.org/10.1016/j.rse.2024.114193 , 2024. 
+
+Ruckstuhl, Y., Janjić, T., and Rasp, S.: Training a convolutional neural network to conserve mass in data assimilation, Nonli n. 
+
+Processes Geophys., 28, 111 –119,  https://doi.org/10.5194/npg -28 -111 -2021 , 2021. 
+
+Rumelhart, D. E., Hinton, G. E., and Williams, R. J.: Learning representations by back -propagating errors, Nature, 323, 533 –
+
+536,  https://doi.org/10.1038/323533a0 , 1986. 
+
+Shu, R., Gao, Y., Wu, H., Gou, R., Wang, K., Xiang, Y., Xu, F., Wen, Q., and Huang, X.: Ocean -E2E: Hybrid Physics -Based 
+
+and Data -Driven Global Forecasting of Extreme Marine Heatwaves with End -to -End Neural Assimilation, 
+
+https://doi.org/10.48550/arXiv.2505.22071 , 15 August 2025. 
+
+Skamarock, W., Klemp, J., Dudhia, J., Gill, D., Barker, D., Wang, W., Huang, X. -Y., and Duda, M.: A Description of the 
+
+Advanced Research WRF Version 3, UCAR/NCAR,  https://doi.org/10.5065/D68S4MVH , 2008. 
+
+Sun, J. -A., Fan, H., Gong, J., Fei, B., Chen, K., Ling, F., Zhang, W., Xu, W., Yan, L., Gentine, P., and Bai, L.: Align -DA: 
+
+Align Score -based Atmospheric Data Assimilation with Multiple Preferences,  https://doi.org/10.48550/arXiv.2505.22008 , 28 
+
+May 2025. 
+
+Taylor, K. E., Stouffer, R. J., and Meehl, G. A.: An Overview of CMIP5 and the Experiment Design, Bulletin of the American 
+
+Meteorological Society, 93, 485 –498,  https://doi.org/10.1175/BAMS -D-11 -00094.1 , 2012. 
+
+University Corporation for Atmospheric Research and NSF National Center for Atmospheric Research: WRF v3.7.1, , 
+
+https://doi.org/10.5281/ZENODO.19271007 , 2015. 
+
+Virtanen, P., Gommers , R., Oliphant, T. E., Haberland, M., Reddy, T., Cournapeau, D., Burovski, E., Peterson, P., Weckesser, 
+
+W., Bright, J., Van Der Walt, S. J., Brett, M., Wilson, J., Millman, K. J., Mayorov, N., Nelson, A. R. J., Jones, E., Kern, R ., 
+
+Larson, E., Carey, C. J. , Polat, İ., Feng, Y., Moore, E. W., VanderPlas, J., Laxalde, D., Perktold, J., Cimrman , R., Henriksen, 
+
+I., Quintero, E. A., Harris, C. R., Archibald, A. M., Ribeiro, A. H., Pedregosa, F., Van Mulbregt, P., SciPy 1.0 Contributors ,
+
+Vijaykumar, A., Bardelli, A. P., Rothberg, A., Hilboll, A., Kloeckner, A., Scopatz, A., Lee, A., Rokem , A., Woods, C. N., 
+
+Fulton, C., Masson, C., Hä ggströ m, C., Fitzgerald, C., Nicholson, D. A., Hagen, D. R., Pasechnik, D. V., Olivetti, E., Martin ,
+
+E., Wieser, E., Silva, F., Lenders, F., Wilhelm, F., Young, G., Price, G. A., Ingold, G. -L., Allen, G. E., Le e, G. R., Audren, H., 36 
+
+Probst, I., Dietrich, J. P., Silterra, J., Webber, J. T., Slavič, J., Nothman, J., Buchner, J., Kulick, J., Schönberger , J. L., De 
+
+Miranda Cardoso, J. V., Reimer, J., Harrington, J., Rodrí guez, J. L. C., Nunez -Iglesias, J., Kuczynski, J., Tritz, K., Thoma, M., 
+
+Newville, M., Kü mmerer, M., Bolingbroke, M., Tartre, M., Pak, M., Smith, N. J., Nowaczyk, N., Shebanov, N., Pavlyk , O., 
+
+Brodtkorb, P. A., Lee, P., McGibbon, R. T., Feldbauer, R., Lewis, S., Tygier, S., Sievert, S., Vigna, S., Peterson, S., More,  S., 
+
+et al.: SciPy 1.0: fundamental algorithms for scientific computing in Python, Nat Methods, 17, 261 –272, 
+
+https://doi.org/10.1038/s41592 -019 -0686 -2, 2020. 
+
+Visualization & Analysis Systems Technologies: Geoscience Community Analysis Toolkit: GeoCAT -f2py, ,
+
+https://doi.org/10.5281/ZENODO.6654183 , 2023. 
+
+Wahle, K., Staneva, J., and Guenther, H.: Data assimilation of ocean wind waves using Neural Networks. A case study for the 
+
+German Bight, Ocean Modelling, 96, 117 –125,  https://doi.org/10.1016/j.ocemod.2015.07.007 , 2015. 
+
+Wang, J., Zhang, S., Yu, X., Jin, Y., Liu, X., Qi, Y., Yang, G., and Li, M.: A Numerical Study of the Impact of Topography 
+
+on the July 2021 Extreme Rainfall Event in Zhengzhou, China, JGR Atmospheres, 129, e2024JD041332, 
+
+https://doi.org/10.1029/2024JD041332 , 2024. 
+
+Winton, M.: A Reformulated Three -Layer Sea Ice Model, J. Atmos. Oceanic Technol., 17, 525 –531, 
+
+https://doi.org/10.1175/1520 -0426(2000)017%253C0525:ARTLSI%253E2.0.CO;2 , 2000. 
+
+Yang, S., Nai, C., Liu, X., Li, W., Chao, J., Wang, J., Wang, L., Li, X., Chen, X., Lu, B., Xiao, Z., Boers, N., Yuan, H., an  d
+
+Pan, B.: Generative assimilation and prediction for weather and climate,  https://doi.org/10.48550/ARXIV.2503.03038 , 2025. 
+
+Yu, X., Zhang, S., Li, J., Lu, L., Liu, Z., Li, M., Yu, H., Han, G., Lin, X., Wu, L., and Chang, P.: A Multi‐Timescale EnOI‐ 
+
+Like High‐Efficiency Approximate Filter for Coupled Model Data Assimilation, J Adv Model Earth Syst, 11, 45 –63, 
+
+https://doi.org/10.1029/2018MS001504 , 2019. 
+
+Yuan, W. -X. and Guo, R.: Physics -guided multistage neural network: A physically guided network for step initial values and 
+
+dispersive shock wave phenomena, Phys. Rev. E, 110, 065307,  https://doi.org/10.1103/PhysRevE.110.065307 , 2024. 
+
+Yuval, J. and O’Gorman, P. A.: Stable machine -learning parameterization of subgrid processes for climate modeling at a range 
+
+of resolutions, Nat Commun, 11, 3295,  https://doi.org/10.1038/s41467 -020 -17142 -3, 2020. 
+
+Zhang, S. and Anderson, J. L.: Impact of spatially and temporally varying estimates of error covariance on assimilation in a 
+
+simple atmospheric model, Tellus A: Dynamic Meteorology and Oceanography, 55, 126, 
+
+https://doi.org/10.3402/tellusa.v55i2.12087 , 2003. 
+
+Zhang, S., Harrison, M. J., Rosati, A., and Wittenberg, A.: System Design and Evaluation of Coupled Ensemble Data 
+
+Assimilation for Global Oceanic Climate Studies, Monthly Weather Review, 135, 3541 –3564, 
+
+https://doi.org/10.1175/MWR3466.1 , 2007. 
+
+Zhang, S., Liu, Z., Zhang, X., Wu, X., Han, G., Zhao, Y., Yu, X., Liu, C., Liu, Y., Wu, S., Lu, F., Li, M., and Deng, X.: 
+
+Coupled data assimilation and parameter estimation in coupled ocean –atmosphere models: a review, Clim Dyn, 54, 5127 –
+
+5144,  https://doi.org/10.1007/s00382 -020 -05275 -6, 2020. 37 
+
+Zhang, S., Xu, S., Fu, H., Wu, L., Liu, Z., Gao, Y., Zhao, C., Wan, W., Wan, L., Lu, H., Li, C., Liu, Y., Lv , X., Xie, J., Yu, 
+
+Y., Gu, J., Wang, X., Zhang, Y., Ning, C., Fei, Y., Guo, X., Wang, Z., Wang, X., Wang, Z., Qu, B., Li, M., Zhao, H., Jiang, 
+
+Y., Yang, G., Lu, L., Wang, H., An, H., Zhang, X., Zhang, Y., Ma, W., Yu, F., Xu, J., Lin, X., and Shen, X.: Towa rd Earth 
+
+system modeling with resolved clouds and ocean submesoscales on heterogeneous many -core HPCs, National Science Review, 
+
+10, nwad069,  https://doi.org/10.1093/nsr/nwad069 , 2023. 
+
+Zhang, T., Morcrette , C., Zhang, M., Lin, W., Xie, S., Liu, Y., Van Weverberg, K., and Rodrigues, J.: A Fortran –Python 
+
+interface for integrating machine learning parameterization into earth system models, Geosci. Model Dev., 18, 1917 –1928, 
+
+https://doi.org/10.5194/gmd -18 -1917 -2025 , 2025. 
+
+Zhong, X., Ma, Z., Yao, Y., Xu, L., Wu, Y., and Wang, Z.: WRF –ML v1.0: a bridge between WRF v4.3 and machine learning 
+
+parameterizations and its application to atmospheric radiative transfer, Geosci. Model Dev., 16, 199 –209, 
+
+https://doi.org/10.5194/gmd -16 -199 -2023 , 2023. 
+
+Zhu, X., Lin, Z., Lu, Z., Zhang, S., and Wu, S.: Hf2p CM2.1_SCDA & WRF_LDA Dataset, 
+
+https://doi.org/10.5281/ZENODO.19272242 , 2026a. 
+
+Zhu, X., Lin, Z., Zhang, S., Lu, Z., Wu, S., Hou, X., Xiao, Z., Ren, Z., Li, J., Jing, X., Gao, Y., Hao, R., Yu, X., and Li,  M.: 
+
+Hf2p CM2.1_SCDA and WRF_LDA, ,  https://doi.org/10.5281/ZENODO.20710848 , 2026b. 38 
+
+# Supplementary Information for 
+
+# Python -Fortran Hybrid Programming  to Fuse AI and  Physical 
+
+# Models: Examples of AI -LDA in climate and weather models 
+
+# (Hf2pMDA _v 1.0 )
+
+# Xianrui Zhu 1+, Zikuan Lin 2+, Shaoqing Zhang 2*, Zebin Lu 2, Songhua Wu 3,4, Xiangyun Hou 2, Zhisheng 
+
+# Xiao 3, Zhicheng Ren 3, Ji angyu Li 5, Jing Xu 5, Yang Gao 6, Rixu Hao 7, Xiaolin Yu 2, Mingkui Li 2,
+
+# Guangliang Liu 8
+
+> 1
+
+Chongben Honors College, Ocean University of China, Qingdao , 266100 , Chin a
+
+> 2
+
+Key Laboratory of Physical Oceanography, Ministry of Education , and  Institute for Advanced Ocean Study , and  Frontiers 
+
+Science Center for Deep Ocean Multispheres and Earth System (FDOMES), College of Oceanic and Atmospheric Sciences, 
+
+Ocean University of China, Qingdao , 266100 , China 
+
+> 3
+
+Qingdao Leice Transient Technology Co., Ltd., Qingdao , 266100 , China 
+
+> 4
+
+College of Marine Technology, Ocean Remote Sensing Institute, Ocean University of China, Qingdao, China 
+
+> 5
+
+Qingdao Marine and Meteorological Institute, Qingdao , 266100 , China 
+
+> 6
+
+Key Laboratory of Marine Environmental Science and Ecology, Ministry of Education, Frontiers Science Center for Deep 
+
+Ocean Multispheres and Earth System (FDOMES), Ocean University of China, Qingdao, 266100, China 
+
+> 7
+
+College of Intelligent Systems Science and Engineering, and Engineering Research Center of Navigation Instruments, 
+
+Ministry of Education, Harbin Engineering University, Harbin, 150001, China. 
+
+> 8
+
+State Key Laboratory of Physical Oceanography and Artificial Intelligence, Jinan, China. 
+
+Contents of this file: 
+
+Texts  S1 to  S3
+
+Table s S1 to S2 
+
+Figures  S1 to  S2
+
+References  S1 
+
+Equations S1 to S12 39 
+
+Text S1:  General procedure of  implementation of H f2p MDA 
+
+A general procedure of implementing Python -Fortran hybrid programming  for Deep Incorporation of AI and Physical Models 
+
+and data assimilation  based on  F2PY  (Hf2p MDA ) includes the following 4 steps. 
+
+Step -1:  Environment setting 
+
+In theory, there is no specific environment variable for  F2PY . However, to minimize the interruption of other computation 
+
+tasks to the Python -Fortran modeling development, we strongly recommend to use an environment setting tool such as  conda 
+
+etc. to set an isolated environment for the Python -Fortran hybrid application. We may start from a Python environment by 
+
+typing the command “ conda create  -n f2p y python=3.11 ” and continue to  complete  the  setting  by typing “ conda activate f2p y”
+
+and “ conda install numpy=1.26 ” for follow -ups until necessary, where 3.11 and  1.26  are environment parameters of 
+
+corresponding software. For some non -standardized environment variables only necessary for specific applications, the 
+
+“source ” command is a convenient complementary. Detailed description will be given in specific applications  by  Sec ts.  3 and 
+
+4.
+
+Here is an example of setting  environment for  openmpi  which is an important application of  MPI in  our  Hf2p MDA -CM2 CDA 
+
+and  Hf2p MDA -WRF DA  case s. We need to recompile  openmpi  package with added  “-fPIC ” tag and  “make install ”. Then we 
+
+source  a file of command list containing the following 3 lines to add the  openmpi  application to the environment  myf2p :
+
+export PATH= ”.../openmpi/bin:$PATH ”
+
+export LIBRARY_PATH= ”.../openmpi/lib:$LIBRARY_PATH” 
+
+export LD_LIBRARY_PATH= ”.../openmpi/lib:$LD_LIBRARY_PATH” 
+
+Again, the  openmpi  directory shall be in the specific application directory for H f2p MDA -CM2 CDA  so that this  openmpi  setting 
+
+does NOT influence any other applications. 
+
+Step -2:  Creating of Python -callable Fortran (PCF) modules 
+
+In order to become Python -callable, the existed Fortran codes need to be recompiled with an additional new tag “ -fPIC ” that 
+
+makes the Fortran codes being compiled become Dynamic Link Library (DLL) candidates with a “position independent” 
+
+nature. Once relatively -independent Fortran codes are all recompiled as DLL candidates, they are ready to link with the Python 
+
+main con troller (PMC). 
+
+To minimize complexity of the infrastructure between PMC and PCF modules, a plug -featured Fortran subroutine that well 
+
+organizes the PCF modules and makes a few plug -ins for PMC needs to be  encapsulated with all PCF modules to form a 
+
+signature file that shows a clear structure of such plugs. We use the following command line to initially create a signature  file 
+
+called  appname.pyf :40 
+
+$ f2py app_plugs.F90  -m appname  -h --overwrite -signature appname.pyf 
+
+where  app_plugs.F90  consists of subroutines or functions that organize the PCF modules and serve as the plug -ins of PMC. 
+
+Supposing that there are a few DLL candidates created in the compiling procedure described above called  libapp1.a ,
+
+libapp2.a, ... etc., then, the  encapsulating command looks like a continuous line of the above initial creation line of  appname.pyf 
+
+as: 
+
+$ FC="mpif90" CC="mpicc" CXX="mpicxx" LDSHARED="mpif90" LDFLAGS=" -no -ipo  \
+
+-Wl,  --export -dynamic" f2py  -c appname.pyf app_plugs.F90 libapp1.a  \
+
+libapp2.a ...  -lnetcdf  -L/.../software/netcdf3/lib  -L/.../openmpi/lib  \
+
+--backend distutils 
+
+where the option “ -no -ipo” closes out Interprocedural Optimization to minimize potential uncertainties due to optimization 
+
+cross modules and the option “ -Wl” ensures used functions linked to DLL. Note that here the openmpi/lib also needs to be 
+
+recompiled with the tag “ -fPIC.” Finally, as the above command is normally conducted without any error message, a complete 
+
+DLL file called  appname.cpython -311 -x86_64 -linux -gnu.so  is formed (automatically named by the compiling environment 
+
+parameters), which is a Python -callable D LL “shared object” where all subroutines and functions are callable by PMC. All 
+
+information about the logic structure of  appname.cpython -311 -x86_64 -linux -gnu.so  is recorded in the signature file 
+
+appname.pyf , which will be served as an import name in PMC, also serving as an efficient guideline for constructing PMC. 
+
+Step -3: Creating of  Fortran -callable Python (FCP)  modules 
+
+To let the Fortran codes be able to call Python -coded algorithms, we need an interface (called  callback_python.F90 , for 
+
+instance) that translates the Python external functions into Fortran -callable public subroutines (called  python_algorithm {1,2}
+
+etc., for instance). At the same time, the  app_plug.F90  shall include the definition of these external functions (called 
+
+python_foo {1,2} etc., for instance) which are transported from PMC into Fortran application at plug -ins in  app_plug.F90  as 
+
+arguments. This Fortran interface file  callback_python.F90  shall be compiled with  app_plug.F90  together by going through 
+
+the procedure described  in  Step  2 to join the signature file  appname.pyf . Then , all subroutines  that  represent python algorithms 
+
+can be called in any Fortran application through a normal  “use ” statement .
+
+Step -4: Creating and executing  of Python main control (PMC) program 
+
+A PMC (called  appname_main.py , for instance) shall consist of three important parts: import statements, model integration 
+
+conductor and AI algorithm interface as described  before . The import statements must include  “from  appname  import 
+
+module_list ” (import selected Fortran modules from  appname  defined before) or simply  “import  appname ” to import all 41 
+
+modules in  appname . The import statements may include any necessary modules that are used in PMC such as an MPI module 
+
+which provides process -element identification (PE -id) etc. information, as well as defined AI algorithms and so on .
+
+To minimize Python -recoding for the existed Fortran model, the PMC ’s statements for conducting model integration usually 
+
+remain  as  simple as possible Python AI algorithms are conveniently called by the Fortran model. In the example of climate 
+
+model application of H f2p MDA, which will be described in  Sec t.  4, we implement an AI strongly -coupled data assimilation 
+
+(SCDA) based on the existed Fortran -coded weakly -coupled data assimilation (WCDA). Due to the strongly -modular nature 
+
+of  existed  Fortran codes, the AI algorithm trained by deep -learning is conveniently inserted  at  the atmosphere -ocean  interface ,
+
+and  we let PMC to take care of time integration loop (detail ed in  Sect . 4.2 ). However, in the example of H f2p MDA ’s NWP 
+
+model application  described in  Sec t.  5, we implement AI  DA  in the  3rd  domain downscaled  from  a recursive domain integration. 
+
+In that circumstance, the PMC ’s model integration conductor only consists of a single line, which will be elucidated in  Sec t. 
+
+5.2 .
+
+Once a PMC is ready, w e can still use  mpirun  command to reflect the MPI nature of Python -Fortran hybrid computation as: 
+
+$ mpirun  -n xx python appname_main.py > appname.log 
+
+where  “xx ” is the PE number required by the program,  appname.log  is the log file recording the log information during the 
+
+program running. We may insert this run command line into the existed  run_script  file of the Fortran model to let the H f2p MDA 
+
+run in a large scale of MPI usage by a  qsub  command to submit it to the back -end job queue. 
+
+Text S2: I mplementation  details of an AE architecture 
+
+S2.1 General architecture design of the AE for  SCDA  in  Hf2p MDA -CM2 SCDA 
+
+The autoencoder (AE) used for SCDA in H f2p MDA -CM2 SCDA  is illustrated in  Fig. S1 . The model adopts a two -branch 
+
+architecture because the atmospheric and oceanic input fields have different spatial resolutions. In the encoder, the two gro ups 
+
+of inputs are first compressed to comparable spatial scales. Their representations are then cou pled through two cross -attention 
+
+stages while the feature dimensions are further compressed. Since the atmospheric and oceanic information has already been 
+
+exchanged and embedded in the latent representation, the decoder does not include additional cross -branch interaction. Instead, 
+
+it decodes the latent representation separately for the atmospheric and oceanic output fields. The model contains 10,329,868 
+
+trainable parameters, including 1,998,340 parameters in the encoder and 8,331,528 parameters in the dec oder. 42 
+
+> Figure S1. Architecture of the AE for SCDA in H f2p MDA -CM2 SCDA . The numbers in square brackets indicate the tensor shape after
+> each operation, ordered as channel, height, and width. The labels above the arrows denote the transition modules, which are
+> described in Text S2.1.
+
+The AE uses standard residual blocks (ResBlocks) to increase network depth and improve representation capacity (He et al., 
+
+2016). The downsampling and upsampling stages are implemented using two -dimensional convolutional layers with  3 × 3
+
+kernels. In the upsampling stages, interpolation is first applied to increase the spatial resolution, followed by a two -dimensional 
+
+convolution. 
+
+The cross -attention modules follow the scaled dot -product attention formulation introduced in the Transformer architecture 
+
+(Vaswani et al., 2017). In general, attention is defined as 
+
+Attention (𝑄 , 𝐾 , 𝑉 ) = softmax  (𝑄 𝐾 ⊤
+
+√𝑑 𝑘 
+
+) 𝑉  (𝑆 1)
+
+where  𝑄 , 𝐾 , 𝑉  are the query, key, and value projections , respectively,  and  𝑑 𝑘  is the dimension of the key  projection . When the 
+
+query is derived from one branch and the key and value are derived from another branch, the operation becomes cross attention .
+
+In each cross -attention stage, the atmospheric and oceanic branches are updated as 
+
+Attention (𝑋 𝑎 𝑊 𝑄 
+
+> 𝑎
+
+, 𝑋 𝑜 𝑊 𝐾  
+
+> 𝑜
+
+, 𝑋 𝑜 𝑊 𝑉 
+
+> 𝑜
+
+)
+
+Attention (𝑋 𝑜 𝑊 𝑄 
+
+> 𝑜
+
+, 𝑋 𝑎 𝑊 𝐾  
+
+> 𝑎
+
+, 𝑋 𝑎 𝑊 𝑉 
+
+> 𝑎
+
+) (𝑆 2)
+
+where  𝑋 𝑎  and  𝑋 𝑜  denote the atmospheric -branch and oceanic -branch features before cross attention, respectively.  𝑊 𝑄 ,
+
+𝑊 𝐾 , and  𝑊 𝑉  are learnable projection matrices. Through these two directional cross -attention operations, information 
+
+is exchanged between the atmospheric and oceanic representations before being compressed into the latent space. 43 
+
+S2.2 Training  details  of the AE for  SCDA  in  Hf2p MDA -CM2 SCDA 
+
+a)  Computing environment and hyperparameters details 
+
+The AE for SCDA in H f2p MDA -CM2 SCDA  was trained on four NVIDIA GeForce RTX 4090 GPUs using DeepSpeed  (Rasley 
+
+et al. , 2020 ) and distributed data parallel training. The manually selected checkpoint was taken from epoch 72. The dataset 
+
+contained 160,600 samples, including 144,540 training samples and 16,060 validation samples. The batch size on each GPU 
+
+was 4, and 8 gradient -accu mulation steps were used, giving an effective batch size of 128. 
+
+The model was optimized with AdamW (Loshchilov and Hutter, 201 7). The learning rate was  7.5 × 10 −5, the weight decay 
+
+was 0.01, and the AdamW parameters were  𝛽  = (0.9,0.999 ) and  𝜀  = 10 −8. Mixed -precision FP16  (Micikevicius et al. , 201 7)
+
+training was used, with gradient clipping set to 1.0. The learning rate followed a cosine schedule with 5 warm -up epochs and 
+
+a minimum learning rate of  10 −6. The dataloader used 8 workers, a prefetch factor of 32, persistent workers, pinned memory, 
+
+block shuffling, and drop -last batching. 
+
+b) Loss details 
+
+Before training, the CM2 variables were normalized using z -score normalization: 
+
+𝑥  − 𝜇 
+
+𝜎  (𝑆 3)
+
+where  𝜇  and  𝜎  are the mean and standard deviation of each variable, respectively. Invalid values were replaced by zero after 
+
+normalization. Masks were used in the reconstruction loss to exclude invalid grid points where applicable. 
+
+The total CM2 loss was formulated as 
+
+𝐿 total  = 𝜂 atm 𝐿 atm  + 𝜂 ocn 𝐿 ocn  + 𝜆 corrupt 𝐿 corrupt  (𝑆 4)
+
+where  𝐿 atm  and  𝐿 ocn  are the atmospheric and oceanic reconstruction losses, respectively. The domain factors were  𝜂 atm  = 1.0
+
+and  𝜂 ocn  = 1.15 . The latent -corruption weight was  𝜆 corrupt  = 0.12 .
+
+For each domain, the loss was defined as 
+
+𝐿 𝑘  = 𝜆 1𝐿 1 + 𝜆 2𝐿 2 + 𝜆 𝑔 𝐿 grad  + 𝜆 𝑒 𝐿 energy  + 𝜆 𝑠 𝐿 spectral  + 𝜆 𝑏 𝐿 subband  (𝑆 5)
+
+Here,  𝐿 1 and  𝐿 2 are the masked absolute and squared reconstruction errors, respectively.  𝐿 grad  compares horizontal and 
+
+vertical finite -difference gradients,  𝐿 energy  compares the spatial mean of squared amplitudes,  𝐿 spectral  compares log -amplitude 
+
+Fourier spectra, and  𝐿 subband  constrains reconstruction errors in different spatial -frequency bands. The main loss weights were 
+
+𝜆 1 = 1.2, 𝜆 2 = 0.35 , 𝜆 𝑔  = 0.10 , 𝜆 𝑒  = 0.05 , 𝜆 𝑠  = 0.008 , 𝜆 𝑏  = 0.45 
+
+The latent -corruption term used single -pass denoising with Gaussian perturbations applied to the latent representation: 
+
+𝑧 ˜ = 𝑧  + 𝜉 , 𝜉  ∼ 𝒩 (0, 𝜎 𝑧 
+
+> 2
+
+𝐼 ), 𝜎 𝑧  = 0.012 
+
+The subband loss was introduced to reduce reconstruction errors across multiple spatial -frequency ranges. For each predicted 
+
+field  𝑥 ˆ and target field  𝑥 , the two -dimensional Fourier transforms are 44 
+
+𝐹  = ℱ(𝑥 ) (𝑆 6)
+
+The normalized wavenumber radius was divided into four bands: 
+
+[[0,0.25 ), [0.25 ,0.50 ), [0.50 ,0.72 ), [0.72 ,1.01 ]]
+
+For each band  𝑏 , a frequency mask  𝑀 𝑏  was applied, and the corresponding band -limited fields were transformed back to 
+
+physical space: 
+
+𝑥 𝑏  = ℱ−1(𝐹 𝑀 𝑏 ) (𝑆 7)
+
+The reconstruction error in each band was measured using a relative Charbonnier penalty (Charbonnier et al., 1997): 
+
+𝐸 𝑏  = mean [√(𝑥 ˆ𝑏  − 𝑥 𝑏  )2 + 𝜖 2]
+
+max (mean (|𝑥 𝑏 |), 𝜖 ) (𝑆 8)
+
+where  𝜖  = 5 × 10 −3. The final subband loss was calculated as the weighted mean over all frequency bands: 
+
+𝐿 subband  = ∑ 𝑤 𝑏 𝑏  𝐸 𝑏 
+
+∑ 𝑤 𝑏 𝑏 
+
+(𝑆 9)
+
+In the  CM2 configuration, the raw band weights were 
+
+[0.55 , 0.85 , 1.50 , 2.55 ]
+
+with stronger weights assigned to higher -frequency bands. The implementation further applied a mild frequency -dependent 
+
+reweighting with power 0.35, yielding effective weights of approximately 
+
+[0.356 , 0.808 , 1.691 , 3.249 ]
+
+This design is conceptually related to frequency -domain reconstruction losses, which have been used to reduce spectral 
+
+discrepancies between reconstructed and target images or fields, such as the Focal Frequency Loss of Jiang et al. (2021). The 
+
+use of the  Charbonnier penalty provides a robust and differentiable alternative to the absolute error. 
+
+S2. 3 General architecture design of  the  AE for  FSDA in  Hf2p MDA -WRF FSD A
+
+The AE used for  WRF ’s fine -scale convection data assimilation ( FSDA ) in H f2p MDA -WRF FSDA  is shown in  Fig. S2 . Compared 
+
+with the SCDA AE, this architecture is more compact and is mainly built from Swin Transformer blocks (Liu et al., 2021). 
+
+The model contains 53,854,780 trainable parameters, including 41,403,486 parameters in the encoder and 12,451,294 
+
+parameters  in the decoder. 45   
+
+> Figure S2: Architecture of the AE for FSDA in H f2p MDA -WRF FSDA . The notation follows Fig. S1. The transition modules are
+> described in Text S2. 3.
+
+In  Fig. S2 , the operations are grouped according to the actual workflow of the encoder, latent modeling module, and decoder. 
+
+Patch embedding denotes the initial strided convolution, which converts gridded input fields into patch tokens and performs 
+
+the first spatial  downsampling. In the encoder, each subsequent transition consists of patch merging followed by Swin 
+
+Transformer blocks. Patch merging reduces the spatial resolution while increasing the feature dimension. 
+
+The final encoder transition uses a linear embedding layer to project the deepest encoder feature into the latent feature 
+
+dimension, followed by latent Swin Transformer blocks. In the decoder, the first transition is a linear projection that maps  the 
+
+laten t feature back to the decoder feature dimension. The following decoder transitions use Swin Transformer blocks together 
+
+with patch expansion to recover the spatial resolution. The final transition uses patch recovery to reconstruct the output fi elds. 
+
+The Swin Transformer blocks follow the shifted -window attention design of Liu et al. (2021), in which self -attention is 
+
+computed within local windows and cross -window communication is achieved by shifted window partitions. Learnable 
+
+position embeddings and  relative position bias are used inside the Transformer modules, but they are not shown separately in 
+
+Fig. S2  for clarity. 
+
+S2.4 Training  details  of the AE for  FSDA in  Hf2p MDA -WRF FSD A
+
+a) Computing environment and hyperparameters details 
+
+The AE for FSDA in H f2p MDA -WRF FSDA  was trained on four NVIDIA L40 GPUs  using PyTorch  distributed data parallel 
+
+training  (Li et al. , 2020). The dataset contained 26,278 samples and was split by quarter into 21,887 training samples, 2,208 
+
+validation samples, and 2,183 test samples. Quarters 1 –10 were used for training, quarter 11 for validation, and quarter 12 for 
+
+testing. The batch size  was 256, the maximum number of epochs was 200, and the optimizer was Adam (Kingma and Ba, 201 4)46 
+
+with a learning rate of  10 −4. The learning rate scheduler was ReduceLROnPlateau with  mode="min" , factor=0.5 , and 
+
+patience=10 . The dataloader used 32 workers and pinned memory. 
+
+b) Loss details 
+
+The WRF variables U10 , V10, T2, and Q2 were normalized using fixed z -score statistics  that are defined by  eq. S 3. Missing 
+
+values were replaced by zero, and all fields were bilinearly interpolated to  256  × 256 . The training target was the input field 
+
+itself; therefore, the task was deterministic autoencoding. 
+
+The FSDA AE was trained with a combination of mean squared error (MSE) and structural similarity loss. The structural 
+
+similarity index measure (SSIM) was originally proposed by Wang et al. (2004). For two fields  𝑥  and  𝑦 , SSIM is defined as 
+
+SSIM (x, y) = (2𝜇 𝑥 𝜇 𝑦  + 𝐶 1)(2𝜎 𝑥𝑦  + 𝐶 2)
+
+(𝜇 𝑥  
+
+> 2
+
++ 𝜇 𝑦  
+
+> 2
+
++ 𝐶 1)(𝜎 𝑥  
+
+> 2
+
++ 𝜎 𝑦  
+
+> 2
+
++ 𝐶 2) (𝑆 10 )
+
+where  𝜇 𝑥  and  𝜇 𝑦  are local means,  𝜎 𝑥  
+
+> 2
+
+and  𝜎 𝑦  
+
+> 2
+
+are local variances,  𝜎 𝑥𝑦  is the local covariance, and  𝐶 1 and  𝐶 2 are small constants 
+
+used for numerical stability. 
+
+The final training loss was 
+
+𝐿  = MSE (𝑦 ˆ ⊙ 𝑀 , 𝑦  ⊙ 𝑀 ) + 0.2[1 − SSIM (𝑦 ˆ ⊙ 𝑀 , 𝑦  ⊙ 𝑀 )] (𝑆 11 )
+
+where  𝒚 ̂ is the reconstructed field,  𝒚  is the target field,  𝑴  is the mask, and  ⊙ denotes element -wise multiplication. The MSE 
+
+term constrains pointwise reconstruction accuracy, whereas the SSIM term provides an additional structural constraint on the 
+
+reconstructed spatial pattern .
+
+Text S3: L3DVar running details 
+
+This section summarizes the optimization settings and computational cost of L3DVar in the two assimilation applications. The 
+
+weighted objective function used in both configurations is defined as 
+
+𝐽 (𝐳 ) = 1
+
+2 ‖𝐳  − 𝐳 𝑏 ‖𝐁 𝑧  
+
+> −1
+> 2
+
++ 𝜆 
+
+2 ‖𝐲  − ℋ(𝐷 (𝐳 ))‖𝐑 −1 
+
+> 2
+
+(S12 )
+
+where  𝜆  controls the relative contribution of the observation term. The estimation of  𝐁 𝑧  for the two applications is described 
+
+in  Sect. 4.3.2 and 5.3.2 . The corresponding covariance settings and optimization parameters are listed in  Table S 1.
+
+> Table S1. L3DVar optimization settings.
+
+Application  𝝀  Number  of iterations  Learning rate  Optimizer 
+
+SCDA by H f2p MDA -CM2 SCDA  100  100  10 −3 Adam 
+
+FSDA by H f2p MDA -WRF FSDA  1000  300  10 −3 Adam 47 
+
+In addition to the optimization configuration, the computational contribution of L3DVar was evaluated for the FSDA by 
+
+Hf2p MDA -WRF FSDA  experiment.  Table S2  reports the accumulated DA cost relative to the main model runtime and the total 
+
+runtime including output writing.   
+
+> Table S2. Computational efficiency of L3DVar in the SCDA by H f2p MDA -CM2 SCDA and FSDA by H f2p MDA -WRF FSDA experiments.
+> DA total denotes the accumulated runtime of the L3DVar optimization, Total main denotes the total runtime of the main workflo w,
+> and DA/main is their ratio. The f2py overhead denotes the additional runtime introduced by the Python –Fortran inter face, and
+> Interface efficiency denotes the fraction of the DA runtime excluding this overhead.
+
+Case  DA total  Total main  DA/main  f2py overhead  Interface efficiency 
+
+SCDA by H f2p MDA -CM2 SCDA  3052.7927 s  22740.1087 s  13.42%  - -
+
+FSDA by H f2p MDA -WRF FSDA  2782.3042 s  28053.3913 s  9.92%  0.3129 s  99.99% 
+
+L3DVar accounted for 13.42% and 9.92% of the total main runtime in the SCDA by H f2p MDA -CM2 SCDA  and FSDA by 
+
+Hf2p MDA -WRF FSDA  experiments, respectively. The f2py overhead was negligible in the latter experiment. The interface 
+
+overhead was not measured for SCDA by H f2p MDA -CM2 SCDA .
+
+References S1 
+
+Charbonnier, P., Blanc -Feraud , L., Aubert, G., and Barlaud, M.: Deterministic edge -preserving regularization in computed 
+
+imaging, IEEE Trans. on Image Process., 6, 298 –311,  https://doi.org/10.1109/83.551699 , 1997. 
+
+He, K., Zhang, X., Ren, S., and Sun, J.: Deep Residual Learning for Image Recognition, in: 2016 IEEE Conference on 
+
+Computer Vision and Pattern Recognition (CVPR), 2016 IEEE Conference on Computer Vision and Pattern Recognition 
+
+(CVPR), 770 –778,  https://doi.org/10.1109/CVPR.2016.90 , 2016. 
+
+Jiang, L., Dai, B., Wu, W., and Loy, C. C.: Focal Frequency Loss for Image Reconstruction and Synthesis, in: 2021 IEEE/CVF 
+
+International Conference on Computer Vision (ICCV), 2021 IEEE/CVF International Conference on Computer Vision (ICCV), 
+
+13899 –13909,  https://doi.org/10.1109/ICCV48922.2021.01366 , 2021. 
+
+Kingma, D. P. and Ba, J.: Adam: A Method for Stochastic Optimization,  https://doi.org/10.48550/ARXIV.1412.6980 , 2014. 
+
+Li, S., Zhao, Y., Varma, R., Salpekar, O., Noordhuis, P., Li, T., Paszke, A., Smith, J., Vaughan, B., Damania, P., and Chinta la, 
+
+S.: PyTorch distributed: experiences on accelerating data parallel training, Proc. VLDB Endow., 13, 3005 –3018, 
+
+https://doi.org/10.14778/3415478.3415530 , 2020. 
+
+Liu, Z., Lin, Y., Cao, Y., Hu, H., Wei, Y., Zhang, Z., Lin, S., and Guo, B.: Swin Transformer: Hierarchical Vision Transforme r
+
+using Shifted Windows, in: 2021 IEEE/CVF International Conference on Computer Vision (ICCV), 2021 IEEE/CVF 
+
+International Conferen ce on Computer Vision (ICCV), 9992 –10002,  https://doi.org/10.1109/ICCV48922.2021.00986 , 2021. 
+
+Loshchilov, I. and Hutter, F.: Decoupled Weight Decay Regularization,  https://doi.org/10.48550/ARXIV.1711.05101 , 2017. 48 
+
+Micikevicius, P., Narang, S., Alben, J., Diamos, G., Elsen, E., Garcia, D., Ginsburg, B., Houston, M., Kuchaiev, O., Venkates h, 
+
+G., and Wu, H.: Mixed Precision Training,  https://doi.org/10.48550/ARXIV.1710.03740 , 2017. 
+
+Rasley, J., Rajbhandari, S., Ruwase, O., and He, Y.: DeepSpeed : System Optimizations Enable Training Deep Learning 
+
+Models with Over 100 Billion Parameters, in: Proceedings of the 26th ACM SIGKDD International Conference on Knowledge 
+
+Discovery & Data Mining, KDD ’20: The 26th ACM SIGKDD Conference on Knowledge Discove ry and Data Mining, 3505 –
+
+3506,  https://doi.org/10.1145/3394486.3406703 , 2020. 
+
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., and Polosukhin , I.: Attention Is All 
+
+You Need,  https://doi.org/10.48550/ARXIV.1706.03762 , 2017. 
+
+Zhou Wang, Bovik, A. C., Sheikh, H. R., and Simoncelli, E. P.: Image quality assessment: from error visibility to structural 
+
+similarity, IEEE Trans. on Image Process., 13, 600 –612,  https://doi.org/10.1109/TIP.2003.819861 , 2004.

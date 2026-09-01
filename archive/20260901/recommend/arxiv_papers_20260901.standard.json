@@ -1,0 +1,439 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-01T19:42:05.520838+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2608.29448v1",
+      "source": "arxiv",
+      "title": "SS-ESOAP: Self-Scaled Adaptive Preconditioning for Physics-Informed Learning",
+      "abstract": "Physics-informed neural networks (PINNs) often face ill-conditioned objectives that limit high-accuracy training. Dense quasi-Newton methods improve local conditioning but require expensive optimizer state, while Kronecker-factored methods such as SOAP scale to larger networks but rely on periodic basis updates. We introduce \\method, which augments SOAP-style preconditioning with a scalar secant-energy correction adapted to Kronecker geometry and an adaptive basis update followed by variance-state downscaling. We characterize the directional secant matching induced by the scalar correction and give a bound on variance-state mismatch across basis changes. Across eight PDE benchmarks, \\method attains the lowest final residual on six, including Burgers and Boussinesq, while SOAP-family baselines perform better on Gray-Scott and Ginzburg-Landau. On Boussinesq, \\method reaches a residual of $10^{-5}$ in 4.1 hours with 9.2 GB peak VRAM, while Adam does not reach this target within 14 hours. Three-seed $L^2$ and $H^1$ errors on four representative PDEs support the link between lower residuals and improved solution accuracy. These results position \\method as a scalable option for stiff, high-accuracy physics-informed training, rather than a uniform replacement for existing optimizers.",
+      "authors": [
+        "Guangyuan Wang",
+        "Mads Toftrup",
+        "Sebastian Loeschcke",
+        "Yixuan Wang",
+        "Anima Anandkumar"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "math.OC",
+        "stat.ML"
+      ],
+      "published": "2026-08-29T21:34:47+00:00",
+      "link": "https://arxiv.org/pdf/2608.29448v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Optimizer specifically designed for physics-informed neural network training, improving accuracy across PDE benchmarks; directly enables PINN-based subsurface flow models",
+      "llm_evidence_cn": "专为物理信息神经网络训练设计的优化器，在多个PDE基准上提升精度；可直接支撑基于PINN的地下水流模型",
+      "llm_evidence": "专为物理信息神经网络训练设计的优化器，在多个PDE基准上提升精度；可直接支撑基于PINN的地下水流模型",
+      "canonical_evidence": "专为物理信息神经网络训练设计的优化器，在多个PDE基准上提升精度；可直接支撑基于PINN的地下水流模型",
+      "llm_tldr_en": "Presents SS-ESOAP, a self-scaled adaptive preconditioning optimizer that augments SOAP-style preconditioning with a scalar secant-energy correction and adaptive basis updates. Across eight PDE benchmarks it attains the lowest final residual on six, offering a robust training tool for physics-informed models such as subsurface flow PINNs.",
+      "llm_tldr_cn": "物理信息神经网络常面临病态目标，限制高精度训练。本文提出SS-ESOAP，将SOAP预条件与标量割线能量校正、自适应基更新结合，并加入方差状态降尺度。在八个PDE基准上，该方法在六个算例中取得最低最终残差。它显著改善PINN训练的收敛性与精度，为地下水流等物理信息学习任务提供高效优化器。",
+      "llm_tldr": "物理信息神经网络常面临病态目标，限制高精度训练。本文提出SS-ESOAP，将SOAP预条件与标量割线能量校正、自适应基更新结合，并加入方差状态降尺度。在八个PDE基准上，该方法在六个算例中取得最低最终残差。它显著改善PINN训练的收敛性与精度，为地下水流等物理信息学习任务提供高效优化器。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.29499v1",
+      "source": "arxiv",
+      "title": "ENPINN: Energy-Norm-Guided Gradient-Enhanced PINNs for Generalized Transport Problems with Sharp Gradients",
+      "abstract": "Physics-informed neural networks (PINNs) have emerged as a meshless alternative to conventional numerical methods for solving partial differential equations (PDEs). However, their limited ability to capture sharp gradients can lead to substantial errors when resolving boundary and interior layers. Here, we introduce an energy-norm-enhanced PINN (ENPINN) that incorporates gradient information and variational structure into the loss function to improve the resolution of layer-dominated solutions. We first examine two related formulations: weak-loss PINNs (WLPINNs), which incorporate test functions into the conventional PINN residual, and gradient-enhanced PINNs (gPINNs), which augment the loss with spatial derivatives of the PDE residual. By analyzing these formulations, we identify their limitations in resolving steep solution gradients and motivate the systematic construction of ENPINN. We establish theoretically how the energy-norm error depends on the ENPINN loss and show that a suitably modified residual-derivative term is essential for accurately capturing boundary layers. We further establish the existence of neural-network approximations with arbitrarily small energy error and derive corresponding derivative bounds, providing a theoretical foundation for the proposed framework. The performance of ENPINN is assessed through systematic comparisons with existing PINN variants for convection-diffusion-reaction problems exhibiting steep gradients. Numerical experiments include a combustion model, a coupled multi-scale system, a two-dimensional Burgers equation with an interior layer, and a three-dimensional time-dependent problem.",
+      "authors": [
+        "Subhendu Maity",
+        "Pratibhamoy Das",
+        "Arihant Patawari",
+        "Ameya D. Jagtap"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "math-ph"
+      ],
+      "published": "2026-08-30T01:31:11+00:00",
+      "link": "https://arxiv.org/pdf/2608.29499v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Energy-norm gradient-enhanced PINNs for sharp-gradient transport problems, directly transferable to subsurface flow modeling",
+      "llm_evidence_cn": "能量范数梯度增强的PINN方法面向尖锐梯度输运问题，可直接迁移至地下水流与溶质运移模拟",
+      "llm_evidence": "能量范数梯度增强的PINN方法面向尖锐梯度输运问题，可直接迁移至地下水流与溶质运移模拟",
+      "canonical_evidence": "能量范数梯度增强的PINN方法面向尖锐梯度输运问题，可直接迁移至地下水流与溶质运移模拟",
+      "llm_tldr_en": "The paper proposes ENPINN, an energy-norm-guided gradient-enhanced PINN that incorporates variational structure and gradient information into the loss to resolve sharp boundary and interior layers in transport PDEs, addressing PINN accuracy limitations.",
+      "llm_tldr_cn": "针对物理信息神经网络在求解含边界层和内部层的输运问题时难以捕捉尖锐梯度的问题，论文提出能量范数引导的梯度增强PINN（ENPINN），将梯度信息与变分结构引入损失函数。方法结合弱损失PINN与梯度增强PINN的优势，显著提升层主导解的解析精度。该工作为地下水流与污染物输运等尖锐锋面问题的AI数值模拟提供了可迁移的强有力工具。",
+      "llm_tldr": "针对物理信息神经网络在求解含边界层和内部层的输运问题时难以捕捉尖锐梯度的问题，论文提出能量范数引导的梯度增强PINN（ENPINN），将梯度信息与变分结构引入损失函数。方法结合弱损失PINN与梯度增强PINN的优势，显著提升层主导解的解析精度。该工作为地下水流与污染物输运等尖锐锋面问题的AI数值模拟提供了可迁移的强有力工具。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.29888v1",
+      "source": "arxiv",
+      "title": "Sensitivity-Constrained Neural Operators for Data-Efficient Forward and Inverse Modeling of Partial Differential Equation Systems",
+      "abstract": "Neural operators provide fast surrogates for partial differential equation (PDE) solvers, but their reliability can degrade for high-dimensional spatial inputs and inverse or repeated inference. State-only training constrains solution values but not the learned input--output response. We study sensitivity-constrained neural operators (SC-NOs), which augment standard training with sampled solver-derived Jacobian supervision. Selected sensitivities from differentiable solvers or discrete adjoints are matched during training, allowing response information to be amortized across minibatches without imposing the full Jacobian at every update. We evaluate SC-NO on advection--diffusion and RANS--Spalart--Allmaras benchmarks, input-dimensionality scaling tests, long-horizon autoregressive rollout, and a shallow-water Tohoku tsunami source-inversion case. Sensitivity supervision improves forward prediction and yields larger gains in gradient-based inverse reconstruction of distributed fields. Scaling experiments show an improved accuracy--cost tradeoff for high-dimensional gridded inputs, while ablations indicate that state values and Jacobian information provide complementary supervision. In the tsunami case, SC-FNO reconstructs gridded seafloor deformation from sparse early gauge observations and forecasts subsequent wave propagation in a near-real-time proof-of-concept workflow. These results support sampled sensitivity supervision as a practical way to improve neural PDE surrogates when forward accuracy, inverse stability, robustness, and computational cost must be considered together.",
+      "authors": [
+        "Abdolmehdi Behroozi",
+        "Chaopeng Shen",
+        "Daniel Kifer",
+        "Kathryn Lawson"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-30T16:37:25+00:00",
+      "link": "https://arxiv.org/pdf/2608.29888v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Neural operators trained with solver-derived Jacobian supervision for data-efficient forward and inverse PDE modeling",
+      "llm_evidence_cn": "利用求解器雅可比监督训练神经算子，提升PDE正反演的数据效率",
+      "llm_evidence": "利用求解器雅可比监督训练神经算子，提升PDE正反演的数据效率",
+      "canonical_evidence": "利用求解器雅可比监督训练神经算子，提升PDE正反演的数据效率",
+      "llm_tldr_en": "Introduces sensitivity-constrained neural operators (SC-NOs) that match solver-derived Jacobians during training, improving data efficiency and reliability for PDE forward/inverse modeling.",
+      "llm_tldr_cn": "神经算子为PDE求解提供快速代理，但在高维输入和反演推断中可靠性容易下降。该文提出SC-NOs，在标准训练中增加采样得到的求解器灵敏度（雅可比）监督，使模型能学习输入-输出响应关系。在平流扩散和RANS等PDE系统上，SC-NOs显著提升了数据效率和鲁棒性。该训练增强策略有助于构建更可信的地下水流正反演代理模型。",
+      "llm_tldr": "神经算子为PDE求解提供快速代理，但在高维输入和反演推断中可靠性容易下降。该文提出SC-NOs，在标准训练中增加采样得到的求解器灵敏度（雅可比）监督，使模型能学习输入-输出响应关系。在平流扩散和RANS等PDE系统上，SC-NOs显著提升了数据效率和鲁棒性。该训练增强策略有助于构建更可信的地下水流正反演代理模型。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.29892v1",
+      "source": "arxiv",
+      "title": "Joint Spatiotemporal Spectral Neural Operators for Learning PDEs on Irregular Domains",
+      "abstract": "Learning solution operators for partial differential equations (PDEs) on irregular and geometry-dependent domains remains a central challenge in scientific machine learning. While spectral methods provide strong inductive biases for modeling global interactions, they are typically limited to regular domains, and existing neural approaches often require domain warping, interpolation, or costly geometric embeddings. We introduce the \\textbf{Graph Spectral Neural Operator (GSNO)}, a neural operator that combines spatial graph spectral decompositions with temporal Fourier transforms through a unified space--time spectral kernel. This formulation enables globally coherent operator learning on non-Cartesian discretizations without domain warping or autoregressive rollouts. By replacing learned geometric embeddings with a graph Laplacian spectral basis, GSNO provides geometry-aware spectral learning with low parameter complexity. Across steady and unsteady PDE benchmarks on irregular and geometry-dependent domains, GSNO achieves strong accuracy with reduced runtime and parameter counts, while demonstrating robust zero-shot generalization across mesh resolutions and geometry families.",
+      "authors": [
+        "Abdolmehdi Behroozi",
+        "Chaopeng Shen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-30T16:41:10+00:00",
+      "link": "https://arxiv.org/pdf/2608.29892v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Neural operator for PDEs on irregular domains applicable as surrogate for groundwater flow",
+      "llm_evidence_cn": "面向不规则域的神经算子，可作地下水流动代理模型",
+      "llm_evidence": "面向不规则域的神经算子，可作地下水流动代理模型",
+      "canonical_evidence": "面向不规则域的神经算子，可作地下水流动代理模型",
+      "llm_tldr_en": "Introduces GSNO, a graph spectral neural operator combining spatial graph spectra with temporal Fourier transforms, enabling globally coherent operator learning for PDEs on irregular domains without warping or interpolation.",
+      "llm_tldr_cn": "针对不规则几何域上偏微分方程算子学习难的问题，本文提出图谱神经算子GSNO，将空间图谱分解与时间傅里叶变换统一为时空谱核，避免域变换或插值。该方法能在非笛卡尔离散化上实现全局一致的算子学习，为复杂地质结构中的地下水流动模拟提供了高效代理建模的新工具。",
+      "llm_tldr": "针对不规则几何域上偏微分方程算子学习难的问题，本文提出图谱神经算子GSNO，将空间图谱分解与时间傅里叶变换统一为时空谱核，避免域变换或插值。该方法能在非笛卡尔离散化上实现全局一致的算子学习，为复杂地质结构中的地下水流动模拟提供了高效代理建模的新工具。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.29895v1",
+      "source": "arxiv",
+      "title": "Physics-Informed Kolmogorov-Arnold networks for viscoelastic fluid equations",
+      "abstract": "Kolmogorov-Arnold Networks (KANs), inspired by the Kolmogorov Arnold representation theorem, provide an interpretable alternative to multilayer perceptrons (MLPs) by using learnable activation functions on edges rather than fixed node activations. We propose a Physics-Informed Kolmogorov-Arnold Network (PI-KAN) framework for solving forward problem of viscoelastic fluid equations, which arise in many complex fluid dynamics applications and are characterized by strong nonlinear coupling between fluid fields. For viscoelastic fluid equations, we adopt the generalized hydrodynamic model, which is well established in the field of dusty plasma. To evaluate the performance of the proposed framework for viscoelastic fluid, we consider benchmark problem based on the Taylor-Green (TG) flow and a modified Taylor-Green flow. We systematically investigate the effects of different network architectures, hyperparameters, and collocation point distributions on the accuracy and convergence behavior of PI-KANs for the range of viscoelastic parameter ($τ_m = 1$--$20$). We also study the impact of random seed initialization on training outcomes. The obtained results provide useful guidance for the design and implementation of physics-informed Kolmogorov-Arnold networks (PI-KANs) in solving viscoelastic fluid equations",
+      "authors": [
+        "Suryanshu Singh",
+        "Midhuna Suresh",
+        "Akanksha Gupta"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn",
+        "physics.comp-ph"
+      ],
+      "published": "2026-08-30T16:43:13+00:00",
+      "link": "https://arxiv.org/pdf/2608.29895v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Physics-informed neural network framework (PI-KAN) for solving forward viscoelastic flow equations; directly transferable to subsurface flow PDEs",
+      "llm_evidence_cn": "面向粘弹性流体方程的物理信息神经网络框架(PI-KAN)，可直接迁移至地下水流方程求解",
+      "llm_evidence": "面向粘弹性流体方程的物理信息神经网络框架(PI-KAN)，可直接迁移至地下水流方程求解",
+      "canonical_evidence": "面向粘弹性流体方程的物理信息神经网络框架(PI-KAN)，可直接迁移至地下水流方程求解",
+      "llm_tldr_en": "Proposes Physics-Informed Kolmogorov-Arnold Networks (PI-KAN) for solving forward viscoelastic fluid equations, using learnable edge activations to improve interpretability and expressiveness. The framework is benchmarked on dusty-plasma viscoelastic flow problems and demonstrates the applicability of PINN variants to complex fluid PDEs.",
+      "llm_tldr_cn": "针对强非线性耦合流体方程求解，提出物理信息Kolmogorov-Arnold网络(PI-KAN)，以边缘可学习激活替代固定节点激活，提升表达力与可解释性。采用广义流体动力学模型描述粘弹性流体尘埃等离子体，并在基准算例上评估。结果显示PI-KAN能有效求解前向问题，为物理信息神经网络在复杂流场中的应用提供了新选择。",
+      "llm_tldr": "针对强非线性耦合流体方程求解，提出物理信息Kolmogorov-Arnold网络(PI-KAN)，以边缘可学习激活替代固定节点激活，提升表达力与可解释性。采用广义流体动力学模型描述粘弹性流体尘埃等离子体，并在基准算例上评估。结果显示PI-KAN能有效求解前向问题，为物理信息神经网络在复杂流场中的应用提供了新选择。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.28935v1",
+      "source": "arxiv",
+      "title": "NeuralFlowNet: Towards Data-Free Physics-Informed Neural Network Solutions of Navier-Stokes Equations Across Low and High Reynolds Numbers",
+      "abstract": "Physics-informed neural networks (PINNs) have emerged as a compelling pathway toward trustworthy artificial-intelligence-based computational fluid dynamics (CFD) by embedding governing equations directly into the learning process. Many existing AI flow models require large simulation or experimental datasets and often remain problem-specific, limiting their generalization and physical reliability. Data-free PINN frameworks offer an alternative by learning flow solutions from the Navier-Stokes equations and prescribed boundary conditions, potentially reducing dependence on expensive CFD datasets while retaining physical consistency. However, traditional PINN frameworks have struggled at high Reynolds numbers, limiting their application in CFD. In this work, we present NeuralFlowNet, a data-free, physics-informed proof-of-concept framework designed to solve steady Navier-Stokes problems across low- to high-Reynolds-number conditions. We describe the proposed methodological framework and demonstrate its applicability using benchmark problems with increasing physical and geometric complexity. The results demonstrate that NeuralFlowNet can accurately recover steady flow fields across a broad Reynolds-number range, including cases with strong pressure gradients, without training on external flow-field data and while maintaining good agreement with reference numerical solutions. These findings establish NeuralFlowNet as a reliable framework for future testing of unsteady and more complex simulations and could provide a basis for developing trustworthy and efficient AI solvers for high-Reynolds-number fluid dynamics.",
+      "authors": [
+        "Jayanga T. Samarasinghe",
+        "Luis De la Fuente",
+        "Laura Alvarez"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-08-28T23:10:58+00:00",
+      "link": "https://arxiv.org/pdf/2608.28935v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "data-free PINN method embedding governing equations, applicable to subsurface flow simulation",
+      "llm_evidence_cn": "无数据物理信息神经网络方法，将控制方程嵌入学习，可应用于地下水流模拟",
+      "llm_evidence": "无数据物理信息神经网络方法，将控制方程嵌入学习，可应用于地下水流模拟",
+      "canonical_evidence": "无数据物理信息神经网络方法，将控制方程嵌入学习，可应用于地下水流模拟",
+      "llm_tldr_en": "NeuralFlowNet proposes a data-free physics-informed neural network that solves Navier-Stokes equations across low and high Reynolds numbers without simulation data, improving generalization and physical consistency for AI-based CFD.",
+      "llm_tldr_cn": "该论文提出数据无关的物理信息神经网络NeuralFlowNet，直接从Navier-Stokes方程和边界条件学习流动解，避免了大规模数据集依赖。在低和高雷诺数多种工况下验证了物理一致性与泛化能力，为嵌入物理定律的无数据AI求解器提供了新思路，并有望移植到地下水流等物理场模拟中。",
+      "llm_tldr": "该论文提出数据无关的物理信息神经网络NeuralFlowNet，直接从Navier-Stokes方程和边界条件学习流动解，避免了大规模数据集依赖。在低和高雷诺数多种工况下验证了物理一致性与泛化能力，为嵌入物理定律的无数据AI求解器提供了新思路，并有望移植到地下水流等物理场模拟中。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.29069v1",
+      "source": "arxiv",
+      "title": "Spectral-Embedded Operator Learning for Three-Phase Interfacial Flow: A Ternary Cahn-Hilliard-Navier-Stokes Benchmark",
+      "abstract": "Operator-learning surrogates have been benchmarked largely on single-field, single-interface problems, leaving unclear whether architectural choices validated in those settings transfer to constrained, multiphase flows. We introduce a three-phase interfacial-flow benchmark to examine whether the trunk coordinate representation matters for a multi-channel, interface-dominated target. The configuration consists of an air bubble rising through water, piercing a water-oil interface, and entraining a water plume into the oil within a bounded, wall-confined domain. Reference data are generated using a structure-preserving ternary Cahn-Hilliard-Navier-Stokes solver that algebraically preserves the simplex constraint. From 1,024 Sobol-sampled simulations spanning a nine-dimensional parameter space, we learn the mapping from physical parameters to five-channel space-time fields. We compare three parameter-matched DeepONet variants differing only in trunk representation: raw coordinates (DeepONet), random Fourier features (FEDONet), and a fixed tensor-product Chebyshev dictionary (SEDONet). SEDONet reduces the test relative L2 error by 16.8% compared with FEDONet and by 24.0% compared with DeepONet, while improving all five output channels. Spatial and temporal error analyses localize the principal gains near the diffuse interfaces and after bubble breakthrough. The results indicate that the Chebyshev representation is particularly effective for the strongly non-periodic wall-normal and temporal structure of this three-phase flow.",
+      "authors": [
+        "Muhammad Abid",
+        "Arth Sojitra",
+        "Omer San"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn",
+        "cs.LG"
+      ],
+      "published": "2026-08-29T05:45:42+00:00",
+      "link": "https://arxiv.org/pdf/2608.29069v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Operator-learning surrogate benchmark for a complex multiphase flow PDE; provides transferable methodology for groundwater flow surrogates",
+      "llm_evidence_cn": "面向复杂多相流PDE的算子学习代理基准，其方法可迁移至地下水流代理模型",
+      "llm_evidence": "面向复杂多相流PDE的算子学习代理基准，其方法可迁移至地下水流代理模型",
+      "canonical_evidence": "面向复杂多相流PDE的算子学习代理基准，其方法可迁移至地下水流代理模型",
+      "llm_tldr_en": "Introduces a three-phase interfacial-flow benchmark for operator-learning surrogates, testing whether trunk coordinate representations transfer to multi-channel, interface-dominated targets. Reference data come from a structure-preserving ternary Cahn-Hilliard-Navier-Stokes solver, providing insights for surrogate modeling of constrained multiphase flows.",
+      "llm_tldr_cn": "针对算子学习代理在多相界面流中的适用性，构建三相界面流基准，考察干线坐标表示对多通道、界面主导目标的影响。基准参考数据由保持结构的三元Cahn-Hilliard-Navier-Stokes求解器生成，代数保持单纯形约束。该工作为受限多相流代理建模提供了公开基准，对地下水多相流模拟的机器学习替代有借鉴意义。",
+      "llm_tldr": "针对算子学习代理在多相界面流中的适用性，构建三相界面流基准，考察干线坐标表示对多通道、界面主导目标的影响。基准参考数据由保持结构的三元Cahn-Hilliard-Navier-Stokes求解器生成，代数保持单纯形约束。该工作为受限多相流代理建模提供了公开基准，对地下水多相流模拟的机器学习替代有借鉴意义。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.29082v1",
+      "source": "arxiv",
+      "title": "A Learnable Multigrid Framework via Graph Convolutions",
+      "abstract": "This paper presents a novel framework that integrates learnable graph convolutions with the geometric multigrid method for solving partial differential equations (PDEs). The discretization of PDEs is first represented as a graph structure, enabling the application of graph convolutions to enhance the multigrid performance. By incorporating graph convolutions into the multigrid components such as smoothing and inter-grid transfer operators, we develop a learnable multigrid that can adaptively optimize its performance based on the underlying problem characteristics. In this framework, the graph convolutions are embedded directly within the multigrid cycle, effectively transforming the entire multigrid solver into a specialized neural network architecture, rather than combining a classical solver with surrogate models. The learnable multigrid framework is lightweight in terms of parameter count and requires minimal training effort to achieve good performance. Numerical experiments demonstrate the effectiveness of the proposed approach in solving some challenging problems, showing improved convergence rates compared to traditional multigrid methods. The generalizability of the learned parameters across different problem settings, including varying source terms, coefficients, geometries, and mesh sizes, is also investigated with proper weight-sharing and transfer-learning strategies.",
+      "authors": [
+        "Xiuping Wang",
+        "Li Luo"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-08-29T06:19:45+00:00",
+      "link": "https://arxiv.org/pdf/2608.29082v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "learnable multigrid integrates graph convolutions for AI-enhanced PDE solvers",
+      "llm_evidence_cn": "可学习多重网格将图卷积与PDE求解器结合，实现AI增强的数值模拟",
+      "llm_evidence": "可学习多重网格将图卷积与PDE求解器结合，实现AI增强的数值模拟",
+      "canonical_evidence": "可学习多重网格将图卷积与PDE求解器结合，实现AI增强的数值模拟",
+      "llm_tldr_en": "Presents a learnable multigrid framework that embeds graph convolutions into smoothing and transfer operators, turning the whole multigrid solver into a specialized neural network for adaptive PDE solving.",
+      "llm_tldr_cn": "该论文提出一种将图卷积嵌入几何多重网格的可学习框架，用于求解偏微分方程。先将离散化PDE表示为图结构，再在图卷积增强的光滑器和层间转移算子中实现自适应优化。该方法将整个多重网格求解器转化为一种专用神经网络架构，能够根据问题特征动态调整，从而提高PDE求解效率和泛化能力，为人工智能增强的地下水流数值模拟提供了通用框架。",
+      "llm_tldr": "该论文提出一种将图卷积嵌入几何多重网格的可学习框架，用于求解偏微分方程。先将离散化PDE表示为图结构，再在图卷积增强的光滑器和层间转移算子中实现自适应优化。该方法将整个多重网格求解器转化为一种专用神经网络架构，能够根据问题特征动态调整，从而提高PDE求解效率和泛化能力，为人工智能增强的地下水流数值模拟提供了通用框架。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "artificial intelligence enhanced groundwater numerical simulation methods",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.30909v1",
+      "source": "arxiv",
+      "title": "Learning dynamically consistent flow reconstructions from limited observations",
+      "abstract": "A core inverse problem in the experimental sciences is the inference of a hidden dynamical state from sparse or indirect measurements. There is a natural opportunity for deep learning methods here, but machine-learnt reconstruction methods typically require full state data for training. We present Trajectory-Consistent Network Training (TraCTra), a label-free framework that trains reconstruction networks using only partial observation sequences and a differentiable forward model. TraCTra requires the network reconstruction and dynamical evolution to be mutually consistent: network-predicted states are marched forward in time to match subsequent observations and to agree in the full state space with independent reconstructions at later times. Across four fluid systems, the same objective reconstructs three-dimensional turbulence from coarse-grained fields, velocity from observations of density fluctuations, and three-dimensional density and velocity from sequences of projected two-dimensional shadowgraphs, while also recovering global vorticity from observations confined to a small spatial window. TraCTra outperforms assimilation-only and physics-informed neural approaches, preserves dynamically important multiscale structure, and remains accurate beyond the optimisation window. It transfers to held-out times in the three-dimensional shadowgraph problem and, when trained across trajectories, generalises to unseen flows in the two-dimensional problem. The results establish trajectory consistency as a general supervision principle for reconstructing hidden dynamical states without full state training targets.",
+      "authors": [
+        "Lu Zhu",
+        "Jacob Page"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-08-31T14:54:35+00:00",
+      "link": "https://arxiv.org/pdf/2608.30909v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "label-free deep learning reconstruction of dynamical flow from sparse observations with a differentiable forward model; transferable to data-driven groundwater modeling",
+      "llm_evidence_cn": "基于可微分正演模型从稀疏观测中无标签重建动力学流场，可迁移至数据驱动地下水建模",
+      "llm_evidence": "基于可微分正演模型从稀疏观测中无标签重建动力学流场，可迁移至数据驱动地下水建模",
+      "canonical_evidence": "基于可微分正演模型从稀疏观测中无标签重建动力学流场，可迁移至数据驱动地下水建模",
+      "llm_tldr_en": "TraCTra trains flow reconstruction networks label-free using partial observations and a differentiable forward model, enforcing consistency between reconstructed states and dynamics. It removes the need for full-state training data and applies to data-driven groundwater state reconstruction.",
+      "llm_tldr_cn": "针对稀疏观测下的状态重建难题，本文提出轨迹一致性网络训练(TraCTra)，仅需部分观测序列与可微分正演模型，无需全状态标签。训练要求网络重建与动力学演化相互一致，并在后续时刻与独立重建相符。该方法在实验科学中可恢复隐藏动力学状态，对未来地下水动态重建与代理模拟具有方法迁移价值。",
+      "llm_tldr": "针对稀疏观测下的状态重建难题，本文提出轨迹一致性网络训练(TraCTra)，仅需部分观测序列与可微分正演模型，无需全状态标签。训练要求网络重建与动力学演化相互一致，并在后续时刻与独立重建相符。该方法在实验科学中可恢复隐藏动力学状态，对未来地下水动态重建与代理模拟具有方法迁移价值。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "data-driven groundwater hydrology",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.29532v1",
+      "source": "arxiv",
+      "title": "Python-Fortran Hybrid Programming to Fuse AI and Physical Models: Examples of AI-LDA in climate and weather models (Hf2pMDA_v1.0)",
+      "abstract": "AI provides an unprecedented opportunity for advancing physics numerical modeling including data assimilation, which is a highly efficient and critically-important tool for advancing our understanding on Earth system and its applications. At the same time, deep incorporation of AI and physical modeling can make great driving to advance AI by injecting it rich physics from long time physics-based modeling development. However, since such physics models are conventionally coded in Fortran and AI algorithms usually are conveniently designed in Python, difficulties exist to directly incorporate AI algorithms into physics models, vice versa. Here, based on the F2PY protocol, we have developed a procedure that implements an infrastructure which conveniently conducts Hf2pMDA to form a program entity so that AI algorithms and physical models can invoke mutually. As examples, within Hf2pMDA, a climate coupled data assimilation (CDA) system is naturally upgraded to a strongly CDA (SCDA) system, and a 1 km high-resolution weather DA system is conveniently implemented within a multi-layer downscaling model that has multiscale DA in different nesting layers. In the climate SCDA system, a coupled general circulation model (CGCM) and a multiscale filtering algorithm is integrated by a Python main controller (PMC) that calls Fortran CGCM components and Weakly-CDA modules as well as a data-trained SCDA algorithm by latent space autoencoder in Python. In the high-resolution weather DA system, the downscaled model consisting of traditional Fortran DA modules in all mother domains and Python AE DA algorithm in the central child domain is integrated by a PMC that organizes these components. With convenient realization of deep incorporation of any AI algorithm and physics model, the Hf2pMDA has a great potential to make progress on both AI and scientific modeling.",
+      "authors": [
+        "Xianrui Zhu",
+        "Zikuan Lin",
+        "Shaoqing Zhang",
+        "Zebin Lu",
+        "Songhua Wu",
+        "Xiangyun Hou",
+        "Zhisheng Xiao",
+        "Zhicheng Ren",
+        "Jiangyu Li",
+        "Jing Xu",
+        "Yang Gao",
+        "Rixu Hao",
+        "Xiaolin Yu",
+        "Mingkui Li",
+        "Guangliang Liu"
+      ],
+      "primary_category": "physics.ao-ph",
+      "categories": [
+        "physics.ao-ph"
+      ],
+      "published": "2026-08-30T03:33:33+00:00",
+      "link": "https://arxiv.org/pdf/2608.29532v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "AI-physics code fusion framework for numerical models, transferable to groundwater simulation",
+      "llm_evidence_cn": "AI与物理模型融合的数值模拟框架，可迁移至地下水模拟",
+      "llm_evidence": "AI与物理模型融合的数值模拟框架，可迁移至地下水模拟",
+      "canonical_evidence": "AI与物理模型融合的数值模拟框架，可迁移至地下水模拟",
+      "llm_tldr_en": "Presents a Python-Fortran hybrid programming approach to embed AI into Fortran-based physics models, demonstrating AI-LDA data assimilation in climate and weather models. The framework offers a reusable pathway for AI-enhanced numerical simulation.",
+      "llm_tldr_cn": "科学计算中的物理模型传统上用Fortran编写，而AI算法多用Python，两者难以直接集成。本文基于F2PY协议开发了Python-Fortran混合编程流程，将AI算法嵌入Fortran数值模型，并以气候和天气模型中的AI-LDA数据同化为例进行了验证。结果表明该框架能够高效融合AI与物理模型，增强数据同化能力。这套方法为人工智能增强地下水数值模拟提供了可复用实现路径。",
+      "llm_tldr": "科学计算中的物理模型传统上用Fortran编写，而AI算法多用Python，两者难以直接集成。本文基于F2PY协议开发了Python-Fortran混合编程流程，将AI算法嵌入Fortran数值模型，并以气候和天气模型中的AI-LDA数据同化为例进行了验证。结果表明该框架能够高效融合AI与物理模型，增强数据同化能力。这套方法为人工智能增强地下水数值模拟提供了可复用实现路径。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "artificial intelligence enhanced groundwater numerical simulation methods",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.30328v1",
+      "source": "arxiv",
+      "title": "Learning PDE Time-Stepping with Neural Cellular Automata",
+      "abstract": "Classical numerical solvers for partial differential equations (PDEs) are computationally expensive to solve repeatedly across varying initial conditions, motivating the need for learned surrogates. In this paper, we propose a trainable Neural Cellular Automata (NCA) based surrogate model for learning long time PDE dynamics. Rather than mapping an entire initial field to a full trajectory in one shot, our proposed model learns a small, local, homogeneous update rule that is applied identically and repeatedly at every grid cell, mirroring the locality of differential operators. We benchmark this framework against three baselines: PDE - Net, a modified physics-informed neural network (PINN), and a Fourier Neural Operator (FNO), on five canonical PDEs (heat, advection, Burgers, Allen - Cahn, and Fisher - KPP), evaluated at temporal domain two times beyond the training temporal domain. The proposed model achieves the lowest long-horizon relative errors on the majority of the experiments.",
+      "authors": [
+        "Esha Saha",
+        "Hao Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "stat.ML"
+      ],
+      "published": "2026-08-31T06:46:24+00:00",
+      "link": "https://arxiv.org/pdf/2608.30328v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Learned surrogate using neural cellular automata for PDE time-stepping, benchmarked against PINN and FNO",
+      "llm_evidence_cn": "用神经细胞自动机学习PDE时间演化，与PINN和FNO对比，可作为地下水流动代理模型",
+      "llm_evidence": "用神经细胞自动机学习PDE时间演化，与PINN和FNO对比，可作为地下水流动代理模型",
+      "canonical_evidence": "用神经细胞自动机学习PDE时间演化，与PINN和FNO对比，可作为地下水流动代理模型",
+      "llm_tldr_en": "Presents a trainable Neural Cellular Automata surrogate that learns a local update rule to roll out long-time PDE dynamics, benchmarked on five canonical PDEs against PINN, FNO, and PDE-Net.",
+      "llm_tldr_cn": "针对经典数值求解器在多变初始条件下重复求解成本高的问题，本文提出基于神经细胞自动机（NCA）的代理模型，学习局部齐次更新规则并逐网格反复应用，模拟长时间PDE动力学。在热传导、平流等多个标准PDE上，显示相比PINN、FNO等基线具有竞争力，为含水层流动等长时间模拟提供了轻量替代。",
+      "llm_tldr": "针对经典数值求解器在多变初始条件下重复求解成本高的问题，本文提出基于神经细胞自动机（NCA）的代理模型，学习局部齐次更新规则并逐网格反复应用，模拟长时间PDE动力学。在热传导、平流等多个标准PDE上，显示相比PINN、FNO等基线具有竞争力，为含水层流动等长时间模拟提供了轻量替代。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
