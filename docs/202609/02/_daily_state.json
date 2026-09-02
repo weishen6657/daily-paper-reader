@@ -1,0 +1,57 @@
+{
+  "date": "20260902",
+  "date_label": "",
+  "generated_at": "2026-09-02 19:31:47 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.28791v1",
+      "route": "202609/02/2608.28791v1-efficient-geothermal-well-control-optimization-via-diffusion-surrogate-reinforcement-learning",
+      "title": "Efficient Geothermal Well-Control Optimization via Diffusion-Surrogate Reinforcement Learning",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "用扩散生成式替代模型构建学习环境，以强化学习优化地热储层注采控制；与地下水流和热输运的机器学习替代模拟高度对齐。",
+      "first_seen_at": "2026-09-02 19:31:47 UTC",
+      "updated_at": "2026-09-02 19:31:47 UTC"
+    },
+    {
+      "paper_id": "2609.00297v1",
+      "route": "202609/02/2609.00297v1-geometry-aware-latent-autoregressive-generative-model-for-pdes-in-complex-domains",
+      "title": "Geometry-aware Latent Autoregressive Generative Model for PDEs in Complex Domains",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向迂曲复杂域的几何感知潜在生成PDE求解模型，可复用至地下多孔介质/地下水流动模拟",
+      "first_seen_at": "2026-09-02 19:31:47 UTC",
+      "updated_at": "2026-09-02 19:31:47 UTC"
+    },
+    {
+      "paper_id": "2609.01417v1",
+      "route": "202609/02/2609.01417v1-predicting-subsurface-abnormalities-growth-using-physics-informed-neural-networks",
+      "title": "Predicting Subsurface Abnormalities Growth using Physics-Informed Neural Networks",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用PINN预测地下异常体发展，属地下结构物理场模型；不含水流，但与PINN地下水流在方法和domain上相通。",
+      "first_seen_at": "2026-09-02 19:31:47 UTC",
+      "updated_at": "2026-09-02 19:31:47 UTC"
+    }
+  ]
+}

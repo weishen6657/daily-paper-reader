@@ -1,0 +1,530 @@
+Title: Efficient Geothermal Well-Control Optimization via Diffusion-Surrogate Reinforcement Learning
+
+URL Source: https://arxiv.org/pdf/2608.28791v1
+
+Published Time: Tue, 01 Sep 2026 00:09:54 GMT
+
+Number of Pages: 10
+
+Markdown Content:
+# Efficient Geothermal Well-Control Optimization via Diffusion-Surrogate Reinforcement Learning 
+
+Ruimin Dai 
+
+School of Computing Clemson University 
+
+Clemson, SC, USA ruimind@clemson.edu 
+
+Guodong Chen 
+
+Energy Geoscience Division Lawrence Berkeley National Laboratory University of California Berkeley 
+
+Berkeley, CA, USA gchen6@lbl.gov 
+
+Randy Harsuko 
+
+Energy Geoscience Division Lawrence Berkeley National Laboratory University of California Berkeley 
+
+Berkeley, CA, USA mharsuko@lbl.gov 
+
+Kunpeng Liu 
+
+School of Computing Clemson University 
+
+Clemson, SC, USA kunpenl@clemson.edu 
+
+Nori Nakata *
+
+Energy Geoscience Division Lawrence Berkeley National Laboratory 
+
+Berkeley, CA, USA nnakata@lbl.gov 
+
+Abstract —Real-time decision-making for enhanced geothermal systems (EGS) is challenging because long-term production periods involve high-dimensional control spaces and a large num-ber of time-consuming high-fidelity hydrothermal simulations. Reinforcement learning provides a natural framework for state-dependent sequential control, but direct policy training with numerical simulators is computationally expensive. To address this issue, we propose a diffusion-surrogate guided reinforcement learning framework for long-horizon EGS well-control optimiza-tion. The reservoir temperature and pressure fields are used as system states, while injection rates are selected as control actions. A learned surrogate environment is constructed using conditional diffusion models to predict the evolution of reservoir temperature and pressure fields and a separate reward model to estimate the corresponding economic return. The surrogate environment is then integrated with Proximal Policy Optimization (PPO) for efficient policy training. Experiments on a fractured EGS bench-mark show that the diffusion surrogate can accurately repro-duce reservoir-state evolution over multiple control stages. The resulting surrogate-assisted PPO policy achieves competitive well-control performance compared with direct simulator-based PPO and existing optimization methods, while substantially reducing the dependence on expensive high-fidelity simulations. These results demonstrate the potential of diffusion-based surrogate environments for efficient reinforcement learning in geothermal well-control optimization. 
+
+Index Terms —Enhanced Geothermal Systems; Well-control Optimization; Reinforcement Learning; Diffusion Models; Sur-rogate Modeling 
+
+I. I NTRODUCTION 
+
+Enhanced Geothermal Systems (EGS) offer a practical ap-proach to extracting geothermal energy from high-temperature rock formations where natural permeability is insufficient for conventional geothermal production [1]–[3]. As illustrated in Fig. 1, relatively cold fluid is injected into the geothermal reservoir through injection wells, circulates through fractures 
+
+> *
+
+Corresponding author. Geothermal Reservoir 
+
+Production Well Injection Well 
+
+Fig. 1: Schematic illustration of an enhanced geothermal system (EGS). Cold fluid is injected into the geothermal reservoir through an injection well, heated as it circulates through the subsurface formation, and recovered through a production well for surface energy utilization. and the surrounding rock matrix, and absorbs heat from the hot formation. The heated fluid is then recovered through production wells and transported to the surface for electricity generation or direct heat use. This circulation process en-ables continuous heat extraction from the subsurface reservoir. Because fractures serve as the dominant pathways for fluid transport, EGS performance is strongly controlled by the coupled behavior of subsurface flow and heat transfer [4]–[6]. Changes in well operation can redistribute reservoir pressure and redirect fluid circulation, which in turn alters the evolution of the temperature field. These effects directly influence how effectively the reservoir volume is swept, when cold-water breakthrough occurs at production wells, and how much thermal energy can be recovered over long-term operation. Properly designed well operating strategies are therefore critical to the long-term economic performance of EGS projects. Well-control optimization seeks to determine suitable arXiv:2608.28791v1 [cs.AI] 28 Aug 2026 control settings at different stages of geothermal production so that heat can be extracted efficiently while maintaining economic viability over the project lifetime [7]–[9]. Depending on the operating scheme, the decision variables may include injection rates, production rates, and bottomhole pressures. These decisions affect not only the immediate production re-sponse but also the subsequent evolution of reservoir pressure, temperature, and overall production potential. For this reason, well-control optimization cannot be reduced to maximizing short-term injection rates, production rates, or thermal output at individual time steps [9]–[11]. Control decisions must be evaluated over the full development horizon, where increased heat production is weighed against costs as-sociated with fluid injection, production, and other operational activities. Net present value (NPV) is commonly used to capture this trade-off in a single economic objective. From this perspective, EGS well-control optimization can be formulated as a sequential decision-making problem that searches for a time-dependent control policy capable of maximizing cumu-lative economic returns over the entire production period. Reinforcement learning (RL) is well suited to long-horizon sequential decision problems in which current control actions affect future system states and returns [12]–[15]. Rather than optimizing a fixed sequence of predetermined control variables directly, RL learns a policy through interactions between an agent and its environment, with actions selected from the current state to maximize cumulative reward over the decision horizon. This formulation has been used in engineering control problems including oil and gas reservoir production optimiza-tion, where reservoir states are provided as observations, well-control variables define the action space, and net present value (NPV) is used as the reward [16], [17]. The same sequential structure arises in EGS well-control optimization. Injection decisions at each control stage modify the reservoir pressure and temperature fields, and these changes affect heat extraction and economic performance in later stages. RL can therefore condition well-control decisions on the evolving reservoir state and optimize them with respect to long-term economic return rather than the immediate response at a single control step. Although optimization methods have been applied to well-control optimization, three key limitations remain for long-term EGS well-control optimization: 1) High-dimensional well-control spaces increase op-timization difficulty. Optimizing multiple wells over multiple control stages produces a large number of decision variables. Combined with the nonlinear rela-tionship between well controls and reservoir response, this high-dimensional search space can require many evaluations to converge and may prevent the optimizer from identifying high-quality control schemes within a limited computational budget [18], [19]. 2) Hydrothermal simulations create a substantial com-putational bottleneck. Each candidate control scheme must typically be evaluated using a computationally ex-pensive hydrothermal simulation [8], [20], [21]. Because optimization requires repeated evaluations of different control schemes, simulation cost can dominate the over-all optimization process. The same issue becomes more pronounced in RL, where policy learning requires a large number of interactions with the simulation environment. 3) Predefined control sequences do not explicitly ac-count for evolving reservoir states. Most existing optimization methods determine the well-control se-quence for the full production horizon in advance. These open-loop strategies do not establish an explicit mapping from the evolving reservoir state to subsequent control actions. Changes in reservoir temperature and pressure during production therefore cannot be directly incorporated into later well-control decisions, limiting adaptation to the reservoir conditions encountered during operation [22]. To address these limitations, we propose a diffusion-surrogate reinforcement learning framework for long-horizon EGS well-control optimization. We formulate well control as a sequential decision problem, where reservoir temperature and pressure fields represent the system state and injection rates are selected as control actions. To reduce the cost of repeated hydrothermal simulations, we construct a surrogate environment in which conditional diffusion models predict the next reservoir state from the current state and action, while a separate reward model estimates the corresponding NPV reward. The learned surrogate environment is then integrated with Proximal Policy Optimization (PPO) [23] for efficient policy training, while the high-fidelity COMSOL simulator is used for final policy evaluation. Our contributions are summarized as follows:  
+
+> •
+
+Problem. We formulate EGS well-control optimization as a state-dependent sequential decision problem. Rather than optimizing a fixed open-loop control sequence over the full production horizon, the formulation learns a policy that maps the evolving reservoir temperature and pressure fields to well-control actions.  
+
+> •
+
+Algorithm. We develop a diffusion-based surrogate en-vironment for RL training. Conditional diffusion models approximate reservoir state transitions conditioned on the current state and injection action, and a separate reward surrogate estimates the resulting economic return. Integrating these models with PPO reduces the number of high-fidelity hydrothermal simulations required during policy learning.  
+
+> •
+
+Evaluation. We evaluate the proposed framework on a fractured EGS well-control problem, examining surrogate prediction accuracy, control performance, and compu-tational cost. The results show that the learned policy achieves competitive performance while requiring sub-stantially fewer high-fidelity simulation evaluations. II. P ROBLEM STATEMENT 
+
+A. Hydrothermal Dynamics of Fractured EGS 
+
+The enhanced geothermal system considered in this work consists of a low-permeability rock matrix intersected by 1. Data Collection 
+
+Well Action COMSOL 
+
+Pressure Temperature Dataset 
+
+> Surrogate model for temperature Surrogate model for pressure Reward Model
+
+Temperature Pressure Reward CTEP CWI CWP 
+
+# - - 
+
+> Energy
+
+Cost NPV =
+
+2. Surrogate Modeling State 
+
+> 4. Evaluation
+> COMSOL Trained Policy
+
+CTEP CWI CWP 
+
+# - -NPV = 
+
+> Diffusion-based state model
+> Reward Model
+> Value Network Policy Network
+
+trajectory State, Reward 
+
+> value
+> MSE Loss
+> Value Network Training
+> Clip Loss
+> Policy Network Training Action
+> Surrogate Model
+> PPO
+> 3. RL training
+
+Fig. 2: Overview of the proposed diffusion-surrogate reinforcement learning framework for EGS well-control optimization, including data collection, surrogate environment construction, PPO policy training, and high-fidelity policy evaluation. highly permeable fractures. The fractures provide preferential pathways for fluid circulation, while the surrounding hot rock matrix serves as the primary source of thermal energy. During geothermal production, relatively cold water is injected into the reservoir through injection wells. The resulting pressure gradients drive fluid through the fracture network toward the production wells. As the injected fluid circulates through the reservoir, heat is transferred from the hot rock to the fluid and subsequently transported along the flow pathways. Therefore, the reservoir response is governed by the coupled evolution of fluid flow and heat transfer. Fluid transport in the fractured reservoir follows mass conservation. For the porous medium, the governing equation can be expressed as 
+
+∂(ρf ϕ)
+
+∂t + ∇ · (ρf u) = Ψ mf + Qm, (1) where ρf denotes the fluid density, ϕ is the porosity, u is the Darcy velocity, Ψmf represents fluid exchange between the rock matrix and fractures, and Qm denotes the mass source or sink associated with well operation. The fluid velocity is governed by Darcy’s law 
+
+u = − kμ (∇p + ρf g∇D) , (2) where k is the permeability, μ is the fluid viscosity, p is the reservoir pressure, g denotes gravitational acceleration, and 
+
+D represents the elevation coordinate. Because the fracture permeability is substantially higher than the matrix perme-ability, the fracture network forms the dominant pathways for pressure-driven fluid transport. The reservoir temperature evolution is governed by an energy balance that accounts for both advective and conductive heat transfer, 
+
+(ρC )eff 
+
+∂T ∂t + ρf Cf u · ∇ T − ∇ · (λeff ∇T ) = Emf + Qh, (3) where T denotes temperature, (ρC )eff is the effective volu-metric heat capacity of the fluid–rock system, Cf is the fluid heat capacity, λeff is the effective thermal conductivity, Emf 
+
+represents heat exchange between the matrix and fractures, and Qh denotes the thermal source or sink. These coupled hydrothermal processes establish a direct relationship between well operation and reservoir evolution. Changing the injection rates modifies the reservoir pressure gradients and fluid circulation pathways, which alters heat transport and the spatial distribution of reservoir temperature. Consequently, well-control decisions influence not only the instantaneous production response but also the future ther-mal and hydraulic states of the reservoir. In this work, the coupled hydrothermal equations are solved using the high-fidelity COMSOL simulator, and the resulting temperature and pressure fields are used to characterize the reservoir state. 
+
+B. Reinforcement Learning Formulation 
+
+Based on the coupled hydrothermal dynamics described above, we formulate EGS well-control optimization as a finite-horizon Markov decision process (MDP). At each control step 
+
+t, the reservoir state is represented by 
+
+st = [ Tt, P t], (4) where Tt and Pt denote the reservoir temperature and pressure fields, respectively. These two fields characterize the thermal and hydraulic conditions resulting from the coupled fluid-flow and heat-transfer processes. Given the current reservoir state, a parameterized policy πθ
+
+determines the well-control action 
+
+at = [ q1,t , . . . , q NI ,t ], (5) where qi,t denotes the injection rate of the i-th injection well and NI is the number of injection wells. Applying at
+
+changes the pressure distribution and fluid circulation within the fractured reservoir, leading to the next reservoir state st+1 
+
+according to the underlying hydrothermal dynamics. The economic return at each control stage is evaluated using the net present value (NPV), which balances thermal energy production against the costs of fluid injection and production. The objective is to learn a state-dependent policy that maximizes the cumulative economic return over the entire production horizon: 
+
+arg max 
+
+> θ
+
+Eπθ
+
+"H−1X
+
+> t=0
+
+γt (CTEP tre − CWI tri − CWP trp)
+
+#
+
+,
+
+(6) where H denotes the number of control stages and γ is the discount factor. CTEP t, CWI t, and CWP t denote the thermal energy production, fluid injection, and fluid production during control stage t, respectively, while re, ri, and rp represent the corresponding thermal energy price, fluid injection cost, and fluid production cost. Through this formulation, the well-control problem is rep-resented as a controlled dynamical process, 
+
+(st, a t) → st+1 , (7) where the transition is governed by the coupled fractured-fluid-flow and heat-transfer dynamics. Rather than optimizing a predefined control sequence over the entire production horizon, the objective is to learn a feedback policy that continuously determines well-control actions according to the evolving reservoir temperature and pressure fields. III. M ETHOD 
+
+A. Method Overview 
+
+As illustrated in Fig. 2, the proposed framework consists of four parts: data collection, surrogate modeling, RL training, and evaluation. First, high-fidelity COMSOL simulations are used to generate reservoir-state transitions and corresponding economic returns under different well-control actions. These data are then used to construct a surrogate environment, where conditional diffusion models predict the evolution of reservoir temperature and pressure fields and a reward model estimates the corresponding NPV. PPO subsequently interacts with the learned surrogate environment to optimize a state-dependent well-control policy. Finally, the trained policy is evaluated using the original COMSOL simulator. The following sections focus on the two core algorithmic modules of the framework: surrogate environment modeling and PPO-based policy opti-mization. 
+
+B. Diffusion-Based Surrogate Model Forward Diffusion Process    
+
+> Original Data Pure Noise
+> Reverse Denoising Process
+> Noise Timestep Condition Generated Data
+> Well Action
+> Residual Connection
+> Convolution Layer Downsampling Layer Upsampling Layer
+
+Fig. 3: Conditional diffusion process for reservoir-state pre-diction To replace the high-fidelity simulator during policy opti-mization, the surrogate environment should approximate the reservoir response to each well-control action. Given the current state st and action at, the environment is expected to provide the next reservoir state and the corresponding reward. We model these two components separately. The diffusion-based surrogate approximates the reservoir state transition 
+
+(st, at) → ˆst+1 , st = [ Tt, Pt], (8) while the economic reward is estimated by a separate surrogate model introduced in the next subsection. The reservoir state consists of high-dimensional tempera-ture and pressure fields, whose evolution depends on both the current spatial distribution and the applied well-control action. We therefore formulate the state prediction using a conditional Denoising Diffusion Probabilistic Model (DDPM), which learns to generate the next reservoir field conditioned on (st, at). Two independent diffusion models are trained for temperature and pressure prediction, respectively. 
+
+a) Conditional DDPM.: For either temperature or pres-sure prediction, let x0 denote the target field at the next control stage. DDPM defines a forward diffusion process that gradually perturbs x0 with Gaussian noise over K diffusion steps. The transition at diffusion step k is 
+
+q(xk|xk−1) = N
+
+p 1 − βkxk−1, β kI
+
+
+
+, (9) where {βk}Kk=1 is a predefined noise schedule. Let αk = 1 −
+
+βk and ¯αk = Qkj=1 αj . A noisy sample can then be directly obtained from the clean target as 
+
+xk = √¯αkx0 + √1 − ¯αkϵ, ϵ ∼ N (0 , I). (10) As k increases, the spatial structure of the target field is grad-ually destroyed and the sample approaches Gaussian noise. DDPM learns the reverse process to progressively recover the target field from this noisy representation. For reservoir state prediction, the reverse process is condi-tioned on the current state and well-control action, 
+
+ct = ( st, at). (11) The conditional reverse transition is modeled as 
+
+pϕ(xk−1|xk, ct) = N  μϕ(xk, k, ct), Σk
+
+ , (12) where ϕ denotes the learnable parameters. Conditioning on 
+
+st provides the current reservoir configuration, while at in-troduces the effect of the applied well-control action. The re-sulting model therefore approximates the controlled transition distribution p(st+1 |st, at).
+
+b) 2D Conditional U-Net.: A 2D conditional U-Net is employed as the denoising network in the DDPM. The encoder progressively extracts multi-scale spatial features from the noisy reservoir field through convolution and downsampling operations, while the decoder reconstructs the spatial resolu-tion through upsampling. Skip connections transfer fine-scale spatial information from the encoder to the decoder, which is important for preserving localized temperature and pressure structures. Residual blocks are further used to facilitate feature propagation and stabilize network training. At each diffusion step, the U-Net takes the noisy field xk,the diffusion timestep k, and the condition ct as inputs. The timestep is encoded through a timestep embedding to represent the current noise level, while the current reservoir state and well-control action guide the denoising process toward the corresponding next reservoir state. The network predicts the noise contained in xk:
+
+ˆϵ = ϵϕ(xk, k, ct). (13) The denoising network is trained using the standard DDPM noise-prediction objective, 
+
+Ldiff = E
+
+h
+
+∥ϵ − ϵϕ(xk, k, ct)∥22
+
+i
+
+. (14) Training samples are constructed from state transitions 
+
+(st, at, st+1 ) generated by the COMSOL simulator. For the temperature model, x0 = Tt+1 , while for the pressure model, 
+
+x0 = Pt+1 .During inference, the reverse DDPM process starts from Gaussian noise and iteratively denoises the sample under the condition (st, at) until the next reservoir field is recovered. The two trained models generate 
+
+ˆTt+1 = DT (st, at), ˆPt+1 = DP (st, at), (15) which are combined as ˆst+1 = [ ˆTt+1 , ˆPt+1 ]. The predicted state is then returned to the RL agent for the next control deci-sion, enabling multi-step reservoir rollouts without repeatedly invoking the high-fidelity COMSOL simulator. 
+
+C. Reward Surrogate Model 
+
+The diffusion surrogate predicts the next reservoir tem-perature and pressure fields, but does not directly provide the economic reward required by RL. Therefore, we train a separate reward surrogate to estimate the stage-wise NPV associated with each state transition. Given the current state st, action at, and next state st+1 ,the reward model predicts 
+
+ˆrt = Rψ (st, at, st+1 ), (16) where Rψ denotes the reward surrogate with parameters ψ.The model is trained using rewards computed from COMSOL simulations and minimizes the mean squared error 
+
+LR = E (rt − ˆrt)2 . (17) During policy rollouts, the predicted next state ˆst+1 from the diffusion surrogate is used to estimate the reward, 
+
+ˆrt = Rψ (st, at, ˆst+1 ). (18) Together, the diffusion and reward surrogates provide the next state and reward required for PPO training. 
+
+D. PPO-Based Policy Optimization 
+
+With the learned surrogate environment, the well-control problem can be optimized through repeated policy rollouts without directly interacting with the high-fidelity simulator. At control step t, the policy πθ takes the current reservoir state st as input and outputs a continuous well-control action 
+
+at. The diffusion surrogate then predicts the next state ˆst+1 ,while the reward surrogate provides the corresponding reward 
+
+ˆrt. Repeating this interaction over the production horizon generates trajectories for policy optimization. We employ Proximal Policy Optimization (PPO) to update the control policy. Let πθold denote the policy used to collect the current rollout and πθ denote the updated policy. The probability ratio between the two policies is defined as 
+
+ρt(θ) = πθ (at|st)
+
+πθold (at|st) . (19) PPO restricts excessive policy updates using the clipped sur-rogate objective 
+
+Lclip = Et
+
+h
+
+min 
+
+
+
+ρt(θ) ˆAt, clip( ρt(θ), 1 − ϵ, 1 + ϵ) ˆAt
+
+i 
+
+,
+
+(20) where ˆAt is the estimated advantage and ϵ controls the clipping range. A value network Vω (st) is trained to estimate the expected return of each reservoir state. Its loss is defined as 
+
+LV = Et
+
+
+
+Vω (st) − ˆRt
+
+2
+
+, (21) Algorithm 1 Diffusion-Surrogate PPO for EGS Well-Control Optimization 
+
+Require: COMSOL dataset D, control horizon H
+
+Ensure: Optimized policy πθ 
+
+> 1:
+
+Train temperature diffusion model DT on D 
+
+> 2:
+
+Train pressure diffusion model DP on D 
+
+> 3:
+
+Train reward surrogate Rψ on D 
+
+> 4:
+
+Initialize PPO policy πθ and value network Vω 
+
+> 5:
+
+for each PPO iteration do  
+
+> 6:
+
+Initialize reservoir state s0 
+
+> 7:
+
+for t = 0 , . . . , H − 1 do  
+
+> 8:
+
+at ∼ πθ (·| st) 
+
+> 9:
+
+ˆTt+1 ← D T (st, at) 
+
+> 10:
+
+ˆPt+1 ← D P (st, at) 
+
+> 11:
+
+ˆst+1 ← [ ˆTt+1 , ˆPt+1 ] 
+
+> 12:
+
+ˆrt ← R ψ (st, at, ˆst+1 ) 
+
+> 13:
+
+Store (st, at, ˆrt, ˆst+1 ) 
+
+> 14:
+
+st ← ˆst+1  
+
+> 15:
+
+end for  
+
+> 16:
+
+Compute advantages using collected trajectories  
+
+> 17:
+
+Update πθ and Vω using PPO  
+
+> 18:
+
+end for  
+
+> 19:
+
+Evaluate πθ using the original COMSOL simulator  
+
+> 20:
+
+return πθ
+
+where ˆRt denotes the estimated return. An entropy term is further included to encourage exploration of the continuous well-control space. The overall PPO loss is 
+
+LPPO = −L clip + cv LV − ceH(πθ ), (22) where cv and ce control the contributions of the value loss and policy entropy, respectively. During training, PPO alternates between collecting trajecto-ries from the learned surrogate environment and updating the policy and value networks using the collected transitions. The resulting policy learns to select well-control actions according to the evolving temperature and pressure fields with the objective of maximizing cumulative NPV over the production horizon. After training, the learned policy is evaluated using the original COMSOL simulator. IV. E XPERIMENT 
+
+A. Experimental Setup 
+
+We use the same fractured EGS benchmark as Chen et al. [24]. The reservoir contains four injection wells and five production wells. The main physical and operational parame-ters are listed in Table I. The production period is 12 ,000 days, divided into 20 control stages of 600 days. At each stage, the action consists of the injection rates of four injection wells. The reservoir temperature and pressure fields are represented on 64 × 64 
+
+grids and used as the RL state, while the stage-wise NPV is used as the reward. A total of 512 trajectories are generated using the COMSOL simulator to train the surrogate environment. Each trajectory TABLE I: Parameter configurations of the fractured geother-mal energy system.                      
+
+> Parameter Value Initial temperature ( ◦C) 200 Initial pressure (MPa) 30 Temperature of injected fluid ( ◦C) 20 Bottom-hole pressure of producers (MPa) 30 Injection rate range of injectors ( m3/s)[0 ,200] ×10 −3
+> Depth (m) 2,500 Matrix porosity (-) 0.01 Fracture porosity (-) 0.1 Matrix permeability ( m2)5×10 −17
+> Fracture permeability ( m2)10 −9
+> Formation thickness (m) 40 Matrix heat conductivity (W/(m ·K)) 2Fluid heat conductivity (W/(m ·◦C)) 0.698 Matrix thermal capacity (J/(kg ·◦C)) 850 Fluid thermal capacity (J/(kg ·◦C)) 4,200
+
+TABLE II: Main hyperparameter settings of the diffusion surrogate and PPO.                              
+
+> Component Parameter Value Diffusion Spatial resolution 64 ×64
+> U-Net channels 16 ,32 –64 –128 –256
+> Training transitions 8,700 Validation transitions 1,540 Diffusion steps 200 Optimizer AdamW Learning rate 2×10 −4
+> Batch size 32 Training steps 20,000 PPO Action dimension 4Optimizer Adam Learning rate 1×10 −5
+> Discount factor γ0.99 GAE parameter λ0.95 Clip parameter ϵ0.2
+
+contains 20 transitions, resulting in 10,240 transitions in total. Among them, 8,700 transitions are used for training and 1,540 for validation. The main hyperparameters of the diffusion surrogate and PPO are given in Table II. We compare PPO-Surrogate with DE, GPEME, SACOSO, SHPSO, MFSKT, and PPO-COMSOL under the same well-control setting. The surrogate model is used only during policy training, and the final PPO-Surrogate policy is evaluated using the original COMSOL simulator. 
+
+B. Overall Performance 
+
+Table III compares the cumulative NPV obtained by dif-ferent well-control methods. PPO-COMSOL achieves the best overall performance, while PPO-Surrogate obtains the second-best result and consistently outperforms the evolutionary and surrogate-assisted baselines. In particular, PPO-Surrogate re-mains close to PPO-COMSOL throughout the production horizon, indicating that policy optimization in the learned sur-rogate environment can recover a high-quality control strategy without repeatedly interacting with the high-fidelity simulator. Fig. 4 further compares the physical production responses of different methods. The PPO-based strategies exhibit a more aggressive heat-extraction pattern during the early production period, resulting in a higher initial thermal energy production TABLE III: Cumulative NPV achieved by different well-control methods at different production stages. 
+
+Method 3000 d 6000 d 12000 d PPO-COMSOL 1.8201 1.9906 2.1749 
+
+PPO-Surrogate 1.7295 1.8776 2.0100 MFSKT 0.7343 1.2947 1.9407 SHPSO 0.6901 1.2676 1.8969 SACOSO 0.6992 1.2170 1.8588 GPEME 0.5757 1.0444 1.6725 DE 0.4783 0.9348 1.5234 0 2000 4000 6000 8000 10000 12000       
+
+> Time (Days)
+> 300 325 350 375 400 425 450 475
+> Average production temperature (K)
+> (a)
+> 02000 4000 6000 8000 10000 12000
+> Time (Days)
+> 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5
+> Thermal energy production rate (W)
+> ×10 8(b)
+> Real COMSOL PPO Diffusion-surrogate PPO MFSKT DE GPEME SACOSO SHPSO
+
+Fig. 4: Production performance under different well-control strategies: (a) average production temperature and (b) thermal energy production rate. rate and a faster decline in average production temperature. In contrast, the baseline methods maintain a smoother tempera-ture decline but produce lower economic returns. The similar response curves of PPO-COMSOL and PPO-Surrogate further indicate that the surrogate-trained policy captures a control behavior close to that obtained through direct COMSOL-based training. 
+
+C. Performance of Surrogate Model 
+
+We first evaluate whether the learned surrogate can repro-duce the reservoir evolution required for long-horizon policy rollouts. Figs. 5 and 6 compare the COMSOL states with the states recursively generated by the diffusion surrogate at different control stages. The generated temperature and pressure fields closely reproduce the main spatial patterns of the high-fidelity simulation over the entire production horizon. For temperature prediction, the surrogate accurately cap-tures the evolution of the thermal front, while the main prediction errors are concentrated around regions with sharp temperature gradients. A similar behavior is observed for pressure prediction, where the generated fields preserve the major pressure distributions and localized responses around the wells. Although prediction errors accumulate during recursive rollout, the overall reservoir structures remain consistent with the COMSOL results up to the final control stage. These re-sults indicate that the diffusion surrogate provides sufficiently stable state transitions for long-horizon PPO training. 
+
+D. Well-Control Optimization Performance 
+
+To further investigate the learned control strategy, Fig. 7 visualizes the injection-rate trajectories generated during PPO True mean t=0 t=5 t=10 t=15 t=20 
+
+> Generated mean Absolute error
+> 300 325 350 375 400 425 450 475
+> Reservoir temperature (K)
+> 010 20 30 40
+> Absolute error (K)
+
+Fig. 5: Multi-step temperature-field prediction by the diffusion surrogate. The rows show the COMSOL reference, surrogate prediction, and absolute prediction error at different control stages. True mean t=0 t=5 t=10 t=15 t=20 
+
+> Generated mean Absolute error
+> 50 100 150 200 250 300 350 400
+> Reservoir pressure (MPa)
+> 050 100
+> Absolute error (MPa)
+
+Fig. 6: Multi-step pressure-field prediction by the diffusion surrogate. The rows show the COMSOL reference, surrogate prediction, and absolute prediction error at different control stages. optimization for the four injection wells. Each trajectory is colored according to its achieved normalized return. The results show that high-return trajectories gradually concentrate within specific injection-rate regions, indicating that PPO learns structured control patterns rather than selecting uni-formly distributed actions over the feasible range. The optimized injection rates also vary across wells and control stages, reflecting the different roles of individual wells in controlling reservoir flow and heat extraction. This state-dependent control behavior allows PPO to adjust the injection strategy according to the evolving temperature and pressure fields instead of optimizing a fixed control sequence independently of the reservoir state. 
+
+E. Model Capacity and Data Size Analysis 
+
+We investigate the effects of model capacity and training data size on surrogate prediction accuracy. Model capacity is controlled by the U-Net model width, which determines the number of feature channels in the denoising network, while the training data size refers to the number of rollout trajectories used for surrogate training. We vary the U-Net width among 1 3 5 7 9 11 13 15 17 19 050 100 150 200 Well 1                   
+
+> 1357911 13 15 17 19 050 100 150 200 Well 2
+> 1357911 13 15 17 19
+> Control step
+> 050 100 150 200 Well 3
+> 1357911 13 15 17 19
+> Control step
+> 050 100 150 200 Well 4
+> 0.82 1.50 1.93 2.17
+> Normalized NPV / return
+> Injection rate ( 10  3 m3/s)
+
+Fig. 7: Injection-rate trajectories explored during PPO opti-mization for the four injection wells. The color indicates the normalized return of each trajectory. 32 64 128 256 480 Training Set Size 510 15 20 25 RMSE     
+
+> Reservoir Temperature Prediction U-Net Model Width 816 32 32 64 128 256 480 Training Set Size 20 25 30 35 40 45 RMSE
+> Reservoir Pressure Prediction U-Net Model Width 816 32
+
+Fig. 8: Effects of training-set size and model capacity on autoregressive prediction accuracy for reservoir temperature and pressure. 8, 16, and 32 and the number of training trajectories from 32 to 480. Prediction performance is evaluated using the mean autoregressive test RMSE for reservoir temperature and pressure. As is shown in Fig. 8, increasing the model width generally improves prediction accuracy. For temperature prediction, the width-32 model achieves the lowest and most stable RMSE, while width-16 and width-32 show comparable performance for pressure prediction. In contrast, increasing the number of training trajectories does not consistently reduce the prediction error. These results suggest that, within the tested range, model capacity has a stronger effect on surrogate accuracy than training data size. 
+
+F. Ablation and Cost Analysis 
+
+We first investigate the effect of different reservoir state representations. As shown in Table IV, using both temperature and pressure fields consistently achieves better well-control performance than using either field alone. For PPO-COMSOL, the combined temperature-pressure state achieves a normalized return of 2.17, compared with 2.03 using only temperature and 1.99 using only pressure. The same trend is observed in the surrogate environment, where the combined state achieves 2.01, compared with 1.96 and 1.91 for temperature-only and pressure-only states, respectively. These results suggest that TABLE IV: Ablation study on different reservoir state repre-sentations. 
+
+Method Return (Normalized) PPO-temperature (T) 2.03 PPO-pressure (P) 1.99 PPO-T-P 2.17 PPO-surrogate-T 1.96 PPO-surrogate-P 1.91 PPO-surrogate-T-P 2.01 
+
+temperature and pressure provide complementary information for state-dependent well-control decisions. Fig. 9 compares the computational cost of PPO-COMSOL and PPO-Surrogate. Direct PPO training requires repeated COMSOL rollouts, which dominate the overall computation time. In contrast, PPO-Surrogate replaces these repeated high-fidelity simulations with the learned temperature and pres-sure diffusion models. The resulting optimization process requires substantially less computation time while maintaining competitive well-control performance. This demonstrates the main computational advantage of using the learned surrogate environment for RL-based EGS optimization. Time      
+
+> Real COMSOL PPO Diffusion surrogate PPO
+> 32.4 1167.7 1200.2 min
+> 59.6 48.9 32.4 141.0 min
+> PPO training COMSOL rollout Temperature diffusion Pressure diffusion Surrogate PPO
+
+Fig. 9: Computational cost of PPO-COMSOL and PPO-Surrogate during policy optimization. Fig. 10 further analyzes the computational cost of the diffusion surrogate under different diffusion model capacities and training-set sizes. Increasing the U-Net width from 8 to 32 substantially increases the number of model parameters, training time, and rollout computation. In particular, the model size increases from 0.52M to 7.17M parameters, while the theoretical cost of a 20-step DDPM rollout increases from 1.23 to 19.50 TFLOPs. The training speed also decreases as the model width increases. In addition, peak memory usage grows with both model width and training-set size. 
+
+G. Reward Model Analysis 
+
+We further evaluate the reward surrogate used to provide the economic signal during PPO training. Fig 11 compares the predicted and true scaled rewards using temperature (T), pressure (P), and combined temperature-pressure (T+P) as reservoir inputs. For all three input settings, the predicted rewards closely follow the reference values, indicating that the reward model can accurately reproduce the stage-wise economic returns obtained from the high-fidelity simulations. Fig 12 (a) further compares the prediction errors under different reservoir inputs. The T+P model achieves the lowest MAE and RMSE of 0.0026 and 0.0049, respectively, compared with 0.0029 and 0.0055 for the temperature-only model and 8 16 32               
+
+> U-Net Model Width
+> 02468
+> Parameters / M
+> 0.52M 1.88M 7.17M
+> (a) Model Size
+> 816 32
+> U-Net Model Width
+> 0510 15
+> 20k Training Time / min
+> 70.5 steps/s 52.8 steps/s 25.2 steps/s
+> (b) Measured Training Cost
+> 816 32
+> U-Net Model Width
+> 0510 15 20
+> Theoretical Compute / TFLOPs
+> 1.23 4.89 19.50 4,000 denoiser calls
+> (c) One 20-Step DDPM Rollout
+> 32 64 128 256 480
+> Training Set Size
+> 123
+> Peak Training Memory / GiB  (d) Measured Memory
+> U-Net Model Width
+> 816 32
+
+Fig. 10: Computational scaling of the diffusion surrogate under different model capacity and training-set sizes. (a) Number of model parameters for different U-Net widths. (b) Measured training time and training throughput for 20k optimization steps. (c) Theoretical computational cost of DDPM rollout. (d) Peak training memory usage under different U-Net widths and training-set sizes. 0.00 0.25 0.50 0.75       
+
+> True scaled reward
+> 0.0 0.2 0.4 0.6 0.8
+> Predicted scaled reward  (a) T
+> 0.00 0.25 0.50 0.75
+> True scaled reward
+> (b) P
+> 0.00 0.25 0.50 0.75
+> True scaled reward
+> (c) T+P
+
+Fig. 11: Comparison between true and predicted scaled re-wards using different reservoir inputs: (a) temperature (T), (b) pressure (P), and (c) combined temperature and pressure (T+P). 0.0031 and 0.0058 for the pressure-only model. These results indicate that temperature and pressure provide complementary information for reward prediction. Fig 12 (b) shows the reward MAE over the 20 control stages. The prediction errors are relatively larger during the initial stages and decrease rapidly as production proceeds, remaining low throughout the later stages. Overall, the results demonstrate that the reward surrogate provides accurate and stable reward estimates over the production horizon. V. R ELATED WORK 
+
+Well-control optimization has been extensively studied for improving the economic performance of subsurface energy systems. Conventional approaches mainly formulate the con-trol schedule as a high-dimensional optimization problem and solve it using gradient-based or evolutionary algorithms. Derivative-free methods such as differential evolution (DE) are attractive because they do not require simulator gradients, but typically demand a large number of expensive simulation evaluations. To reduce this cost, surrogate-assisted optimiza-0.000 0.001 0.002 0.003 0.004 0.005 0.006 0.007                      
+
+> MAE RMSE
+> 0.0029 0.0055
+> T
+> 0.0031 0.0058
+> P
+> 0.0026 0.0049
+> T+P
+> Reservoir input Reward error TPT+P
+> 0.002 0.004 0.006 0.008 0.010 0.012
+> 12345678910 11 12 13 14 15 16 17 18 19 20
+> Control stage Reward MAE
+
+Fig. 12: Reward prediction performance under different reser-voir inputs. (a) Overall MAE and RMSE for models using temperature (T), pressure (P), and combined temperature-pressure (T+P) inputs. (b) Reward MAE at different control stages over the 20-stage production horizon. tion methods, including GPEME [25], SA-COSO [26], and SHPSO [27], use data-driven models to approximate expensive objective evaluations. More recently, Chen et al. [24] proposed MFSKT for geothermal well-control optimization, combining multi-fidelity surrogate models, knowledge transfer, and active learning to improve search efficiency. Despite their effective-ness, these methods primarily optimize a predefined sequence of well controls rather than learning a state-dependent control policy. Reinforcement learning (RL) provides an alternative for-mulation by treating well control as a sequential decision-making problem. Previous studies have applied RL and deep RL to reservoir production optimization and waterflooding control [28], [29]. Zhang et al. [16] formulated life-cycle production optimization as a finite-horizon Markov deci-sion process and employed Soft Actor-Critic (SAC) to learn continuous well-control policies from reservoir pressure and saturation states. Other studies have also investigated PPO-based reservoir control [17]. These approaches demonstrate the potential of RL to learn feedback policies that directly map evolving reservoir states to control actions. However, direct RL training requires repeated interactions with numerical reser-voir simulators, which becomes computationally expensive for high-fidelity hydrothermal models. Data-driven surrogate models have therefore been increas-ingly explored to accelerate subsurface simulations. Neural networks, Gaussian processes, and other machine-learning models have been used to approximate reservoir responses and objective functions [24], [30]. Deep-learning surrogates have also been developed to predict spatial or temporal flow responses in fractured reservoirs [31]. Meanwhile, denoising diffusion probabilistic models (DDPMs) [32] provide a pow-erful framework for modeling high-dimensional spatial distri-butions through iterative denoising and have recently shown potential for scientific spatiotemporal forecasting. In contrast to surrogate-assisted optimization that directly approximates the optimization objective, our approach constructs a complete surrogate environment for RL. Conditional diffusion models approximate the controlled evolution of reservoir temperature and pressure fields, while a separate reward surrogate estimates the corresponding economic return. This enables PPO to perform long-horizon policy optimization without repeatedly calling the high-fidelity simulator during training. VI. C ONCLUSION 
+
+This paper proposes a diffusion-surrogate reinforcement learning framework for EGS well-control optimization. Con-ditional diffusion models are used to predict the evolution of reservoir temperature and pressure fields, while a separate reward surrogate provides the economic reward required for PPO training. The learned surrogate environment enables state-dependent policy optimization without repeatedly calling the high-fidelity COMSOL simulator during training. Experiments on a fractured geothermal benchmark show that the proposed PPO-Surrogate method achieves compet-itive well-control performance compared with existing opti-mization methods and remains close to PPO trained directly with COMSOL. The results demonstrate that diffusion-based surrogate environments can effectively support long-horizon RL optimization for geothermal well control while reducing dependence on expensive high-fidelity simulations. REFERENCES [1] F. Parisio and K. Yoshioka, “Modeling fluid reinjection into an enhanced geothermal system,” Geophysical Research Letters , vol. 47, no. 19, p. e2020GL089886, 2020. [2] P. Olasolo, M. Ju´ arez, M. Morales, I. Liarte et al. , “Enhanced geothermal systems (egs): A review,” Renewable and Sustainable Energy Reviews ,vol. 56, pp. 133–144, 2016. [3] K. Liu, N. Nakata, J. Zhang, G. Chen, R. Liu, T. Zhe, D. Wang, X. Wang, H. Cao, and Y. Fu, “Beyond simulate-then-optimize: Geothermal ai for geothermal dynamics prediction, design, and discovery,” ACM SIGKDD Explorations Newsletter , vol. 28, no. 1, pp. 102–114, 2026. [4] D. Karvounis and S. Wiemer, “A discrete fracture hybrid model for fore-casting diffusion-induced seismicity and power generation in enhanced geothermal systems,” Geophysical Journal International , vol. 230, no. 1, pp. 84–113, 2022. [5] J. Yao, X. Zhang, Z. Sun, Z. Huang, J. Liu, Y. Li, Y. Xin, X. Yan, and W. Liu, “Numerical simulation of the heat extraction in 3d-egs with thermal-hydraulic-mechanical coupling method based on discrete fractures model,” Geothermics , vol. 74, pp. 19–34, 2018. [6] T. Praditia, R. Helmig, and H. Hajibeygi, “Multiscale formulation for coupled flow-heat equations arising from single-phase flow in fractured geothermal reservoirs,” Computational Geosciences , vol. 22, no. 5, pp. 1305–1322, 2018. [7] N. Wang, H. Chang, X.-Z. Kong, and D. Zhang, “Deep learning based closed-loop well control optimization of geothermal reservoir with uncertain permeability,” Renewable Energy , vol. 211, pp. 379–394, 2023. [8] G. Chen, J. J. Jiao, C. Jiang, and X. Luo, “Surrogate-assisted level-based learning evolutionary search for geothermal heat extraction optimiza-tion,” Renewable and Sustainable Energy Reviews , vol. 189, p. 113860, 2024. [9] E. Juliusson and R. N. Horne, “Optimization of injection scheduling in fractured geothermal reservoirs,” Geothermics , vol. 48, pp. 80–92, 2013. [10] A. Pollack and T. Mukerji, “Accounting for subsurface uncertainty in enhanced geothermal systems to make more robust techno-economic decisions,” Applied energy , vol. 254, p. 113666, 2019. [11] M. Chen, A. F. Tompson, R. J. Mellors, and O. Abdalla, “An efficient optimization of well placement and control for a geothermal prospect under geological uncertainty,” Applied energy , vol. 137, pp. 352–363, 2015. [12] L. P. Kaelbling, M. L. Littman, and A. W. Moore, “Reinforcement learning: A survey,” Journal of artificial intelligence research , vol. 4, pp. 237–285, 1996. [13] R. S. Sutton, D. McAllester, S. Singh, and Y. Mansour, “Policy gradi-ent methods for reinforcement learning with function approximation,” 
+
+Advances in neural information processing systems , vol. 12, 1999. [14] V. Mnih, K. Kavukcuoglu, D. Silver, A. A. Rusu, J. Veness, M. G. Bellemare, A. Graves, M. Riedmiller, A. K. Fidjeland, G. Ostrovski 
+
+et al. , “Human-level control through deep reinforcement learning,” 
+
+nature , vol. 518, no. 7540, pp. 529–533, 2015. [15] J. Schulman, S. Levine, P. Abbeel, M. Jordan, and P. Moritz, “Trust region policy optimization,” in International conference on machine learning . Pmlr, 2015, pp. 1889–1897. [16] K. Zhang, Z. Wang, G. Chen, L. Zhang, Y. Yang, C. Yao, J. Wang, and J. Yao, “Training effective deep reinforcement learning agents for real-time life-cycle production optimization,” Journal of Petroleum Science and Engineering , vol. 208, p. 109766, 2022. [17] Y. Nasir and L. J. Durlofsky, “Deep reinforcement learning for optimal well control in subsurface systems with uncertain geology,” Journal of Computational Physics , vol. 477, p. 111945, 2023. [18] X. Wang, R. D. Haynes, Y. He, and Q. Feng, “Well control optimization using derivative-free algorithms and a multiscale approach,” Computers & Chemical Engineering , vol. 123, pp. 12–33, 2019. [19] M. Salehian, M. H. Sefat, and K. Muradov, “A robust, multi-solution framework for well placement and control optimization,” Computational Geosciences , vol. 26, no. 4, pp. 897–914, 2022. [20] Z. Xue, J. Bi, H. Ma, Z. Sun, and Z. Chen, “A robust physics-constrained neural operator framework for efficient geothermal resource development,” Nature Communications , 2026. [21] R. Sasso, M. Conserva, and P. Rauber, “Posterior sampling for deep rein-forcement learning,” in International Conference on Machine Learning .PMLR, 2023, pp. 30 042–30 061. [22] J.-D. Jansen, O. H. Bosgra, and P. M. Van den Hof, “Model-based control of multiphase flow in subsurface oil reservoirs,” Journal of Process Control , vol. 18, no. 9, pp. 846–855, 2008. [23] J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov, “Prox-imal policy optimization algorithms,” arXiv preprint arXiv:1707.06347 ,2017. [24] G. Chen, J. J. Jiao, Z. Wang, and Q. Dai, “Multi-fidelity machine learning with knowledge transfer enhances geothermal energy system design and optimization,” Advances in Geo-Energy Research , vol. 16, no. 3, pp. 244–259, 2025. [25] B. Liu, Q. Zhang, and G. G. Gielen, “A gaussian process surrogate model assisted evolutionary algorithm for medium scale expensive optimization problems,” IEEE Transactions on Evolutionary Computation , vol. 18, no. 2, pp. 180–192, 2013. [26] C. Sun, Y. Jin, R. Cheng, J. Ding, and J. Zeng, “Surrogate-assisted co-operative swarm optimization of high-dimensional expensive problems,” 
+
+IEEE Transactions on Evolutionary Computation , vol. 21, no. 4, pp. 644–660, 2017. [27] H. Yu, Y. Tan, J. Zeng, C. Sun, and Y. Jin, “Surrogate-assisted hierar-chical particle swarm optimization,” Information Sciences , vol. 454, pp. 59–72, 2018. [28] F. Hourfar, H. J. Bidgoly, B. Moshiri, K. Salahshoor, and A. Elkamel, “A reinforcement learning approach for waterflooding optimization in petroleum reservoirs,” Engineering Applications of Artificial Intelli-gence , vol. 77, pp. 98–116, 2019. [29] H. Ma, G. Yu, Y. She, and Y. Gu, “Waterflooding optimization under ge-ological uncertainties by using deep reinforcement learning algorithms,” in SPE Annual Technical Conference and Exhibition? SPE, 2019, p. D031S043R001. [30] B. Yan, M. Gudala, and S. Sun, “Robust optimization of geothermal recovery based on a generalized thermal decline model and deep learning,” Energy Conversion and Management , vol. 286, p. 117033, 2023. [31] Y. Do Kim and L. J. Durlofsky, “Neural network surrogate for flow prediction and robust optimization in fractured reservoir systems,” Fuel ,vol. 351, p. 128756, 2023. [32] J. Ho, A. Jain, and P. Abbeel, “Denoising diffusion probabilistic models,” 
+
+Advances in neural information processing systems , vol. 33, pp. 6840– 6851, 2020.

@@ -1,0 +1,130 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-02T19:30:14.934785+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.28791v1",
+      "source": "arxiv",
+      "title": "Efficient Geothermal Well-Control Optimization via Diffusion-Surrogate Reinforcement Learning",
+      "abstract": "Real-time decision-making for enhanced geothermal systems (EGS) is challenging because long-term production periods involve high-dimensional control spaces and a large number of time-consuming high-fidelity hydrothermal simulations. Reinforcement learning provides a natural framework for state-dependent sequential control, but direct policy training with numerical simulators is computationally expensive. To address this issue, we propose a diffusion-surrogate guided reinforcement learning framework for long-horizon EGS well-control optimization. The reservoir temperature and pressure fields are used as system states, while injection rates are selected as control actions. A learned surrogate environment is constructed using conditional diffusion models to predict the evolution of reservoir temperature and pressure fields and a separate reward model to estimate the corresponding economic return. The surrogate environment is then integrated with Proximal Policy Optimization (PPO) for efficient policy training. Experiments on a fractured EGS benchmark show that the diffusion surrogate can accurately reproduce reservoir-state evolution over multiple control stages. The resulting surrogate-assisted PPO policy achieves competitive well-control performance compared with direct simulator-based PPO and existing optimization methods, while substantially reducing the dependence on expensive high-fidelity simulations. These results demonstrate the potential of diffusion-based surrogate environments for efficient reinforcement learning in geothermal well-control optimization.",
+      "authors": [
+        "Ruimin Dai",
+        "Guodong Chen",
+        "Randy Harsuko",
+        "Kunpeng Liu",
+        "Nori Nakata"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-28T18:52:57+00:00",
+      "link": "https://arxiv.org/pdf/2608.28791v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Diffusion-surrogate RL optimizes geothermal reservoir well control using learned surrogate environment for expensive hydrothermal simulations; aligns with ML surrogate subsurface flow/transport methods.",
+      "llm_evidence_cn": "用扩散生成式替代模型构建学习环境，以强化学习优化地热储层注采控制；与地下水流和热输运的机器学习替代模拟高度对齐。",
+      "llm_evidence": "用扩散生成式替代模型构建学习环境，以强化学习优化地热储层注采控制；与地下水流和热输运的机器学习替代模拟高度对齐。",
+      "canonical_evidence": "用扩散生成式替代模型构建学习环境，以强化学习优化地热储层注采控制；与地下水流和热输运的机器学习替代模拟高度对齐。",
+      "llm_tldr_en": "A diffusion-surrogate creates a fast learned environment for RL to optimize long-horizon geothermal well-control, reducing reliance on expensive high-fidelity hydrothermal simulations; analogous to groundwater surrogate control.",
+      "llm_tldr_cn": "增强型地热系统的长期注采控制面临高维决策空间和高保真热-水模拟耗时压力，直接用模拟器训练强化学习策略代价昂贵。该文提出扩散-替代引导的强化学习框架：以储层温度和压力场为状态、注入速率为动作，先用条件扩散模型学习一个快速替代环境，再在替代环境中训练长时序地热井控制策略。该方式显著减少对高保真热-水-力耦合模拟的在线调用，并支持实时决策。其核心范式可为高成本地下水流动与溶质或热量输移模拟的智能决策和代理建模提供直接借鉴。",
+      "llm_tldr": "增强型地热系统的长期注采控制面临高维决策空间和高保真热-水模拟耗时压力，直接用模拟器训练强化学习策略代价昂贵。该文提出扩散-替代引导的强化学习框架：以储层温度和压力场为状态、注入速率为动作，先用条件扩散模型学习一个快速替代环境，再在替代环境中训练长时序地热井控制策略。该方式显著减少对高保真热-水-力耦合模拟的在线调用，并支持实时决策。其核心范式可为高成本地下水流动与溶质或热量输移模拟的智能决策和代理建模提供直接借鉴。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.01417v1",
+      "source": "arxiv",
+      "title": "Predicting Subsurface Abnormalities Growth using Physics-Informed Neural Networks",
+      "abstract": "The research explores the pioneering integration of Physics-Informed Neural Networks (PINNs) into the domain of Ground-Penetrating Radar (GPR) data prediction. This research presents a detailed development framework for a specialized PINN model, proficient at interpreting and forecasting GPR data, much like how medical imaging models predict tumor behavior. By harnessing the synergy between deep learning algorithms and the physical laws governing subsurface structures or in medical terms, human tissues the model effectively embeds the physics of electromagnetic wave propagation into its architecture. This ensures that predictions not only align with fundamental physical principles but also mirror the precision needed in medical diagnostics for detecting and monitoring tumors. The suggested deep learning structure comprises three components: a CNN, a spatial feature channel attention (SFCA) mechanism, and ConvLSTM, along with temporal feature frame attention (TFFA) modules. The attention mechanism computes channel attention and temporal attention weights using self-adaptation, thereby fine tuning the visual and temporal feature responses to extract the most pertinent and significant visual and temporal features. By integrating physics directly into the neural network, our model has shown enhanced accuracy in forecasting GPR data. This improvement is vital for conducting effective assessments of bridge deck conditions and other evaluations related to civil infrastructure. The use of Physics Informed Neural Networks (PINNs) has demonstrated the potential to transform the field of Non-Destructive Evaluation (NDE) by enhancing the precision of infrastructure deterioration predictions. Moreover, it offers a deeper insight into the fundamental mechanisms of deterioration, viewed through the prism of physics-based models.",
+      "authors": [
+        "Mehrdad Shafiei Dizaji",
+        "Hoda Azari"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-09-01T15:34:23+00:00",
+      "link": "https://arxiv.org/pdf/2609.01417v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "PINNs applied to subsurface GPR data for predicting anomaly growth; no flow, but close method/domain bridge to PINN subsurface flow.",
+      "llm_evidence_cn": "用PINN预测地下异常体发展，属地下结构物理场模型；不含水流，但与PINN地下水流在方法和domain上相通。",
+      "llm_evidence": "用PINN预测地下异常体发展，属地下结构物理场模型；不含水流，但与PINN地下水流在方法和domain上相通。",
+      "canonical_evidence": "用PINN预测地下异常体发展，属地下结构物理场模型；不含水流，但与PINN地下水流在方法和domain上相通。",
+      "llm_tldr_en": "A specialized PINN embeds electromagnetic-wave physics into deep learning to interpret and forecast GPR subsurface anomaly growth, analogous to medical imaging prognosis.",
+      "llm_tldr_cn": "探地雷达数据的地下异常体解释与演变预测常因物理规律嵌入不足而缺乏可靠性。该文提出一个专用物理信息神经网络框架，将电磁波传播的物理定律嵌入深度学习结构，类似医学影像预测病灶生长的方式对地下异常体进行解释和预测。给出的开发框架使预测结果既符合基本物理原理，又可达到诊断级别的精度。由于针对的是电磁波而非水流，该研究并不直接属于地下水流模拟，但其PINN融入物理约束的思路可直接借鉴于浅层地下水动力场预测。",
+      "llm_tldr": "探地雷达数据的地下异常体解释与演变预测常因物理规律嵌入不足而缺乏可靠性。该文提出一个专用物理信息神经网络框架，将电磁波传播的物理定律嵌入深度学习结构，类似医学影像预测病灶生长的方式对地下异常体进行解释和预测。给出的开发框架使预测结果既符合基本物理原理，又可达到诊断级别的精度。由于针对的是电磁波而非水流，该研究并不直接属于地下水流模拟，但其PINN融入物理约束的思路可直接借鉴于浅层地下水动力场预测。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.00297v1",
+      "source": "arxiv",
+      "title": "Geometry-aware Latent Autoregressive Generative Model for PDEs in Complex Domains",
+      "abstract": "Solving multiphysics partial differential equations (PDEs) remains a major challenge in scientific computing, especially for highly complex $μ$m-scale tortuous geometries critical to energy and chemical engineering. We address this challenge by proposing a Geometry-aware Latent Autoregressive generative Model for PDEs (GeoLAMP) for solving physics within highly irregular and tortuous structures. GeoLAMP introduces a dual-encoder architecture on graph representations to jointly capture global topology and fine-scale geometric features, enabling an effective transition from real-space fields to compact latent representations. In the latent space, we propose a causal self-attention transformer with flow matching to model temporal dynamics, allowing stable and scalable block-wise autoregressive prediction. A flexible decoder reconstructs high-resolution physical fields on arbitrary points. We establish three multiphysics benchmark datasets in complex geometries, covering reactive flow, heat convection, and elasticity. GeoLAMP consistently achieves the most stable autoregression performance on these datasets, maintaining low errors throughout the entire rollout horizon. Our results provide a systematic study of geometry-aware learning for PDEs in $μ$m-scale complex geometries and offer new insights into block-wise time marching of latent autoregressive PDE modeling via a flow matching framework.",
+      "authors": [
+        "Zi Wang",
+        "Minghui Xu",
+        "Tapan Mukerji"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-08-31T19:42:37+00:00",
+      "link": "https://arxiv.org/pdf/2609.00297v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "geometry-aware latent generative model solves PDEs in tortuous complex domains; reusable surrogate scheme relevant to groundwater/porous-media simulation",
+      "llm_evidence_cn": "面向迂曲复杂域的几何感知潜在生成PDE求解模型，可复用至地下多孔介质/地下水流动模拟",
+      "llm_evidence": "面向迂曲复杂域的几何感知潜在生成PDE求解模型，可复用至地下多孔介质/地下水流动模拟",
+      "canonical_evidence": "面向迂曲复杂域的几何感知潜在生成PDE求解模型，可复用至地下多孔介质/地下水流动模拟",
+      "llm_tldr_en": "Presents GeoLAMP, a geometry-aware latent autoregressive generative model that solves multiphysics PDEs in highly irregular tortuous domains, using graph dual-encoding plus causal attention with flow matching in latent space.",
+      "llm_tldr_cn": "在微米级迂曲复杂几何上求解多物理PDE仍很困难，现有方法难以同时捕捉全局拓扑与细尺度几何，为此提出GeoLAMP。该模型利用图表示的双编码器联合编码全局拓扑和细尺度几何特征，把真实空间场映射到紧凑隐空间，再于隐空间部署带流匹配的因果自注意力Transformer建模时间演化，以实现PDE求解。针对高度不规则结构化区域的实验显示了其在复杂几何中预测物理时空演化的能力。由于迂曲结构与地下多孔介质相似，该方法对地下水/孔隙流动的生成式代理建模具有直接借鉴意义。",
+      "llm_tldr": "在微米级迂曲复杂几何上求解多物理PDE仍很困难，现有方法难以同时捕捉全局拓扑与细尺度几何，为此提出GeoLAMP。该模型利用图表示的双编码器联合编码全局拓扑和细尺度几何特征，把真实空间场映射到紧凑隐空间，再于隐空间部署带流匹配的因果自注意力Transformer建模时间演化，以实现PDE求解。针对高度不规则结构化区域的实验显示了其在复杂几何中预测物理时空演化的能力。由于迂曲结构与地下多孔介质相似，该方法对地下水/孔隙流动的生成式代理建模具有直接借鉴意义。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
