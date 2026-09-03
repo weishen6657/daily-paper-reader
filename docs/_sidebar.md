@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-09-03 <!--dpr-date:20260903-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/03/2609.02833v1-learning-spectral-like-mesh-free-discretisations" data-sidebar-item="{&quot;title&quot;: &quot;Learning Spectral-Like Mesh-Free Discretisations&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.02833v1-learning-spectral-like-mesh-free-discretisations&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ag&quot;}], &quot;evidence&quot;: &quot;用神经网络学习谱类精度的无网格离散算子，可服务于AI增强的地下水流等PDE数值模拟&quot;}">Learning Spectral-Like Mesh-Free Discretisations</a>
   * 2026-09-02 <!--dpr-date:20260902-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/02/2608.28791v1-efficient-geothermal-well-control-optimization-via-diffusion-surrogate-reinforcement-learning" data-sidebar-item="{&quot;title&quot;: &quot;Efficient Geothermal Well-Control Optimization via Diffusion-Surrogate Reinforcement Learning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.28791v1-efficient-geothermal-well-control-optimization-via-diffusion-surrogate-reinforcement-learning&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ag&quot;}], &quot;evidence&quot;: &quot;用扩散生成式替代模型构建学习环境，以强化学习优化地热储层注采控制；与地下水流和热输运的机器学习替代模拟高度对齐。&quot;}">Efficient Geothermal Well-Control Optimization via Diffusion-Surrogate Reinforcement Learning</a>

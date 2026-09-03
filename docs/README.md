@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-09-02</span>
+      <span class="dpr-home-dashboard-kicker">2026-09-03</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 3 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 1 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>3</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>1</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-09-02 19:31:47 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-09-03 19:21:19 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日筛选3篇机器学习与地球科学交叉论文，聚焦地下能效优化与复杂域建模。最值得关注扩散强化学习驱动的地热井控制优化，以及复杂域PDE的几何感知自回归模型，两篇均获7.0分。若时间有限，建议优先浏览第一篇的地热开发效率提升思路。</p>
+<p>今日精读0篇、速读1篇，主要围绕一篇无网格离散化方法的论文展开。值得关注的是《Learning Spectral-Like Mesh-Free Discretisations》（6.0/10），探讨了学习型谱类无网格离散化的构造思路。若对数值方法与机器学习交叉感兴趣，可进一步查阅该文的算法细节与实验效果。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -84,12 +84,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">3 篇</strong>
+    <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Efficient Geothermal Well-Control Optimization via Diffusion-Surrogate Reinforcement Learning">Efficient Geothermal Well-Control Optimization via Diffusion-Surrogate Reinforcement Learning</span></li><li><span class="dpr-home-dashboard-paper-title" title="Geometry-aware Latent Autoregressive Generative Model for PDEs in Complex Domains">Geometry-aware Latent Autoregressive Generative Model for PDEs in Complex Domains</span></li><li><span class="dpr-home-dashboard-paper-title" title="Predicting Subsurface Abnormalities Growth using Physics-Informed Neural Networks">Predicting Subsurface Abnormalities Growth using Physics-Informed Neural Networks</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Learning Spectral-Like Mesh-Free Discretisations">Learning Spectral-Like Mesh-Free Discretisations</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>3</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>1</strong></span></div>
 </section>
 </div>
 

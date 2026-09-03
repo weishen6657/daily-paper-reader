@@ -1,0 +1,25 @@
+{
+  "date": "20260903",
+  "date_label": "",
+  "generated_at": "2026-09-03 19:21:19 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.02833v1",
+      "route": "202609/03/2609.02833v1-learning-spectral-like-mesh-free-discretisations",
+      "title": "Learning Spectral-Like Mesh-Free Discretisations",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用神经网络学习谱类精度的无网格离散算子，可服务于AI增强的地下水流等PDE数值模拟",
+      "first_seen_at": "2026-09-03 19:21:19 UTC",
+      "updated_at": "2026-09-03 19:21:19 UTC"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-03T19:20:15.952834+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.02833v1",
+      "source": "arxiv",
+      "title": "Learning Spectral-Like Mesh-Free Discretisations",
+      "abstract": "Meshfree methods such as smoothed particle hydrodynamics (SPH) with kernel corrections, radial basis function-generated finite differences (RBF-FD), and the local anisotropic basis function method (LABFM) construct discrete differential operators by imposing polynomial consistency on a local stencil. For stencils containing more nodes than there are consistency constraints, the resulting linear system is underdetermined, and the remaining degrees of freedom are fixed implicitly by the choice of kernel, basis preconditioning, or a minimum-norm condition. Polynomial consistency constrains the operator only in the low-wavenumber limit, and no part of the construction selects for accuracy at the wavenumbers where fine-scale content resides. We introduce Spectral-like Neural Discretisation (SpeND), in which the choice of those degrees of freedom is cast as a learning problem: stencil weights are parametrised by a neural network conditioned on the local node geometry, trained to approximate the modal response of a spectral operator over the resolvable band. A hard-constrained projection layer maps the network output onto the affine subspace of consistent weights, so that polynomial consistency holds exactly by construction rather than as a penalty. Training is self-supervised and physics-agnostic, requiring no reference solutions; the objective minimises dispersion and dissipation error over a prescribed band-limited function space. Modal analysis on disordered two-dimensional node distributions shows that the learned fourth-order operator follows the exact response over a substantially wider band than either explicit LABFM at equal stencil size or fourth-order finite differences on a structured grid, whilst recovering the expected fourth-order convergence rate under refinement.",
+      "authors": [
+        "Lucas Gerken Starepravo",
+        "Henry Broadley",
+        "Steven Lind",
+        "Jack R. C. King"
+      ],
+      "primary_category": "physics.comp-ph",
+      "categories": [
+        "physics.comp-ph",
+        "cs.LG"
+      ],
+      "published": "2026-09-02T17:16:16+00:00",
+      "link": "https://arxiv.org/pdf/2609.02833v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "neural learning of spectral-like mesh-free discretizations improves numerical PDE operators, relevant to AI-enhanced flow simulation methods",
+      "llm_evidence_cn": "用神经网络学习谱类精度的无网格离散算子，可服务于AI增强的地下水流等PDE数值模拟",
+      "llm_evidence": "用神经网络学习谱类精度的无网格离散算子，可服务于AI增强的地下水流等PDE数值模拟",
+      "canonical_evidence": "用神经网络学习谱类精度的无网格离散算子，可服务于AI增强的地下水流等PDE数值模拟",
+      "llm_tldr_en": "This work uses neural networks to learn spectral-like mesh-free discretizations, allocating stencil degrees of freedom beyond polynomial consistency to improve operator accuracy at fine scales, offering a reusable AI-enhanced discretization route for PDE simulation.",
+      "llm_tldr_cn": "针对无网格离散方法在超定节点上通过核选择或最小范数隐式决定自由度、仅保证低波数一致而缺少高波数精度控制的问题，论文提出用神经网络学习谱类无网格离散算子，以数据驱动方式分配局部自由度并提升精细尺度刻画能力。数值结果表明新离散格式可在相同模板下获得更接近谱法的算子近似。这类可学习的无网格离散技术能为地下水流数值模拟提供AI增强的高精度空间离散手段。",
+      "llm_tldr": "针对无网格离散方法在超定节点上通过核选择或最小范数隐式决定自由度、仅保证低波数一致而缺少高波数精度控制的问题，论文提出用神经网络学习谱类无网格离散算子，以数据驱动方式分配局部自由度并提升精细尺度刻画能力。数值结果表明新离散格式可在相同模板下获得更接近谱法的算子近似。这类可学习的无网格离散技术能为地下水流数值模拟提供AI增强的高精度空间离散手段。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "artificial intelligence enhanced groundwater numerical simulation methods",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "label": "2026-09-03",
+  "date": "2026-09-03",
+  "generated_at": "2026-09-03T19:21:21",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202609/03/2609.02833v1-learning-spectral-like-mesh-free-discretisations",
+      "section": "quick",
+      "title_en": "Learning Spectral-Like Mesh-Free Discretisations",
+      "authors": "Lucas Gerken Starepravo, Henry Broadley, Steven Lind, Jack R. C. King",
+      "date": "2026-09-02",
+      "pdf": "https://arxiv.org/pdf/2609.02833v1",
+      "score": "6.0",
+      "evidence": "用神经网络学习谱类精度的无网格离散算子，可服务于AI增强的地下水流等PDE数值模拟",
+      "tldr": "传统网格自由离散算子仅对低频段施加多项式一致性，高频精度由欠定自由度隐式决定，缺少控制。SpeND将这些自由度交由神经网络学习，并用硬约束投影层确保多项式一致性在构造上严格成立；其自监督训练对象是带限函数空间的谱响应，追求最小色散和耗散误差。二维无序节点上的模态测试表明，该四阶算子能在比同尺寸LABFM和结构化四阶差分宽得多的频段跟踪精确解，同时细化收敛阶仍为四。该方法完全不需要参考解，且与具体物理无关，展示了一条用神经网络填补谱精度空间的通用路径。",
+      "tags": "query:ag",
+      "abstract_en": "Meshfree methods such as smoothed particle hydrodynamics (SPH) with kernel corrections, radial basis function-generated finite differences (RBF-FD), and the local anisotropic basis function method (LABFM) construct discrete differential operators by imposing polynomial consistency on a local stencil. For stencils containing more nodes than there are consistency constraints, the resulting linear system is underdetermined, and the remaining degrees of freedom are fixed implicitly by the choice of kernel, basis preconditioning, or a minimum-norm condition. Polynomial consistency constrains the operator only in the low-wavenumber limit, and no part of the construction selects for accuracy at the wavenumbers where fine-scale content resides. We introduce Spectral-like Neural Discretisation (SpeND), in which the choice of those degrees of freedom is cast as a learning problem: stencil weights are parametrised by a neural network conditioned on the local node geometry, trained to approximate the modal response of a spectral operator over the resolvable band. A hard-constrained projection layer maps the network output onto the affine subspace of consistent weights, so that polynomial consistency holds exactly by construction rather than as a penalty. Training is self-supervised and physics-agnostic, requiring no reference solutions; the objective minimises dispersion and dissipation error over a prescribed band-limited function space. Modal analysis on disordered two-dimensional node distributions shows that the learned fourth-order operator follows the exact response over a substantially wider band than either explicit LABFM at equal stencil size or fourth-order finite differences on a structured grid, whilst recovering the expected fourth-order convergence rate under refinement.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
