@@ -1,0 +1,300 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-04T19:36:06.529291+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2609.03069v1",
+      "source": "arxiv",
+      "title": "Learnable composition for neural operators",
+      "abstract": "Neural operators are fast, differentiable surrogates for physical simulation, but their accuracy often degrades when domain geometry, size, or operating conditions differ from training. Supervised adaptation can recover accuracy, but even a small target set requires costly high-fidelity simulations. We therefore ask how pretraining and transfer can be designed together to reduce this deployment cost. LatentDDM first pretrains a neural operator to predict fields on small subdomains. For a new setting, it freezes this operator and trains only a lightweight module that composes the local predictions. We evaluate our method on two complementary problems: steady Darcy flow, where long-range pressure coupling must extend across increasingly large porous domains, and unsteady incompressible flow around a pitching airfoil, where rollout errors compound as target pitching frequencies exceed the training range. Compared with the capacity-matched models that process the full domain at once, LatentDDM's error is 36-56% lower on larger Darcy domains after adaptation with 16 target simulations. It also improves 20-step field rollouts in fast-pitching airfoil flow, both zero-shot and after few-shot calibration. These results identify the co-designed local pretraining and composition-level transfer as a promising design principle for physical foundation models.",
+      "authors": [
+        "Zituo Chen",
+        "Baiming Zhang",
+        "Sili Deng"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-09-02T18:40:04+00:00",
+      "link": "https://arxiv.org/pdf/2609.03069v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Neural operator surrogate with composition strategy; evaluated on Darcy flow across porous domains, core to groundwater flow simulation",
+      "llm_evidence_cn": "面向神经操作子代理的组合学习方法，并在达西渗流等多孔介质问题验证，与地下水流动模拟相关",
+      "llm_evidence": "面向神经操作子代理的组合学习方法，并在达西渗流等多孔介质问题验证，与地下水流动模拟相关",
+      "canonical_evidence": "面向神经操作子代理的组合学习方法，并在达西渗流等多孔介质问题验证，与地下水流动模拟相关",
+      "llm_tldr_en": "Neural operators are fast surrogates for physical simulation but degrade under new geometry or size. LatentDDM pretrains an operator on small subdomains then learns a lightweight composition module, showing accuracy for large-domain Darcy flow and unsteady incompressible flow.",
+      "llm_tldr_cn": "神经操作子为物理模拟提供快速可微代理，但当几何、尺寸或工况变化时精度劣化，监督适应又需要昂贵的高保真样本。为此论文提出LatentDDM：先在小子域上预训练神经操作子，冻结后仅训练一个轻量模块来组合局部预测，以支持更大规模多孔介质域。在稳态达西流动与不可压缩非定常流动上验证，该方法能保持精度并显著降低部署成本。该组合式迁移策略为地下水流代理模型的低成本构建提供了直接可行的路径。",
+      "llm_tldr": "神经操作子为物理模拟提供快速可微代理，但当几何、尺寸或工况变化时精度劣化，监督适应又需要昂贵的高保真样本。为此论文提出LatentDDM：先在小子域上预训练神经操作子，冻结后仅训练一个轻量模块来组合局部预测，以支持更大规模多孔介质域。在稳态达西流动与不可压缩非定常流动上验证，该方法能保持精度并显著降低部署成本。该组合式迁移策略为地下水流代理模型的低成本构建提供了直接可行的路径。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2609.02982v1",
+      "source": "arxiv",
+      "title": "Equation Recast for Canonical Operator Learning Across Parametric PDEs",
+      "abstract": "Learning solution operators across broad parameter ranges can require substantial coverage of both input functions and physical parameters, particularly for purely data-driven parametric models. In addition, the resulting models may fail silently outside the training distribution. We introduce equation recast, which reformulates parametric operator learning as the learning of a single canonical operator. Parameter-induced operator variations are derived analytically from the governing equation and absorbed into effective sources, enabling zero-shot prediction across new parameter regimes. Across multi-parameter, nonlinear, and singular PDE settings, equation recast supports extrapolation, integrates sparse heterogeneous datasets in a shared canonical representation, and uses loss of convergence as an internal warning signal for failure of the recast iteration. In high-fidelity tokamak simulations for nuclear fusion, the framework unifies electron-temperature data across four device geometries through canonical-domain mapping within one jointly trained operator. Equation recast provides a route toward reusable neural PDE solvers combining equation-guided transfer, data efficiency, and monitorable inference.",
+      "authors": [
+        "Qiyun Cheng",
+        "Valentin Duruisseaux",
+        "Cesar F. Clauser",
+        "Md Hossain Sahadath",
+        "Huihua Yang",
+        "Shaowu Pan",
+        "Nathaniel Ferraro",
+        "Anima Anandkumar",
+        "Wei Ji",
+        "Cristina Rea"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.comp-ph",
+        "physics.plasm-ph"
+      ],
+      "published": "2026-09-02T13:15:50+00:00",
+      "link": "https://arxiv.org/pdf/2609.02982v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Canonical operator learning for parametric PDEs with zero-shot extrapolation; directly supports ML-based surrogate models for groundwater flow simulation",
+      "llm_evidence_cn": "参数化偏微分方程的规范算子学习支持跨参数区间零样本预测；可直接支撑机器学习的地下水流模拟替代模型",
+      "llm_evidence": "参数化偏微分方程的规范算子学习支持跨参数区间零样本预测；可直接支撑机器学习的地下水流模拟替代模型",
+      "canonical_evidence": "参数化偏微分方程的规范算子学习支持跨参数区间零样本预测；可直接支撑机器学习的地下水流模拟替代模型",
+      "llm_tldr_en": "Parametric operator learning usually requires broad training coverage and can fail outside distribution. Equation recast derives parameter-induced variations analytically from governing equations and folds them into effective sources, learning one canonical operator for zero-shot prediction across new regimes. This transferable framework is well-suited to ML-based groundwater flow surrogates that must handle varying aquifer parameters.",
+      "llm_tldr_cn": "参数化算子学习通常需要大量覆盖输入函数和物理参数的数据，且容易在训练分布外失效。方程重塑方法从控制方程解析推导参数引起的算子变化，将其吸收为等效源项，从而学习单一规范算子；这支持多参数、非线性及奇异偏微分方程下新参数区的零样本预测。该方法还能整合异构稀疏数据。该思路适用于不同含水层参数条件下的地下水流机器学习替代模拟，能显著提升外推与泛化能力。",
+      "llm_tldr": "参数化算子学习通常需要大量覆盖输入函数和物理参数的数据，且容易在训练分布外失效。方程重塑方法从控制方程解析推导参数引起的算子变化，将其吸收为等效源项，从而学习单一规范算子；这支持多参数、非线性及奇异偏微分方程下新参数区的零样本预测。该方法还能整合异构稀疏数据。该思路适用于不同含水层参数条件下的地下水流机器学习替代模拟，能显著提升外推与泛化能力。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.27639v1",
+      "source": "arxiv",
+      "title": "Dimension Bridging for 3D RANS with Neural Network Accelerated Gaussian Functional Regression",
+      "abstract": "In many computational science and engineering problems, repeatedly solving fully resolved physics-based models to design for a quantity of interest (QoI) can quickly become intractable, requiring the use of low-fidelity models to predict the same QoI but introduce errors where some features are neglected or are otherwise inaccurately resolved. We use Gaussian Functional Regression (GFR) to learn a correction to a 2D Reynolds-Averaged Navier-Stokes (RANS) model to predict the aerodynamic coefficients from a 3D RANS model. This model pair has a disparity in the governing physics from the reduced dimensionality, a previously unexplored application for GFR. Empirically, our results show that with a proper choice of low-dimensional (LD) model, the proposed kernel allows for the use of fewer high-dimensional (HD) evaluations to regress a response surface to the same level of accuracy as standard stationary kernels. Moreover, the new kernel provides more informative uncertainty quantification, which we show is advantageous when used to drive an adaptive sampling algorithm. Finally, we propose a novel neural network accelerated kernel, which we show offers predictions in good agreement while speeding up evaluations by millions of times in wall clock measurements, bringing the computational budget within the real-time regime.",
+      "authors": [
+        "Wesley Lao",
+        "Thomas Scott",
+        "Tan Bui-Thanh",
+        "Paul Laiu",
+        "Matt Bement"
+      ],
+      "primary_category": "cs.CE",
+      "categories": [
+        "cs.CE"
+      ],
+      "published": "2026-08-27T19:25:02+00:00",
+      "link": "https://arxiv.org/pdf/2608.27639v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "ML surrogate correction between low/high fidelity flow models, transferable to groundwater surrogate modelling",
+      "llm_evidence_cn": "低/高保真流动模型之间的机器学习代理修正，可迁移至地下水代理模拟",
+      "llm_evidence": "低/高保真流动模型之间的机器学习代理修正，可迁移至地下水代理模拟",
+      "canonical_evidence": "低/高保真流动模型之间的机器学习代理修正，可迁移至地下水代理模拟",
+      "llm_tldr_en": "Proposes Gaussian Functional Regression to learn a 2D-to-3D RANS correction for high-fidelity aerodynamic predictions at low cost. Without groundwater experiments, its low/high-fidelity surrogate correction strategy is still transferable to groundwater flow surrogate modelling.",
+      "llm_tldr_cn": "针对高保真物理模型反复求解计算成本高的问题，论文利用高斯泛函回归学习二维RANS到三维RANS的修正项，以较低成本获得高保真气动系数预测。实验发现选择适当的低维特征后修正效果良好，并揭示了低保真模型与高保真模型之间的维度桥接潜力。研究虽面向航空流场，但其代理修正思想可用于地下水流动的机器学习代理建模。",
+      "llm_tldr": "针对高保真物理模型反复求解计算成本高的问题，论文利用高斯泛函回归学习二维RANS到三维RANS的修正项，以较低成本获得高保真气动系数预测。实验发现选择适当的低维特征后修正效果良好，并揭示了低保真模型与高保真模型之间的维度桥接潜力。研究虽面向航空流场，但其代理修正思想可用于地下水流动的机器学习代理建模。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.03768v1",
+      "source": "arxiv",
+      "title": "Computing high-order mixed derivatives in physics-informed neural networks using multi-index Bell polynomials",
+      "abstract": "Physics-informed neural networks for high-order partial differential equations require mixed input derivatives and their gradients with respect to the network parameters. Standard implementations obtain an order-$K$ derivative by repeated automatic differentiation. We instead organize the forward recursion of the multivariate Faà di Bruno formula and its explicit backpropagation over a prescribed downward-closed set of multi-indices, with the Bell-polynomial convolutions tabulated once. The forward pass carries only the derivatives the differential operator requires. The backward pass propagates gradients from losses formed from any subset of them, including nonlinear products and coupled fields. Both recursions are exact up to roundoff and avoid nested computational graphs. An independent Taylor-jet implementation, symbolic checks of the test problems, and finite differences verify derivatives and loss gradients through order seven. On one CPU core, the method evaluates 330 mixed derivatives with respect to four inputs through order seven and the corresponding loss gradient without the memory failures observed for several nested implementations. Numerical tests include third-, fifth-, and seventh-order dispersive equations, incompressible flow, and a manufactured five-field electrohydrodynamic system. The seventh-order Zakharov-Kuznetsov test in $3+1$ dimensions has a relative solution error of $6\\times10^{-4}$.",
+      "authors": [
+        "Fumihiro Imoto"
+      ],
+      "primary_category": "physics.comp-ph",
+      "categories": [
+        "physics.comp-ph",
+        "physics.plasm-ph"
+      ],
+      "published": "2026-09-03T12:36:02+00:00",
+      "link": "https://arxiv.org/pdf/2609.03768v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "improves high-order derivative computation in PINNs, core technical enabler for subsurface-flow PINNs",
+      "llm_evidence_cn": "提升物理信息神经网络高阶导数计算，是地下流PINN仿真的关键使能技术",
+      "llm_evidence": "提升物理信息神经网络高阶导数计算，是地下流PINN仿真的关键使能技术",
+      "canonical_evidence": "提升物理信息神经网络高阶导数计算，是地下流PINN仿真的关键使能技术",
+      "llm_tldr_en": "High-order mixed derivatives in physics-informed neural networks are usually computed by repeated automatic differentiation. This work organizes the forward recursion of the multivariate Faà di Bruno formula and explicit backpropagation over a downward-closed set of multi-indices, with Bell-polynomial convolutions tabulated once. Only derivatives needed by the differential operator are carried; gradients from nonlinear and coupled losses propagate efficiently.",
+      "llm_tldr_cn": "物理信息神经网络求解高阶偏微分方程时，高阶混合导数通常需要反复自动微分，训练开销大且实现复杂。本文基于多元Faà di Bruno公式的前向递归组织导数计算，并在向下封闭的多指标集合上用Bell多项式卷积进行显式反向传播。前向过程只携带微分算子所需的导数，后向过程可处理非线性乘积和耦合场损失，从而显著降低高阶PINN的训练成本。该方法为地下流模拟中涉及高阶物理项的计算提供了高效导数工具。",
+      "llm_tldr": "物理信息神经网络求解高阶偏微分方程时，高阶混合导数通常需要反复自动微分，训练开销大且实现复杂。本文基于多元Faà di Bruno公式的前向递归组织导数计算，并在向下封闭的多指标集合上用Bell多项式卷积进行显式反向传播。前向过程只携带微分算子所需的导数，后向过程可处理非线性乘积和耦合场损失，从而显著降低高阶PINN的训练成本。该方法为地下流模拟中涉及高阶物理项的计算提供了高效导数工具。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.02656v1",
+      "source": "arxiv",
+      "title": "Super-Resolution Initialization of High-Fidelity CFD Simulations for Pebble-Bed Reactors",
+      "abstract": "High-order CFD simulations provide detailed resolution of the heterogeneous interstitial flow in pebble-bed reactors, but their computational cost is high, especially during the initial flow-development period required to reach statistically stationary conditions. This work investigates the use of a Super-Resolution Graph Neural Network (SR-GNN) to improve the initialization of high-order NekRS simulations. Lower-order P = 2 velocity fields are used as inputs to reconstruct higher-order representations, which are then used as initial conditions for P = 7 restart simulations. The approach is evaluated using a 146-pebble bed at Re = 1000, Re = 2500, and Re = 5000, with pressure-drop convergence used as the main figure of merit. The SR-GNN models were trained using paired low- and high-order snapshots and were first evaluated through qualitative inference comparisons. High-order restart simulations showed that, for Re = 1000 and Re = 2500, the SR-GNN initialized cases produced pressure-drop histories similar to direct restarts from true P = 2 fields. For Re = 5000, however, the super-resolved field restart approached the statistically stationary P = 7 pressure-drop range faster than both the direct P = 2 restart and the reference P = 7 simulation initialized from a uniform velocity field. The trained Re = 5000 model was also applied to a larger 1568-pebble bed, demonstrating qualitative applicability of the workflow to a significantly larger packed-bed geometry. These results indicate that SR-GNN-based initialization is a promising strategy for reducing high-order flow-development cost, while also motivating further work on broader Reynolds-number and geometry generalization.",
+      "authors": [
+        "Guilherme Gottems",
+        "Vasil Ivakimov",
+        "Luiz Aldeia Machado",
+        "Mahmoud Yaseen",
+        "Tri Nguyen",
+        "Elia Merzari",
+        "Riccardo Balin",
+        "Dillon Shaver",
+        "Filippo Simini",
+        "Bethany Lusch",
+        "Venkatram Vishwanath",
+        "Haomin Yuan",
+        "Misun Min",
+        "Ramesh Balakrishnan",
+        "Jun Fang",
+        "Paul Fischer"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn"
+      ],
+      "published": "2026-09-01T16:55:56+00:00",
+      "link": "https://arxiv.org/pdf/2609.02656v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Super-resolution graph neural network as ML surrogate to accelerate high-fidelity porous flow simulation; transferable to groundwater surrogate modeling",
+      "llm_evidence_cn": "超分辨率图神经网络代理用于加速多孔介质流动高保真模拟，方法可迁移至地下水代理建模",
+      "llm_evidence": "超分辨率图神经网络代理用于加速多孔介质流动高保真模拟，方法可迁移至地下水代理建模",
+      "canonical_evidence": "超分辨率图神经网络代理用于加速多孔介质流动高保真模拟，方法可迁移至地下水代理建模",
+      "llm_tldr_en": "High-fidelity CFD of pebble-bed reactors is costly; a super-resolution graph network reconstructs fields from low-order runs to initialize restart simulations, speeding flow development.",
+      "llm_tldr_cn": "球床反应器高保真CFD模拟计算量大，初始流动发展耗时长。本文提出用超分辨率图神经网络SR-GNN，将低阶P=2速度场重建为高阶表示并作为P=7重启模拟的初始条件。在146球床的多个雷诺数算例中，这种学习型初始化能更快达到压降收敛。结果表明机器学习可为多孔介质流动的高保真模拟提供有效加速，对AI增强地下水数值模拟具有方法迁移参考价值。",
+      "llm_tldr": "球床反应器高保真CFD模拟计算量大，初始流动发展耗时长。本文提出用超分辨率图神经网络SR-GNN，将低阶P=2速度场重建为高阶表示并作为P=7重启模拟的初始条件。在146球床的多个雷诺数算例中，这种学习型初始化能更快达到压降收敛。结果表明机器学习可为多孔介质流动的高保真模拟提供有效加速，对AI增强地下水数值模拟具有方法迁移参考价值。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.03343v1",
+      "source": "arxiv",
+      "title": "Learning Informative Prior with Infinite-Dimensional Continuous Normalizing Flow for Bayesian Inverse Problem",
+      "abstract": "This paper addresses infinite-dimensional Bayesian inference for inverse problem of partial differential equations with model parameters in infinite-dimensional Hilbert space. To effectively incorporate prior information, we propose a novel continuous normalizing flows based infinite-dimensional model. Specifically, by introducing a well-defined neural ordinary differential equation in infinite-dimensional space, a simple reference measure can be transformed into a more complex measure which encodes the prior information. A corresponding theoretical framework is established to ensure the well-posedness of our proposed Bayesian prior in infinite-dimensional space. We also provide training methods of the prior for two distinct data settings, along with two sampling algorithms for the resulting Bayesian posterior. The proposed framework is applied to three representative inverse problems: the simple smooth inverse problem, inverse scattering problem, and the inverse heat conduction problem. Numerical experiments support the theoretical analysis and demonstrate the efficiency of the proposed algorithms.",
+      "authors": [
+        "Yang Zhao",
+        "Junxiong Jia",
+        "Tao Zhou"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "cs.LG"
+      ],
+      "published": "2026-09-03T04:02:01+00:00",
+      "link": "https://arxiv.org/pdf/2609.03343v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Machine-learned infinite-dimensional priors for Bayesian PDE inversion, supporting data-driven characterization of groundwater parameters",
+      "llm_evidence_cn": "机器学习生成式先验用于PDE贝叶斯反演，可促进数据驱动的地下水参数识别",
+      "llm_evidence": "机器学习生成式先验用于PDE贝叶斯反演，可促进数据驱动的地下水参数识别",
+      "canonical_evidence": "机器学习生成式先验用于PDE贝叶斯反演，可促进数据驱动的地下水参数识别",
+      "llm_tldr_en": "Introduces continuous normalizing flows in infinite-dimensional space to learn informative Bayesian priors for PDE inverse problems, with theoretical well-posedness and training methods.",
+      "llm_tldr_cn": "针对PDE参数反演中无穷维先验构造难的问题，该文提出一种基于连续归一化流的无穷维贝叶斯先验。通过定义具有良好适定性的无穷维神经ODE，将简单参考测度转化为可编码复杂信息的先验测度，并给出先验训练方法。该方法为包括地下水在内的PDE参数估计提供了灵活、数据驱动的先验学习框架。",
+      "llm_tldr": "针对PDE参数反演中无穷维先验构造难的问题，该文提出一种基于连续归一化流的无穷维贝叶斯先验。通过定义具有良好适定性的无穷维神经ODE，将简单参考测度转化为可编码复杂信息的先验测度，并给出先验训练方法。该方法为包括地下水在内的PDE参数估计提供了灵活、数据驱动的先验学习框架。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "data-driven groundwater hydrology",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.03382v1",
+      "source": "arxiv",
+      "title": "SurgeGen: A Hybrid Generative Diffusion Framework for Storm Surge Scenario Synthesis",
+      "abstract": "Predicting storm surge induced by landfalling tropical cyclones is crucial for flood mitigation and coastal risk management. Traditionally, physics-based numerical models simulate storm surge by solving the Navier--Stokes equations using numerical methods, but these simulations are computationally expensive. Generative models are promising for storm surge emulation because they can generate diverse realizations rather than producing a single deterministic prediction. However, their use for storm surge emulation remains largely unexplored. In this paper, we leverage diffusion models for storm surge surrogate modeling, combining a baseline prediction stage with conditional generation to provide a more interpretable modeling framework. We develop SurgeGen, a two-stage generative framework for generating storm surge scenarios conditioned on hypothetical storms with parameters defined in a continuous space. First, a baseline model produces a coarse estimate of the storm surge height. This estimate then conditions a diffusion model, which generates refined storm surge scenarios that better capture spatial patterns and variability. We demonstrate that our approach can generate realistic and diverse storm surge scenarios under conditions both within and outside the training distribution.",
+      "authors": [
+        "Shunan Zheng",
+        "John J. Hasenbein"
+      ],
+      "primary_category": "math.DS",
+      "categories": [
+        "math.DS",
+        "cs.LG"
+      ],
+      "published": "2026-09-03T05:31:44+00:00",
+      "link": "https://arxiv.org/pdf/2609.03382v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Generative diffusion surrogate for storm surge simulation; surrogate concept relevant to groundwater flow simulation",
+      "llm_evidence_cn": "面向风暴潮的生成扩散代理模型，其代理思想对地下水流动模拟有借鉴性",
+      "llm_evidence": "面向风暴潮的生成扩散代理模型，其代理思想对地下水流动模拟有借鉴性",
+      "canonical_evidence": "面向风暴潮的生成扩散代理模型，其代理思想对地下水流动模拟有借鉴性",
+      "llm_tldr_en": "SurgeGen combines baseline prediction and conditional diffusion generation to emulate expensive storm-surge simulations and synthesize diverse scenarios. Although coastal not groundwater, the generative surrogate approach transfers to machine-learning surrogate models for groundwater flow.",
+      "llm_tldr_cn": "针对传统风暴潮物理数值模拟计算费用高且仅给单一预测的问题，论文提出SurgeGen，将基线预测阶段与条件扩散生成融于一个更可解释的替代建模框架，用于仿真昂贵风暴潮并合成多样化情景。生成模型不限于单一确定性预测，可提供多个物理合理的风暴潮情景。研究对象虽为沿海风暴潮而非地下水，其混合生成式代理建模思路可迁移至地下水流动的机器学习替代模拟。",
+      "llm_tldr": "针对传统风暴潮物理数值模拟计算费用高且仅给单一预测的问题，论文提出SurgeGen，将基线预测阶段与条件扩散生成融于一个更可解释的替代建模框架，用于仿真昂贵风暴潮并合成多样化情景。生成模型不限于单一确定性预测，可提供多个物理合理的风暴潮情景。研究对象虽为沿海风暴潮而非地下水，其混合生成式代理建模思路可迁移至地下水流动的机器学习替代模拟。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "date": "20260904",
+  "date_label": "",
+  "generated_at": "2026-09-04 19:43:03 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.03069v1",
+      "route": "202609/04/2609.03069v1-learnable-composition-for-neural-operators",
+      "title": "Learnable composition for neural operators",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向神经操作子代理的组合学习方法，并在达西渗流等多孔介质问题验证，与地下水流动模拟相关",
+      "first_seen_at": "2026-09-04 19:43:03 UTC",
+      "updated_at": "2026-09-04 19:43:03 UTC"
+    },
+    {
+      "paper_id": "2609.02982v1",
+      "route": "202609/04/2609.02982v1-equation-recast-for-canonical-operator-learning-across-parametric-pdes",
+      "title": "Equation Recast for Canonical Operator Learning Across Parametric PDEs",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "参数化偏微分方程的规范算子学习支持跨参数区间零样本预测；可直接支撑机器学习的地下水流模拟替代模型",
+      "first_seen_at": "2026-09-04 19:43:03 UTC",
+      "updated_at": "2026-09-04 19:43:03 UTC"
+    },
+    {
+      "paper_id": "2609.03768v1",
+      "route": "202609/04/2609.03768v1-computing-high-order-mixed-derivatives-in-physics-informed-neural-networks-using-multi-index-bell-polynomials",
+      "title": "Computing high-order mixed derivatives in physics-informed neural networks using multi-index Bell polynomials",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "提升物理信息神经网络高阶导数计算，是地下流PINN仿真的关键使能技术",
+      "first_seen_at": "2026-09-04 19:43:03 UTC",
+      "updated_at": "2026-09-04 19:43:03 UTC"
+    },
+    {
+      "paper_id": "2608.27639v1",
+      "route": "202609/04/2608.27639v1-dimension-bridging-for-3d-rans-with-neural-network-accelerated-gaussian-functional-regression",
+      "title": "Dimension Bridging for 3D RANS with Neural Network Accelerated Gaussian Functional Regression",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "低/高保真流动模型之间的机器学习代理修正，可迁移至地下水代理模拟",
+      "first_seen_at": "2026-09-04 19:43:03 UTC",
+      "updated_at": "2026-09-04 19:43:03 UTC"
+    },
+    {
+      "paper_id": "2609.02656v1",
+      "route": "202609/04/2609.02656v1-super-resolution-initialization-of-high-fidelity-cfd-simulations-for-pebble-bed-reactors",
+      "title": "Super-Resolution Initialization of High-Fidelity CFD Simulations for Pebble-Bed Reactors",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "超分辨率图神经网络代理用于加速多孔介质流动高保真模拟，方法可迁移至地下水代理建模",
+      "first_seen_at": "2026-09-04 19:43:03 UTC",
+      "updated_at": "2026-09-04 19:43:03 UTC"
+    },
+    {
+      "paper_id": "2609.03343v1",
+      "route": "202609/04/2609.03343v1-learning-informative-prior-with-infinite-dimensional-continuous-normalizing-flow-for-bayesian-inverse-problem",
+      "title": "Learning Informative Prior with Infinite-Dimensional Continuous Normalizing Flow for Bayesian Inverse Problem",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "机器学习生成式先验用于PDE贝叶斯反演，可促进数据驱动的地下水参数识别",
+      "first_seen_at": "2026-09-04 19:43:03 UTC",
+      "updated_at": "2026-09-04 19:43:03 UTC"
+    },
+    {
+      "paper_id": "2609.03382v1",
+      "route": "202609/04/2609.03382v1-surgegen-a-hybrid-generative-diffusion-framework-for-storm-surge-scenario-synthesis",
+      "title": "SurgeGen: A Hybrid Generative Diffusion Framework for Storm Surge Scenario Synthesis",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向风暴潮的生成扩散代理模型，其代理思想对地下水流动模拟有借鉴性",
+      "first_seen_at": "2026-09-04 19:43:03 UTC",
+      "updated_at": "2026-09-04 19:43:03 UTC"
+    }
+  ]
+}
