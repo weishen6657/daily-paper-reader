@@ -1,0 +1,39 @@
+{
+  "label": "2026-09-05",
+  "date": "2026-09-05",
+  "generated_at": "2026-09-05T19:33:25",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202609/05/2609.02110v1-a-computational-comparison-of-fourier-spectral-differentiation-and-spatial-automatic-differentiation-in-periodic-physics-informed-neural-networks",
+      "section": "quick",
+      "title_en": "A Computational Comparison of Fourier Spectral Differentiation and Spatial Automatic Differentiation in Periodic Physics-Informed Neural Networks",
+      "authors": "Xilai Liang, Zhao Zhang",
+      "date": "2026-09-02",
+      "pdf": "https://arxiv.org/pdf/2609.02110v1",
+      "score": "6.0",
+      "evidence": "PINN空间微分比较可提升地下水流模型训练效率",
+      "tldr": "物理信息神经网络（PINNs）通常用自动微分（AD）计算偏微分方程残差中的空间导数，但多阶或高阶导数会带来高昂的计算和内存成本。论文在周期性物理空间PINNs中对比了空间AD与傅里叶谱微分：神经网络输出在均匀周期网格上评估并变换到傅里叶空间，通过谱乘法获得各阶导数，且系数可复用。在Allen-Cahn、Korteweg-de Vries和Kuramoto-Sivashinsky方程的标准或因果PINNs共五组设置中，傅里叶微分带来平均2.90倍到18.52倍的端到端训练加速，峰值GPU内存降低68.7%到94.1%，最终相对L2误差量级相当。对于一维周期基准，傅里叶谱微分显著降低时间和内存，同时保持可比误差，代价是需要均匀结构化网格。",
+      "tags": "query:ag",
+      "abstract_en": "Physics-informed neural networks (PINNs) commonly evaluate the spatial derivatives appearing in partial differential equation residuals using automatic differentiation (AD), whose computational and memory costs can become substantial when multiple or high-order derivatives are required. We perform a controlled comparison of spatial AD and Fourier spectral differentiation in periodic physical-space PINNs. Within each paired experiment, the neural representation, temporal differentiation, optimizer, sampling procedure, and training schedule are held fixed, so that the two cases differ only in the spatial differentiation procedure. For the Fourier variant, network outputs are evaluated on a uniform periodic grid and transformed to Fourier space, where spatial derivatives are obtained through spectral multiplication and the same Fourier coefficients are reused across derivative orders. We compare the two procedures in standard PINNs for the Allen--Cahn and Korteweg--de Vries equations and in Causal PINNs for the Allen--Cahn, Korteweg--de Vries, and Kuramoto--Sivashinsky equations. Across these five equation--framework settings, Fourier differentiation yields mean paired end-to-end training speedups ranging from $2.90\\times$ to $18.52\\times$ and reduces peak allocated graphics processing unit (GPU) memory by $68.7\\%$--$94.1\\%$. The final relative $L_2$ errors remain of the same order, with neither differentiation procedure showing a consistent accuracy advantage. For the one-dimensional periodic benchmarks considered here, Fourier spectral differentiation therefore provides substantially lower training time and memory usage than spatial AD while retaining comparable solution error, at the cost of requiring a uniform structured spatial grid.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/05/2609.04011v1-differentiable-hybrid-modelling-for-learning-and-optimising-chemical-transport-processes-from-experimental-data",
+      "section": "quick",
+      "title_en": "Differentiable Hybrid Modelling for Learning and Optimising Chemical Transport Processes from Experimental Data",
+      "authors": "Arthur Jessop, Mohammed Alsubeihi, Ben Moseley, Ashwin Kumar Rajagopalan",
+      "date": "2026-09-03",
+      "pdf": "https://arxiv.org/pdf/2609.04011v1",
+      "score": "6.0",
+      "evidence": "提出可微混合建模框架，将机理传输模型与神经网络结合，可借鉴用于地下水流动与溶质运移模拟",
+      "tldr": "针对现有化学传递模型依赖人为本构定律和初始条件假设而黑盒神经网络缺乏物理一致性的问题，提出了一种可微分混合建模框架。该框架将JAX有限体积群体平衡求解器与神经网络结合，可从实验数据中自动发现本构关系并拟合初始条件。凭借端到端可微性，还可直接对实验设置进行优化，为质量、能量和动量传递相关的分离过程学习和优化提供了一条新途径。",
+      "tags": "query:ag",
+      "abstract_en": "Reliable transport models are essential when modelling and optimising many chemical engineering processes, yet, most models assume hand-picked constitutive laws which may not reflect reality, and often assume initial conditions are known exactly. Both restrictions can significantly bias model predictions and lead to systematic error when used in predictive and control settings. Black-box neural surrogate alternatives for modelling can better match real example data, but are confined to the task they were trained on and cannot be interrogated for physical consistency. Here we introduce a general-purpose differentiable hybrid modelling framework for transport processes, specifically for the case of population balance equations. Our framework integrates a JAX finite volume population balance solver with learnable neural network components which are trained to both discover constitutive laws and fit initial conditions from real experimental data, allowing us to better model real experimental transport systems. Furthermore, we use our framework for process optimisation, using its differentiability to allow us to direct optimising experimental settings for quantities of interest. This work highlights the huge potential of such differentiable hybrid modelling frameworks for learning and optimising any given chemical separation which involves mass, energy, and/or momentum transport.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

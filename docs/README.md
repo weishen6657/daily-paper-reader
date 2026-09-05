@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-09-04</span>
+      <span class="dpr-home-dashboard-kicker">2026-09-05</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 7 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 2 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>6</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>2</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-09-04 19:43:03 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-09-05 19:33:23 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日精读聚焦可组合神经算子（8.0分），另速读覆盖参数化PDE算子学习、PINN高阶混合导数及3D RANS降维方法。最值得关注的是“可学习组合”提升算子泛化，以及多指数Bell多项式加速PINN高阶导数计算。建议普通读者先看懂精读文章的核心实验设计，再按兴趣速览其余三篇的对比表。</p>
+<p>今日速读2篇论文，均获6.0分，聚焦物理信息神经网络与可微分建模的计算方法。</p>
+<p>最值得关注的两大方向：周期PINN中Fourier谱微分与自动微分的计算对比，以及结合实验数据优化化学传输过程的混合建模。</p>
+<p>建议先从第二篇入手，理解可微分建模如何用实验数据驱动学习，再对比第一篇的方法论差异。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -71,12 +73,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">1 篇</strong>
+    <strong class="dpr-home-dashboard-count">0 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Learnable composition for neural operators">Learnable composition for neural operators</span></li></ul>
+<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>1</strong></span></div>
+
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -84,12 +86,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">6 篇</strong>
+    <strong class="dpr-home-dashboard-count">2 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Equation Recast for Canonical Operator Learning Across Parametric PDEs">Equation Recast for Canonical Operator Learning Across Parametric PDEs</span></li><li><span class="dpr-home-dashboard-paper-title" title="Computing high-order mixed derivatives in physics-informed neural networks using multi-index Bell polynomials">Computing high-order mixed derivatives in physics-informed neural networks using multi-index Bell polynomials</span></li><li><span class="dpr-home-dashboard-paper-title" title="Dimension Bridging for 3D RANS with Neural Network Accelerated Gaussian Functional Regression">Dimension Bridging for 3D RANS with Neural Network Accelerated Gaussian Functional Regression</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="A Computational Comparison of Fourier Spectral Differentiation and Spatial Automatic Differentiation in Periodic Physics-Informed Neural Networks">A Computational Comparison of Fourier Spectral Differentiation and Spatial Automatic Differentiation in Periodic Physics-Informed Neural Networks</span></li><li><span class="dpr-home-dashboard-paper-title" title="Differentiable Hybrid Modelling for Learning and Optimising Chemical Transport Processes from Experimental Data">Differentiable Hybrid Modelling for Learning and Optimising Chemical Transport Processes from Experimental Data</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>6</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>2</strong></span></div>
 </section>
 </div>
 

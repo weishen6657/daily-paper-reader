@@ -1,0 +1,41 @@
+{
+  "date": "20260905",
+  "date_label": "",
+  "generated_at": "2026-09-05 19:33:23 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.02110v1",
+      "route": "202609/05/2609.02110v1-a-computational-comparison-of-fourier-spectral-differentiation-and-spatial-automatic-differentiation-in-periodic-physics-informed-neural-networks",
+      "title": "A Computational Comparison of Fourier Spectral Differentiation and Spatial Automatic Differentiation in Periodic Physics-Informed Neural Networks",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "PINN空间微分比较可提升地下水流模型训练效率",
+      "first_seen_at": "2026-09-05 19:33:23 UTC",
+      "updated_at": "2026-09-05 19:33:23 UTC"
+    },
+    {
+      "paper_id": "2609.04011v1",
+      "route": "202609/05/2609.04011v1-differentiable-hybrid-modelling-for-learning-and-optimising-chemical-transport-processes-from-experimental-data",
+      "title": "Differentiable Hybrid Modelling for Learning and Optimising Chemical Transport Processes from Experimental Data",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "提出可微混合建模框架，将机理传输模型与神经网络结合，可借鉴用于地下水流动与溶质运移模拟",
+      "first_seen_at": "2026-09-05 19:33:23 UTC",
+      "updated_at": "2026-09-05 19:33:23 UTC"
+    }
+  ]
+}
