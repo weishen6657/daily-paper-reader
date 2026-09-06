@@ -1,0 +1,327 @@
+Title: APPSolver: Adaptive Patch Partitioning for Point-Wise Ship Flow Prediction on Unstructured Meshes
+
+URL Source: https://arxiv.org/pdf/2608.29355v1
+
+Published Time: Tue, 01 Sep 2026 00:50:49 GMT
+
+Number of Pages: 14
+
+Markdown Content:
+# APPSolver: Adaptive Patch Partitioning for Point-Wise Ship Flow Prediction on Unstructured Meshes 
+
+Wenhua Huo Fenglei Han ∗ Wangyuan Zhao Xiao Peng 
+
+Chunhui Wang Jialin Wu Jiayi Han College of Shipbuilding Engineering, Harbin Engineering University 
+
+fenglei_han@hrbeu.edu.cn 
+
+## Abstract 
+
+Large non-uniform point sets make direct attention-based surrogate modeling costly for ship hydrodynamics. We introduce APPSolver, a point-wise flow-prediction framework built around Adaptive Patch Partitioning (APP), a deterministic quadtree representation for fixed two-dimensional horizontal slices extracted from ship CFD simulations. APP assigns finer patches near the hull and coarser patches farther away, downsamples patch contents, and recovers predictions to the full reference point set. Under a corrected protocol that constructs natural (t, t + 1) 
+
+pairs before splitting, reuses training-set normalization statistics, and reports three model seeds, learned tokenizers are more accurate than APP-Transformer, and a persistence baseline has lower one-step MAE on all three ShipBench hulls. The supported benefit of APP is therefore computational rather than universal predictive superiority: on a representative DTC input, APP-Transformer requires 1.815 GFLOPs and 1.309 ms per model forward, while a matched ablation shows that adaptive partitioning reduces MAE by 16.4–24.9% relative to a uniform partition augmented with learned slicing. Condition encoders provide setting-dependent gains in leave-one-hull-out evaluation, but the current absolute next-state objective does not establish accurate long-horizon dynamics. These results characterize APP as a compact spatial representation with an explicit accuracy–efficiency trade-off. Code is available at https://github.com/wenhuahuo/APPSolver .
+
+## 1 Introduction 
+
+High-fidelity flow fields around ship hulls support hydrodynamic analysis and design, but repeated CFD simulations remain expensive across hull forms and operating conditions [28, 30]. Deep-learning surrogates can reduce this cost [32]. Ship CFD data nevertheless present a representation challenge: points are strongly non-uniform, with local refinement near the hull and wake and much coarser sampling in the far field [31]. This work studies fixed two-dimensional horizontal slices extracted at ship draft, rather than moving free surfaces or full three-dimensional volume meshes. Many surrogates interpolate CFD fields onto regular grids for use with CNNs [14], Vision Trans-formers [21], or Fourier Neural Operators [16]. Other methods, including GNOT [9], Transolver [33], and UPT [2], process irregular samples directly and use learned latent or token representations. Point-to-token compression is therefore not unique to our method. Our question is narrower: whether a deterministic partition aligned with the spatial refinement pattern of ship CFD can provide a useful representation and a favorable model-forward cost, while retaining a route back to the full reference point set. 
+
+> ∗Corresponding author. Preprint. arXiv:2608.29355v1 [cs.AI] 29 Aug 2026
+
+We propose Adaptive Patch Partitioning (APP), a distance-refined quadtree that forms finer patches near the hull and coarser patches farther away. APP converts a large non-uniform point set into fixed-length patch tokens, applies controlled downsampling, and recovers outputs to all reference points by distance-weighted k-nearest-neighbor interpolation. APPSolver combines this representation with a Transformer backbone and a generic condition-token interface for hull geometry and operating parameters. Frozen Qwen encoders are one realization of this interface; normalized numerical MLP, Fourier-feature MLP, FiLM, and zero-conditioning alternatives are evaluated directly. Our contributions are: • We define and audit a one-step prediction benchmark on fixed non-uniform 2D ship-flow point sets. Natural (t, t + 1) pairs are constructed before splitting, normalization uses training statistics, and predictions are evaluated after recovery to the full reference point set. • We introduce APP as a deterministic quadtree tokenization and recovery mechanism. A matched production-model ablation compares adaptive, uniform, and uniform-plus-learned partitions, while profiling separates model-forward efficiency from end-to-end cost. • We characterize, rather than hide, the resulting trade-offs. Learned tokenizers and persistence are more accurate under the corrected protocol, whereas APP-Transformer has substantially lower measured model-forward cost. Condition-token gains are modest and depend on the held-out hull. 
+
+## 2 Related work 
+
+We review related work along two directions below. Additional discussion on data-driven ship hydro-dynamics surrogates and token-based representations for physical fields is provided in Appendix D. 
+
+2.1 Regular-grid flow prediction and time rollout models 
+
+Many flow field prediction models represent CFD data as regular grids or image tensors [6] and use convolutional networks [27], U-Net [20], Vision Transformer [21], or Fourier Neural Operator [16] for learning. Early work has demonstrated the effectiveness of convolutional neural networks in two-dimensional flow field prediction and surrogate modeling. FNO further approaches from the operator learning perspective, learning function-space-to-function-space mappings through frequency-domain convolution on regular grids, and has demonstrated high inference efficiency across multiple PDE benchmarks. In benchmarks closer to engineering CFD, regular grid representations have also been used to construct cross-geometry, cross-boundary-condition flow field prediction tasks, supporting autoregressive time rollouts [20, 11]. Regular-grid methods provide uniform tensor shapes and efficient computation with mature image architectures. Ship CFD meshes, however, are typically refined near the hull and wake and sampled more sparsely in the far field. Interpolation to a regular grid changes this sampling pattern and can introduce redundant far-field samples. We therefore study one-step point-wise prediction while preserving the spatial organization of the fixed non-uniform 2D reference set. This choice does not imply that regular-grid models are generally inferior. 
+
+2.2 Operator learning on irregular meshes and complex geometries 
+
+Beyond regular grid methods, another line of work directly targets physical field learning on unstruc-tured meshes, point clouds, or complex geometries. MeshGraphNets [23] organizes mesh nodes and adjacency relationships into graph structures, learning the temporal evolution of physical sys-tems through message passing, demonstrating the ability to model variable topologies and complex boundary conditions. Subsequent graph neural network methods have also been applied to fluid prediction tasks on unstructured meshes, showing that explicitly utilizing mesh connectivity helps model local interactions and physical propagation processes [8]. These methods share with this paper the avoidance of regular grid interpolation, but the computational form of graph message passing and its receptive field expansion differ from Transformer-style global token modeling. Neural operators and Transformer-based PDE solvers have expanded prediction on complex geome-tries and irregular samples. Geo-FNO [17] extends Fourier operators to complex domains, GNOT 2Point-wise Prediction Adaptive Patch Partitioning      
+
+> 3) P & D
+> Input Flow Field
+> Transformer
+> ... ... ...
+> Flatten & Linear Projection
+> Ship Params
+> ship_info: B: 51.0 B_T: 3.517 Cb: 0.6642 Cba: 0.6653 Cbf: 0.0953 Cm: 0.9701 ...
+> Case Params
+> OpenFoamSetting: g: 9.81 hRef: 0.244 water: nu: 1.09e-06 rho: 998.8 Umean: 1.668 ...
+> LLM Encoder Projection . . .
+> Padding Down-sample
+> 1) Coarse Partition 2) Near-field Refinement Padding & Downsample (P & D) Condition Token Encode Legend
+> done done
+> Frozen Params Coarse Partition & Near-field Refinement Detailed View
+> Patch Point Patch Token Condition Token
+> ...
+
+Figure 1: Overview of APPSolver on a fixed non-uniform 2D reference slice. APP applies quadtree partitioning, distance-based refinement, padding, and downsampling to construct patch tokens. A condition encoder optionally maps hull geometry and operating parameters into a prefix token. The Transformer predicts downsampled patch outputs, which are recovered to the full reference point set with distance-weighted k-nearest-neighbor interpolation. [9] maps input functions and query points through geometry-aware attention, Transolver [33] learns physics-aware slices, and UPT [2] uses latent tokens for general physical fields. APPSolver does not claim a new point-to-token principle beyond these methods. Its narrower distinction is a deterministic spatial prior derived from quadtree partitioning, together with explicit downsampling, full-reference recovery, and an empirical accuracy–cost characterization on non-uniform 2D ship-flow point sets. 
+
+## 3 Method 
+
+This section presents the overall method design of APPSolver. Figure 1 illustrates the complete pipeline from flow field patch partitioning to next-step point-wise flow field prediction: To avoid terminological confusion, APP in this paper specifically refers to the Adaptive Patch Partitioning method, while APPSolver refers to the complete flow field prediction framework encompassing APP, condition token fusion, and the backbone prediction network. 
+
+3.1 Problem definition 
+
+We formulate ship flow prediction as a one-step surrogate task on a fixed non-uniform 2D reference point set extracted from a horizontal CFD slice. Given a time-independent point set X = {xi}Ni=1 
+
+with xi ∈ Rdx , the flow field state at time t is Ut = {ui,t }Ni=1 with ui,t ∈ Rdu , where N is the number of mesh points, dx = 2 is the coordinate dimensionality, and du = 4 comprises three velocity components and pressure. The model learns a mapping Fθ conditioned on a case token c that encodes ship geometry and condition parameters: 
+
+bUt+1 = Fθ (X , Ut, c ) , bUt+1 ∈ RN ×du , (1) trained with a point-wise MSE loss L(θ) = |D| −1 P
+
+t ∥ bUt+1 − Ut+1 ∥22/N . APP serves as an intermediate tokenization mechanism and does not alter the output boundary: the final prediction is reassembled to every original CFD point. A detailed problem formulation is provided in Appendix C. 
+
+3.2 Ship still water navigation dataset 
+
+To construct irregular point set temporal data for ship still water navigation problems, we establish the ship still water navigation dataset (we call it ShipBench) based on the DTC hull from OpenFOAM 3tutorials 2, as well as KCS and KVLCC2 published by SIMMAN 2020 3, covering three typical ship types. The data generation pipeline uses the interFoam solver in OpenFOAM [10], combined with the VOF method to capture free surface evolution, with turbulence closure using the SST k–ω model. The geometry and mesh stage uses snappyHexMesh to generate unstructured meshes near the hull, with the initial phase field specified by setFields . Subsequently, unsteady flow fields are obtained through parallel solving, and field values on the fixed horizontal plane at ship draft are exported during post-processing. The learning target is a non-uniform two-dimensional point set on a fixed horizontal plane at ship draft, rather than an instantaneous moving free surface or a full three-dimensional volume field. Each point has two spatial coordinates and four physical channels: velocity components u, v, and w, and pressure prgh . We preserve this non-uniform sampling rather than interpolating it onto an image-like regular grid. Within each condition, the horizontal slice defines a fixed reference point set with a constant spatial structure across time. Parallel export can change row ordering even though the reference locations are unchanged. We therefore use a KDTree to restore every frame to the first-frame reference ordering. This step establishes row-wise spatial correspondence; it does not truncate points or compensate for a changing surface. Natural adjacent-frame pairs (t, t + 1) are then constructed in chronological order before the split is applied. Z-score normalization statistics are estimated on the training partition and reused unchanged for validation and rollout. 
+
+3.3 Adaptive patch partitioning Adaptive flow field partitioning method. For one-step prediction on the fixed non-uniform reference set, APPSolver first converts the points into compact patch-token representations for a standard Transformer, using APP as an intermediate tokenization mechanism. Given the two-dimensional spatial coordinates xi = ( xi, y i) at the current time step and their corresponding flow field variables, APP constructs a quadtree partition on the original CFD point set. During the partitioning process, a node is subdivided into four quadrants, and its non-empty child nodes are recursively processed. If subdivision yields only one non-empty quadrant, further partitioning is stopped to avoid unstable recursion in highly non-uniform or locally degenerate cases. The basic stopping criterion for a node can be written as 
+
+Stop( v) = I[|P v | ≤ Tv ] (2) where Pv denotes the set of CFD points within node v, and Tv denotes the target mesh node capacity for the sub-region corresponding to node v. This constraint controls the spatial coverage of different tokens during the recursive partitioning process, allowing APP to form a computable intermediate representation while preserving local structure. The leaf nodes form the patch set, with each patch corresponding to a local region of the reference point set. Within a patch, points are sorted lexicographically by (x, y ): smaller x comes first, with ties resolved by increasing y. This deterministic order and partition exploit the near-field-to-far-field sampling pattern while avoiding one Transformer token per reference point. 
+
+Near-field refinement strategy. APP uses distance to the hull reference point as a deterministic proxy for spatial importance. This encourages finer patches near the hull and coarser patches farther away, but it does not explicitly detect a wake or estimate flow gradients. Inspired by distance-based geometric conditioning [6], we normalize the distance thresholds by ship length: 
+
+r1 = τ1Lship , r2 = τ2Lship . (3) Given a base capacity S, the target capacity for different distance regions is defined as 
+
+S⋆v =
+
+
+
+max(4 , ⌊S/ 4⌋), ∥cv − xref ∥2 < r 1,
+
+max(4 , ⌊S/ 2⌋), r1 ≤ ∥ cv − xref ∥2 < r 2,S, ∥cv − xref ∥2 ≥ r2.
+
+(4) The value 4 is the minimum patch capacity. Smaller target capacities encourage further subdivision, forming more patches near the hull while retaining larger aggregation units farther away. The 
+
+> 2https://github.com/OpenFOAM/OpenFOAM-7/tree/master/tutorials/multiphase/interFoam/RAS/ DTCHullWave
+> 3https://simman2020.kr/contents/Ship_data_summary.php
+
+4operation does not interpolate the point set onto a regular grid; it changes only the local token granularity according to the selected distance prior. 
+
+Spatial downsampling strategy. After quadtree partitioning and near-field refinement, the number of points within different patches is typically inconsistent. To construct patch tokens of uniform length, zero-padding is needed for each patch. However, if the maximum point count after partitioning is directly used as the point slot length, the many points in far-field coarse-grained patches would introduce additional redundancy. To address this, we propose a spatial downsampling strategy. Given a base patch capacity S and a downsampling ratio ρ, the target point budget is defined as 
+
+Ntar = max(4 , ⌊Sρ ⌋). (5) Near-field patches whose distance to the reference point is less than r1 are preferentially preserved during downsampling. For non-near-field patches whose point count exceeds the budget, approximate uniform sampling is performed along their internal point sequence to bring their size close to Ntar .Subsequently, the unified point slot length is determined based on the maximum point count after downsampling, and masks are used to distinguish real points from padding positions. Finally, the input, output, and validity masks are organized as 
+
+X ∈ RP ×(Nslot Cin ), Y ∈ RP ×(Nslot Cout ), M ∈ { 0, 1}P ×Nslot . (6) where P is the number of patches and Nslot is the maximum point-slot count after downsampling. The base capacity S and the post-downsampling budget are distinct: the default S = 256 with ρ = 0 .6
+
+gives ⌊256 × 0.6⌋ = 153 retained slots before padding. This sequence compresses over-budget far-field patches and then applies fixed-length padding. To recover predictions to the full reference point set, we use distance-weighted k-nearest-neighbor interpolation with k = 4 .
+
+3.4 Ship geometry and case parameter embedding 
+
+APPSolver exposes a generic condition interface that maps hull geometry and operating parameters to the patch-token space. For sample m,
+
+c(m) = {c(m)geo , c (m)case }, (7) where c(m)geo contains principal dimensions, waterplane parameters, and station profiles [34], and c(m)case 
+
+contains speed, Reynolds number, fluid properties, and boundary conditions. We evaluate zero condi-tioning, a normalized numeric MLP, a Fourier-feature MLP, FiLM, and frozen Qwen2.5/Qwen3.5 encoders [25, 24]. Numerical encoders use statistics from the training hulls. For Qwen, the structured parameters are textualized, embeddings are precomputed offline, and the hidden state at the last non-padding token is projected to the backbone dimension: 
+
+e(m) 
+
+> c
+
+= WcfLLM 
+
+
+
+T (c(m))
+
+
+
+> last
+
++ bc ∈ Rdmodel . (8) The offline LLM encoding cost is not included in model-forward timing. Given P APP inputs {x(m) 
+
+> i
+
+}Pi=1 , each patch is projected and augmented with a learnable position embedding, 
+
+p(m) 
+
+> i
+
+= Wxx(m) 
+
+> i
+
++ ri, i = 1 , . . . , P. 
+
+Token-based encoders concatenate the condition token as a prefix, 
+
+X(m)0 =
+
+h
+
+e(m) 
+
+> c
+
+, p (m)1 , . . . , p (m)
+
+> P
+
+i
+
+∈ R(P +1) ×dmodel . (9) Only patch representations are projected to flow outputs. FiLM instead modulates backbone features through learned affine parameters. This interface separates the use of explicit condition information from the choice of a particular encoder. 54 Experiments 
+
+4.1 Experimental setup 
+
+We evaluate on ShipBench, which contains DTC, KCS, and KVLCC2 with two speeds per hull, and on four CFDBench problems [20]: cavity, tube, dam, and cylinder. APP-Transformer and APP-DPT [26] are compared with Transolver [33], FNO [16], UPT [2], GNOT [9], Fusion-DeepONet [22], PCNO [35], and a persistence predictor bUt+1 = Ut. Learned models contain approximately 1M parameters. The corrected ShipBench protocol constructs natural adjacent-frame pairs before splitting, uses training-partition normalization statistics, and evaluates after recovery to the full reference point set. Unless noted otherwise, tables report normalized-space mean absolute error (MAE) and relative 
+
+L2 error. Learning-model entries are means ± sample standard deviations over seeds 42, 43, and 44 with fixed split seed 42. Detailed protocols are given in Appendix A. 
+
+4.2 Corrected main comparison 
+
+Table 1 reports the corrected ShipBench comparison. Persistence obtains the lowest overall MAE on every hull. Among learned methods, UPT is best on DTC, PCNO on KCS, and Transolver on KVLCC2. APP-Transformer is less accurate than these learned tokenizers, but its relative L2 error is lower than persistence on DTC and KCS, and its KVLCC2 MSE is also lower (1.696 versus 2.511). The ranking is therefore metric-dependent, but the one-step MAE results do not support a claim that the absolute next-state objective has learned the small temporal increments at a 0.2-s interval. Table 1: Corrected ShipBench comparison. Each hull reports normalized MAE and relative L2;learning models are mean ± sample standard deviation over three model seeds. Persistence is deterministic. Best values in each metric are bold.                                                                  
+
+> DTC KCS KVLCC2 Model MAE Rel. L2MAE Rel. L2MAE Rel. L2
+> APP-Transformer .09254 ±.00016 .22406 ±.00046 .12910 ±.00125 .26102 ±.00163 .04600 ±.00085 .96909 ±.00881 APP-DPT .16703 ±.00221 .32745 ±.00240 .21707 ±.00377 .38297 ±.00585 .05513 ±.00107 .98120 ±.00486 Transolver .04512 ±.00077 .18113 ±.00043 .08942 ±.00154 .22394 ±.00269 .03507 ±.00201 .93869 ±.03573 UPT .04405 ±.00093 .18467 ±.00074 .08861 ±.00115 .22546 ±.00042 .03894 ±.00320 .95292 ±.00995 GNOT .14898 ±.00111 .31130 ±.00035 .20378 ±.00628 .37454 ±.00730 .07015 ±.00265 .98318 ±.00175 FNO .16713 ±.00695 .33198 ±.01339 .23262 ±.00154 .40667 ±.00077 .08187 ±.00283 .95029 ±.00270 Fusion-DeepONet .12358 ±.00262 .26618 ±.00388 .17695 ±.00526 .32736 ±.00744 .08030 ±.00099 .98879 ±.00502 PCNO .04979 ±.00704 .18025 ±.00505 .08228 ±.00093 .20763 ±.00235 .03759 ±.00066 .91342 ±.00117
+> Persistence .03753 .21156 .07707 .23665 .03196 1.17916
+
+The channel-wise comparison in Table 2 shows the same limitation. Persistence is better in 11 of 12 hull–channel comparisons; APP-Transformer is better only for prgh on KVLCC2. All eight learned methods also trail persistence in overall MAE. The strongest learned-model MAEs are still 17.4%, 6.8%, and 9.7% higher than persistence on DTC, KCS, and KVLCC2, respectively. Table 2: APP-Transformer versus persistence normalized MAE by channel. Cells show APP mean ±
+
+standard deviation / persistence. Lower values are bold.                                    
+
+> Hull Overall uvwprgh
+> DTC .09254 ±.00016 / .03753 .06094 ±.00136 / .02072 .09679 ±.00069 / .04346 .09394 ±.00074 / .03798 .11849 ±.00076 / .04795
+> KCS .12910 ±.00125 / .07707 .06667 ±.00040 / .02950 .11234 ±.00008 / .06080 .10171 ±.00098 / .05625 .23567 ±.00453 / .16174
+> KVLCC2 .04600 ±.00085 / .03196 .05351 ±.00239 / .03288 .04762 ±.00244 / .02923 .05403 ±.00131 / .03330 .02883 ±.00054 / .03241
+
+Table 3 reports CFDBench MAE. PCNO is best on cavity, dam, and cylinder, while UPT is best on tube. APP-Transformer does not obtain the best MAE on these four tasks. We therefore use CFDBench as an external robustness comparison rather than evidence of uniform superiority. 6Table 3: Normalized MAE on CFDBench, reported as mean ± sample standard deviation over three seeds. Best values are bold.                                     
+
+> Model Cavity Tube Dam Cylinder APP-Transformer .05659 ±.00166 .04915 ±.00291 .07452 ±.00350 .08088 ±.00129 APP-DPT .12221 ±.00555 .12593 ±.00083 .16252 ±.00232 .18833 ±.00718 Transolver .01188 ±.00336 .02188 ±.00281 .02968 ±.00253 .01880 ±.00273 UPT .00827 ±.00249 .02005 ±.00194 .03406 ±.00410 .02029 ±.00482 GNOT .09395 ±.00392 .25438 ±.00169 .14753 ±.01018 .16611 ±.00489 FNO .07837 ±.00172 .17955 ±.00867 .33922 ±.00635 .24454 ±.01226 Fusion-DeepONet .11898 ±.00848 .31556 ±.03114 .12206 ±.00810 .17601 ±.00941 PCNO .00707 ±.00027 .06489 ±.01077 .02212 ±.00072 .01245 ±.00033
+
+Figure 2 illustrates one DTC 1Re prediction. Target and prediction fields should be compared within each physical channel; the error panels use a separate visual range and are not used as evidence of near-perfect prediction. 
+
+Figure 2: Illustrative APP-Transformer prediction on a DTC 1Re sample. Rows correspond to u,
+
+v, w, and prgh ; the inset identifies the locally refined near-hull region. Quantitative conclusions are based on full-reference metrics rather than apparent error intensity in this rendering. 
+
+4.3 Adaptive partition and learned-token ablations 
+
+We compare the production APP-Transformer under three matched partition strategies. Adaptive is the proposed distance-refined quadtree. Uniform disables distance refinement while retaining the remaining APP pipeline. Uniform + learned adds a Transolver-style 32-slice soft assignment inside each backbone block. Table 4 shows that adaptive partitioning reduces MAE relative to uniform + learned by 24.9%, 19.7%, and 16.4% on DTC, KCS, and KVLCC2. This supports the spatial prior within the matched APPSolver architecture; it does not establish that fixed partitioning is universally better than learned tokenization. 7Table 4: Production APP-Transformer partition ablation. Values are normalized MAE, mean ±
+
+sample standard deviation over three seeds.             
+
+> Strategy DTC KCS KVLCC2 Adaptive .09254 ±.00016 .12910 ±.00125 .04600 ±.00085
+> Uniform .12431 ±.00152 .16564 ±.00085 .04890 ±.00184 Uniform + learned .12324 ±.00026 .16086 ±.00022 .05502 ±.00046
+
+We also sweep Transolver slice counts {4, 8, 16 , 32 } and UPT latent-token counts {8, 16 , 32 , 64 , 128 }
+
+under the same 16,000-step budget. Table 5 reports the best setting per hull. The tuned learned-token models remain more accurate than APP-Transformer. The sweep is targeted to token budgets and is not an exhaustive architecture-specific hyperparameter search. Table 5: Best token-budget setting and normalized MAE for Transolver and UPT, compared with APP-Transformer.             
+
+> Hull Best Transolver Best UPT APP-Transformer DTC 32 slices: .04512 ±.00077 64 tokens: .04395 ±.00065 .09254 ±.00016 KCS 8 slices: .08855 ±.00115 8 tokens: .08804 ±.00118 .12910 ±.00125 KVLCC2 4 slices: .03458 ±.00160 8 tokens: .03496 ±.00229 .04600 ±.00085
+
+4.4 Condition-encoder comparison 
+
+The condition-token contribution is an interface for injecting hull geometry and operating parameters, not a claim that a frozen LLM is always necessary. We compare zero conditioning, a normalized numeric MLP, a Fourier-feature MLP, FiLM, Qwen2.5, and Qwen3.5 on APP-Transformer. Table 6 reports mean normalized MAE over three model seeds. Zero conditioning is best in the full-data setting. In the leave-one-hull-out experiments, Qwen3.5 reduces MAE relative to zero by approxi-mately 3.0%, 4.5%, and 1.0% on DTC, KCS, and KVLCC2, respectively. Numeric encoders remain competitive, indicating that gains arise from explicit condition information rather than being exclusive to an LLM. The KVLCC2 errors and relative L2 values near one indicate a severe out-of-support shift, so its small improvement is limited evidence of extrapolation. Table 6: APP-Transformer condition-encoder ablation. Entries are mean normalized MAE over seeds 42, 43, and 44. 
+
+Scenario Zero Numeric MLP Fourier MLP FiLM Qwen2.5 Qwen3.5 Full ShipBench .03979 .04048 .04133 .04036 .04069 .04128 Leave out DTC .02690 .02623 .02859 .17942 .02717 .02609 
+
+Leave out KCS .04395 .04779 .04273 .23264 .04262 .04199 
+
+Leave out KVLCC2 7.84960 8.24206 8.00103 8.50888 7.89234 7.77022 
+
+4.5 Fifty-step autoregressive rollout 
+
+Single-step errors do not establish temporal stability. We therefore evaluate seed-42 best-validation checkpoints on an independently held-out continuous 51-frame window, feeding each prediction back as the next input. Table 7 shows that APP-Transformer remains finite for 50 steps but is less accurate than persistence at every reported horizon. Its cumulative MAE ratios through step 50 are 6.01, 3.81, and 6.44 on DTC, KCS, and KVLCC2. No learned model obtains a cumulative ratio below one; the best finite ratios are 1.70 for GNOT on DTC, 1.98 for GNOT on KCS, and 6.44 for APP-Transformer on KVLCC2. PCNO becomes non-finite on KVLCC2 at h = 19 . The rollout study uses one model seed and does not support a claim of accurate long-horizon dynamics. 8Table 7: APP-Transformer / persistence normalized MAE during a 50-step autoregressive rollout. The cumulative ratio is cumulative APP MAE divided by cumulative persistence MAE through h = 50 .                        
+
+> Hull h= 1 h= 10 h= 20 h= 50 Cumulative ratio DTC .08295/.02751 .18484/.07201 .29028/.09217 1.33241/.10816 6.01 ×
+> KCS .11286/.05944 .22500/.09099 .33339/.09919 .76954/.13835 3.81 ×
+> KVLCC2 .01679/.00378 .05459/.00856 .06893/.01004 .07087/.01173 6.44 ×
+
+## 5 Limitations and conclusion 
+
+The corrected evaluation exposes several important limitations. Persistence has lower one-step MAE than every learned model on all three hulls, and no learned model achieves cumulative 50-step MAE below persistence. The absolute next-state objective therefore does not establish accurate temporal dynamics at the 0.2-s interval; residual prediction, multi-step training, or dynamics-aware objectives are needed before APPSolver can be used for reliable rollout. The rollout study also uses only one model seed. In addition, ShipBench contains three hulls and two speeds per hull, and the KVLCC2 holdout indicates severe out-of-support failure. Best checkpoints are selected on the reported validation split rather than an independent test set. The geometric scope is equally bounded. We evaluate fixed non-uniform 2D horizontal slices at ship draft, not moving instantaneous free surfaces, native mesh connectivity, or 3D volume meshes. An octree is a natural implementation direction for 3D data, but it has not been implemented or evaluated. Finally, the reported latency covers model forward only; APP construction, host-to-device transfer, offline condition encoding, and k-NN recovery are excluded. Within these boundaries, APPSolver provides a deterministic adaptive tokenization and recovery pipeline for large ship-flow point sets. Matched ablations support the distance-refined partition within the production architecture, and GPU profiling shows a substantially lower model-forward cost than Transolver, UPT, and GNOT, at the price of lower predictive accuracy. The condition-token interface can modestly assist held-out-hull transfer, while lightweight numerical encoders remain competitive. The principal conclusion is therefore an explicit accuracy–efficiency trade-off for adaptive spatial representation, rather than universal predictive superiority or established long-horizon dynamics. 
+
+## References 
+
+[1] Kiriakos Alexiou, Efthimios G. Pariotis, Helen C. Leligou, and Theodoros C. Zannis. Towards data-driven models in the prediction of ship performance (speed–power) in actual seas: A comparative study between modern approaches. Energies , 15(16):6094, 2022. doi: 10.3390/en15166094. URL https: //doi.org/10.3390/en15166094 .[2] Benedikt Alkin, Andreas Fürst, Simon Schmid, Lukas Gruber, Markus Holzleitner, and Johannes Brand-stetter. Universal physics transformers: A framework for efficiently scaling neural operators. Advances in Neural Information Processing Systems , 37:25152–25194, 2024. [3] Volker Bertram. Practical ship hydrodynamics . Elsevier, 2012. [4] Nicolas Carion, Francisco Massa, Gabriel Synnaeve, Nicolas Usunier, Alexander Kirillov, and Sergey Zagoruyko. End-to-end object detection with transformers. In European conference on computer vision ,pages 213–229. Springer, 2020. [5] Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn, Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer, Georg Heigold, Sylvain Gelly, et al. An image is worth 16x16 words: Transformers for image recognition at scale. arXiv preprint arXiv:2010.11929 , 2020. [6] Xiaoxiao Guo, Wei Li, and Francesco Iorio. Convolutional neural networks for steady flow approximation. In Proceedings of the 22nd ACM SIGKDD international conference on knowledge discovery and data mining , pages 481–490, 2016. [7] Prateek Gupta, Adil Rasheed, and Sverre Steen. Ship performance monitoring using machine-learning. 
+
+Ocean Engineering , 254:111094, 2022. doi: 10.1016/j.oceaneng.2022.111094. URL https://doi.org/ 10.1016/j.oceaneng.2022.111094 .[8] Xu Han, Han Gao, Tobias Pfaff, Jian-Xun Wang, and Li-Ping Liu. Predicting physics in mesh-reduced space with temporal attention. In International Conference on Learning Representations , 2022. URL 
+
+https://arxiv.org/abs/2201.09113 .
+
+9[9] Zhongkai Hao, Zhengyi Wang, Hang Su, Chengyang Ying, Yinpeng Dong, Songming Liu, Ze Cheng, Jian Song, and Jun Zhu. Gnot: A general neural operator transformer for operator learning. In International conference on machine learning , pages 12556–12569. PMLR, 2023. [10] Hrvoje Jasak. OpenFOAM: Open source cfd in research and industry. International journal of naval architecture and ocean engineering , 1(2):89–94, 2009. [11] Jundou Jiang, Guanxiong Li, Yi Jiang, Laiping Zhang, and Xiaogang Deng. TransCFD: A transformer-based decoder for flow field prediction. Engineering Applications of Artificial Intelligence , 123:106340, 2023. doi: 10.1016/j.engappai.2023.106340. URL https://doi.org/10.1016/j.engappai.2023. 106340 .[12] Panagiotis D. Kaklis, Konstantinos Kostas, and Shahroz Khan. Machine learning and modeling for ship design. Journal of Marine Science and Engineering , 13(12):2304, 2025. doi: 10.3390/jmse13122304. URL https://doi.org/10.3390/jmse13122304 .[13] Pavlos Karagiannidis and Nikos Themelis. Data-driven modelling of ship propulsion and the effect of data pre-processing on the prediction of ship fuel consumption and speed loss. Ocean Engineering , 222: 108616, 2021. doi: 10.1016/j.oceaneng.2021.108616. URL https://doi.org/10.1016/j.oceaneng. 2021.108616 .[14] Sangam Khanal, Shilaj Baral, and Joongoo Jeon. Comparison of CNN-based deep learning architectures for unsteady cfd acceleration on small datasets. Nuclear Engineering and Technology , 57(10):103703, 2025. [15] Lars Larsson, Frederick Stern, and Michel Visonneau. CFD in ship hydrodynamics—results of the gothenburg 2010 workshop. In MARINE 2011, IV International Conference on Computational Methods in Marine Engineering , pages 237–259. Springer Netherlands, 2013. doi: 10.1007/978-94-007-6143-8_14. URL https://doi.org/10.1007/978-94-007-6143-8_14 .[16] Zongyi Li, Nikola Kovachki, Kamyar Azizzadenesheli, Burigede Liu, Kaushik Bhattacharya, Andrew Stuart, and Anima Anandkumar. Fourier neural operator for parametric partial differential equations. arXiv preprint arXiv:2010.08895 , 2020. [17] Zongyi Li, Daniel Zhengyu Huang, Burigede Liu, and Anima Anandkumar. Fourier neural operator with learned deformations for pdes on general geometries. Journal of Machine Learning Research , 24(388): 1–26, 2023. [18] Lu Lu, Pengzhan Jin, and George Em Karniadakis. Deeponet: Learning nonlinear operators for identi-fying differential equations based on the universal approximation theorem of operators. arXiv preprint arXiv:1910.03193 , 2019. [19] Lu Lu, Pengzhan Jin, Guofei Pang, Zhongqiang Zhang, and George Em Karniadakis. Learning nonlinear operators via DeepONet based on the universal approximation theorem of operators. Nature machine intelligence , 3(3):218–229, 2021. [20] Yining Luo, Yingfa Chen, and Zhen Zhang. CFDBench: A large-scale benchmark for machine learning methods in fluid dynamics. arXiv preprint arXiv:2310.05963 , 2023. [21] Renato F. Miotto and William R. Wolf. Flow imaging as an alternative to non-intrusive measurements and surrogate models through vision transformers and convolutional neural networks. Physics of Fluids , 35 (4):045143, 04 2023. ISSN 1070-6631. doi: 10.1063/5.0144700. URL https://doi.org/10.1063/5. 0144700 .[22] Ahmad Peyvan, Varun Kumar, and George Em Karniadakis. Fusion-deeponet: A data-efficient neural operator for geometry-dependent hypersonic and supersonic flows. Journal of Computational Physics ,544:114432, 2026. ISSN 0021-9991. doi: https://doi.org/10.1016/j.jcp.2025.114432. URL https: //www.sciencedirect.com/science/article/pii/S0021999125007144 .[23] Tobias Pfaff, Meire Fortunato, Alvaro Sanchez-Gonzalez, and Peter W Battaglia. Learning mesh-based simulation with graph networks. arXiv preprint arXiv:2010.03409 , 2020. [24] Qwen Team. Qwen3.5: Towards native multimodal agents, February 2026. URL https://qwen.ai/ blog?id=qwen3.5 .[25] Qwen Team, An Yang, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, Chengyuan Li, Dayiheng Liu, Fei Huang, et al. Qwen2.5 Technical Report, 2024. URL https://arxiv.org/abs/ 2412.15115 .
+
+10 [26] René Ranftl, Alexey Bochkovskiy, and Vladlen Koltun. Vision transformers for dense prediction. In 
+
+Proceedings of the IEEE/CVF international conference on computer vision , pages 12179–12188, 2021. [27] Mateus Dias Ribeiro, Abdul Rehman, Sheraz Ahmed, and Andreas Dengel. DeepCFD: Efficient steady-state laminar flow approximation with deep convolutional neural networks. arXiv preprint arXiv:2004.08826 , 2020. [28] Frederick Stern, Jianming Yang, Zhaoyuan Wang, Hamid Sadat-Hosseini, Maysam Mousaviraad, Shanti Bhushan, and Tao Xing. Computational ship hydrodynamics: Nowadays and way forward. International Shipbuilding Progress , 60(1-4):3–105, 2013. [29] Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. Attention is all you need. Advances in neural information processing systems ,30, 2017. [30] Michel Visonneau, Ganbo Deng, Emmanuel Guilmineau, Alban Leroyer, Patrick Queutey, and Jeroen Wackers. Computational fluid dynamics for naval hydrodynamics. Comptes Rendus. Mécanique , 350(S1): 1–19, 2022. [31] J Wackers, K Ait Said, GB Deng, P Queutey, M Visonneau, and I Mizine. Adaptive grid refinement applied to rans ship flow computation. In Proceedings of the 28th Symposium on Naval Hydrodynamics, Pasadena, California , 2010. [32] Haixin Wang, Yadi Cao, Zijie Huang, Yuxuan Liu, Peiyan Hu, Xiao Luo, Zezheng Song, Wanjia Zhao, Jilin Liu, Jinan Sun, et al. Recent advances on machine learning for computational fluid dynamics: A survey. arXiv preprint arXiv:2408.12171 , 2024. [33] Haixu Wu, Huakun Luo, Haowen Wang, Jianmin Wang, and Mingsheng Long. Transolver: A fast transformer solver for pdes on general geometries. arXiv preprint arXiv:2402.02366 , 2024. [34] Xing-chun Yan, Tao Zong, Wen Yao, and Yi-jing Wan. Research on the influence of the characteristic parameters of the very large oil tanker on the fast performance. Ship Science and Technology , 45(17): 15–19, 2023. [35] Chenyu Zeng, Yanshu Zhang, Jiayi Zhou, Yuhan Wang, Zilin Wang, Yuhao Liu, Lei Wu, and Daniel Zhengyu Huang. Point cloud neural operator for parametric PDEs on complex and variable geometries. Computer Methods in Applied Mechanics and Engineering , 443:118022, 2025. 
+
+## A Detailed experimental setup 
+
+This appendix provides the full experimental configuration described in Section 4.1. 
+
+A.1 Datasets 
+
+We evaluate two data domains: ShipBench and CFDBench [20]. ShipBench covers DTC, KCS, and KVLCC2, each at design speed (1Re) and twice design speed (2Re), with model lengths of approximately 6–8 m . Each case contains about 70 s of unsteady evolution at a 0.2 s export interval, giving roughly 350 frames. Fixed horizontal slices at ship draft contain approximately 26k –44k 
+
+non-uniform reference points. Given 2D coordinates and the current u, v, w, and prgh fields, the task predicts those four channels one frame ahead. For CFDBench, we use raw samples rather than image-interpolated data and select cavity, tube, dam, and cylinder problems spanning different boundary conditions, physical parameters, and geometries. 
+
+A.2 Baselines and evaluation protocol 
+
+Comparison methods include our APP-based Transformer and DPT, as well as baseline methods for irregular mesh or point set learning: Transolver [33], FNO [16], UPT [2], GNOT [9], Fusion-DeepONet [22], and PCNO [35]. The first four baselines come from Neural-Solver-Library 4 and are run under unified data interfaces, training pipelines, and evaluation protocols. We adjust model parameter configurations so that all models have approximately 1M parameters, thereby ensuring that comparisons reflect differences in model representation and solving mechanisms rather than implementation details. 
+
+> 4https://github.com/thuml/Neural-Solver-Library
+
+11 A.3 Training and selection protocol 
+
+Within each condition, natural (t, t + 1) pairs are constructed in chronological order before an 0.8/0.2 training/validation split is applied with split seed 42. Training statistics are reused for validation and rollout. Each learning model is trained for 16,000 optimizer steps with Adam at a learning rate of 
+
+10 −4 and batch size 4, and is evaluated every 2,000 steps. The checkpoint with minimum validation MAE is selected retrospectively, with the earlier checkpoint used for exact ties. This validation split is used both for checkpoint selection and reporting, so it is not an untouched test set. Main accuracy experiments use model seeds 42, 43, and 44; sample standard deviation therefore reflects training-seed variation only. The default APP base capacity is S = 256 and the downsampling ratio is ρ = 0 .6, corresponding to a post-downsampling budget of 153 slots. All CFDBench runs use the same 16,000-step protocol. The default batch size is 4, but 11 runs that exceeded the 48-GB memory of an NVIDIA RTX A6000 were rerun with batch size 2: Cavity Transolver seed 42; Cavity Fusion-DeepONet and GNOT seeds 42–44; Tube Fusion-DeepONet seed 43; and Tube GNOT seeds 42–44. This exception is disclosed because batch size is not perfectly matched for those runs. 
+
+A.4 Metrics and compute reporting 
+
+We compute masked training losses only on valid patch slots and evaluate APP models after distance-weighted k-NN recovery to the full reference point set. MAE and relative L2 are prioritized in the main text; MSE and RMSE are retained as squared-error diagnostics. Unless stated otherwise, errors are measured in normalized space. Fixed-budget training time and model-forward latency are implementation- and hardware-dependent and are reported as empirical measurements rather than algorithmic complexity bounds. Forward profiling uses an NVIDIA RTX A6000, batch size 1, CUDA Events, 50 warm-up iterations, and 200 measured repetitions. 
+
+## B Forward computation profiling 
+
+Table 8 reports model-forward cost on a representative DTC input. APP models use P = 1171 patch tokens and a post-downsampling budget of 153 slots; point-based baselines use N = 26101 points. APP-Transformer has the lowest measured latency and nearly the lowest profiled FLOPs, although PCNO has slightly fewer FLOPs. Relative to APP-Transformer, Transolver, UPT, and GNOT are 18.9, 4.7, and 19.2 times slower in this implementation. These timings use already constructed device inputs and exclude APP partitioning, patch construction, host-to-device transfer, offline Qwen encoding, and k-NN recovery. They are model-forward measurements, not end-to-end latency. Table 8: Model-forward profiling on a representative DTC input at batch size 1 on an NVIDIA RTX A6000. GPU latency is the median of 200 CUDA-Event measurements after 50 warm-up iterations. Timing uses final checkpoints; accuracy tables use best-validation checkpoints.                            
+
+> Model Params (M) FLOPs (G) GPU median (ms) APP-Transformer (Ours) 0.930 1.815 1.309
+> APP-DPT (Ours) 0.939 2.047 2.329 Transolver 0.989 53.644 24.767 FNO 0.990 7.482 3.785 Fusion-DeepONet 0.997 23.598 7.751 UPT 1.000 18.936 6.112 GNOT 0.993 52.705 25.131 PCNO 1.033 1.694 5.241
+
+## C Detailed problem formulation 
+
+This appendix provides the full formulation of the task defined in Section 3.1. For a ship still-water navigation CFD case, the fixed horizontal slice at ship draft is represented as a time-independent non-uniform reference point set 
+
+X = {xi}Ni=1 , xi ∈ Rdx , (10) 12 where N is the number of reference points and dx is the coordinate dimension. We use the x and y
+
+coordinates of the fixed horizontal slice, so dx = 2 ; the current study does not model the z coordinate as a spatial input. At each mesh point, the flow field state is denoted as 
+
+Ut = {ui,t }Ni=1 , ui,t ∈ Rdu . (11) The dataset uses four physical channels: velocity components u, v, and w, and pressure prgh , so 
+
+du = 4 .Since this paper focuses on unsteady temporal advancement, point-wise supervision relationships need to be established between adjacent time steps. Under the above time-independent mesh definition, for the input point xi at the current time step, its supervision label is directly taken as the flow field value ui,t +1 at the same spatial location at the next time step. The alignment of point order across time steps in the actual data is accomplished by dataset preprocessing and is described in the next subsection. Building upon this, this paper learns a parameterized mapping Fθ, taking the time-independent original CFD coordinates, the current time step flow field state, and case conditions as inputs, to predict the point-wise flow field at the next time step: 
+
+bUt+1 = Fθ (X , Ut, c ) , bUt+1 ∈ RN ×du . (12) where c denotes an optional condition representation of hull geometry and operating parameters. The interval is one exported frame (0.2 s), so the training target is the absolute next state from t to 
+
+t + 1 . The rollout results show that this objective should not be interpreted as establishing accurate long-horizon dynamics. The training objective employs a point-wise supervision loss, minimizing the error between the predicted flow field and the next time-step flow field across all training cases and time steps: 
+
+L(θ) = 1
+
+|D| 
+
+X
+
+> t∈D
+
+1
+
+N
+
+> N
+
+X
+
+> i=1
+
+∥bui,t +1 − ui,t +1 ∥22 . (13) APP is an intermediate representation mechanism. It aggregates the reference point set into patch tokens, predicts values on retained slots, and recovers the result to every reference point with distance-weighted k-NN interpolation. Condition information may be fused with patch tokens in the same Transformer space, but it is optional and setting-dependent. 
+
+## D Additional related work 
+
+D.1 Data-driven ship hydrodynamics and design surrogates 
+
+Ship hydrodynamic performance evaluation has long relied on model testing, empirical formulas, and high-fidelity CFD [3]. Model testing provides reliable physical observations but is costly and difficult to cover large-scale hull types and operating condition combinations. Empirical and semi-empirical methods offer high engineering efficiency but are typically limited in scope and geometric parameterization. In contrast, CFD methods based on RANS or LES can resolve spatial distribution characteristics of pressure, velocity, free surface, and wake under complex hull geometries, and have become commonly used tools in modern ship design analysis [10, 15]. However, when the design process requires repeated evaluation of different hull types, speeds, or attitudes, the computational cost of traditional CFD still constitutes a significant bottleneck. To reduce simulation costs, researchers have recently begun constructing data-driven surrogate models for ship hydrodynamic problems [12]. Such methods typically utilize existing CFD or experimental data to learn approximate mappings from hull parameters and operating conditions to resistance, heave, trim, or local flow fields, thereby serving rapid performance evaluation and design space exploration [1, 13, 7]. These studies show that deep-learning models can approximate expensive numerical mappings within bounded hull families and operating ranges. We focus on one-step point-wise prediction over fixed non-uniform 2D ship-flow slices rather than overall hydrodynamic coefficients or regular-grid field regression. The persistence and rollout comparisons limit our present conclusion to representation efficiency rather than validated replacement of an unsteady CFD solver. 13 D.2 Conditional and token-based representations for physical fields 
+
+Token-based representations have become a common form in visual modeling and physical field learning. The Transformer [29] originally established global dependencies between sequence tokens through self-attention. ViT [5] divides images into patch tokens, enabling standard Transformers to process two-dimensional visual inputs. DETR [4] formulates the detection task as a set prediction problem through object queries and cross-attention. These works demonstrate that different types of tokens, such as patches, queries, and conditions, can serve as unified interfaces to jointly incorporate local observations, global context, and task conditions into the same attention modeling framework. Conditional inputs are common in scientific machine learning. DeepONet [18, 19] combines input functions and query positions through branch–trunk structures, while GNOT, Transolver, and UPT organize geometry, physical parameters, queries, or fields as tokens or latent representations [9, 33, 2]. APPSolver likewise provides a shared space for patch and condition tokens, but our ablation shows that the value of conditioning depends on the training and held-out hull. We therefore treat the interface, rather than any specific LLM encoder, as the method component. 14

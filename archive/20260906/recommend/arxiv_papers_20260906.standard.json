@@ -1,0 +1,135 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-06T18:56:26.533353+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2608.29176v1",
+      "source": "arxiv",
+      "title": "A Tensor Neural Network Method for High-Order Homogenization of Locally Periodic Elliptic Problems",
+      "abstract": "We develop a high-order tensor neural network (TNN) method for locally periodic elliptic multiscale problems of the form $-\\nabla\\cdot(A(x,x/\\varepsilon)\\nabla u_\\varepsilon)=f$. Because the coefficient depends on both the slow variable $x$ and the fast periodic variable $y=x/\\varepsilon$, the high-order cell problems and macroscopic corrector equations are more involved than in the classical case $A=A(y)$, and the correctors depend parametrically on $x$. We derive a computable high-order two-scale expansion and prove an $H^1$ convergence estimate for the partial expansion in boundary-layer-free settings, including periodic domains and ideal boundary-matching configurations. The proof uses the recursive compatibility structure of the corrector hierarchy and a zero-mean oscillation estimate in $H^{-1}$. We then construct a TNN framework for the high-dimensional corrector problems. Its tensor-product structure permits deterministic one-dimensional quadrature for the cell problems, homogenized coefficients, macroscopic source terms, and loss functions, avoiding Monte Carlo integration error. The numerical realization assumes that the coefficient entries and assembled data admit finite or controlled tensor-product representations; this computational assumption is separate from the general matrix-valued coefficient class used in the analysis. Experiments with scalar locally periodic coefficients show accurate high-order correctors. The $H^1$ semi-norm errors are consistent with the proved estimate, while point-normalized $L^2$ errors display the nominal high-order behavior predicted by the formal expansion.",
+      "authors": [
+        "Huaijia Zhang",
+        "Haochen Liu",
+        "Xia Ji",
+        "Hehu Xie"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "math.AP"
+      ],
+      "published": "2026-08-29T09:56:22+00:00",
+      "link": "https://arxiv.org/pdf/2608.29176v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Tensor neural network for multiscale elliptic PDEs with oscillatory coefficients, the core model of subsurface flow.",
+      "llm_evidence_cn": "张量神经网络求解振荡系数多尺度椭圆方程，是地下水流核心数学模型。",
+      "llm_evidence": "张量神经网络求解振荡系数多尺度椭圆方程，是地下水流核心数学模型。",
+      "canonical_evidence": "张量神经网络求解振荡系数多尺度椭圆方程，是地下水流核心数学模型。",
+      "llm_tldr_en": "Develops a high-order tensor neural network method for locally periodic elliptic homogenization, with computable two-scale expansions and H1 convergence proof. It directly targets heterogeneous media simulation, a central problem in groundwater flow modeling.",
+      "llm_tldr_cn": "针对局部周期异质多尺度椭圆问题，该文提出高阶张量神经网络(TNN)方法。方法处理快慢双尺度依赖的系数，推导可计算的高阶双尺度展开并证明无边界层情形下的H1收敛性。该工作为含非均质渗透系数的地下水流数值模拟提供稳健的机器学习建模工具，可用于增强传统均匀化计算。",
+      "llm_tldr": "针对局部周期异质多尺度椭圆问题，该文提出高阶张量神经网络(TNN)方法。方法处理快慢双尺度依赖的系数，推导可计算的高阶双尺度展开并证明无边界层情形下的H1收敛性。该工作为含非均质渗透系数的地下水流数值模拟提供稳健的机器学习建模工具，可用于增强传统均匀化计算。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning approaches for groundwater flow and transport simulation",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.29012v1",
+      "source": "arxiv",
+      "title": "Frequency Selective Neural Networks as a Foundation Architecture for Time Series Learning",
+      "abstract": "Time-series data across physical and biological domains are fundamentally driven by complex, non-stationary oscillatory modes. While deep learning models, such as Convolutional Neural Networks (CNNs), Recurrent Neural Networks, and Transformers, have dominated sequential analysis, they remain fundamentally \"spectral-blind\". By mapping continuous physical waves into unconstrained spatial or discrete token spaces, these architectures suffer from severe spectral entanglement, acting as opaque black boxes that decouple predictive accuracy from physical reality. In this paper, we introduce the Frequency Selective Neural Network (FSNN), pioneering a foundation architecture guaranteeing physical interpretability without sacrificing expressive power of deep learning. FSNN addresses spectral entanglement by explicitly embedding the rigorous mathematics of advanced signal processing into its neural topology. Through a fully differentiable Wiener-like filter bank optimized via complex-domain backpropagation, FSNN autonomously discovers and isolates the precise physical modes of a given task. Extensive evaluations demonstrate that FSNN establishes state-of-the-art predictive performance, achieving $77.0\\%$ average accuracy on the standard 10 multivariate UEA datasets and leading across all major metrics on the highly imbalanced PTB-XL clinical ECG benchmark. Crucially, in contrast to yielding abstract feature maps, FSNN converges directly on physically meaningful frequency bands, such as isolating the cardiac QRS complex, providing a highly scalable, interpretable paradigm for robust pattern recognition in complex temporal domains. Our code is available at: https://github.com/ad6174hhhh/FSNN.",
+      "authors": [
+        "Hui Huang",
+        "Ye Sun",
+        "Shiyan Hu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-29T02:51:29+00:00",
+      "link": "https://arxiv.org/pdf/2608.29012v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "A physically interpretable deep time-series architecture suitable for groundwater level prediction.",
+      "llm_evidence_cn": "面向物理时间序列的深度学习架构，可用于地下水位预测。",
+      "llm_evidence": "面向物理时间序列的深度学习架构，可用于地下水位预测。",
+      "canonical_evidence": "面向物理时间序列的深度学习架构，可用于地下水位预测。",
+      "llm_tldr_en": "Introduces a Frequency Selective Neural Network as a time-series foundation architecture that maintains physical interpretability. It directly addresses non-stationary oscillatory signals, a core challenge in groundwater level forecasting with deep learning.",
+      "llm_tldr_cn": "当前CNN、RNN、Transformer等时间序列模型缺乏频谱感知，难以捕捉物理系统中的非平稳振荡模式。论文提出频率选择神经网络(FSNN)，通过频率选择性结构在保证表达力的同时保留物理可解释性。该方法面向物理/生物时间序列设计，可直接作为地下水位等地球物理序列的预测模型基础架构。",
+      "llm_tldr": "当前CNN、RNN、Transformer等时间序列模型缺乏频谱感知，难以捕捉物理系统中的非平稳振荡模式。论文提出频率选择神经网络(FSNN)，通过频率选择性结构在保证表达力的同时保留物理可解释性。该方法面向物理/生物时间序列设计，可直接作为地下水位等地球物理序列的预测模型基础架构。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "deep learning groundwater level prediction",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.29355v1",
+      "source": "arxiv",
+      "title": "APPSolver: Adaptive Patch Partitioning for Point-Wise Ship Flow Prediction on Unstructured Meshes",
+      "abstract": "Large non-uniform point sets make direct attention-based surrogate modeling costly for ship hydrodynamics. We introduce APPSolver, a point-wise flow-prediction framework built around Adaptive Patch Partitioning (APP), a deterministic quadtree representation for fixed two-dimensional horizontal slices extracted from ship CFD simulations. APP assigns finer patches near the hull and coarser patches farther away, downsamples patch contents, and recovers predictions to the full reference point set. Under a corrected protocol that constructs natural $(t,t+1)$ pairs before splitting, reuses training-set normalization statistics, and reports three model seeds, learned tokenizers are more accurate than APP-Transformer, and a persistence baseline has lower one-step MAE on all three ShipBench hulls. The supported benefit of APP is therefore computational rather than universal predictive superiority: on a representative DTC input, APP-Transformer requires 1.815 GFLOPs and 1.309 ms per model forward, while a matched ablation shows that adaptive partitioning reduces MAE by 16.4-24.9\\% relative to a uniform partition augmented with learned slicing. Condition encoders provide setting-dependent gains in leave-one-hull-out evaluation, but the current absolute next-state objective does not establish accurate long-horizon dynamics. These results characterize APP as a compact spatial representation with an explicit accuracy--efficiency trade-off. Code is available at https://github.com/wenhuahuo/APPSolver .",
+      "authors": [
+        "Wenhua Huo",
+        "Fenglei Han",
+        "Wangyuan Zhao",
+        "Xiao Peng",
+        "Chunhui Wang",
+        "Jialin Wu",
+        "Jiayi Han"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-08-29T16:23:00+00:00",
+      "link": "https://arxiv.org/pdf/2608.29355v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "machine learning surrogate for point-wise flow prediction on unstructured meshes; transferable to surrogate groundwater flow models",
+      "llm_evidence_cn": "面向非结构网格逐点流场预测的机器学习代理模型，可迁移至地下水流动代理模拟",
+      "llm_evidence": "面向非结构网格逐点流场预测的机器学习代理模型，可迁移至地下水流动代理模拟",
+      "canonical_evidence": "面向非结构网格逐点流场预测的机器学习代理模型，可迁移至地下水流动代理模拟",
+      "llm_tldr_en": "Presents APPSolver, an adaptive patch-partitioning quadtree framework for point-wise flow prediction on unstructured meshes, reducing attention surrogate cost and offering transferable surrogate-model tools for groundwater flow simulation.",
+      "llm_tldr_cn": "针对非结构网格上大而非均匀点集导致直接注意力代理建模成本高的问题，提出APPSolver，采用确定性四叉树自适应划分点云，船体附近细、远处粗，再恢复至完整参考点集。通过修正训练/测试切分、复用训练集归一化统计并报告三个随机种子，学习型分词器准确率优于APP-Transformer，且预测具有持续性。该方法为基于机器学习的点式流场代理模拟提供了可扩展工具，可借鉴到地下水等数值流动模拟中。",
+      "llm_tldr": "针对非结构网格上大而非均匀点集导致直接注意力代理建模成本高的问题，提出APPSolver，采用确定性四叉树自适应划分点云，船体附近细、远处粗，再恢复至完整参考点集。通过修正训练/测试切分、复用训练集归一化统计并报告三个随机种子，学习型分词器准确率优于APP-Transformer，且预测具有持续性。该方法为基于机器学习的点式流场代理模拟提供了可扩展工具，可借鉴到地下水等数值流动模拟中。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

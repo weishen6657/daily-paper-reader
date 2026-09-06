@@ -1,0 +1,57 @@
+{
+  "date": "20260906",
+  "date_label": "",
+  "generated_at": "2026-09-06 19:00:25 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.29176v1",
+      "route": "202609/06/2608.29176v1-a-tensor-neural-network-method-for-high-order-homogenization-of-locally-periodic-elliptic-problems",
+      "title": "A Tensor Neural Network Method for High-Order Homogenization of Locally Periodic Elliptic Problems",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "张量神经网络求解振荡系数多尺度椭圆方程，是地下水流核心数学模型。",
+      "first_seen_at": "2026-09-06 19:00:25 UTC",
+      "updated_at": "2026-09-06 19:00:25 UTC"
+    },
+    {
+      "paper_id": "2608.29012v1",
+      "route": "202609/06/2608.29012v1-frequency-selective-neural-networks-as-a-foundation-architecture-for-time-series-learning",
+      "title": "Frequency Selective Neural Networks as a Foundation Architecture for Time Series Learning",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向物理时间序列的深度学习架构，可用于地下水位预测。",
+      "first_seen_at": "2026-09-06 19:00:25 UTC",
+      "updated_at": "2026-09-06 19:00:25 UTC"
+    },
+    {
+      "paper_id": "2608.29355v1",
+      "route": "202609/06/2608.29355v1-appsolver-adaptive-patch-partitioning-for-point-wise-ship-flow-prediction-on-unstructured-meshes",
+      "title": "APPSolver: Adaptive Patch Partitioning for Point-Wise Ship Flow Prediction on Unstructured Meshes",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向非结构网格逐点流场预测的机器学习代理模型，可迁移至地下水流动代理模拟",
+      "first_seen_at": "2026-09-06 19:00:25 UTC",
+      "updated_at": "2026-09-06 19:00:25 UTC"
+    }
+  ]
+}

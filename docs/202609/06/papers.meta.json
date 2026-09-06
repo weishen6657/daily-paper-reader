@@ -1,0 +1,54 @@
+{
+  "label": "2026-09-06",
+  "date": "2026-09-06",
+  "generated_at": "2026-09-06T19:00:27",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202609/06/2608.29176v1-a-tensor-neural-network-method-for-high-order-homogenization-of-locally-periodic-elliptic-problems",
+      "section": "deep",
+      "title_en": "A Tensor Neural Network Method for High-Order Homogenization of Locally Periodic Elliptic Problems",
+      "authors": "Huaijia Zhang, Haochen Liu, Xia Ji, Hehu Xie",
+      "date": "2026-08-29",
+      "pdf": "https://arxiv.org/pdf/2608.29176v1",
+      "score": "8.0",
+      "evidence": "张量神经网络求解振荡系数多尺度椭圆方程，是地下水流核心数学模型。",
+      "tldr": "针对系数同时依赖宏观变量x和快变量x/ε的局部周期椭圆多尺度问题，传统两尺度展开和数值均匀化面临高阶校正子参数依赖及高维计算困难。本文推导了可计算的局部周期高阶两尺度展开，并给出无边界层情形下的H^1收敛证明；进而构造张量神经网络(TNN)求解高维胞元问题，利用张量积结构实现确定性一维求积，避免了蒙特卡洛积分误差。数值实验验证了高阶校正精度，H^1误差与理论估计一致，L^2误差呈现名义高阶收敛。",
+      "tags": "query:ag",
+      "abstract_en": "We develop a high-order tensor neural network (TNN) method for locally periodic elliptic multiscale problems of the form $-\\nabla\\cdot(A(x,x/\\varepsilon)\\nabla u_\\varepsilon)=f$. Because the coefficient depends on both the slow variable $x$ and the fast periodic variable $y=x/\\varepsilon$, the high-order cell problems and macroscopic corrector equations are more involved than in the classical case $A=A(y)$, and the correctors depend parametrically on $x$. We derive a computable high-order two-scale expansion and prove an $H^1$ convergence estimate for the partial expansion in boundary-layer-free settings, including periodic domains and ideal boundary-matching configurations. The proof uses the recursive compatibility structure of the corrector hierarchy and a zero-mean oscillation estimate in $H^{-1}$. We then construct a TNN framework for the high-dimensional corrector problems. Its tensor-product structure permits deterministic one-dimensional quadrature for the cell problems, homogenized coefficients, macroscopic source terms, and loss functions, avoiding Monte Carlo integration error. The numerical realization assumes that the coefficient entries and assembled data admit finite or controlled tensor-product representations; this computational assumption is separate from the general matrix-valued coefficient class used in the analysis. Experiments with scalar locally periodic coefficients show accurate high-order correctors. The $H^1$ semi-norm errors are consistent with the proved estimate, while point-normalized $L^2$ errors display the nominal high-order behavior predicted by the formal expansion.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/06/2608.29012v1-frequency-selective-neural-networks-as-a-foundation-architecture-for-time-series-learning",
+      "section": "quick",
+      "title_en": "Frequency Selective Neural Networks as a Foundation Architecture for Time Series Learning",
+      "authors": "Hui Huang, Ye Sun, Shiyan Hu",
+      "date": "2026-08-29",
+      "pdf": "https://arxiv.org/pdf/2608.29012v1",
+      "score": "6.0",
+      "evidence": "面向物理时间序列的深度学习架构，可用于地下水位预测。",
+      "tldr": "时间序列普遍由非平稳振荡模式驱动，但CNN、RNN、Transformer等主流模型在映射物理波时存在“频谱盲区”，造成频谱纠缠和黑箱预测。FSNN将可微Wiener滤波器组嵌入神经拓扑，以复数域反传自动发现和隔离物理模态，在10个UEA数据集上达到77.0%平均精度，并在PTB-XL心电基准上综合领先，同时收敛于QRS波等可解释频带，提供了可扩展的可解释时序学习基础架构。",
+      "tags": "query:ag",
+      "abstract_en": "Time-series data across physical and biological domains are fundamentally driven by complex, non-stationary oscillatory modes. While deep learning models, such as Convolutional Neural Networks (CNNs), Recurrent Neural Networks, and Transformers, have dominated sequential analysis, they remain fundamentally \"spectral-blind\". By mapping continuous physical waves into unconstrained spatial or discrete token spaces, these architectures suffer from severe spectral entanglement, acting as opaque black boxes that decouple predictive accuracy from physical reality. In this paper, we introduce the Frequency Selective Neural Network (FSNN), pioneering a foundation architecture guaranteeing physical interpretability without sacrificing expressive power of deep learning. FSNN addresses spectral entanglement by explicitly embedding the rigorous mathematics of advanced signal processing into its neural topology. Through a fully differentiable Wiener-like filter bank optimized via complex-domain backpropagation, FSNN autonomously discovers and isolates the precise physical modes of a given task. Extensive evaluations demonstrate that FSNN establishes state-of-the-art predictive performance, achieving $77.0\\%$ average accuracy on the standard 10 multivariate UEA datasets and leading across all major metrics on the highly imbalanced PTB-XL clinical ECG benchmark. Crucially, in contrast to yielding abstract feature maps, FSNN converges directly on physically meaningful frequency bands, such as isolating the cardiac QRS complex, providing a highly scalable, interpretable paradigm for robust pattern recognition in complex temporal domains. Our code is available at: https://github.com/ad6174hhhh/FSNN.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/06/2608.29355v1-appsolver-adaptive-patch-partitioning-for-point-wise-ship-flow-prediction-on-unstructured-meshes",
+      "section": "quick",
+      "title_en": "APPSolver: Adaptive Patch Partitioning for Point-Wise Ship Flow Prediction on Unstructured Meshes",
+      "authors": "Wenhua Huo, Fenglei Han, Wangyuan Zhao, Xiao Peng, Chunhui Wang, Jialin Wu, Jiayi Han",
+      "date": "2026-08-29",
+      "pdf": "https://arxiv.org/pdf/2608.29355v1",
+      "score": "6.0",
+      "evidence": "面向非结构网格逐点流场预测的机器学习代理模型，可迁移至地下水流动代理模拟",
+      "tldr": "针对非均匀网格使注意力模型用于船舶流场预测计算成本高的问题，提出APPSolver，利用自适应块分区（APP）四叉树表示：船体附近细分、远处粗分，对块下采样再恢复预测。在修正试验协议下，APP-Transformer在DTC上仅需1.815 GFLOPs和1.309 ms，较均匀分区MAE降低16.4%～24.9%，但精度不如学习式tokenizer，持久性基线一步误差也更低。可见APP的主要收益在计算效率而非普适精度，是一种有明确精度-效率权衡的紧凑空间表示，但仍不足以支撑长期动力学预测。",
+      "tags": "query:ag",
+      "abstract_en": "Large non-uniform point sets make direct attention-based surrogate modeling costly for ship hydrodynamics. We introduce APPSolver, a point-wise flow-prediction framework built around Adaptive Patch Partitioning (APP), a deterministic quadtree representation for fixed two-dimensional horizontal slices extracted from ship CFD simulations. APP assigns finer patches near the hull and coarser patches farther away, downsamples patch contents, and recovers predictions to the full reference point set. Under a corrected protocol that constructs natural $(t,t+1)$ pairs before splitting, reuses training-set normalization statistics, and reports three model seeds, learned tokenizers are more accurate than APP-Transformer, and a persistence baseline has lower one-step MAE on all three ShipBench hulls. The supported benefit of APP is therefore computational rather than universal predictive superiority: on a representative DTC input, APP-Transformer requires 1.815 GFLOPs and 1.309 ms per model forward, while a matched ablation shows that adaptive partitioning reduces MAE by 16.4-24.9\\% relative to a uniform partition augmented with learned slicing. Condition encoders provide setting-dependent gains in leave-one-hull-out evaluation, but the current absolute next-state objective does not establish accurate long-horizon dynamics. These results characterize APP as a compact spatial representation with an explicit accuracy--efficiency trade-off. Code is available at https://github.com/wenhuahuo/APPSolver .",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
