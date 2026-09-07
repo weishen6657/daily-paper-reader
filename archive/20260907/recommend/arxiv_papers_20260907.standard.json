@@ -1,0 +1,94 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-07T18:56:49.995204+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.04407v1",
+      "source": "arxiv",
+      "title": "Disentangling Attention in Deep Operator Learning: A Controlled Study of Data-Driven and Physics-Informed Architectures",
+      "abstract": "Deep neural operators learn mappings between input functions and complete PDE solution fields, enabling forward evaluations of new problem instances orders of magnitude faster than conventional numerical solvers. Attention mechanisms have recently been introduced into neural operators, but most studies change several architectural components at once, making it difficult to identify what actually improves accuracy. This work presents a controlled and systematic study of five deep operator network (DeepONet) variants with distinct attention mechanisms, trained under both data-driven and physics-informed regimes, to isolate the effects of cross-attention, self-attention, tokenization, and attention depth. We evaluate them on a source-driven transient one-dimensional nonlinear diffusion-reaction equation, a transient one-dimensional viscous Burgers equation with variable initial conditions, and a two-dimensional Poisson heat-conduction problem with heterogeneous source fields. Per-sensor tokenization with cross-attention reduces the mean relative L_2 error of the classical DeepONet in all benchmark-training combinations by factors of 2.4-28.0, while the best attention configurations reach 3.5-32.3. Branch self-attention paired only with dot-product fusion is inconsistent, degrading the one-dimensional problems while helping the more complex two-dimensional source field; added on top of cross-attention it improves all six cases, though by less than cross-attention fusion alone. Global pre-mixing provides no consistent benefit. Increasing cross-attention depth further improves accuracy, but with diminishing returns and a substantially higher cost under physics-informed training. Overall, query-dependent cross-attention is the most reliable mechanism, whereas branch self-attention is most useful for large, spatially complex functional inputs.",
+      "authors": [
+        "Amar Alem Koric",
+        "Qibang Liu",
+        "Seid Koric"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-09-03T19:17:01+00:00",
+      "link": "https://arxiv.org/pdf/2609.04407v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "neural-operator surrogate (DeepONet) study for PDE solutions, relevant to ML surrogate modeling of groundwater flow",
+      "llm_evidence_cn": "面向PDE解场的DeepONet神经算子代理研究,与地下水流ML代理建模相关",
+      "llm_evidence": "面向PDE解场的DeepONet神经算子代理研究,与地下水流ML代理建模相关",
+      "canonical_evidence": "面向PDE解场的DeepONet神经算子代理研究,与地下水流ML代理建模相关",
+      "llm_tldr_en": "Deep neural operators approximate full PDE solution fields; this controlled study isolates the effects of five attention mechanisms in DeepONets trained in data-driven and physics-informed regimes, thereby supporting surrogate design choices for PDE-based groundwater simulation.",
+      "llm_tldr_cn": "深度神经算子学习输入函数到PDE解场的映射,可快速完成正向求解,但注意力变体常同时改动多个部件。该论文对五种带有不同注意力机制的DeepONet变体开展受控系统比较,在数据驱动与物理信息训练模式下隔离交叉注意力、自注意力、token化与注意力深度的影响。研究结果为PDE代理算子架构选择提供了证据。此类DeepONet设计可直接指导地下水流模拟中的机器学习替代模型搭建。",
+      "llm_tldr": "深度神经算子学习输入函数到PDE解场的映射,可快速完成正向求解,但注意力变体常同时改动多个部件。该论文对五种带有不同注意力机制的DeepONet变体开展受控系统比较,在数据驱动与物理信息训练模式下隔离交叉注意力、自注意力、token化与注意力深度的影响。研究结果为PDE代理算子架构选择提供了证据。此类DeepONet设计可直接指导地下水流模拟中的机器学习替代模型搭建。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.05012v1",
+      "source": "arxiv",
+      "title": "Solution-space heterogeneity shapes federated learning dynamics across partial differential equations",
+      "abstract": "Federated scientific machine learning enables institutions to train neural surrogates without centralizing local physical data, yet studies of partial differential equations (PDEs) lack a transferable definition of non-independent and identically distributed data. Existing protocols partition coordinates, coefficients, boundary conditions, or geometries according to equation-specific rules. Here, we introduce solution-space PDE-Dirichlet, a protocol that converts continuous supervised responses into reusable solution bins and quantifies the realized separation between clients through optimal transport over the geometry of these bins. We derive an exact inverse relation between population allocation heterogeneity and the Dirichlet concentration, and we establish conditions under which response heterogeneity induces gradient disagreement, local-update dispersion, and parameter divergence. Across seven controlled and public PDE tasks, three neural-operator families, and five random seeds, a lower concentration consistently increases the realized solution distance and optimization heterogeneity. The degradation in final error is task dependent: the largest effect occurs for low-viscosity Burgers, reaching 4.157 percentage points under the most heterogeneous setting, whereas additional communication or smoother dynamics can reduce the final gap despite persistent parameter separation. These results distinguish a reproducible geometric mechanism from task-dependent generalization outcomes and provide a common basis for evaluating non-IID federated PDE learning.",
+      "authors": [
+        "Ping Luo",
+        "Jiahuan Wang",
+        "Ziqing Wen",
+        "Tao Sun",
+        "Dongsheng Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.DC"
+      ],
+      "published": "2026-09-04T11:23:29+00:00",
+      "link": "https://arxiv.org/pdf/2609.05012v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Federated neural surrogate learning for PDEs provides data-driven surrogate modeling methods for PDE simulation",
+      "llm_evidence_cn": "面向偏微分方程的联邦神经代理学习为数据驱动的代理模拟提供了通用方法",
+      "llm_evidence": "面向偏微分方程的联邦神经代理学习为数据驱动的代理模拟提供了通用方法",
+      "canonical_evidence": "面向偏微分方程的联邦神经代理学习为数据驱动的代理模拟提供了通用方法",
+      "llm_tldr_en": "Federated scientific ML trains neural PDE surrogates without centralizing data but lacks general non-IID definitions. This paper proposes solution-space PDE-Dirichlet with optimal transport, and shows allocation heterogeneity inversely shapes federated learning dynamics.",
+      "llm_tldr_cn": "联邦科学机器学习使机构无需集中局部物理数据即可训练偏微分方程的神经代理模型，但现有研究缺乏可迁移的非独立同分布数据定义。为此本文提出解空间PDE-Dirichlet协议，把连续监督响应转化为可复用的解容器，并借助最优输运量化不同客户端的分布分离程度。作者推导出总体分配异质性与联邦学习动态之间的精确关系。该方法为跨机构的数据驱动偏微分方程代理建模（如地下水流模拟）提供了通用评测与训练基础。",
+      "llm_tldr": "联邦科学机器学习使机构无需集中局部物理数据即可训练偏微分方程的神经代理模型，但现有研究缺乏可迁移的非独立同分布数据定义。为此本文提出解空间PDE-Dirichlet协议，把连续监督响应转化为可复用的解容器，并借助最优输运量化不同客户端的分布分离程度。作者推导出总体分配异质性与联邦学习动态之间的精确关系。该方法为跨机构的数据驱动偏微分方程代理建模（如地下水流模拟）提供了通用评测与训练基础。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "machine learning based surrogate models for groundwater flow simulation",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

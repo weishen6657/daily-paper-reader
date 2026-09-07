@@ -1,0 +1,41 @@
+{
+  "date": "20260907",
+  "date_label": "",
+  "generated_at": "2026-09-07 18:58:45 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.04407v1",
+      "route": "202609/07/2609.04407v1-disentangling-attention-in-deep-operator-learning-a-controlled-study-of-data-driven-and-physics-informed-architectures",
+      "title": "Disentangling Attention in Deep Operator Learning: A Controlled Study of Data-Driven and Physics-Informed Architectures",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向PDE解场的DeepONet神经算子代理研究,与地下水流ML代理建模相关",
+      "first_seen_at": "2026-09-07 18:58:45 UTC",
+      "updated_at": "2026-09-07 18:58:45 UTC"
+    },
+    {
+      "paper_id": "2609.05012v1",
+      "route": "202609/07/2609.05012v1-solution-space-heterogeneity-shapes-federated-learning-dynamics-across-partial-differential-equations",
+      "title": "Solution-space heterogeneity shapes federated learning dynamics across partial differential equations",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向偏微分方程的联邦神经代理学习为数据驱动的代理模拟提供了通用方法",
+      "first_seen_at": "2026-09-07 18:58:45 UTC",
+      "updated_at": "2026-09-07 18:58:45 UTC"
+    }
+  ]
+}

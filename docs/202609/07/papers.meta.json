@@ -1,0 +1,39 @@
+{
+  "label": "2026-09-07",
+  "date": "2026-09-07",
+  "generated_at": "2026-09-07T18:58:47",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202609/07/2609.04407v1-disentangling-attention-in-deep-operator-learning-a-controlled-study-of-data-driven-and-physics-informed-architectures",
+      "section": "quick",
+      "title_en": "Disentangling Attention in Deep Operator Learning: A Controlled Study of Data-Driven and Physics-Informed Architectures",
+      "authors": "Amar Alem Koric, Qibang Liu, Seid Koric",
+      "date": "2026-09-03",
+      "pdf": "https://arxiv.org/pdf/2609.04407v1",
+      "score": "7.0",
+      "evidence": "面向PDE解场的DeepONet神经算子代理研究,与地下水流ML代理建模相关",
+      "tldr": "针对深度算子学习中注意力机制研究常因混合改动多个组件而难以归因的问题，本文系统地对比了五种DeepONet注意力变体，并在数据驱动与物理信息两种训练模式下评估。结果显示，逐传感器token化联合交叉注意力在所有基准-训练组合中将平均相对L2误差降低2.4-28.0倍，最优配置达到3.5-32.3倍；加深交叉注意力可继续提升精度但收益递减。总体上，查询相关的交叉注意力是最稳定可靠的机制，而分支自注意力仅对高维复杂函数输入有价值。",
+      "tags": "query:ag",
+      "abstract_en": "Deep neural operators learn mappings between input functions and complete PDE solution fields, enabling forward evaluations of new problem instances orders of magnitude faster than conventional numerical solvers. Attention mechanisms have recently been introduced into neural operators, but most studies change several architectural components at once, making it difficult to identify what actually improves accuracy. This work presents a controlled and systematic study of five deep operator network (DeepONet) variants with distinct attention mechanisms, trained under both data-driven and physics-informed regimes, to isolate the effects of cross-attention, self-attention, tokenization, and attention depth. We evaluate them on a source-driven transient one-dimensional nonlinear diffusion-reaction equation, a transient one-dimensional viscous Burgers equation with variable initial conditions, and a two-dimensional Poisson heat-conduction problem with heterogeneous source fields. Per-sensor tokenization with cross-attention reduces the mean relative L_2 error of the classical DeepONet in all benchmark-training combinations by factors of 2.4-28.0, while the best attention configurations reach 3.5-32.3. Branch self-attention paired only with dot-product fusion is inconsistent, degrading the one-dimensional problems while helping the more complex two-dimensional source field; added on top of cross-attention it improves all six cases, though by less than cross-attention fusion alone. Global pre-mixing provides no consistent benefit. Increasing cross-attention depth further improves accuracy, but with diminishing returns and a substantially higher cost under physics-informed training. Overall, query-dependent cross-attention is the most reliable mechanism, whereas branch self-attention is most useful for large, spatially complex functional inputs.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202609/07/2609.05012v1-solution-space-heterogeneity-shapes-federated-learning-dynamics-across-partial-differential-equations",
+      "section": "quick",
+      "title_en": "Solution-space heterogeneity shapes federated learning dynamics across partial differential equations",
+      "authors": "Ping Luo, Jiahuan Wang, Ziqing Wen, Tao Sun, Dongsheng Li",
+      "date": "2026-09-04",
+      "pdf": "https://arxiv.org/pdf/2609.05012v1",
+      "score": "6.0",
+      "evidence": "面向偏微分方程的联邦神经代理学习为数据驱动的代理模拟提供了通用方法",
+      "tldr": "联邦科学机器学习中，PDE数据的非IID性缺乏可迁移定义，现有协议多依赖方程特定规则。为此提出solution-space PDE-Dirichlet协议：将连续响应转化为解箱，通过最优传输量化客户端间实际分离，并建立分配异质性与Dirichlet浓度的反比关系。在7个PDE任务、3个神经算子族上验证，低浓度稳定加剧优化异质性，最显著使Burgers误差增加4.157个百分点；但额外通信或平滑动力学可缩小最终误差差距。该工作区分了可复现的几何机制与任务依赖的泛化结果，为联邦PDE学习提供了统一评估基础。",
+      "tags": "query:ag",
+      "abstract_en": "Federated scientific machine learning enables institutions to train neural surrogates without centralizing local physical data, yet studies of partial differential equations (PDEs) lack a transferable definition of non-independent and identically distributed data. Existing protocols partition coordinates, coefficients, boundary conditions, or geometries according to equation-specific rules. Here, we introduce solution-space PDE-Dirichlet, a protocol that converts continuous supervised responses into reusable solution bins and quantifies the realized separation between clients through optimal transport over the geometry of these bins. We derive an exact inverse relation between population allocation heterogeneity and the Dirichlet concentration, and we establish conditions under which response heterogeneity induces gradient disagreement, local-update dispersion, and parameter divergence. Across seven controlled and public PDE tasks, three neural-operator families, and five random seeds, a lower concentration consistently increases the realized solution distance and optimization heterogeneity. The degradation in final error is task dependent: the largest effect occurs for low-viscosity Burgers, reaching 4.157 percentage points under the most heterogeneous setting, whereas additional communication or smoother dynamics can reduce the final gap despite persistent parameter separation. These results distinguish a reproducible geometric mechanism from task-dependent generalization outcomes and provide a common basis for evaluating non-IID federated PDE learning.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
