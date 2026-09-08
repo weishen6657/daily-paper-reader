@@ -1,0 +1,130 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-08T19:36:52.049274+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.00544v1",
+      "source": "arxiv",
+      "title": "GenONet: A Generative operator Network for High-Resolution Precipitation Nowcasting",
+      "abstract": "High-resolution precipitation nowcasting is critical for reducing the impacts of severe weather but remains difficult because of rapid storm evolution. Deep learning models have shown great promise for this task, but their predictive skill often deteriorates over longer forecast horizons. This leads to increasingly blurry forecasts that fail to capture the complex, non-linear evolution of storm systems. In order to address these limitations, we introduce Spatio-Temporal U-DeepONet (GenONet), a novel architecture for long-range precipitation forecasting up to 3 hours, specifically designed to produce sharp and physically consistent results. GenONet's architecture pioneers the use of a Deep Operator Network (DeepONet) as a generator within a Generative Adversarial Network (GAN) framework for this task. The DeepONet learns the continuous-time dynamics of precipitation, ensuring stability over long forecast horizons. Adversial training against a spatio-temporal discriminator compels the model to produce sharp, coherent forecasts, while a physics-informed loss regularizer, derived from the Moisture Conservation Equation, improves physical plausibility in our ablation setting. Quantitative evaluations show that our model achieves consistently higher scores on most of the metrics, especially for highintensity events and at longer lead times. Qualitatively, GenONet produces structurally coherent forecasts that maintain their integrity, whereas baseline models degrade into indistinct patterns. Finally, an ablation study confirms the benefit of this physics-informed loss, highlighting the strength of combining operator learning with adversarial training.",
+      "authors": [
+        "Mohammad Kian Golkar",
+        "Luciano Alves de Oliveira",
+        "Mohammad Khanjani"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "physics.ao-ph"
+      ],
+      "published": "2026-09-01T01:30:33+00:00",
+      "link": "https://arxiv.org/pdf/2609.00544v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Generative spatio-temporal DeepONet for hydrologic nowcasting; transferable architecture for AI-driven environmental and groundwater simulation",
+      "llm_evidence_cn": "生成式DeepONet用于高分辨率降水临近预报，架构可迁移至地下水等高分辨时空模拟",
+      "llm_evidence": "生成式DeepONet用于高分辨率降水临近预报，架构可迁移至地下水等高分辨时空模拟",
+      "canonical_evidence": "生成式DeepONet用于高分辨率降水临近预报，架构可迁移至地下水等高分辨时空模拟",
+      "llm_tldr_en": "Introduces GenONet, a spatio-temporal U-DeepONet that uses a DeepONet generator to produce sharp, physically consistent precipitation nowcasts up to 3 hours, addressing blurry forecasts from standard deep models.",
+      "llm_tldr_cn": "针对高分辨率降水临近预报中深度学习预测随时间模糊、难以保持强对流非线性结构的问题，论文提出Spatio-Temporal U-DeepONet（GenONet），首次将DeepONet作为生成器用于长达3小时的降水预测，以产生清晰且物理一致的结果。该生成式算子网络方法对地下水位、流场等高分辨率时空预测与数值模拟具有直接借鉴价值。",
+      "llm_tldr": "针对高分辨率降水临近预报中深度学习预测随时间模糊、难以保持强对流非线性结构的问题，论文提出Spatio-Temporal U-DeepONet（GenONet），首次将DeepONet作为生成器用于长达3小时的降水预测，以产生清晰且物理一致的结果。该生成式算子网络方法对地下水位、流场等高分辨率时空预测与数值模拟具有直接借鉴价值。",
+      "llm_tags": [
+        "query:ag:composite"
+      ],
+      "matched_query_tag": "query:ag:composite",
+      "matched_query_text": "Papers central to 帮我检索近十年的关于人工智能驱动的地下水数值模拟的英文文献, especially work that connects or combines: LSTM groundwater forecasting; data-driven groundwater hydrology; physics-informed neural network subsurface flow; artificial intelligence groundwater simulation; deep learning groundwater level prediction; machine learning approaches for groundwater flow and transport simulation; physics informed neural network subsurface flow; artificial intelligence enhanced groundwater numerical simulation methods; machine learning based surrogate models for groundwater flow simulation.",
+      "matched_requirement_id": "req-composite-ag",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.03626v1",
+      "source": "arxiv",
+      "title": "Residual neural networks overcome the curse of dimensionality for semilinear heat equations",
+      "abstract": "Rigorous results show that feedforward neural networks can overcome the curse of dimensionality in the numerical approximation of high-dimensional partial differential equations (PDEs), but comparatively little is known about residual neural networks (ResNets) in the nonlinear PDE setting. We prove that ResNets overcome the curse of dimensionality in the numerical approximation of solutions of semilinear heat equations with globally Lipschitz continuous, gradient-independent nonlinearities: under polynomial growth and network approximability hypotheses on the PDE data, there exist $η\\in(0,\\infty)$ and ResNets $Ψ_{d,\\varepsilon}$, $d\\in\\mathbb{N}$, $\\varepsilon\\in(0,1]$, with at most $ηd^η\\varepsilon^{-η}$ parameters whose realizations approximate the solution in dimension $d$ with an $L^2$-error of at most $\\varepsilon$. The proof represents one deterministic realization of a multilevel Picard estimator by a ResNet whose shortcut connections transmit the spatial variable and a scalar accumulator, while the residual branches successively add the summands of the estimator. For ridge-sum initial conditions, admissible sigmoidal activations, and globally Lipschitz truncations of the nonlinearity, we obtain, for every $ξ>0$, the explicit bound $C_ξd^{4+ξ}\\varepsilon^{-(3+ξ)}$ on the number of parameters.",
+      "authors": [
+        "Ilkhom Mukhammadiev",
+        "Diyora Salimova"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "cs.LG",
+        "math.AP",
+        "math.PR"
+      ],
+      "published": "2026-09-03T10:15:11+00:00",
+      "link": "https://arxiv.org/pdf/2609.03626v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "ResNets for semilinear heat PDE approximation, foundational for AI enhanced groundwater numerical methods",
+      "llm_evidence_cn": "残差神经网络近似半线性热方程，为AI增强地下水数值方法提供理论支撑",
+      "llm_evidence": "残差神经网络近似半线性热方程，为AI增强地下水数值方法提供理论支撑",
+      "canonical_evidence": "残差神经网络近似半线性热方程，为AI增强地下水数值方法提供理论支撑",
+      "llm_tldr_en": "Proves ResNets can overcome the curse of dimensionality for semilinear heat PDEs with polynomial parameter bounds, giving theoretical support for neural approximation of parabolic flow equations.",
+      "llm_tldr_cn": "论文针对高维半线性热方程数值近似中的维数灾难问题，证明了残差神经网络可在参数规模受多项式控制的情况下逼近其解。在关于数据多项式和网络逼近性的假设下，推导了近似误差关于维度和精度的显式依赖。这一结果为非线性PDE场景中使用ResNet提供了理论依据，也为地下水流等抛物型方程的AI数值模拟奠定数学基础。",
+      "llm_tldr": "论文针对高维半线性热方程数值近似中的维数灾难问题，证明了残差神经网络可在参数规模受多项式控制的情况下逼近其解。在关于数据多项式和网络逼近性的假设下，推导了近似误差关于维度和精度的显式依赖。这一结果为非线性PDE场景中使用ResNet提供了理论依据，也为地下水流等抛物型方程的AI数值模拟奠定数学基础。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "artificial intelligence enhanced groundwater numerical simulation methods",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.05180v1",
+      "source": "arxiv",
+      "title": "A simple shallow neural network for emulating the solution to singularly perturbed problems",
+      "abstract": "We consider (feed-forward) Neural Networks (NNs) for the emulation of the solution to singularly perturbed second order boundary value problems, with two small parameters. We describe a shallow NN which exploits available asymptotic expansions for the solution. These additive decompositions into smooth and layer components, allow for derivative estimates which are explicit in the order of differentiation as well as the singular perturbation parameter(s) \\cite{melenk, Irene, SX}. Utilizing such decompositions, we propose a simple NN for emulating the solution to such problems using the $\\tanh$ activation function together with different training objectives, such as residual or energy minimization. The key idea is to augment the approximation space with suitable exponential functions, similar to enriched spaces in finite element methods, e.g.~\\cite{Kellogg}. Numerical examples in one and two dimensions, including a smooth non-tensor-product domain, illustrate the resulting parameter-robust behavior over the tested perturbation ranges.",
+      "authors": [
+        "Christos Xenophontos",
+        "Aayushman Raina"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA"
+      ],
+      "published": "2026-09-04T14:16:58+00:00",
+      "link": "https://arxiv.org/pdf/2609.05180v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Shallow neural network for singularly perturbed BVP solution emulation, transferable to subsurface flow simulation",
+      "llm_evidence_cn": "用于奇异摄动边值问题模拟的浅层神经网络，可迁移至地下水流类模拟",
+      "llm_evidence": "用于奇异摄动边值问题模拟的浅层神经网络，可迁移至地下水流类模拟",
+      "canonical_evidence": "用于奇异摄动边值问题模拟的浅层神经网络，可迁移至地下水流类模拟",
+      "llm_tldr_en": "Builds a shallow NN that exploits asymptotic decomposition to emulate singularly perturbed BVP solutions using tanh activation and residual/energy training, useful for multi-scale or boundary-layer flow simulation.",
+      "llm_tldr_cn": "该文针对带有两个小参数的奇异摄动二阶边值问题，提出可利用渐近展开先验的浅层神经网络模拟方法。通过解的光滑与边界层分量加性分解，把预估的结构信息引入网络，并用tanh激活函数配合残差或能量最小化目标进行训练。数值结果表明该网络能有效刻画陡峭边界层，且参数规模小。这种结构感知的代理策略可望用于复杂流动问题的神经网络模拟。",
+      "llm_tldr": "该文针对带有两个小参数的奇异摄动二阶边值问题，提出可利用渐近展开先验的浅层神经网络模拟方法。通过解的光滑与边界层分量加性分解，把预估的结构信息引入网络，并用tanh激活函数配合残差或能量最小化目标进行训练。数值结果表明该网络能有效刻画陡峭边界层，且参数规模小。这种结构感知的代理策略可望用于复杂流动问题的神经网络模拟。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "artificial intelligence enhanced groundwater numerical simulation methods",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

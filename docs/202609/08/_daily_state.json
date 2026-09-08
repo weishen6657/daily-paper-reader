@@ -1,0 +1,57 @@
+{
+  "date": "20260908",
+  "date_label": "",
+  "generated_at": "2026-09-08 19:39:10 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.00544v1",
+      "route": "202609/08/2609.00544v1-genonet-a-generative-operator-network-for-high-resolution-precipitation-nowcasting",
+      "title": "GenONet: A Generative operator Network for High-Resolution Precipitation Nowcasting",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "生成式DeepONet用于高分辨率降水临近预报，架构可迁移至地下水等高分辨时空模拟",
+      "first_seen_at": "2026-09-08 19:39:10 UTC",
+      "updated_at": "2026-09-08 19:39:10 UTC"
+    },
+    {
+      "paper_id": "2609.03626v1",
+      "route": "202609/08/2609.03626v1-residual-neural-networks-overcome-the-curse-of-dimensionality-for-semilinear-heat-equations",
+      "title": "Residual neural networks overcome the curse of dimensionality for semilinear heat equations",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "残差神经网络近似半线性热方程，为AI增强地下水数值方法提供理论支撑",
+      "first_seen_at": "2026-09-08 19:39:10 UTC",
+      "updated_at": "2026-09-08 19:39:10 UTC"
+    },
+    {
+      "paper_id": "2609.05180v1",
+      "route": "202609/08/2609.05180v1-a-simple-shallow-neural-network-for-emulating-the-solution-to-singularly-perturbed-problems",
+      "title": "A simple shallow neural network for emulating the solution to singularly perturbed problems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用于奇异摄动边值问题模拟的浅层神经网络，可迁移至地下水流类模拟",
+      "first_seen_at": "2026-09-08 19:39:10 UTC",
+      "updated_at": "2026-09-08 19:39:10 UTC"
+    }
+  ]
+}
