@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-09-08</span>
+      <span class="dpr-home-dashboard-kicker">2026-09-09</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 3 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 12 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>3</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>11</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-09-08 19:39:10 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-09-09 19:52:58 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日速读3篇高分论文，覆盖AI降水预报与神经网络求解偏微分方程两大热点；其中《GenONet》面向高分辨率降水临近预报，值得关注生成式算子学习的新思路。剩余两篇分别从残差网络与浅层网络角度改进PDE求解效率。若时间有限，可先读《GenONet》了解气象AI落地进展，再按兴趣探索网络结构优势。</p>
+<p>今日精读1篇、速读11篇，核心围绕AI驱动的科学与工程计算。</p>
+<p>最值得关注：用卫星与井观测合成估算高平原含水层水位（精读8.0分），另有3篇PDE求解与流场预测的模型对比研究。</p>
+<p>建议普通读者优先看含水层水位估算这篇，理解卫星数据如何弥补地面观测不足。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -71,12 +73,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">0 篇</strong>
+    <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Estimating water levels in the High Plains Aquifer by synthesizing satellite data with groundwater well observations">Estimating water levels in the High Plains Aquifer by synthesizing satellite data with groundwater well observations</span></li></ul>
   </div>
-
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -84,12 +86,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">3 篇</strong>
+    <strong class="dpr-home-dashboard-count">11 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="GenONet: A Generative operator Network for High-Resolution Precipitation Nowcasting">GenONet: A Generative operator Network for High-Resolution Precipitation Nowcasting</span></li><li><span class="dpr-home-dashboard-paper-title" title="Residual neural networks overcome the curse of dimensionality for semilinear heat equations">Residual neural networks overcome the curse of dimensionality for semilinear heat equations</span></li><li><span class="dpr-home-dashboard-paper-title" title="A simple shallow neural network for emulating the solution to singularly perturbed problems">A simple shallow neural network for emulating the solution to singularly perturbed problems</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Distance-Aware Attention and Wall-Distance Expert Routing for Transformer-Based 3D Flow Prediction">Distance-Aware Attention and Wall-Distance Expert Routing for Transformer-Based 3D Flow Prediction</span></li><li><span class="dpr-home-dashboard-paper-title" title="A Systematic Analysis of Automatic Differentiation versus Discretization-based Constraints for Physics-Informed PDE Solvers">A Systematic Analysis of Automatic Differentiation versus Discretization-based Constraints for Physics-Informed PDE Solvers</span></li><li><span class="dpr-home-dashboard-paper-title" title="Latent-MoE: Domain-Aware Mixture-of-Experts for PDEs with Multi-Regime Physics">Latent-MoE: Domain-Aware Mixture-of-Experts for PDEs with Multi-Regime Physics</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>3</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>11</strong></span></div>
 </section>
 </div>
 
