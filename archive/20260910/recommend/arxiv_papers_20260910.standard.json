@@ -1,0 +1,97 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-10T19:40:27.416317+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.07437v1",
+      "source": "arxiv",
+      "title": "A Systematic Analysis of Automatic Differentiation versus Discretization-based Constraints for Physics-Informed PDE Solvers",
+      "abstract": "Physics-informed neural networks (PINNs) represent a growing frontier in using artificial intelligence to solve partial differential equations (PDEs). Automatic differentiation (AD) plays a central role in this paradigm, which is mesh-free and replaces traditional iterative solvers with gradient-based optimization in continuous space. However, the inherent limitations of AD, particularly in handling higher-order derivatives and discontinuous solutions, pose significant challenges for complex problems. This has motivated a growing number of researchers to explore discretization-based constraints as an alternative path. Yet, the respective applicability of these two paradigms remains largely unexplored. In this work, we conduct systematic experiments across a wide spectrum of problems, from simple linear Poisson to high-Mach hypersonic flows with strong discontinuities. Through a rigorous decomposition of approximation, optimization, and truncation errors, we systematically elucidate the fundamental trade-offs and error-governing mechanisms of both paradigms, as well as two representative network architectures: multi-layer perceptron (MLP) and graph neural network (GNN). Our results reveal a consistent trend: as nonlinearity strengthens, the accuracy advantage of discretization-based constraints becomes increasingly pronounced, with smaller optimization errors compensating for the truncation errors. Moreover, the more complex the nonlinearity and boundary conditions, the greater the advantage of GNN over MLP. These insights offer a robust practical guideline for configuring neural PDE solvers in demanding engineering applications. Our source data and code are available at https://github.com/guoxing0809/neuropde_analysis.",
+      "authors": [
+        "Xing Guo",
+        "Hongwei Tang",
+        "Zewei Meng",
+        "Yidong Zhang",
+        "Shaoqiu Xiao",
+        "Feng Liu"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "cs.LG",
+        "physics.flu-dyn"
+      ],
+      "published": "2026-09-07T12:44:35+00:00",
+      "link": "https://arxiv.org/pdf/2609.07437v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "physics-informed neural networks for solving PDEs via automatic differentiation",
+      "llm_evidence_cn": "基于自动微分的物理信息神经网络求解偏微分方程",
+      "llm_evidence": "基于自动微分的物理信息神经网络求解偏微分方程",
+      "canonical_evidence": "基于自动微分的物理信息神经网络求解偏微分方程",
+      "llm_tldr_en": "Physics-informed neural networks rely on automatic differentiation but struggle with higher-order derivatives and discontinuities. This paper systematically compares automatic differentiation against discretization-based constraints for physics-informed PDE solvers, clarifying the applicability of each paradigm.",
+      "llm_tldr_cn": "物理信息神经网络（PINN）借助自动微分以无网格方式求解偏微分方程，但自动微分在处理高阶导数与不连续解时存在明显局限。本文系统对比自动微分与基于离散化的约束两类范式在物理信息PDE求解器中的适用性。分析揭示了两种范式各自的适用范围与优劣。该工作为复杂PDE问题中选择合适的物理信息求解策略提供了指导。",
+      "llm_tldr": "物理信息神经网络（PINN）借助自动微分以无网格方式求解偏微分方程，但自动微分在处理高阶导数与不连续解时存在明显局限。本文系统对比自动微分与基于离散化的约束两类范式在物理信息PDE求解器中的适用性。分析揭示了两种范式各自的适用范围与优劣。该工作为复杂PDE问题中选择合适的物理信息求解策略提供了指导。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.09912v1",
+      "source": "arxiv",
+      "title": "Development and Validation of a Physics-Guided Machine Learning Extrapolation Framework Using a Classical Transient Diffusion Benchmark",
+      "abstract": "Machine learning models used in engineering are typically trained within limited operating ranges, yet reliable predictions are often required beyond these domains. Consequently, the primary challenge is extrapolation rather than interpolation. Rigorous validation is hindered by the scarcity of data outside the training range. To address this limitation, a novel extrapolation framework is integrated with established machine learning architectures to enable accurate and physically consistent predictions beyond the training domain. The framework is established by systematically evaluating two physics-guided architectures: a Bidirectional Long Short-Term Memory (BiLSTM) network and a Physics-Informed Neural Network (PINN). A classical one-dimensional transient diffusion problem is adopted as a benchmark because its exact analytical solution provides unlimited, reliable data across the spatio-temporal domain, enabling rigorous quantitative validation. The problem is particularly challenging because the solution evolves from an initial singularity through a strongly nonlinear transient regime before approaching a steady-state linear profile. When training data are confined to an intermediate portion of this evolution, backward extrapolation toward the singularity becomes especially demanding. To improve reliability, physics-guided coordinate transformations, boundary-aware learning strategies, and stability-enhancing temporal marching are incorporated. Extrapolation is evaluated using a train-predict-validate-extend strategy, in which validated predictions are recursively added to the training set to progressively extend the prediction horizon. The results demonstrate accurate and physically consistent predictions beyond the training domain, highlighting the framework's potential for engineering applications where data availability is limited.",
+      "authors": [
+        "Ashutosh Yadav",
+        "Alok Dubey",
+        "Prodyut Ranjan Chakraborty",
+        "Harshal Akolekar"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-09-09T09:09:04+00:00",
+      "link": "https://arxiv.org/pdf/2609.09912v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "physics-guided BiLSTM framework for extrapolation on a transient diffusion benchmark",
+      "llm_evidence_cn": "物理引导的双向LSTM外推框架，基于瞬态扩散基准",
+      "llm_evidence": "物理引导的双向LSTM外推框架，基于瞬态扩散基准",
+      "canonical_evidence": "物理引导的双向LSTM外推框架，基于瞬态扩散基准",
+      "llm_tldr_en": "ML models often fail beyond training ranges. This work integrates physics-guided BiLSTM and physics architectures to enable accurate, physically consistent extrapolation, validated on a transient diffusion benchmark.",
+      "llm_tldr_cn": "工程机器学习模型多局限于训练工况，外推预测常不可靠且缺乏域外验证数据。本文提出一种物理引导的机器学习外推框架，将双向长短期记忆网络与物理约束架构相结合，并以经典瞬态扩散问题作为基准系统评估。结果表明框架可在训练域之外给出准确且物理一致的预测。该工作为数据驱动模型的外推能力与物理可信度提供了通用验证思路。",
+      "llm_tldr": "工程机器学习模型多局限于训练工况，外推预测常不可靠且缺乏域外验证数据。本文提出一种物理引导的机器学习外推框架，将双向长短期记忆网络与物理约束架构相结合，并以经典瞬态扩散问题作为基准系统评估。结果表明框架可在训练域之外给出准确且物理一致的预测。该工作为数据驱动模型的外推能力与物理可信度提供了通用验证思路。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "LSTM groundwater forecasting",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

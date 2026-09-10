@@ -1,0 +1,41 @@
+{
+  "date": "20260910",
+  "date_label": "",
+  "generated_at": "2026-09-10 19:41:23 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.07437v1",
+      "route": "202609/10/2609.07437v1-a-systematic-analysis-of-automatic-differentiation-versus-discretization-based-constraints-for-physics-informed-pde-solvers",
+      "title": "A Systematic Analysis of Automatic Differentiation versus Discretization-based Constraints for Physics-Informed PDE Solvers",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "基于自动微分的物理信息神经网络求解偏微分方程",
+      "first_seen_at": "2026-09-10 19:41:23 UTC",
+      "updated_at": "2026-09-10 19:41:23 UTC"
+    },
+    {
+      "paper_id": "2609.09912v1",
+      "route": "202609/10/2609.09912v1-development-and-validation-of-a-physics-guided-machine-learning-extrapolation-framework-using-a-classical-transient-diffusion-benchmark",
+      "title": "Development and Validation of a Physics-Guided Machine Learning Extrapolation Framework Using a Classical Transient Diffusion Benchmark",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "物理引导的双向LSTM外推框架，基于瞬态扩散基准",
+      "first_seen_at": "2026-09-10 19:41:23 UTC",
+      "updated_at": "2026-09-10 19:41:23 UTC"
+    }
+  ]
+}
