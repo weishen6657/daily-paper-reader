@@ -1,0 +1,41 @@
+{
+  "date": "20260911",
+  "date_label": "",
+  "generated_at": "2026-09-11 18:51:43 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.07983v1",
+      "route": "202609/11/2609.07983v1-solving-the-elastic-wave-equation-with-physics-informed-neural-networks-a-robust-and-critical-assessment",
+      "title": "Solving the Elastic Wave Equation with Physics-Informed Neural Networks: A Robust and Critical Assessment",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用于求解PDE的物理信息神经网络，方法直接关联物理信息地下流动建模",
+      "first_seen_at": "2026-09-11 18:51:43 UTC",
+      "updated_at": "2026-09-11 18:51:43 UTC"
+    },
+    {
+      "paper_id": "2609.08239v1",
+      "route": "202609/11/2609.08239v1-beyond-residuals-energy-based-solutions-of-partial-differential-equations-using-scientific-machine-learning",
+      "title": "Beyond Residuals: Energy based solutions of partial differential equations using scientific machine learning",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向PDE的变分能量型科学机器学习替代残差PINN",
+      "first_seen_at": "2026-09-11 18:51:43 UTC",
+      "updated_at": "2026-09-11 18:51:43 UTC"
+    }
+  ]
+}

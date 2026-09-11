@@ -1,0 +1,89 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-11T18:44:48.121626+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.07983v1",
+      "source": "arxiv",
+      "title": "Solving the Elastic Wave Equation with Physics-Informed Neural Networks: A Robust and Critical Assessment",
+      "abstract": "Physics-Informed Neural Networks (PINNs) have recently emerged as a promising approach for solving Partial Differential Equations (PDEs), offering a meshfree alternative that integrates physical principles into the learning process. This presents a new paradigm compared to traditional discretization methods and purely data-driven machine learning techniques. While promising, PINNs are not a panacea; they inherit challenges such as spectral bias and unstable convergence. Moreover, their potential in seismology remains largely unexplored. In this work, we provide a robust and critical assessment of PINNs for solving the elastic wave equation in seismology. We investigate the performance of PINNs on problems with varying degrees of complexity across various seismic sources and parameter models, from constant to highly heterogeneous settings. A pivotal aspect of our work involves investigating whether embedding physical principles directly into the network architecture enhances convergence and accuracy. We test an extensive range of neural architecture designs, from unrestricted, uninformed PINNs to highly specialized ones. We find that integrating an understanding of wave physics into the network design significantly improves accuracy. For instance, introducing a custom wavelet or plane wave layer, coupled with encoder and decoder layers, consistently yields a relative $L_2$ error approximately half that of the standard PINN, as evidenced across numerous experiments. We further demonstrate that this novel architecture enhances accuracy when applied to the acoustic wave equation, underlying the versatility of our network. Another key contribution of our research is the successful conditioning of PINNs on seismic source locations. This signifies a considerable advancement towards rapid seismic hazard detection and seismic analysis.",
+      "authors": [
+        "Davide Staub",
+        "Ben Moseley"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-09-07T21:01:29+00:00",
+      "link": "https://arxiv.org/pdf/2609.07983v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "PINN for PDE solving; methodology directly relevant to physics-informed subsurface flow modeling",
+      "llm_evidence_cn": "用于求解PDE的物理信息神经网络，方法直接关联物理信息地下流动建模",
+      "llm_evidence": "用于求解PDE的物理信息神经网络，方法直接关联物理信息地下流动建模",
+      "canonical_evidence": "用于求解PDE的物理信息神经网络，方法直接关联物理信息地下流动建模",
+      "llm_tldr_en": "PINNs offer a meshfree PDE solver but face spectral bias and unstable convergence; this work critically assesses PINNs for the elastic wave equation in seismology, revealing capabilities and limits.",
+      "llm_tldr_cn": "物理信息神经网络作为无网格PDE求解新范式前景广阔，但存在谱偏差与收敛不稳定等问题，其在地震学中的应用尚未充分探索。本文对PINN求解弹性波方程进行稳健且批判性的评估，考察其在不同问题下的表现，揭示其能力与局限。该评估为PINN在地下水流等地下流动PDE模拟中的适用性提供了重要参考。",
+      "llm_tldr": "物理信息神经网络作为无网格PDE求解新范式前景广阔，但存在谱偏差与收敛不稳定等问题，其在地震学中的应用尚未充分探索。本文对PINN求解弹性波方程进行稳健且批判性的评估，考察其在不同问题下的表现，揭示其能力与局限。该评估为PINN在地下水流等地下流动PDE模拟中的适用性提供了重要参考。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.08239v1",
+      "source": "arxiv",
+      "title": "Beyond Residuals: Energy based solutions of partial differential equations using scientific machine learning",
+      "abstract": "Energy-based approaches provide a natural and physically consistent framework for a large class of partial differential equations arising in solid and fluid mechanics, where the governing equations follow from variational principles. In contrast to residual-based physics-informed neural networks (PINNs) and their weak-form variants, which enforce the strong or weak form of the equations through loss minimization, the Deep Energy Method (DEM) directly computes the solution as the minimizer of an energy or incremental potential functional. This eliminates the need for residual weighting, avoids high-order derivatives, and enables the direct enforcement of physical constraints through the variational structure.In this work, we systematically revisit the Deep Energy Method, placing it in the broader context of physics-informed learning and variational modeling. We clarify the relationship between DEM, PINNs, and VPINNs, and identify the class of problems for which energy minimization provides intrinsic advantages in terms of stability, robustness and interpretability. Particular emphasis is placed on incremental variational formulations, which allow DEM to be applied to nonlinear, history-dependent and time-dependent problems, including phase-field fracture and dissipative systems. The variational structure underlying DEM further provides a natural foundation for optimization and inverse problems, where the energy functional acts as a physics-based constraint rather than a residual penalty. Through a series of numerical examples, we demonstrate that DEM offers a principled and effective alternative to residual-based methods for variational problems, highlighting its strengths and limitations relative to existing physics-informed approaches.",
+      "authors": [
+        "Timon Rabczuk",
+        "Yizheng Wang"
+      ],
+      "primary_category": "physics.comp-ph",
+      "categories": [
+        "physics.comp-ph"
+      ],
+      "published": "2026-09-08T04:34:08+00:00",
+      "link": "https://arxiv.org/pdf/2609.08239v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "energy-based scientific machine learning alternative to residual PINNs for PDEs",
+      "llm_evidence_cn": "面向PDE的变分能量型科学机器学习替代残差PINN",
+      "llm_evidence": "面向PDE的变分能量型科学机器学习替代残差PINN",
+      "canonical_evidence": "面向PDE的变分能量型科学机器学习替代残差PINN",
+      "llm_tldr_en": "Residual-based PINNs require loss weighting and high-order derivatives, complicating training; the Deep Energy Method instead minimizes an energy or incremental potential functional, naturally enforcing physical constraints for variational solid and fluid problems.",
+      "llm_tldr_cn": "针对残差型物理信息神经网络需引入残差加权、依赖高阶导数且训练困难的问题，本文提出深度能量法（DEM），直接以能量或增量势泛函的最小化解作为PDE解。该方法适用于由变分原理导出的固体与流体力学问题，无需残差加权即可自然施加物理约束。研究表明其可稳定求解一大类偏微分方程。该范式为地下水流等具变分结构的物理信息模拟提供了替代思路。",
+      "llm_tldr": "针对残差型物理信息神经网络需引入残差加权、依赖高阶导数且训练困难的问题，本文提出深度能量法（DEM），直接以能量或增量势泛函的最小化解作为PDE解。该方法适用于由变分原理导出的固体与流体力学问题，无需残差加权即可自然施加物理约束。研究表明其可稳定求解一大类偏微分方程。该范式为地下水流等具变分结构的物理信息模拟提供了替代思路。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "physics-informed neural network subsurface flow",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

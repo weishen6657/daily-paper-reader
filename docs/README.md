@@ -41,7 +41,7 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-09-10</span>
+      <span class="dpr-home-dashboard-kicker">2026-09-11</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
     <strong class="dpr-home-dashboard-count">共 2 篇</strong>
@@ -51,7 +51,7 @@
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>2</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-09-10 19:41:23 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-09-11 18:51:43 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日速读两篇物理信息PDE求解研究：自动微分与离散约束对比、物理引导机器学习外推框架。两篇均围绕物理约束与机器学习结合，值得关注自动微分与离散约束的取舍，以及用经典瞬态扩散基准验证外推可靠性。普通读者可先看扩散基准那篇，理解物理引导外推如何落地。</p>
+<p>今日速读两篇物理信息神经网络求解偏微分方程的评估与改进研究，均获6.0分。值得关注的是：PINN求解弹性波方程的稳健性被系统检验，以及用能量而非残差构建PDE求解新思路。普通读者可先看弹性波那篇了解PINN的边界与坑，再读能量法看如何绕开残差训练的局限。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -87,7 +87,7 @@
     <strong class="dpr-home-dashboard-count">2 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="A Systematic Analysis of Automatic Differentiation versus Discretization-based Constraints for Physics-Informed PDE Solvers">A Systematic Analysis of Automatic Differentiation versus Discretization-based Constraints for Physics-Informed PDE Solvers</span></li><li><span class="dpr-home-dashboard-paper-title" title="Development and Validation of a Physics-Guided Machine Learning Extrapolation Framework Using a Classical Transient Diffusion Benchmark">Development and Validation of a Physics-Guided Machine Learning Extrapolation Framework Using a Classical Transient Diffusion Benchmark</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Solving the Elastic Wave Equation with Physics-Informed Neural Networks: A Robust and Critical Assessment">Solving the Elastic Wave Equation with Physics-Informed Neural Networks: A Robust and Critical Assessment</span></li><li><span class="dpr-home-dashboard-paper-title" title="Beyond Residuals: Energy based solutions of partial differential equations using scientific machine learning">Beyond Residuals: Energy based solutions of partial differential equations using scientific machine learning</span></li></ul>
   </div>
   <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">ag <strong>2</strong></span></div>
 </section>
