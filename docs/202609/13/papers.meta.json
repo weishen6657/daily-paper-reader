@@ -1,0 +1,24 @@
+{
+  "label": "2026-09-13",
+  "date": "2026-09-13",
+  "generated_at": "2026-09-13T19:02:24",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202609/13/2609.11426v1-diffswe2d-a-differentiable-shallow-water-equations-solver-for-end-to-end-flood-and-tsunami-modelling",
+      "section": "quick",
+      "title_en": "DiffSWE2d: a differentiable Shallow Water Equations solver for end-to-end flood and tsunami modelling",
+      "authors": "Zhonghou Xu",
+      "date": "2026-09-10",
+      "pdf": "https://arxiv.org/pdf/2609.11426v1",
+      "score": "6.0",
+      "evidence": "可微数值求解器将物理模拟与自动微分结合",
+      "tldr": "传统浅水方程求解器在反演与优化中需反复前向模拟，梯度估计计算昂贵。DiffSWE2d 是基于 PyTorch 的开源可微分浅水方程求解器，将时间推进物理构建为可微分计算图，使梯度可直接穿过数值求解器反向传播。作者用两个基准算例验证精度，并应用于海啸波形反演，通过梯度优化成功推断模型输入。该工作为物理水文建模与自动微分、机器学习优化方法融合提供了灵活框架，并公开代码与可复现示例。",
+      "tags": "query:ag",
+      "abstract_en": "Solving inverse and optimisation problems with traditional shallow water equations (SWE) solvers can be computationally expensive, particularly when gradients with respect to model inputs or parameters must be estimated through repeated forward simulations. In this paper, we introduce DiffSWE2d, an open-source differentiable shallow water equations solver for end-to-end flood and tsunami modelling implemented in PyTorch. By leveraging automatic differentiation, DiffSWE2d represents the time-marching physics as a differentiable computational graph, enabling gradients to be propagated directly through the numerical solver. We validate the solver against two established benchmark cases and demonstrate its application to tsunami waveform inversion, showing its ability to infer model inputs through gradient-based optimisation. DiffSWE2d provides a flexible framework for integrating physics-based hydrodynamic modelling with modern optimisation and machine learning methods. The source code and reproducible examples are publicly available at: https://github.com/ZhonghouXu/DiffSWE2d",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

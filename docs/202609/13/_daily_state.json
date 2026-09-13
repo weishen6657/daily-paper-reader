@@ -1,0 +1,25 @@
+{
+  "date": "20260913",
+  "date_label": "",
+  "generated_at": "2026-09-13 19:02:22 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.11426v1",
+      "route": "202609/13/2609.11426v1-diffswe2d-a-differentiable-shallow-water-equations-solver-for-end-to-end-flood-and-tsunami-modelling",
+      "title": "DiffSWE2d: a differentiable Shallow Water Equations solver for end-to-end flood and tsunami modelling",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "ag"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "可微数值求解器将物理模拟与自动微分结合",
+      "first_seen_at": "2026-09-13 19:02:22 UTC",
+      "updated_at": "2026-09-13 19:02:22 UTC"
+    }
+  ]
+}

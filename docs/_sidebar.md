@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-09-13 <!--dpr-date:20260913-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/13/2609.11426v1-diffswe2d-a-differentiable-shallow-water-equations-solver-for-end-to-end-flood-and-tsunami-modelling" data-sidebar-item="{&quot;title&quot;: &quot;DiffSWE2d: a differentiable Shallow Water Equations solver for end-to-end flood and tsunami modelling&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.11426v1-diffswe2d-a-differentiable-shallow-water-equations-solver-for-end-to-end-flood-and-tsunami-modelling&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ag&quot;}], &quot;evidence&quot;: &quot;可微数值求解器将物理模拟与自动微分结合&quot;}">DiffSWE2d: a differentiable Shallow Water Equations solver for end-to-end flood and tsunami modelling</a>
   * 2026-09-11 <!--dpr-date:20260911-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202609/11/2609.07983v1-solving-the-elastic-wave-equation-with-physics-informed-neural-networks-a-robust-and-critical-assessment" data-sidebar-item="{&quot;title&quot;: &quot;Solving the Elastic Wave Equation with Physics-Informed Neural Networks: A Robust and Critical Assessment&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2609.07983v1-solving-the-elastic-wave-equation-with-physics-informed-neural-networks-a-robust-and-critical-assessment&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ag&quot;}], &quot;evidence&quot;: &quot;用于求解PDE的物理信息神经网络，方法直接关联物理信息地下流动建模&quot;}">Solving the Elastic Wave Equation with Physics-Informed Neural Networks: A Robust and Critical Assessment</a>

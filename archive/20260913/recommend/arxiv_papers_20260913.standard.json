@@ -1,0 +1,53 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-13T19:01:39.457655+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.11426v1",
+      "source": "arxiv",
+      "title": "DiffSWE2d: a differentiable Shallow Water Equations solver for end-to-end flood and tsunami modelling",
+      "abstract": "Solving inverse and optimisation problems with traditional shallow water equations (SWE) solvers can be computationally expensive, particularly when gradients with respect to model inputs or parameters must be estimated through repeated forward simulations. In this paper, we introduce DiffSWE2d, an open-source differentiable shallow water equations solver for end-to-end flood and tsunami modelling implemented in PyTorch. By leveraging automatic differentiation, DiffSWE2d represents the time-marching physics as a differentiable computational graph, enabling gradients to be propagated directly through the numerical solver. We validate the solver against two established benchmark cases and demonstrate its application to tsunami waveform inversion, showing its ability to infer model inputs through gradient-based optimisation. DiffSWE2d provides a flexible framework for integrating physics-based hydrodynamic modelling with modern optimisation and machine learning methods. The source code and reproducible examples are publicly available at: https://github.com/ZhonghouXu/DiffSWE2d",
+      "authors": [
+        "Zhonghou Xu"
+      ],
+      "primary_category": "physics.flu-dyn",
+      "categories": [
+        "physics.flu-dyn",
+        "physics.geo-ph"
+      ],
+      "published": "2026-09-10T11:56:00+00:00",
+      "link": "https://arxiv.org/pdf/2609.11426v1",
+      "tags": [
+        "keyword:ag",
+        "query:ag"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "differentiable numerical solver coupling physics simulation with automatic differentiation",
+      "llm_evidence_cn": "可微数值求解器将物理模拟与自动微分结合",
+      "llm_evidence": "可微数值求解器将物理模拟与自动微分结合",
+      "canonical_evidence": "可微数值求解器将物理模拟与自动微分结合",
+      "llm_tldr_en": "DiffSWE2d is an open-source differentiable shallow water equations solver in PyTorch that propagates gradients through the time-marching solver, enabling end-to-end flood and tsunami inverse modeling.",
+      "llm_tldr_cn": "针对传统浅水方程求解器在反演与优化问题中需反复前向模拟、梯度估计代价高昂的瓶颈，本文提出DiffSWE2d，一个基于PyTorch的开源可微浅水方程求解器，将时间推进的物理过程表示为可微计算图，使梯度可直接穿越数值求解器传播。作者在两个基准算例上验证了求解器正确性，并展示了其在海啸等场景端到端建模中的应用。该可微物理模拟思路对人工智能增强的地下水数值模拟具有直接借鉴价值。",
+      "llm_tldr": "针对传统浅水方程求解器在反演与优化问题中需反复前向模拟、梯度估计代价高昂的瓶颈，本文提出DiffSWE2d，一个基于PyTorch的开源可微浅水方程求解器，将时间推进的物理过程表示为可微计算图，使梯度可直接穿越数值求解器传播。作者在两个基准算例上验证了求解器正确性，并展示了其在海啸等场景端到端建模中的应用。该可微物理模拟思路对人工智能增强的地下水数值模拟具有直接借鉴价值。",
+      "llm_tags": [
+        "query:ag"
+      ],
+      "matched_query_tag": "query:ag",
+      "matched_query_text": "artificial intelligence enhanced groundwater numerical simulation methods",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
